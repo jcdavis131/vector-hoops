@@ -718,6 +718,11 @@ h1{ view-transition-name: vh-title; }
   }
   ::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*){ animation: none !important; }
   @view-transition{ navigation: none; }
+  /* presses and hovers change shadow and colour, never position */
+  .btn:hover, .btn:active, .trail-btn:hover, .trail-btn:active, .rt-retry:active,
+  .btn.lifeline:hover:not(:disabled), .btn.lifeline:active:not(:disabled),
+  #lifelines-bar .btn-lifeline:hover:not(:disabled),
+  #lifelines-bar .btn-lifeline:active:not(:disabled){ transform: none !important; }
 }
 
 /* ==========================================================================

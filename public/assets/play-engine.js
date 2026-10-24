@@ -608,12 +608,8 @@
         const div=document.createElement('div'); div.className='guess-row'+(isWin?' win':'')+(isNew?' is-new':'');
         // pixel avatar for each guess resembling player
         const avatarId = `guess-av-${idx}-${Date.now()}`;
-        div.innerHTML=`<div class="guess-row__inner"><div id="${avatarId}" class="guess-row__avatar"></div><div class="guess-row__body"><div class="guess-row__head"><b>${idx+1}. ${safeName} ${safeSeason}</b><span class="pill${isWin?' pill-green':''}">${simPct}% • ${rankLabel}</span></div><div class="guess-row__meta">${warm} • ${archName}</div><div class="bar"><i style="width:${isNew?0:targetW}%"></i></div></div></div>`;
+        div.innerHTML=`<div class="guess-row__inner"><div id="${avatarId}" class="guess-row__avatar"></div><div class="guess-row__body"><div class="guess-row__head"><b>${idx+1}. ${safeName} ${safeSeason}</b><span class="pill${isWin?' pill-green':''}">${simPct}% • ${rankLabel}</span></div><div class="guess-row__meta">${warm} • ${archName}</div><div class="bar"><i style="width:${targetW}%"></i></div></div></div>`;
         cont.appendChild(div);
-        if(isNew){
-          const bar=div.querySelector('.bar>i');
-          requestAnimationFrame(()=>requestAnimationFrame(()=>{ try{ if(bar) bar.style.width=targetW+'%'; }catch{} }));
-        }
         // mount avatar after append
         try{
           const avEl=document.getElementById(avatarId);

@@ -212,7 +212,7 @@
 
     // focus ring AAA
     var style = document.createElement('style');
-    style.textContent = ':focus-visible{outline:3px solid #0072B2; outline-offset:2px; box-shadow:0 0 0 5px rgba(0,114,178,.22);} .bottom-tabs button:focus-visible{outline:3px solid #F0E442; outline-offset:-3px;}';
+    style.textContent = ':focus-visible{outline:3px solid var(--focus, #0072B2); outline-offset:2px;} .bottom-tabs button:focus-visible{outline:3px solid #F0E442; outline-offset:-3px;}';
     document.head.appendChild(style);
 
     // city-intro-pills deprecated (arena tour removed v25) — nothing to enhance

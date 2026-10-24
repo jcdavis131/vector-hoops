@@ -758,8 +758,8 @@ function renderGhosts(d){
   el.innerHTML=html||emptyMsg('Not enough minutes yet for ghost matches.','No player reached the 15 minutes a ghost match needs.');
   if(html)grownOnce(el);
 }
-// bars grow in on their first paint only (live.css [data-grown]); refreshes and the scrub redraw in place
-function grownOnce(el){if(el&&!el.dataset.grown&&!el._growT)el._growT=setTimeout(()=>{el.dataset.grown='1';},800);}
+// bars grow in on a game's first paint only (live.css [data-grown]); refreshes and the scrub redraw in place
+function grownOnce(el){if(!el)return;const g=String(TL.gameId);if(el.dataset.growFor===g)return;el.dataset.growFor=g;delete el.dataset.grown;clearTimeout(el._growT);el._growT=setTimeout(()=>{el.dataset.grown='1';},800);}
 
 let FORM_DB=null;
 

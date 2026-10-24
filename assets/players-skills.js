@@ -163,6 +163,15 @@
 
   // ---- profile v28 ----
 
+  /* Skill bars grow in on a player's first render only (players.css
+     [data-grown]); the secondary fetches re-render the same player in place. */
+  function growOncePerSlug(el, slug) {
+    if (!el || el.dataset.growFor === slug) return;
+    el.dataset.growFor = slug;
+    delete el.dataset.grown;
+    clearTimeout(el._growT);
+    el._growT = setTimeout(function () { el.dataset.grown = '1'; }, 800);
+  }
   function renderProfile() {
     var rec = INDEX[current.slug];
     if (!rec) return;
@@ -326,6 +335,7 @@
     mountCourtFor(rec.name);
 
     els.profile.hidden = false;
+    growOncePerSlug(els.profile, current.slug);
     if (els.ppEmptyWrap) els.ppEmptyWrap.hidden = true;
     if (global.VHPlayersPage) {
       global.VHPlayersPage.showTab('profile', { skipHistory: true });

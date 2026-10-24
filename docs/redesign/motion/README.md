@@ -114,9 +114,28 @@ The first frame after navigation (70ms) is already the settled page: no double e
 ghosting, `getAnimations()` 0. The gate's `@view-transition{navigation:none}` holds in a real
 browser. The only difference between frames 70ms and 120ms is the web fonts swapping in.
 
-**Side effect worth knowing.** `.btn` now transitions `box-shadow`. On the nine pages that load
-keyboard-a11y.js, its injected focus halo (a box-shadow) therefore eases *out* on blur over `--dur-1`.
-Focus-in is still instant (`button:focus-visible{transition:none}`).
+## Review fixes (after 4eea8dd4)
+
+- **HIGH, focus ring eased on blur.** keyboard-a11y.js injected a box-shadow halo, which `.btn`'s
+  new box-shadow transition eased out on blur. The injected ring is now outline only, coloured
+  `var(--focus, #0072B2)`. No transition list anywhere names `outline`.
+- **Daily Court bars re-grew on every guess.** renderGuesses() rebuilds every row. Now only
+  `.guess-row.is-new .bar > i` grows on play, and era-crossed keeps its per-pick grow. The bar is
+  rendered at its target width; the double-rAF width write is gone.
+- **Skill bars re-grew up to 4× on /players.** renderProfile() re-runs as the secondary fetches
+  land. `#skills-profile` now gets `data-grown` 800 ms after a slug's first paint, so the bars grow
+  once per player.
+- **Low fixes:**
+  - The gate pins `transform:none` on `.btn`, trail, lifeline and `.rt-retry` hover and press, so
+    presses don't jump under reduced motion.
+  - live.js grownOnce resets per game id.
+  - New embed3d test: destroy() clears a pending 3 s resume.
+  - lemmino.css's grain loop is deleted.
+- **Re-run:**
+  - pytest: 2,907 tests, the same 3 known failures.
+  - embed3d tests: 23/23.
+  - Budgets, design checks and the other static gates: unchanged. D7 is still 24.
+  - check_motion.py with reduce: play and players both come to rest.
 
 ## Deferred
 

@@ -70,10 +70,6 @@
 .lemmino-grain{
   position:absolute; inset:-10%; pointer-events:none; z-index:3; opacity:0.22; mix-blend-mode:soft-light;
   background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.95' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.42'/%3E%3C/svg%3E");
-  animation:lemmino-grain-shift 0.4s steps(2) infinite;
-}
-@keyframes lemmino-grain-shift{
-  0%{ transform:translate(0,0) } 100%{ transform:translate(-2%,1%) }
 }
 
 .lemmino-ui{
@@ -144,5 +140,5 @@
 
 /* Reduced motion */
 @media(prefers-reduced-motion:reduce){
-  .lemmino-grain{ animation:none; display:none; }
+  .lemmino-grain{ display:none; }
 }

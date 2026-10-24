@@ -81,7 +81,7 @@ function fixture() {
 const LIGHT = { '--void': '#1E2022', '--void-ink': '#D8DCD8', '--void-ink-2': '#A7B0BC', '--void-accent': '#FF7A5C',
   '--accent': '#E0483B', '--fg-3': '#6E6E66', '--data-terra': '#A05A38', '--team-a': '#123456' };
 
-function env({ tokens = LIGHT, reduce = false, coarse = false, fetchImpl = null, doc = fixture(), timeout = setTimeout } = {}) {
+function env({ tokens = LIGHT, reduce = false, coarse = false, fetchImpl = null, doc = fixture(), timeout = setTimeout, clear = clearTimeout } = {}) {
   const log = [];
   const raf = [];
   const mq = {};
@@ -107,7 +107,7 @@ function env({ tokens = LIGHT, reduce = false, coarse = false, fetchImpl = null,
     getComputedStyle(node) { assert.equal(node, documentElement); return { getPropertyValue: (k) => vars[k] || '' }; },
     requestAnimationFrame(cb) { raf.push(cb); return raf.length; },
     cancelAnimationFrame() {},
-    setTimeout: timeout, clearTimeout,
+    setTimeout: timeout, clearTimeout: clear,
     fetch(url, init) {
       fetches.push(url);
       if (fetchImpl) return fetchImpl(url, init, fetches.length);
@@ -433,6 +433,20 @@ test('wave 3: pointer and keyboard pause the turn, both resume after 3 s', async
   assert.equal(pt.length, 2, 'pointer release schedules the resume');
   pt[1].fn();
   assert.equal(h.snapshot().autoRotate, true);
+});
+
+test('wave 3: destroy() clears a resume scheduled before it', async () => {
+  const timers = [], cleared = [];
+  const e = env({ timeout: (fn, ms) => { timers.push({ fn, ms }); return 1000 + timers.length; }, clear: (id) => cleared.push(id) });
+  const h = e.Embed3D.mount(e.host);
+  await e.settle(); await e.settle();
+  const canvas = e.host.q('embed3d__canvas');
+  canvas.dispatch('pointerdown', { pointerId: 1, clientX: 10, clientY: 10 });
+  canvas.dispatch('pointerup', { pointerId: 1, clientX: 10, clientY: 10 });
+  const resumeId = 1000 + timers.findIndex((t) => t.ms === 3000) + 1;
+  assert.ok(resumeId > 1000, 'a resume was scheduled');
+  h.destroy();
+  assert.ok(cleared.includes(resumeId), 'destroy cleared it: ' + JSON.stringify(cleared));
 });
 
 test('wave 3: the selection ring draws clockwise over 320 ms; whole at once under reduced motion', async () => {
