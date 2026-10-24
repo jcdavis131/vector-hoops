@@ -278,8 +278,8 @@
     var num = NUM_BY_SLUG[ins.slug];
     return '<details class="card vh-ins__card' + (featured ? ' vh-ins__card--featured' : '') + '" id="ins-' + esc(ins.slug) + '" data-slug="' + esc(ins.slug) + '" data-theme="' + kickerTheme(ins.kicker) + '"' + (open ? ' open' : '') + '>' +
       '<summary class="vh-ins__sum">' +
-      '<div class="vh-ins__kicker vh-ins__kicker--' + kickerTheme(ins.kicker) + '">' +
-      (num ? '<span class="vh-ins__num">№' + num + '</span>' : '') + esc(ins.kicker) + '</div>' +
+      '<span class="vh-ins__kicker vh-ins__kicker--' + kickerTheme(ins.kicker) + '">' +
+      (num ? '<span class="vh-ins__num">№' + num + '</span>' : '') + esc(ins.kicker) + '</span>' +
       '<h2 class="vh-ins__title">' + esc(ins.title) + '</h2>' +
       '</summary><div class="vh-ins__body">' +
       (ins.tldr ? '<p class="vh-ins__tldr"><span>tl;dr</span>' + esc(ins.tldr) + '</p>' : '') +
@@ -435,8 +435,11 @@
             document.body.appendChild(a);
             a.click();
             a.remove();
-          } catch (e) { /* no-op: canvas unavailable */ }
-          btn.textContent = 'Save PNG';
+            btn.textContent = 'Save PNG';
+          } catch (e) {
+            btn.textContent = 'Couldn’t render';
+            setTimeout(function () { btn.textContent = 'Save PNG'; }, 2400);
+          }
         }, 30);
       });
     });
@@ -462,6 +465,8 @@
     var c = cv.getContext('2d');
     var F = '"Archivo","Inter",system-ui,-apple-system,"Segoe UI",sans-serif';
     var P = palette();
+    // a missing token would export solid black with no error: refuse instead
+    if (!P.void || !P.ink || !P.ink2 || !P.ember || !P.gold) throw new Error('palette');
     c.fillStyle = P.void;
     c.fillRect(0, 0, W, H);
     c.fillStyle = P.ember;

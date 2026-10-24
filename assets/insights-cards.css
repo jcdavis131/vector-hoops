@@ -11,7 +11,7 @@
 .vh-ins__card--featured{border-color:var(--accent-line)}
 .vh-ins__card[data-theme="money"]{border-top:3px solid var(--coin-text)}
 .vh-ins__card[data-theme="entity"]{border-top:3px solid var(--data-moss)}
-.vh-ins__kicker{font:700 12px/1.4 var(--font-sans);letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin:0 0 8px}
+.vh-ins__kicker{display:block;font:700 12px/1.4 var(--font-sans);letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin:0 0 8px}
 .vh-ins__kicker--money{color:var(--coin-text)}
 .vh-ins__kicker--entity{color:var(--fg-2)}
 .vh-ins__num{margin-right:.6em;color:var(--fg-3)}
@@ -27,7 +27,7 @@
 }
 .vh-ins__card[open] > .vh-ins__sum::after{content:"\2212"}
 .vh-ins__sum:hover .vh-ins__title{color:var(--accent-2)}
-.vh-ins__card:not([open]) .vh-ins__title{margin:0}
+details.vh-ins__card:not([open]) .vh-ins__title{margin:0}
 .vh-ins__body{padding-top:var(--s-2)}
 
 /* ---- the card index: every finding's title in one phone screenful ---- */
