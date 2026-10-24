@@ -22,10 +22,10 @@
 <link rel="stylesheet" href="assets/fonts.css?v=8f376b2a"/>
 <link rel="stylesheet" href="/assets/atlas.css?v=31711e9d"/>
 <link rel="stylesheet" href="/assets/shell.css?v=398d5e37"/>
-<link rel="stylesheet" href="/assets/game.css?v=3cbdceed"/>
+<link rel="stylesheet" href="/assets/game.css?v=0e919957"/>
 </head><body class="game game--play">
 <a class="skip-link" href="#main">Skip to content</a>
-<noscript><div role="alert" style="padding:16px;text-align:center">Enable JS — Vector Hoops needs JavaScript for Daily Court + Map</div></noscript>
+<noscript><div role="alert" class="noscript-note">Daily Court needs JavaScript to deal the puzzles and draw the map.</div></noscript>
 
 <nav class="site-nav" data-active="/play" aria-label="Vector Hoops site"></nav>
 <div id="main" class="main main--narrow" role="main">
@@ -35,7 +35,7 @@
     <h1 class="title-card__title" id="game-title">Find the <em>modern twin</em></h1>
     <p class="title-card__lede" id="game-subtitle">Daily Court — find each past All-Star’s modern twin. 5 puzzles, 6 tries each, the same five for everyone today.</p>
     <div class="game-status">
-      <div class="game-status__side"><span class="pill" id="puzzle-pill">P#—</span><span class="pill" id="streak-pill">streak 0</span></div>
+      <div class="game-status__side"><span class="pill" id="puzzle-pill">Court</span><span class="pill" id="streak-pill">streak 0</span></div>
       <div id="game-status-bar">
         <div class="label game-status__phase"><span id="puzzle-day-label">Today</span><span class="game-status__sep" aria-hidden="true">·</span><span id="game-phase-label">Loading court…</span></div>
         <div id="court-load-fallback" class="state state--error" hidden role="alert">
@@ -58,10 +58,10 @@
     <div class="mode-desc" id="mode-desc">Daily Court: 5 fixed past All-Stars a day. Play any order; progress saves per slot.</div>
   </div>
 
-  <div class="card" id="daily-court" style="display:none;">
+  <div class="card" id="daily-court" hidden>
     <div class="court-top">
       <div><div class="small-mono"><span id="court-mode-name">Daily Court</span> — <span id="court-day-label">Today</span></div><h2 class="hd"><span id="court-solved">0</span><span id="court-total">/5</span> solved • <span id="court-guesses">0</span> <span id="court-guesses-word">guesses</span></h2></div>
-      <div class="court-top__actions"><span class="pill" id="court-streak-pill" title="Current daily streak">🔥 streak 0</span><span class="pill" id="court-ip-badge" aria-hidden="true" hidden>Same for everyone</span><button class="chip-link" id="btn-copy-court" type="button">📋 Copy court</button></div>
+      <div class="court-top__actions"><span class="pill" id="court-streak-pill" title="Current daily streak">🔥 streak 0</span><button class="chip-link" id="btn-copy-court" type="button">📋 Copy court</button></div>
     </div>
     <div class="court-grid" id="court-grid"></div>
     <div class="lineup-bar" id="lineup-bar"></div>
@@ -72,12 +72,11 @@
     </div>
   </div>
 
-  <div id="lens-bar"></div>
-  <div id="map-wrap" class="card--void"><canvas id="sky-canvas" width="640" height="380" aria-label="12,966 player-seasons as points in a rotatable 3D stat-shape map — your guesses draw as orange rings connected by a line to the past target's bullseye, showing how close each guess landed"></canvas><div id="map-overlay"><span class="chip" id="map-fact">12,966 player-seasons • ★ target past</span><span class="chip">orange rings = your guesses • line = distance • ◎ bullseye = target</span></div><div id="map-controls"><button class="chip-link" id="btn-pause" type="button">Pause</button><button class="chip-link" id="btn-reset" type="button">Reset</button></div><div id="map-legend"><div class="label map-legend__title">Map</div><div>Drag to orbit • ◎ bullseye = past target (auto-centered)</div></div><div id="hover-tip"></div></div>
+  <div id="map-wrap" class="card--void"><div id="play-map" class="play-map" data-variant="game" role="group" aria-label="The player map: every guess lands as a ring, the mystery past All-Star is the marked point"></div></div>
 
   <!-- PACK BATTLE retired: old ?pack= links render an honest note here, not pack mode -->
-  <div class="card" id="pack-retired" style="display:none;"></div>
-  <div class="card" id="boot-error" style="display:none;"></div>
+  <div class="card" id="pack-retired" hidden></div>
+  <div class="card" id="boot-error" hidden></div>
 
   <div class="card" id="past-card">
     <div class="past-card__row">
@@ -93,7 +92,7 @@
           <h2 id="past-name" class="hd">Loading…</h2>
           <div id="past-meta" class="small-mono"></div>
           <div class="turn-indicator"><span class="turn-dot"></span><span id="turn-text">Game starts now — 6 guesses to find modern twin</span></div>
-          <div id="past-closest-hint" class="small-mono" style="margin-top:10px;text-transform:none;display:none"></div>
+          <div id="past-closest-hint" class="past-card__hint" hidden></div>
         </div>
       </div>
       <div class="past-card__actions">
@@ -104,10 +103,10 @@
   </div>
 
   <div class="card vh-truth" id="guess-card">
-    <div class="ready-banner" id="ready-banner"><div class="ready-banner__body"><h3>▶ Ready? First guess begins game</h3><p>You see past All-Star ★. Type a 2025–26 modern player below — 6 tries. Warmer/colder after each.</p></div><button class="btn btn-primary" id="btn-focus-guess" type="button">Start typing →</button></div>
+    <div class="ready-banner" id="ready-banner"><div class="ready-banner__body"><h3>▶ Ready? First guess begins game</h3><p>Type a 2025–26 player below. You get 6 tries, with warmer or colder after each.</p></div><button class="btn btn-primary" id="btn-focus-guess" type="button">Start typing →</button></div>
     <div class="answer">
-      <div class="answer__head"><label class="small-mono" for="guess-input">Guess modern — turn <span id="turn-count">1</span>/6 • <span id="slot-label-wrap">slot <span id="slot-label">1</span>/5</span></label><span class="pill" id="warm-label" style="display:none" role="status" aria-live="polite"></span></div>
-      <div class="suggest"><input id="guess-input" class="input" placeholder="Type modern — e.g., Wembanyama, SGA, Ant" autocomplete="off" spellcheck="false" disabled/><ul id="guess-suggest" style="display:none"></ul></div>
+      <div class="answer__head"><label class="small-mono" for="guess-input">Guess modern — turn <span id="turn-count">1</span>/6 • <span id="slot-label-wrap">slot <span id="slot-label">1</span>/5</span></label><span class="pill" id="warm-label" hidden role="status" aria-live="polite"></span></div>
+      <div class="suggest"><input id="guess-input" class="input" placeholder="Type modern — e.g., Wembanyama, SGA, Ant" autocomplete="off" spellcheck="false" disabled/><ul id="guess-suggest" hidden data-hide="attr"></ul></div>
       <p class="answer__rule guess-rule" id="guess-rule" data-served-const="guess_rule">Only players with a qualifying 2025-26 season (12+ games, 450+ minutes)</p>
     </div>
     <div class="guess-actions"><button id="guess-btn" class="btn btn-primary" type="button" disabled>Guess</button><button id="share-btn" class="btn" type="button">Share</button><button id="share-text-btn" class="btn" type="button">Copy Grid</button><button id="btn-challenge" class="btn" type="button">Challenge</button></div>
@@ -116,30 +115,29 @@
   </div>
 </div>
 
-<div id="onboarding-backdrop" class="vh-sheet-backdrop" hidden>
-  <div class="vh-sheet" role="dialog" aria-modal="true" aria-labelledby="onboard-title"><div class="vh-sheet__handle"></div>
-    <div class="vh-sheet__head"><h2 class="vh-sheet__title" id="onboard-title">How to play</h2><button class="btn btn--icon vh-sheet__close" id="btn-onboard-close" type="button" aria-label="Close">✕</button></div>
-    <div class="small-mono vh-sheet__kicker">Daily Court · one canonical ruleset</div>
+<div id="onboarding-backdrop" class="sheet__backdrop" hidden data-sheet-managed>
+  <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="onboard-title"><div class="sheet__handle"></div>
+    <div class="sheet__head"><h2 class="sheet__title" id="onboard-title">How to play</h2><button class="sheet__close" id="btn-onboard-close" type="button" aria-label="Close">✕</button></div>
     <div class="onboard-steps">
-      <div class="onboard-step"><span class="onboard-step__num">1</span><div><b>Find the modern twin</b><p>Type a 2025–26 modern player — 6 tries to name the past All-Star’s closest modern twin. Warmer/colder after each guess.</p></div></div>
-      <div class="onboard-step"><span class="onboard-step__num">2</span><div><b>Streaks</b><p>Solve 1 to keep your streak. 3+ earns Sharpshooter. All 5 is a perfect board.</p></div></div>
-      <div class="onboard-step"><span class="onboard-step__num">3</span><div><b>Same five for everyone</b><p>Daily Court deals 5 fixed past All-Stars a day, same for everyone. Refresh won’t change them — progress saves per slot.</p></div></div>
+      <div class="onboard-step"><span class="onboard-step__num">1</span><div><b>Find the modern twin</b><p>Each slot shows a past All-Star. Type a 2025–26 player: you get 6 tries to name the closest modern twin, with warmer or colder after each guess.</p></div></div>
+      <div class="onboard-step"><span class="onboard-step__num">2</span><div><b>Watch the map</b><p>Every guess lands on the map as a ring around its dot. The marked point is the mystery player; tap a 2025–26 dot to fill in that name.</p></div></div>
+      <div class="onboard-step"><span class="onboard-step__num">3</span><div><b>Streaks</b><p>Solve 1 a day to keep your streak. 3 earns Sharpshooter, all 5 is a perfect court. Refresh won’t change the five, and progress saves per slot.</p></div></div>
     </div>
-    <div class="vh-sheet__actions"><button class="btn btn-primary" id="btn-onboard-play" type="button">▶ Play Court</button><button class="btn" id="btn-onboard-random" type="button">🎲 Random</button></div>
+    <div class="sheet__actions"><button class="btn btn-primary" id="btn-onboard-play" type="button">▶ Play Court</button><button class="btn" id="btn-onboard-random" type="button">🎲 Random</button></div>
   </div>
 </div>
 
-<canvas id="confetti-canvas" class="confetti" style="display:none" aria-hidden="true"></canvas>
+<canvas id="confetti-canvas" class="confetti" hidden aria-hidden="true"></canvas>
 <script src="assets/error-boundary.js?v=8079215c"></script>
-<script src="assets/keyboard-a11y.js?v=39777a87"></script>
+<script src="assets/keyboard-a11y.js?v=e79ec37c"></script>
 <script src="assets/toast.js?v=06285043"></script>
 <script src="assets/site-nav.js?v=13e9219d" defer></script>
-<script src="assets/pwa-install.js?v=b954d9d1" defer></script><script src="assets/audio.js?v=52cfa0d8" defer></script><script type="module" src="assets/timesfm-forecast.js?v=b1376756"></script><script src="assets/pixel-avatar.js?v=6216d2ba" defer></script><script src="assets/team-logo.js?v=864a7981" defer></script><script src="assets/viral-share.js?v=cf0464c7" defer></script><script src="assets/daily-ledger.js?v=4d0840fa" defer></script><script src="assets/daily-score.js?v=1700d0af" defer></script><script src="assets/past-modern-game.js?v=730a82fc" defer></script><script src="assets/served-constants.js?v=8ba12340" defer></script><script src="/assets/twin-bands.js?v=0a191313" defer></script><script src="/assets/twin-explainer.js?v=a005619a" defer></script>
-<script src="assets/map-lenses.js?v=656e8d30" defer></script>
-<script src="assets/game-mechanics.js?v=fd94b8c0" defer></script>
-<script src="assets/play-engine.js?v=da7adc4b"></script>
+<script src="assets/pwa-install.js?v=b954d9d1" defer></script><script src="assets/audio.js?v=52cfa0d8" defer></script><script src="assets/pixel-avatar.js?v=6216d2ba" defer></script><script src="assets/team-logo.js?v=864a7981" defer></script><script src="assets/viral-share.js?v=cf0464c7" defer></script><script src="assets/daily-ledger.js?v=4d0840fa" defer></script><script src="assets/past-modern-game.js?v=730a82fc" defer></script><script src="assets/served-constants.js?v=8ba12340" defer></script><script src="/assets/twin-bands.js?v=0a191313" defer></script><script src="/assets/twin-explainer.js?v=a005619a" defer></script>
+<script src="/assets/embed-3d.js?v=9e81f90c" defer></script>
+<script src="assets/game-mechanics.js?v=b85505b7" defer></script>
+<script src="assets/play-engine.js?v=417f11c2"></script>
 <script src="assets/engagement.js?v=9afde51a" defer></script>
-<script src="assets/inline-play.js?v=b01d2319"></script>
+<script src="assets/inline-play.js?v=81a5dee8"></script>
 <!-- footer:stamped -->
 <footer class="site-footer">
   <nav class="site-footer__sitemap" aria-label="Sitemap">

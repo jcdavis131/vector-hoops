@@ -33,41 +33,45 @@
     }catch(e){}
   }
 
-  /* Visible, non-blocking select-to-copy panel for clipboard denial. */
+  /* Visible, non-blocking select-to-copy panel for clipboard denial: the kit sheet. */
   function selectToCopy(title, text){
     try{
       var old = document.getElementById('vh-p0-copy-panel');
       if (old) old.remove();
       var back = document.createElement('div');
-      back.id = 'vh-p0-copy-panel'; back.setAttribute('role', 'dialog');
-      back.setAttribute('aria-label', title);
-      back.style.cssText = 'position:fixed;inset:0;z-index:10001;background:rgba(26,21,15,.55);display:flex;align-items:center;justify-content:center;padding:20px';
+      back.id = 'vh-p0-copy-panel'; back.className = 'sheet__backdrop';
       var card = document.createElement('div');
-      card.style.cssText = 'background:#FFFDF6;color:#1A150F;border-radius:16px;padding:18px;max-width:520px;width:100%;font:14px/1.5 system-ui,-apple-system,sans-serif';
-      var h = document.createElement('b'); h.textContent = title;
-      var p = document.createElement('p');
-      p.style.cssText = 'margin:8px 0;font-size:12.5px;opacity:.8';
+      card.className = 'sheet'; card.setAttribute('role', 'dialog');
+      card.setAttribute('aria-modal', 'true'); card.setAttribute('aria-labelledby', 'vh-p0-copy-title');
+      var head = document.createElement('div'); head.className = 'sheet__head';
+      var h = document.createElement('h2'); h.className = 'sheet__title'; h.id = 'vh-p0-copy-title'; h.textContent = title;
+      head.appendChild(h);
+      var p = document.createElement('p'); p.className = 'caption';
       p.textContent = 'Copy is blocked in this browser — the text below is selected, long-press or Ctrl/Cmd-C to copy it.';
       var ta = document.createElement('textarea');
+      ta.className = 'input copy-panel__text';
       ta.value = text; ta.readOnly = true; ta.setAttribute('aria-label', 'Share text');
-      ta.style.cssText = 'width:100%;min-height:150px;box-sizing:border-box;font:12px/1.6 ui-monospace,monospace;border:1px solid #E4DCC8;border-radius:10px;padding:10px;background:#F7F3E8;color:#1A150F';
-      var row = document.createElement('div');
-      row.style.cssText = 'display:flex;gap:8px;margin-top:12px';
+      var row = document.createElement('div'); row.className = 'sheet__actions';
       var sel = document.createElement('button');
-      sel.type = 'button'; sel.textContent = 'Select all';
-      sel.style.cssText = 'flex:1;min-height:44px;border-radius:12px;border:1px solid #1A150F;background:#1A150F;color:#FFFDF6;font-weight:800;cursor:pointer';
+      sel.type = 'button'; sel.className = 'btn btn-primary'; sel.textContent = 'Select all';
       var close = document.createElement('button');
-      close.type = 'button'; close.textContent = 'Close';
-      close.style.cssText = 'flex:1;min-height:44px;border-radius:12px;border:1px solid #1A150F;background:transparent;color:#1A150F;font-weight:800;cursor:pointer';
-      var done = function(){ back.remove(); document.removeEventListener('keydown', esc, true); };
+      close.type = 'button'; close.className = 'btn'; close.textContent = 'Close';
+      var release = null, opener = document.activeElement;
+      var done = function(){
+        back.remove();
+        if (release) { release(); release = null; }
+        else { document.removeEventListener('keydown', esc, true); try{ if (opener && opener.focus) opener.focus(); }catch(e){} }
+      };
       var esc = function(e){ if (e.key === 'Escape') done(); };
       sel.addEventListener('click', function(){ ta.focus(); ta.select(); });
       close.addEventListener('click', done);
       back.addEventListener('click', function(e){ if (e.target === back) done(); });
-      document.addEventListener('keydown', esc, true);
       row.appendChild(sel); row.appendChild(close);
-      card.appendChild(h); card.appendChild(p); card.appendChild(ta); card.appendChild(row);
+      card.appendChild(head); card.appendChild(p); card.appendChild(ta); card.appendChild(row);
       back.appendChild(card); document.body.appendChild(back);
+      // play-engine.js's sheet contract: inert page, Tab wraps, Escape closes, focus returns
+      if (window.VHSheetFocus) release = window.VHSheetFocus(back, done);
+      else document.addEventListener('keydown', esc, true);
       ta.focus(); ta.select();
     }catch(e){}
   }
