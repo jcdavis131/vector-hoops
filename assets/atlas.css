@@ -434,10 +434,9 @@ p{ text-wrap: pretty; }
   box-shadow: none;
   text-decoration: none;
   cursor: pointer;
-  transition: border-color var(--dur-1) var(--ease), background var(--dur-1) var(--ease), color var(--dur-1) var(--ease), transform var(--dur-1) var(--ease);
+  transition: border-color var(--dur-1) var(--ease), background var(--dur-1) var(--ease), color var(--dur-1) var(--ease), transform var(--dur-1) var(--ease), box-shadow var(--dur-1) var(--ease);
 }
 .btn:hover, .trail-btn:hover{ border-color: var(--fg-3); background: var(--surface-2); transform: none; box-shadow: none; }
-.btn:active, .trail-btn:active{ transform: translateY(1px); box-shadow: none; }
 .btn[disabled], .btn:disabled, .trail-btn:disabled{ opacity: .45; cursor: not-allowed; }
 /* .btn-primary is defined once, in the pipe block below (one rule, one token: --pipe). */
 .btn-accent{ background: transparent; color: var(--accent-2); border-color: var(--accent-line); }
@@ -671,22 +670,54 @@ body.vh-modal-open{ overflow: hidden; overscroll-behavior: contain; }
 
 
 /* ==========================================================================
-   Motion — slow, confident, never bouncy
+   Motion — one choreography (DESIGN-DIRECTION §4 wave 3). CSS only, no library.
+   1 Arrive   the cross-document view transition below (the new page rises
+              8px in 280ms) and the <h1>, which carries view-transition-name
+              vh-title and no reveal. Nothing else moves on load but 2.
+   2 Settle   .reveal: at most four items under the h1, 80ms apart, 240ms each,
+              so the last lands at 480ms. Transform + opacity only.
+   3 Touch    .btn press = translate(2px,2px) while the 3px step shadow
+              collapses to 1px, both in --dur-1 (the blocky section below).
+              Cards never lift. The focus ring never eases (top of file).
+   4 Reward   --spring is spent once: mario-coin-pop on the streak tick, a
+              solved slot and an unlocked reward. Nothing else overshoots.
+   5 Signal   vh-live-pulse is the only loop (live dots). New rows slide in
+              (atlas-slide-in, 450ms); bars grow in (atlas-bar-grow, 700ms).
+   6 Atlas    embed-3d.js: slow turn, paused by pointer or keyboard, resumes
+              after 3s, never under reduced motion; the selection ring draws.
+   7 Reduced  the gate below covers every sheet; no file keeps its own.
    ========================================================================== */
-@keyframes atlas-rise{ from{ opacity: 0; transform: translateY(14px); } to{ opacity: 1; transform: none; } }
+@keyframes atlas-rise{ from{ opacity: 0; transform: translateY(8px); } to{ opacity: 1; transform: none; } }
 @keyframes atlas-fade{ from{ opacity: 0; } to{ opacity: 1; } }
-.reveal{ animation: atlas-rise var(--dur-3) var(--ease) both; }
-.reveal-1{ animation-delay: 80ms; } .reveal-2{ animation-delay: 180ms; } .reveal-3{ animation-delay: 280ms; }
-.reveal-4{ animation-delay: 380ms; }
+@keyframes atlas-slide-in{ from{ opacity: 0; transform: translateX(-10px); } to{ opacity: 1; transform: none; } }
+@keyframes atlas-bar-grow{ from{ transform: scaleX(0); } to{ transform: none; } }
+@keyframes atlas-bar-rise{ from{ transform: scaleY(0); } to{ transform: none; } }
+@keyframes vh-live-pulse{ 0%, 100%{ opacity: 1; } 50%{ opacity: .25; } }
+/* Arrive: cross-document view transition; timing after huashu-motion by
+   alchaincyf (MIT). The old page holds, the new one rises 8px in 280ms
+   ease-out, the nav and the h1 morph in place over the same 280ms. */
+@view-transition{ navigation: auto; }
+.site-nav{ view-transition-name: vh-nav; }
+h1{ view-transition-name: vh-title; }
+::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*){ animation-duration: 280ms; animation-timing-function: cubic-bezier(.2,0,0,1); }
+::view-transition-old(root){ animation: none; }
+::view-transition-new(root){ animation: 280ms cubic-bezier(.2,0,0,1) both vh-vt-in; }
+@keyframes vh-vt-in{ from{ opacity: 0; transform: translateY(8px); } }
+.reveal{ animation: atlas-rise 240ms var(--ease) both; }
+.reveal-1{ animation-delay: 80ms; } .reveal-2{ animation-delay: 160ms; } .reveal-3{ animation-delay: 240ms; }
 
+/* The one reduced-motion gate. `none`, not a 0.01ms run: a finished
+   `fill: both` animation is still in document.getAnimations(), and nothing
+   on the site waits for animationend/transitionend. Every resting state is
+   the un-animated one, so switching motion off never hides anything. */
 @media (prefers-reduced-motion: reduce){
   *, *::before, *::after{
-    animation-duration: .01ms !important;
-    animation-delay: 0ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: .01ms !important;
+    animation: none !important;
+    transition: none !important;
     scroll-behavior: auto !important;
   }
+  ::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*){ animation: none !important; }
+  @view-transition{ navigation: none; }
 }
 
 /* ==========================================================================
@@ -861,7 +892,7 @@ section .today-strip__links a:first-child:hover{ background: var(--pipe-deep); }
   box-shadow: 2px 2px 0 var(--block);
 }
 #streak-pill::before{ content: "★ "; color: #7A5200; }
-#streak-pill.tick{ animation: mario-coin-pop .45s var(--spring); }
+#streak-pill.tick{ animation: mario-coin-pop .38s var(--spring); }
 
 /* Progress dots: one per guess, 32px so a thumb can read them; done = a collected coin,
    current = the coin wash (seed play.html:148-150 + the coin pips below). */
@@ -920,7 +951,7 @@ section .today-strip__links a:first-child:hover{ background: var(--pipe-deep); }
 /* brick-tan divider over the court */
 #game-header .game-status-bar{ border-top-color: var(--brick); }
 
-/* lifelines are power-ups: ?-blocks with a hard shadow and a springy press.
+/* lifelines are power-ups: ?-blocks with a hard shadow and the kit press.
    Kit name: .lifeline (a .btn modifier); the #lifelines-bar .btn-lifeline
    selector is game-mechanics.js's current markup and shares every rule. */
 .btn.lifeline, #lifelines-bar .btn-lifeline{
@@ -929,7 +960,7 @@ section .today-strip__links a:first-child:hover{ background: var(--pipe-deep); }
   border-radius: 6px;
   box-shadow: 3px 3px 0 var(--block);
   color: var(--qblock-ink);
-  transition: transform .18s var(--spring), box-shadow .18s var(--spring);
+  transition: transform var(--dur-1) var(--ease), box-shadow var(--dur-1) var(--ease);
 }
 .btn.lifeline::before, #lifelines-bar .btn-lifeline::before{
   content: "?";
@@ -946,7 +977,7 @@ section .today-strip__links a:first-child:hover{ background: var(--pipe-deep); }
   box-shadow: 4px 4px 0 var(--block);
 }
 .btn.lifeline:active:not(:disabled), #lifelines-bar .btn-lifeline:active:not(:disabled){
-  transform: translate(2px,2px) scale(.98);
+  transform: translate(2px,2px);
   box-shadow: 1px 1px 0 var(--block);
 }
 .btn.lifeline:disabled, #lifelines-bar .btn-lifeline:disabled{
@@ -954,15 +985,6 @@ section .today-strip__links a:first-child:hover{ background: var(--pipe-deep); }
   box-shadow: none;
 }
 .lifeline__cost, #lifelines-bar .btn-lifeline .ll-cost{ color: var(--qblock-ink); opacity: .75; }
-
-/* ---- the lift respects reduced motion, explicitly ---- */
-@media (prefers-reduced-motion: reduce){
-  #streak-pill.tick, .court-card.is-solved, .reward.is-unlocked{ animation: none; }
-  .btn.lifeline, #lifelines-bar .btn-lifeline{ transition: none; }
-  .btn.lifeline:hover:not(:disabled), .btn.lifeline:active:not(:disabled),
-  #lifelines-bar .btn-lifeline:hover:not(:disabled),
-  #lifelines-bar .btn-lifeline:active:not(:disabled){ transform: none; }
-}
 
 /* ---- print stays ink on paper ---- */
 @media print{
@@ -1207,7 +1229,6 @@ details.card--collapsible > summary:focus-visible{ outline: 2px solid var(--focu
 .skeleton{
   display: block; width: 100%; max-width: 240px; height: 12px; border-radius: 2px;
   background: var(--surface-2);
-  animation: atlas-fade 1.2s var(--ease) infinite alternate;
 }
 .skeleton--s{ max-width: 48px; }
 .skeleton--l{ max-width: 100%; }

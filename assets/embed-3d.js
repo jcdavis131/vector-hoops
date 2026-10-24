@@ -232,6 +232,7 @@
       proj: projection, highlight: new Set(), selectedId: null,
       dim: null, rings: [], groups: [], groupOf: null,
       autoRotate: !reduceMotion, idleTimer: 0, raf: 0,
+      now: 0, selT0: 0, /* frame clock; when the selection ring began to draw */
       sx: null, sy: null, sz: null, /* screen coords of last frame */
       error: null, destroyed: false
     };
@@ -500,6 +501,7 @@
     function setSelected(id) {
       var next = (id == null || id < 0) ? null : id;
       var keyChanged = (next == null) !== (state.selectedId == null);
+      if (next != null && next !== state.selectedId) state.selT0 = -1; /* the ring draws from the next frame */
       state.selectedId = next;
       if (keyChanged) renderLegend();
     }
@@ -622,7 +624,7 @@
       else if (e.key === '+' || e.key === '=') state.dist = Math.max(1.6, state.dist * 0.9);
       else if (e.key === '-' || e.key === '_') state.dist = Math.min(8, state.dist * 1.1);
       else handled = false;
-      if (handled) { e.preventDefault(); pauseRotate(false); }
+      if (handled) { e.preventDefault(); pauseRotate(true); }
     });
 
     canvas.addEventListener('pointerdown', function (e) {
@@ -719,15 +721,25 @@
       tip.style.top = (e.clientY - r.top - 10) + 'px';
     }
 
+    /* ring: true = a full ring; a number in (0,1] = the share of it drawn so
+       far, clockwise from 12 o'clock (the selection ring draws, never pulses). */
     function dot(x, y, size, ring) {
       ctx.beginPath();
       ctx.arc(x, y, size / 2, 0, 6.2832);
       ctx.fill();
       if (ring) {
+        var sweep = ring === true ? 1 : ring;
         ctx.beginPath();
-        ctx.arc(x, y, size / 2 + 3, 0, 6.2832);
+        ctx.arc(x, y, size / 2 + 3, -1.5708, -1.5708 + 6.2832 * sweep);
         ctx.stroke();
       }
+    }
+    /* Selection ring progress: 320ms (--dur-2) ease-out; whole at once under reduced motion. */
+    function ringDraw() {
+      if (reduceMotion) return 1;
+      if (state.selT0 < 0) state.selT0 = state.now;
+      var k = Math.max(0, Math.min(1, (state.now - state.selT0) / 320));
+      return Math.max(0.02, 1 - Math.pow(1 - k, 3));
     }
 
     /* ---- frame loop: one depth-sorted pass, fillStyle batched by bucket ---- */
@@ -737,6 +749,7 @@
       if (state.destroyed) return;
       var dt = Math.min(0.05, (t - lastT) / 1000 || 0.016);
       lastT = t;
+      if (typeof t === 'number' && t === t) state.now = t;
       if (state.autoRotate && state.loaded) state.yaw += dt * 0.12;
       if (state.loaded) draw();
       state.raf = requestAnimationFrame(frame);
@@ -795,7 +808,7 @@
           if (si !== undefined) {
             ctx.fillStyle = hl;
             ctx.strokeStyle = hl;
-            dot(sx[si], syy[si], 3 + sz[si] * 2.5, true);
+            dot(sx[si], syy[si], 3 + sz[si] * 2.5, ringDraw());
           }
         }
       }

@@ -57,7 +57,7 @@ function makeCtx(log) {
   const ctx = { fillStyle: '', strokeStyle: '', globalAlpha: 1, lineWidth: 1 };
   for (const n of ['setTransform', 'clearRect', 'beginPath', 'closePath', 'moveTo', 'lineTo', 'save', 'restore']) ctx[n] = () => {};
   ctx.fillRect = (x, y, w, h) => log.push({ op: 'fillRect', fill: ctx.fillStyle, alpha: ctx.globalAlpha, x, y, w, h });
-  ctx.arc = (x, y, r) => log.push({ op: 'arc', x, y, r, fill: ctx.fillStyle, stroke: ctx.strokeStyle });
+  ctx.arc = (x, y, r, a0, a1) => log.push({ op: 'arc', x, y, r, a0, a1, fill: ctx.fillStyle, stroke: ctx.strokeStyle });
   ctx.fill = () => log.push({ op: 'fill', fill: ctx.fillStyle });
   ctx.dash = [];
   ctx.setLineDash = (d) => { ctx.dash = Array.from(d); };
@@ -81,7 +81,7 @@ function fixture() {
 const LIGHT = { '--void': '#1E2022', '--void-ink': '#D8DCD8', '--void-ink-2': '#A7B0BC', '--void-accent': '#FF7A5C',
   '--accent': '#E0483B', '--fg-3': '#6E6E66', '--data-terra': '#A05A38', '--team-a': '#123456' };
 
-function env({ tokens = LIGHT, reduce = false, coarse = false, fetchImpl = null, doc = fixture() } = {}) {
+function env({ tokens = LIGHT, reduce = false, coarse = false, fetchImpl = null, doc = fixture(), timeout = setTimeout } = {}) {
   const log = [];
   const raf = [];
   const mq = {};
@@ -107,7 +107,7 @@ function env({ tokens = LIGHT, reduce = false, coarse = false, fetchImpl = null,
     getComputedStyle(node) { assert.equal(node, documentElement); return { getPropertyValue: (k) => vars[k] || '' }; },
     requestAnimationFrame(cb) { raf.push(cb); return raf.length; },
     cancelAnimationFrame() {},
-    setTimeout, clearTimeout,
+    setTimeout: timeout, clearTimeout,
     fetch(url, init) {
       fetches.push(url);
       if (fetchImpl) return fetchImpl(url, init, fetches.length);
@@ -412,6 +412,50 @@ test('reduced motion freezes the turn; touch never restarts it', async () => {
   assert.equal(h.snapshot().autoRotate, false);
   const e2 = env();
   assert.equal(e2.Embed3D.mount(e2.host).snapshot().autoRotate, true);
+});
+
+test('wave 3: pointer and keyboard pause the turn, both resume after 3 s', async () => {
+  const timers = [];
+  const e = env({ timeout: (fn, ms) => { timers.push({ fn, ms }); return timers.length; } });
+  const h = e.Embed3D.mount(e.host);
+  await e.settle(); await e.settle();
+  const canvas = e.host.q('embed3d__canvas');
+  canvas.dispatch('keydown', { key: 'ArrowLeft', preventDefault() {} });
+  assert.equal(h.snapshot().autoRotate, false);
+  const kb = timers.filter((t) => t.ms === 3000);
+  assert.equal(kb.length, 1, 'keyboard schedules the resume');
+  kb[0].fn();
+  assert.equal(h.snapshot().autoRotate, true);
+  canvas.dispatch('pointerdown', { pointerId: 1, clientX: 10, clientY: 10 });
+  assert.equal(h.snapshot().autoRotate, false);
+  canvas.dispatch('pointerup', { pointerId: 1, clientX: 10, clientY: 10 });
+  const pt = timers.filter((t) => t.ms === 3000);
+  assert.equal(pt.length, 2, 'pointer release schedules the resume');
+  pt[1].fn();
+  assert.equal(h.snapshot().autoRotate, true);
+});
+
+test('wave 3: the selection ring draws clockwise over 320 ms; whole at once under reduced motion', async () => {
+  const ringOf = (e) => e.log.filter((r) => r.op === 'arc' && r.a0 !== 0);
+  const e = env();
+  const h = e.Embed3D.mount(e.host, { variant: 'game' });
+  await e.settle(); await e.settle();
+  e.pump();
+  h.setSelected(0);
+  e.log.length = 0; e.pump();               // t = 16: the ring starts
+  let ring = ringOf(e);
+  assert.equal(ring.length, 1);
+  assert.ok(ring[0].a1 - ring[0].a0 < 0.5, 'just started: ' + JSON.stringify(ring[0]));
+  e.log.length = 0; e.pump(25);             // t up to 400 ms after the start
+  ring = ringOf(e).pop();
+  assert.ok(Math.abs(ring.a1 - ring.a0 - 6.2832) < 1e-3, 'drawn whole: ' + JSON.stringify(ring));
+  const r = env({ reduce: true });
+  const hr = r.Embed3D.mount(r.host, { variant: 'game' });
+  await r.settle(); await r.settle();
+  hr.setSelected(0);
+  r.log.length = 0; r.pump();
+  ring = ringOf(r);
+  assert.ok(Math.abs(ring[0].a1 - ring[0].a0 - 6.2832) < 1e-3, 'reduced motion: whole at once');
 });
 
 test('tap selects through onSelect with the point id', async () => {

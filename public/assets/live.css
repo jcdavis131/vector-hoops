@@ -16,10 +16,7 @@
 .live-head .title-card__actions{ margin-top: 0; }
 .live-dot{ display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: var(--fg-3); flex: 0 0 auto; }
 .live-root.is-live .live-dot{ background: var(--accent); }
-@media (prefers-reduced-motion: no-preference){
-  .live-root.is-live .live-dot{ animation: live-pulse 1.6s ease-in-out infinite; }
-}
-@keyframes live-pulse{ 0%,100%{ opacity: 1; transform: scale(1); } 50%{ opacity: .3; transform: scale(.72); } }
+.live-root.is-live .live-dot{ animation: vh-live-pulse 1.4s infinite; }
 
 /* ---- day navigation + the game strip ---- */
 .daynav{ display: flex; flex-direction: column; gap: var(--s-2); min-width: 0; }
@@ -106,7 +103,10 @@ details.method p{ margin: 0 0 var(--s-2); }
 .qbars{ display: flex; gap: 8px; margin-top: 10px; align-items: flex-end; }
 .qbar{ flex: 1; text-align: center; }
 .qbwrap{ display: flex; gap: 3px; align-items: flex-end; justify-content: center; height: 64px; }
-.qb{ width: 16px; min-height: 3px; border-radius: 3px 3px 0 0; }
+.qb{ width: 16px; min-height: 3px; border-radius: 3px 3px 0 0; transform-origin: 50% 100%; }
+/* bars grow in once per page view; live.js sets data-grown after the first
+   paint, so the 30 s refresh and the timeline scrub redraw without regrowing */
+.qbars:not([data-grown]) .qb{ animation: atlas-bar-rise 700ms var(--ease) both; }
 .qb--a{ background: var(--team-a, var(--fg-3)); }
 .qb--h{ background: var(--team-h, var(--fg)); }
 .qbar .qv, .qbar .ql{ font-family: var(--font-code); font-size: var(--t-xs); color: var(--fg-2); }
@@ -116,8 +116,7 @@ details.method p{ margin: 0 0 var(--s-2); }
 svg.shot{ display: block; width: 100%; height: auto; color: var(--fg); background: var(--surface-2); border: 1px solid var(--line); border-radius: var(--radius); }
 svg.shot .court-paint{ fill: var(--surface); }
 svg.shot .annot{ font-family: var(--font-code); fill: var(--fg-2); }
-@media (prefers-reduced-motion: no-preference){ svg.shot .shot-dot{ animation: live-pop .35s ease both; } }
-@keyframes live-pop{ from{ opacity: 0; } to{ opacity: 1; } }
+svg.shot .shot-dot{ animation: atlas-fade 350ms var(--ease) both; }
 .zone-stats{ display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin-top: 10px; }
 .zone{ padding: 8px; text-align: center; background: var(--surface-2); border: 1px solid var(--line); border-radius: var(--radius); }
 .zone .zl{ font-family: var(--font-display); font-size: var(--t-xs); font-weight: 700; letter-spacing: .1em; color: var(--fg-2); }
@@ -135,7 +134,8 @@ svg.shot .annot{ font-family: var(--font-code); fill: var(--fg-2); }
 .rrow{ display: flex; align-items: center; gap: 8px; margin-top: 5px; }
 .rrow .who{ flex: 0 0 84px; font-size: var(--t-xs); font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .rrow .bar{ flex: 1; height: 11px; background: var(--surface-2); border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
-.rrow .fill{ height: 100%; border-radius: 5px; }
+.rrow .fill{ height: 100%; border-radius: 5px; transform-origin: 0 50%; }
+#ghosts:not([data-grown]) .fill{ animation: atlas-bar-grow 700ms var(--ease) both; }
 .fill--live{ background: var(--fg); }
 .fill--ghost{ background: var(--accent); }
 .rrow .val{ flex: 0 0 60px; text-align: right; font-family: var(--font-code); font-size: var(--t-xs); color: var(--fg-2); font-variant-numeric: tabular-nums; }
@@ -162,10 +162,7 @@ svg.shot .annot{ font-family: var(--font-code); fill: var(--fg-2); }
 .plays .pc{ flex: 0 0 64px; font-family: var(--font-code); font-size: var(--t-xs); color: var(--fg-2); }
 .plays .sc{ margin-left: auto; white-space: nowrap; font-family: var(--font-code); font-size: var(--t-xs); color: var(--fg-2); font-variant-numeric: tabular-nums; }
 .plays li.score b{ color: var(--fg); }
-@media (prefers-reduced-motion: no-preference){
-  .plays li.fresh, .ms-item.fresh{ animation: live-slide .45s ease both; }
-}
-@keyframes live-slide{ from{ opacity: 0; transform: translateX(-10px); } to{ opacity: 1; transform: none; } }
+.plays li.fresh, .ms-item.fresh{ animation: atlas-slide-in 450ms var(--ease) both; }
 
 .leaders{ display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
 .lcol h3{ margin: 0 0 4px; font-size: var(--t-sm); letter-spacing: .06em; }

@@ -12,15 +12,12 @@
 :where(.game) .btn-row{ display: flex; flex-wrap: wrap; gap: var(--s-2); margin-top: var(--s-3); }
 :where(.game) .btn-row .btn{ flex: 1 1 120px; }
 :where(.game) .bar{ display: block; height: 4px; margin-top: 6px; border-radius: 999px; background: var(--surface-2); overflow: hidden; }
-:where(.game) .bar > i{ display: block; height: 100%; background: var(--accent); transition: width .7s var(--ease); }
+:where(.game) .bar > i{ display: block; height: 100%; background: var(--accent); transform-origin: 0 50%; animation: atlas-bar-grow 700ms var(--ease) both; }
 :where(.game) kbd{ padding: 1px 6px; border: 1px solid var(--line-2); border-radius: 4px; background: var(--surface-2); font-weight: 700; }
 /* the error card's heading reads as the kit state title */
 :where(.game) .state--error > h2{ margin: 0; }
 :where(.game) .state--error > p{ margin: 0; }
 :where(.game) .game-noscript{ margin: 0; padding: var(--s-4); text-align: center; }
-@media (prefers-reduced-motion: reduce){
-  :where(.game) .bar > i{ transition: none; }
-}
 
 /* ==========================================================================
    /play: Daily Court
@@ -133,8 +130,7 @@
 :where(.game--play) #boot-error .state{ min-height: 0; }
 :where(.game--play) .noscript-note{ padding: var(--s-4); text-align: center; }
 :where(.game--play) .turn-indicator{ display: flex; align-items: center; gap: var(--s-2); margin-top: 10px; font-size: var(--t-sm); font-weight: 600; }
-:where(.game--play) .turn-dot{ width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 3px var(--accent-wash); animation: game-pulse 1.6s infinite; }
-@keyframes game-pulse{ 0%, 100%{ transform: scale(1); } 50%{ transform: scale(1.18); } }
+:where(.game--play) .turn-dot{ width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 3px var(--accent-wash); }
 
 /* the guess card */
 :where(.game--play) .vh-truth{ border-inline-start: 3px solid var(--accent); }  /* embedding truth: solid marker */
@@ -210,14 +206,14 @@
 :where(.game--play) .twin-band__num{ font-size: .92em; opacity: .75; font-variant-numeric: tabular-nums; }
 :where(.game--play) .twin-band__label{ opacity: .7; }
 
-/* game feel: entrances, pops, shakes (the reward overshoot is atlas.css's) */
-@keyframes game-row-in{ from{ opacity: 0; transform: translateY(10px) scale(.985); } to{ opacity: 1; transform: none; } }
-@keyframes game-pop{ 0%{ transform: scale(.8); } 55%{ transform: scale(1.1); } 100%{ transform: scale(1); } }
-@keyframes game-card-in{ from{ opacity: 0; transform: translateY(12px); } to{ opacity: 1; transform: none; } }
+/* game feel on atlas.css's choreography: a new guess row slides in (signal),
+   the warm/cold word and the result card rise without overshoot (the one
+   overshoot is the reward's), a rejected guess shakes once (the only
+   error signal, 250 ms, transform only) */
 @keyframes game-shake{ 0%, 100%{ transform: translateX(0); } 25%{ transform: translateX(-5px); } 75%{ transform: translateX(5px); } }
-:where(.game--play) .guess-row.is-new{ animation: game-row-in .38s var(--ease); }
-:where(.game--play) #warm-label.pop{ animation: game-pop .32s var(--ease); }
-:where(.game--play) #result .card{ animation: game-card-in .4s var(--ease); }
+:where(.game--play) .guess-row.is-new{ animation: atlas-slide-in 450ms var(--ease) both; }
+:where(.game--play) #warm-label.pop{ animation: atlas-rise var(--dur-1) var(--ease) both; }
+:where(.game--play) #result .card{ animation: atlas-rise var(--dur-2) var(--ease) both; }
 :where(.game--play) #guess-input.shake{ animation: game-shake .25s var(--ease); }
 :where(.game--play) .confetti{ position: fixed; inset: 0; z-index: 98; pointer-events: none; }
 
@@ -244,13 +240,6 @@
   /* three equal segments in one joined row; a long label wraps inside its own segment */
   :where(.game--play) #mode-tabs{ display: flex; width: 100%; flex-wrap: nowrap; }
   :where(.game--play) #mode-tabs > button{ flex: 1 1 0; min-width: 0; padding: 6px 8px; letter-spacing: .06em; white-space: normal; text-align: center; line-height: 1.2; }
-}
-@media (prefers-reduced-motion: reduce){
-  :where(.game--play) .turn-dot,
-  :where(.game--play) .guess-row.is-new,
-  :where(.game--play) #result .card,
-  :where(.game--play) #warm-label.pop,
-  :where(.game--play) #guess-input.shake{ animation: none; }
 }
 
 /* ==========================================================================

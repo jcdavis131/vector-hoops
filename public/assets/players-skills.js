@@ -671,9 +671,6 @@
         if (!ORDER.length) return;
         var slug = ORDER[Math.floor(Math.random()*ORDER.length)];
         pickPlayer(slug);
-        if (els.ppShell) {
-          els.ppShell.animate([{transform:'rotate(-.6deg) scale(.98)'},{transform:'rotate(0) scale(1)'}],{duration:220,easing:'cubic-bezier(.2,.8,.2,1)'});
-        }
       });
     }
     if (els.ppFeatured) {
@@ -681,7 +678,7 @@
         var card = ev.target.closest('[data-slug]');
         if (!card) return;
         pickPlayer(card.getAttribute('data-slug'));
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        window.scrollTo({ top: 0, behavior:(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth') });
       });
     }
   }

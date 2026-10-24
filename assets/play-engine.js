@@ -460,7 +460,7 @@
             G.guesses = loadGuesses();
             try{ VHPastModern.state().guesses=G.guesses.slice(); }catch{}
             renderPast(); renderGuesses(); renderDailyCourt(); updateStatusBar(); syncMap();
-            window.scrollTo({top: $('#past-card').offsetTop-20, behavior:'smooth'});
+            window.scrollTo({top: $('#past-card').offsetTop-20, behavior:(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth')});
           }
         });
       });
@@ -755,9 +755,9 @@
         if(!el) return;
         try{ if(el.hidden){ el.hidden=false; renderDailyCourt(); } }catch{}
         const y=el.getBoundingClientRect().top + window.pageYOffset - 10;
-        window.scrollTo({top:y, behavior:'smooth'});
+        window.scrollTo({top:y, behavior:(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth')});
         // fallback
-        setTimeout(()=>{ try{ el.scrollIntoView({behavior:'smooth', block:'start'}); }catch{} }, 50);
+        setTimeout(()=>{ try{ el.scrollIntoView({behavior:(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'), block:'start'}); }catch{} }, 50);
       }); }
     const hintEl=$('#past-closest-hint'); if(hintEl&&closest){ hintEl.hidden=false; hintEl.textContent=`Answer: ${closest.entry.n} ${(closest.sim*100).toFixed(0)}% — ${won?'won':'over'}`; }
     syncMap(); updateStatusBar(); renderDailyCourt();
@@ -1075,7 +1075,7 @@
     backdrop?.addEventListener('click', e=>{ if(e.target===backdrop) closeOnboard(); });
     /* Panel v3 G6: Escape dismisses the info sheet (sheetFocus owns the key while it is open). */
 
-    $('#btn-focus-guess')?.addEventListener('click', ()=>{ $('#guess-input')?.focus(); window.scrollTo({top: $('#guess-card').offsetTop-20, behavior:'smooth'}); });
+    $('#btn-focus-guess')?.addEventListener('click', ()=>{ $('#guess-input')?.focus(); window.scrollTo({top: $('#guess-card').offsetTop-20, behavior:(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth')}); });
     $('#guess-btn')?.addEventListener('click', ()=>{ if(typeof doGuess==='function') doGuess(); });
     $('#guess-input')?.addEventListener('keydown', e=>{ if(e.key==='Enter'){ e.preventDefault(); if(typeof doGuess==='function') doGuess(); } });
     // grid mode: tiles call doGuess(name) directly

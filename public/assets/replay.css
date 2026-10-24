@@ -61,8 +61,7 @@
 .rp-now{ margin: 10px 0 0; min-height: 1.4em; font-family: var(--font-code); font-size: var(--t-sm); color: var(--fg); }
 .rp-live{ gap: 6px; }
 .rp-live .dot{ width: 8px; height: 8px; border-radius: 50%; background: currentColor; }
-@media (prefers-reduced-motion: no-preference){ .rp-live[aria-pressed="true"] .dot{ animation: rp-pulse 1.4s ease-in-out infinite; } }
-@keyframes rp-pulse{ 50%{ opacity: .25; } }
+.rp-live[aria-pressed="true"] .dot{ animation: vh-live-pulse 1.4s infinite; }
 
 /* ---- side plates ---- */
 .rp-side{ display: grid; gap: 14px; min-width: 0; }

@@ -184,7 +184,7 @@
   letter-spacing: .08em; text-transform: uppercase; color: var(--fg);
 }
 .pp-skill__track{ width: 100%; min-width: 0; height: 8px; background: var(--surface-2); border-radius: 999px; overflow: hidden; }
-.pp-skill__fill{ height: 100%; border-radius: 999px; transition: width var(--dur-2) var(--ease); }
+.pp-skill__fill{ height: 100%; border-radius: 999px; transform-origin: 0 50%; animation: atlas-bar-grow 700ms var(--ease) both; }
 .pp-skill__foot{ display: flex; justify-content: space-between; font-size: var(--t-xs); color: var(--fg-3); }
 
 /* grade pills: the number in mono, the tier in the fill */

@@ -119,7 +119,7 @@
     if (layer) layer.classList.toggle('has-selection', selectedRegion >= 0);
     renderPanel(selectedRegion);
     if (selectedRegion >= 0 && panel && !panel.hidden) {
-      try { panel.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); } catch (e) {}
+      try { panel.scrollIntoView({ block: 'nearest', behavior:(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth') }); } catch (e) {}
     }
   }
 

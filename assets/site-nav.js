@@ -117,7 +117,6 @@
     wireDrawer(nav);
     markLive(nav);
     wireSound(nav);
-    motion();
 
     // visit — Owner Q: which inbound refs actually bring returning players?
     // data-mounted guards double-fire; vh-analytics.js is a no-op until a
@@ -245,25 +244,6 @@
     b.addEventListener('click', function () { toggle(!on); });
     global.VHSiteNav = global.VHSiteNav || {};
     global.VHSiteNav.setSound = toggle;
-  }
-
-  // reveal sections/plates below the fold (visible without JS and under reduced motion)
-  function motion() {
-    if (!global.IntersectionObserver || (global.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches)) return;
-    var vh = global.innerHeight || 800, n = 0, io = new IntersectionObserver(function (es) {
-      var k = 0;
-      es.forEach(function (e) {
-        if (!e.isIntersecting) return;
-        e.target.style.transitionDelay = Math.min(k++, 5) * 50 + 'ms';
-        e.target.classList.add('vh-in'); io.unobserve(e.target);
-        e.target.addEventListener('transitionend', function () { this.style.transitionDelay = ''; }, { once: true });
-      });
-    });
-    Array.prototype.forEach.call(document.querySelectorAll('section, .plate'), function (el) {
-      if (n > 40 || el.closest('.site-nav') || (el.parentElement && el.parentElement.closest('.vh-rv')) || (el.tagName === 'SECTION' && el.querySelector('.plate, section'))) return;
-      var r = el.getBoundingClientRect();
-      if (r.height && r.top > vh) { el.classList.add('vh-rv'); io.observe(el); n++; }
-    });
   }
 
   if (document.readyState === 'loading') {

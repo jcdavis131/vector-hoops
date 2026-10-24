@@ -219,7 +219,7 @@
     var sc = $('#mh-share-card'); if (sc) sc.addEventListener('click', shareCard);
     var cl = $('#mh-copy-link'); if (cl) cl.addEventListener('click', function () { copyText(shareURL(taps, stars), 'Link copied — same map, same stars.'); });
     var ct = $('#mh-copy-text'); if (ct) ct.addEventListener('click', function () { copyText(shareText(taps, stars, pct), 'Result copied.'); });
-    if (!state.restoring) el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    if (!state.restoring) el.scrollIntoView({ behavior:(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'), block: 'nearest' });
   }
   function shareURL(taps, stars) {
     return SITE + '/map-guess?day=' + state.day + '&mode=' + state.mode + '&r=' + taps + '&s=' + stars;
