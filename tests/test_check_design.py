@@ -330,6 +330,20 @@ def test_detector_stays_quiet_on_clean_shape(tmp_path: Path, did: str, mutate: M
     assert hits(write_site(tmp_path, files), did) == []
 
 
+def test_d2_noindex_page_needs_no_canonical_or_og_url(tmp_path: Path) -> None:
+    files = clean_site()
+    robots = '<meta name="robots" content="noindex"/>'
+    files["play.html"] = page("/play", "Play", canonical=False, extra=robots).replace(
+        f'<meta property="og:url" content="{cd.SITE_HOST}/play"/>\n', ""
+    )
+    assert "og:url" not in files["play.html"]
+    assert hits(write_site(tmp_path, files), "D2") == []
+    # without the robots meta the same head is two hits
+    files["play.html"] = files["play.html"].replace(robots, "")
+    got = hits(write_site(tmp_path / "indexed", files), "D2")
+    assert any("lacks canonical" in h for h in got) and any("lacks og:url" in h for h in got)
+
+
 def test_d19_reports_a_failing_ledger_check(tmp_path: Path) -> None:
     root = write_site(tmp_path, clean_site())
     assert hits(root, "D19", LEDGER_OK) == []

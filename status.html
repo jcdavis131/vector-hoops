@@ -6,13 +6,11 @@
 <title>Status — Vector Hoops</title>
 <meta name="description" content="Live operational status for Vector Hoops: site, data freshness, model serving, and incident history. Every number carries its as-of."/>
 <meta name="robots" content="noindex"/>
-<link rel="canonical" href="https://hoops.dumbmodel.com/status"/>
 <meta name="color-scheme" content="light dark"/>
 <meta name="theme-color" content="#FCFBF7" media="(prefers-color-scheme: light)"/>
 <meta name="theme-color" content="#0F1114" media="(prefers-color-scheme: dark)"/>
 <meta property="og:type" content="website"/>
 <meta property="og:site_name" content="Vector Hoops"/>
-<meta property="og:url" content="https://hoops.dumbmodel.com/status"/>
 <meta property="og:title" content="Status — Vector Hoops"/>
 <meta property="og:description" content="Live operational status for Vector Hoops: site, data freshness, model serving, and incident history. Every number carries its as-of."/>
 <meta property="og:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png"/>
@@ -30,27 +28,28 @@
 <link rel="stylesheet" href="/assets/atlas.css?v=31711e9d"/>
 <link rel="stylesheet" href="/assets/shell.css?v=398d5e37"/>
 <style>
-:root{ --card: var(--surface); --muted: var(--fg-3); --line-1: var(--line); } /* this page's names for the atlas tokens */
 .st{ max-width: 880px; margin: 0 auto; padding: 32px 20px 64px; }
 .st__banner{ display:flex; gap:14px; align-items:center; border:1px solid var(--line-2);
-  border-radius:14px; padding:18px 20px; background:var(--card); margin:22px 0 26px; }
+  border-radius:var(--radius-xl); padding:18px 20px; background:var(--surface); margin:22px 0 26px; }
 .st__dot{ width:14px; height:14px; border-radius:50%; flex:none; }
-.st__dot--ok{ background:#2e9e5b; box-shadow:0 0 0 5px rgba(46,158,91,.18); }
-.st__dot--warn{ background:#d9931e; box-shadow:0 0 0 5px rgba(217,147,30,.18); }
-.st__dot--bad{ background:#d64545; box-shadow:0 0 0 5px rgba(214,69,69,.18); }
+.st__dot--ok{ background:var(--ok); box-shadow:0 0 0 5px color-mix(in srgb, var(--ok) 18%, transparent); }
+.st__dot--warn{ background:var(--qblock-2); box-shadow:0 0 0 5px color-mix(in srgb, var(--qblock-2) 18%, transparent); }
+.st__dot--bad{ background:var(--bad); box-shadow:0 0 0 5px color-mix(in srgb, var(--bad) 18%, transparent); }
 .st__grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:14px; }
-.st__card{ border:1px solid var(--line-2); border-radius:14px; padding:16px 18px; background:var(--card); }
-.st__card h2{ font-size:13px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); margin:0 0 10px; }
-.st__row{ display:flex; justify-content:space-between; gap:12px; padding:6px 0; border-top:1px dashed var(--line-1); font-size:14px; }
+.st__card{ border:1px solid var(--line-2); border-radius:var(--radius-xl); padding:16px 18px; background:var(--surface); min-width:0; }
+.st__card h2{ font-size:13px; letter-spacing:.08em; text-transform:uppercase; color:var(--fg-3); margin:0 0 10px; }
+.st__row{ display:flex; justify-content:space-between; gap:12px; padding:6px 0; border-top:1px dashed var(--line); font-size:14px; }
 .st__row:first-of-type{ border-top:0; }
-.st__k{ color:var(--muted); }
-.st__v{ text-align:right; font-variant-numeric:tabular-nums; }
-.st__pill{ display:inline-block; padding:2px 10px; border-radius:999px; font-size:12px; font-weight:600; }
-.st__pill--ok{ background:rgba(46,158,91,.14); color:#2e9e5b; }
-.st__pill--warn{ background:rgba(217,147,30,.16); color:#b57a14; }
-.st__pill--bad{ background:rgba(214,69,69,.14); color:#d64545; }
-.st__pill--na{ background:var(--line-1); color:var(--muted); }
-.st__foot{ margin-top:26px; color:var(--muted); font-size:13px; }
+.st__k{ flex:none; color:var(--fg-3); }
+.st__v{ min-width:0; overflow-wrap:anywhere; text-align:right; font-variant-numeric:tabular-nums; }
+/* status pills: the state colour is the hairline and a tint; the text stays --fg so every state reads AA */
+.st__pill{ display:inline-block; padding:2px 10px; border-radius:999px; font-size:12px; font-weight:600; color:var(--fg); border:1px solid var(--line-2); }
+.st__pill--ok{ background:color-mix(in srgb, var(--ok) 16%, transparent); border-color:var(--ok); }
+.st__pill--warn{ background:color-mix(in srgb, var(--qblock-2) 18%, transparent); border-color:var(--qblock-2); }
+.st__pill--bad{ background:color-mix(in srgb, var(--bad) 14%, transparent); border-color:var(--bad); }
+.st__pill--na{ background:var(--surface-2); color:var(--fg-2); }
+.st__note{ color:var(--fg-3); font-size:13px; }
+.st__foot{ margin-top:26px; color:var(--fg-3); font-size:13px; }
 .st__foot code{ font-size:12px; }
 </style>
 </head>
@@ -69,7 +68,7 @@
     <span class="st__dot st__dot--warn" aria-hidden="true"></span>
     <div>
       <strong>Degraded — see flags below</strong><br/>
-      <span style="color:var(--muted);font-size:13px">Snapshot 2026-10-23T15:18:55+00:00 UTC</span>
+      <span class="st__note">Snapshot 2026-10-23T15:18:55+00:00 UTC</span>
     </div>
   </div>
   <div class="st__grid">
@@ -93,9 +92,9 @@
         <span class="st__v"><span class="st__pill st__pill--ok">pass</span></span></div>
       <div class="st__row"><span class="st__k">Champion</span><span class="st__v">MTNN v5 (single-model policy)</span></div>
       <ul><li><code>assets: run july-v5-a4918f09 was promoted with --force: Adopted the July 2026 v5 incumbent already served on master (git blob a4918f09). The original…</code></li><li><code>assets: export floors waived by that force, failed: [&#x27;test recall or the 14-d baseline recall is missing&#x27;]</code></li><li><code>public/assets: run july-v5-a4918f09 was promoted with --force: Adopted the July 2026 v5 incumbent already served on master (git blob a4918f09). The original…</code></li><li><code>public/assets: export floors waived by that force, failed: [&#x27;test recall or the 14-d baseline recall is missing&#x27;]</code></li></ul>
-      <p style="color:var(--muted);font-size:13px">Lineage records a forced adoption of the July 2026 v5 incumbent; the original promote.py run files are not in this repo. Find the run files or order a replacement champion — the owner&#x27;s decision.</p>
+      <p class="st__note">Lineage records a forced adoption of the July 2026 v5 incumbent; the original promote.py run files are not in this repo. Find the run files or order a replacement champion — the owner&#x27;s decision.</p>
     </section>
-    <section class="st__card" id="feed-health" aria-label="Feed health"><h2>Feed health</h2><div class="st__row"><span class="st__k">Overall</span><span class="st__v"><span class="st__pill st__pill--warn">degraded</span></span></div><div class="st__row"><span class="st__k">espn scoreboard</span><span class="st__v"><span class="st__pill st__pill--warn">stale</span></span></div><div class="st__row"><span class="st__k">Last good tick</span><span class="st__v">2026-10-20T19:03:40Z</span></div><div class="st__row"><span class="st__k">Latency</span><span class="st__v">2181 ms</span></div><div class="st__row"><span class="st__k">Consecutive failures</span><span class="st__v">0</span></div><div class="st__row"><span class="st__k">espn summary</span><span class="st__v"><span class="st__pill st__pill--warn">stale</span></span></div><div class="st__row"><span class="st__k">Last good tick</span><span class="st__v">2026-10-20T19:03:42Z</span></div><div class="st__row"><span class="st__k">Latency</span><span class="st__v">1859 ms</span></div><div class="st__row"><span class="st__k">Consecutive failures</span><span class="st__v">0</span></div><div class="st__row"><span class="st__k">espn teams</span><span class="st__v"><span class="st__pill st__pill--warn">stale</span></span></div><div class="st__row"><span class="st__k">Last good tick</span><span class="st__v">2026-10-20T19:03:43Z</span></div><div class="st__row"><span class="st__k">Latency</span><span class="st__v">1489 ms</span></div><div class="st__row"><span class="st__k">Consecutive failures</span><span class="st__v">0</span></div><div class="st__row"><span class="st__k">scoreboard snapshot</span><span class="st__v"><span class="st__pill st__pill--warn">stale</span></span></div><div class="st__row"><span class="st__k">Last good tick</span><span class="st__v">2026-10-20T19:01:25Z</span></div><div class="st__row"><span class="st__k">Latency</span><span class="st__v">unknown</span></div><div class="st__row"><span class="st__k">Consecutive failures</span><span class="st__v">0</span></div><div class="st__row"><span class="st__k">season snapshot</span><span class="st__v"><span class="st__pill st__pill--warn">stale</span></span></div><div class="st__row"><span class="st__k">Last good tick</span><span class="st__v">2026-10-20T19:02:34Z</span></div><div class="st__row"><span class="st__k">Latency</span><span class="st__v">unknown</span></div><div class="st__row"><span class="st__k">Consecutive failures</span><span class="st__v">0</span></div><div class="st__row"><span class="st__k">Snapshot</span><span class="st__v">2026-10-20T19:03:43Z</span></div><p style="color:var(--muted);font-size:13px">Realtime data-plane sources: uptime, lag, last-good-tick. This card reads the last deployed snapshot — staleness here means the pipeline (not the page) is behind. A source whose last good tick is older than 120 min is flagged stale and the header drops from ok to warn. Currently stale: espn_scoreboard, espn_summary, espn_teams, scoreboard_snapshot, season_snapshot.</p></section>
+    <section class="st__card" id="feed-health" aria-label="Feed health"><h2>Feed health</h2><div class="st__row"><span class="st__k">Overall</span><span class="st__v"><span class="st__pill st__pill--warn">degraded</span></span></div><div class="st__row"><span class="st__k">espn scoreboard</span><span class="st__v"><span class="st__pill st__pill--warn">stale</span></span></div><div class="st__row"><span class="st__k">Last good tick</span><span class="st__v">2026-10-20T19:03:40Z</span></div><div class="st__row"><span class="st__k">Latency</span><span class="st__v">2181 ms</span></div><div class="st__row"><span class="st__k">Consecutive failures</span><span class="st__v">0</span></div><div class="st__row"><span class="st__k">espn summary</span><span class="st__v"><span class="st__pill st__pill--warn">stale</span></span></div><div class="st__row"><span class="st__k">Last good tick</span><span class="st__v">2026-10-20T19:03:42Z</span></div><div class="st__row"><span class="st__k">Latency</span><span class="st__v">1859 ms</span></div><div class="st__row"><span class="st__k">Consecutive failures</span><span class="st__v">0</span></div><div class="st__row"><span class="st__k">espn teams</span><span class="st__v"><span class="st__pill st__pill--warn">stale</span></span></div><div class="st__row"><span class="st__k">Last good tick</span><span class="st__v">2026-10-20T19:03:43Z</span></div><div class="st__row"><span class="st__k">Latency</span><span class="st__v">1489 ms</span></div><div class="st__row"><span class="st__k">Consecutive failures</span><span class="st__v">0</span></div><div class="st__row"><span class="st__k">scoreboard snapshot</span><span class="st__v"><span class="st__pill st__pill--warn">stale</span></span></div><div class="st__row"><span class="st__k">Last good tick</span><span class="st__v">2026-10-20T19:01:25Z</span></div><div class="st__row"><span class="st__k">Latency</span><span class="st__v">unknown</span></div><div class="st__row"><span class="st__k">Consecutive failures</span><span class="st__v">0</span></div><div class="st__row"><span class="st__k">season snapshot</span><span class="st__v"><span class="st__pill st__pill--warn">stale</span></span></div><div class="st__row"><span class="st__k">Last good tick</span><span class="st__v">2026-10-20T19:02:34Z</span></div><div class="st__row"><span class="st__k">Latency</span><span class="st__v">unknown</span></div><div class="st__row"><span class="st__k">Consecutive failures</span><span class="st__v">0</span></div><div class="st__row"><span class="st__k">Snapshot</span><span class="st__v">2026-10-20T19:03:43Z</span></div><p class="st__note">Realtime data-plane sources: uptime, lag, last-good-tick. This card reads the last deployed snapshot — staleness here means the pipeline (not the page) is behind. A source whose last good tick is older than 120 min is flagged stale and the header drops from ok to warn. Currently stale: espn_scoreboard, espn_summary, espn_teams, scoreboard_snapshot, season_snapshot.</p></section>
     <section class="st__card" aria-label="Incident history">
       <h2>Incidents</h2>
       <p>No incidents recorded.</p>

@@ -153,15 +153,9 @@ def test_insert_replace_and_lf(site: Path) -> None:
     assert ">old</footer>" not in game and game.count(sf.BEGIN) == 1
 
 
-def test_deferred_pages_are_left_alone(site: Path, capsys: pytest.CaptureFixture[str]) -> None:
-    assert "offline.html" in sf.DEFER and "index.html" not in sf.DEFER  # index stamped once #165 landed
-    before = {name: (site / name).read_bytes() for name in sf.DEFER}
-    assert sf.main(["--root", str(site)]) == 0
-    assert {name: (site / name).read_bytes() for name in sf.DEFER} == before
-    assert sf.main(["--root", str(site), "--check"]) == 0
-    out = capsys.readouterr().out
-    for name, reason in sf.DEFER.items():
-        assert f"defer {name}: {reason}" in out
+def test_no_page_is_deferred() -> None:
+    # offline.html took the shell in wave 2.7 and index.html after #165: every page gets the stamped footer now
+    assert sf.DEFER == {}
 
 
 def test_check_fails_on_drift_and_stamp_repairs(site: Path, capsys: pytest.CaptureFixture[str]) -> None:

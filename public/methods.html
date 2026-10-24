@@ -28,19 +28,17 @@
 <link rel="stylesheet" href="/assets/shell.css?v=398d5e37"/>
 <style>
 .doc{ padding-top:0; }
-.doc-toc{ display:flex; flex-wrap:wrap; justify-content:center; gap:0; border-top:1px solid var(--line); border-bottom:1px solid var(--line); max-width:980px; margin:0 auto; width:100%; }
-.doc-toc a{ display:inline-flex; gap:7px; align-items:baseline; padding:14px 12px; text-decoration:none; font-family:var(--font-display); font-size:12.5px; font-weight:600; color:var(--fg-2); transition:color var(--dur-1) var(--ease); }
-.doc-toc a:hover{ color:var(--fg); }
+.doc-toc{ display:flex; flex-wrap:wrap; justify-content:center; gap:var(--s-2); max-width:980px; margin:0 auto; width:100%; padding:var(--s-4) 0; border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+@media (max-width:640px){ .doc-toc{ flex-wrap:nowrap; justify-content:flex-start; overflow-x:auto; scroll-snap-type:x proximity; } .doc-toc .chip-link{ scroll-snap-align:start; } }
 .doc-body{ width:100%; max-width:760px; margin:var(--s-6) auto 0; }
 .doc-body section{ padding:var(--s-7) 0; border-bottom:1px solid var(--line); }
 .doc-body section:last-child{ border-bottom:0; }
 .doc-eyebrow{ font-family:var(--font-display); font-size:var(--t-2xs); font-weight:600; font-stretch:112%; letter-spacing:.24em; text-transform:uppercase; color:var(--accent); margin-bottom:12px; }
 .doc-body h2{ font-size:var(--t-xl); margin:0 0 16px; }
-.doc-body p{ font-size:16px; line-height:1.75; color:var(--fg-2); margin:0 0 16px; }
+:where(.doc-body p){ font-size:16px; line-height:1.75; color:var(--fg-2); margin:0 0 16px; }
 .doc-body a{ color:var(--fg); text-decoration-color:var(--accent-line); }
 .doc-body .data-table{ margin:8px 0 20px; }
-.doc-note{ font-size:14px !important; color:var(--fg-3) !important; }
-.doc-formula{ font-size:14px !important; line-height:1.75 !important; padding:16px 20px; border-left:2px solid var(--accent); background:var(--surface); color:var(--fg-2) !important; }
+.doc-formula{ padding:16px 20px; border-left:2px solid var(--accent); background:var(--surface); }
 .doc-defs{ display:grid; grid-template-columns:1fr 1fr; gap:0; margin:16px 0 0; border-top:1px solid var(--line); }
 .doc-defs > div{ padding:14px 0; border-bottom:1px solid var(--line); }
 .doc-defs > div:nth-child(even){ padding-left:20px; border-left:1px solid var(--line); }
@@ -52,24 +50,21 @@
 .doc-list--plain li{ padding:10px 0; border-bottom:1px solid var(--line); }
 .doc-list--plain li:last-child{ border-bottom:0; }
 @media (max-width:640px){ .doc-defs, .doc-list{ grid-template-columns:1fr; columns:1; } .doc-defs > div:nth-child(even){ padding-left:0; border-left:0; } }
-/* Stat-strip chips (130 Features / 17 Towers / …) */
-.stats-strip{ display:flex; gap:8px; overflow-x:auto; overflow-y:hidden; -webkit-overflow-scrolling:touch; scrollbar-width:none; padding:2px 0 8px; margin:0 -2px; flex-wrap:nowrap; }
-.stats-strip::-webkit-scrollbar{ display:none }
-.stats-chip{ flex:0 0 auto; white-space:nowrap; border:1px solid var(--line-2); border-radius:999px; padding:6px 12px; background:var(--surface); font-family:var(--font-code); font-size:11px; font-weight:800; min-height:32px; display:inline-flex; align-items:center; }
-.stats-chip b{ font-size:14px; margin-right:6px }
+.doc-body .stat-strip{ margin:var(--s-4) 0 0; }
 /* Words we stand by: anchor-linked pull-quotes */
-.vh-quote{ margin:0 0 var(--s-4); padding:18px 20px; border-left:3px solid var(--accent); background:var(--surface); border-radius:0 12px 12px 0; }
+.vh-quote{ margin:0 0 var(--s-4); padding:18px 20px; border-left:3px solid var(--accent); background:var(--surface); border-radius:0 var(--radius-lg) var(--radius-lg) 0; }
 .vh-quote p{ font-family:var(--font-display); font-size:clamp(18px,3.2vw,24px); line-height:1.35; color:var(--fg); margin:0 0 8px; }
 .vh-quote a.vh-quote__src{ font-size:13px; color:var(--fg-3); text-decoration:none; }
 .vh-quote a.vh-quote__src:hover{ color:var(--accent); }
 /* Research notebook card */
-.vh-researchcard{ border:1px solid var(--line-2); border-radius:16px; padding:22px; background:var(--surface); }
+.vh-researchcard{ border:1px solid var(--line-2); border-radius:var(--radius-xl); padding:22px; background:var(--surface); }
 .vh-researchcard h3{ margin:0 0 8px; font-size:20px; }
 .vh-researchcard p{ font-size:15px; }
+.doc-noscript{ padding:16px; text-align:center; }
 </style>
 </head><body>
 <a class="skip-link" href="#main">Skip to content</a>
-<noscript><div role="alert" style="padding:16px;text-align:center">Vector Hoops Methods — this page reads fully without JavaScript.</div>
+<noscript><div role="alert" class="doc-noscript">Vector Hoops Methods — this page reads fully without JavaScript.</div>
 </noscript>
 
 <nav class="site-nav" data-active="/methods" aria-label="Vector Hoops site"><noscript class="site-nav__noscript"><a href="/">Atlas</a><a href="/play">Play</a><a href="/map-guess">Map Hunt</a><a href="/live">Live</a><a href="/players">Players</a><a href="/insights">Insights</a><a href="/taxonomy">Taxonomy</a><a href="/methods">Methods</a><a href="/models/mtnn-v5">Models</a></noscript></nav>
@@ -81,7 +76,7 @@
   </header>
 
   <nav class="doc-toc" aria-label="On this page">
-    <a href="#vector-space">What does the model see?</a><a href="#the-model">How does it learn?</a><a href="#the-map">Where does the map lie?</a><a href="#archetypes">What kinds of players are there?</a><a href="#dossier">Where else does it show up?</a><a href="#insights">What do the Insights cards claim?</a><a href="#drift">How does the league change?</a><a href="#quotes">Words we stand by</a><a href="#limitations">What can&rsquo;t it do?</a>
+    <a class="chip-link" href="#vector-space">What does the model see?</a><a class="chip-link" href="#the-model">How does it learn?</a><a class="chip-link" href="#the-map">Where does the map lie?</a><a class="chip-link" href="#archetypes">What kinds of players are there?</a><a class="chip-link" href="#dossier">Where else does it show up?</a><a class="chip-link" href="#insights">What do the Insights cards claim?</a><a class="chip-link" href="#drift">How does the league change?</a><a class="chip-link" href="#quotes">Words we stand by</a><a class="chip-link" href="#limitations">What can&rsquo;t it do?</a>
   </nav>
 
   <article class="doc-body">
@@ -102,10 +97,10 @@
           <tr><td><code>PLUS_MINUS</code></td><td>On-court impact</td><td>Per 100</td></tr>
         </tbody>
       </table>
-      <p class="doc-note">Cleaning: dedupe; missing → season mean plus a mask bit <i>m</i>; percentages are shrunk toward the league average (more shots = more trust); extremes clipped.</p>
+      <p class="caption">Cleaning: dedupe; missing → season mean plus a mask bit <i>m</i>; percentages are shrunk toward the league average (more shots = more trust); extremes clipped.</p>
       <h2>The richer served model</h2>
       <p>The same 12,966 player-seasons with far more context: volume, playmaking, rebounding, defense, efficiency, shot mix, bio, tracking (2013+, masked before), form, market, roster, career, competition, team, pedigree, playoffs and honors. Each family feeds its own tower.</p>
-      <div class="stats-strip"><span class="stats-chip"><b data-fact="model_inputs">130</b>Features</span><span class="stats-chip"><b>17</b>Towers</span><span class="stats-chip"><b data-fact="seasons">30</b>Seasons</span><span class="stats-chip"><b>8</b>Types</span><span class="stats-chip"><b><span data-fact="model_dim">64</span>-d</b>L2</span></div>
+      <div class="stat-strip"><div class="stat"><b data-fact="model_inputs">130</b>Features</div><div class="stat"><b>17</b>Towers</div><div class="stat"><b data-fact="seasons">30</b>Seasons</div><div class="stat"><b>8</b>Types</div><div class="stat"><b><span data-fact="model_dim">64</span>-d</b>L2</div></div>
       <dl class="doc-defs">
         <div><dt>z-score</dt><dd>How far above the league average: 0 is average, +2 is elite.</dd></div>
         <div><dt>era-z</dt><dd>Measured against that season only.</dd></div>
@@ -124,14 +119,16 @@ Tower 17×: 2d_in→160 LN GELU → 160→32 LN + skip ×2 → 32-d (544 total)
 + season_emb 12-d → 556 → 556→256 GELU → <b>64 L2</b>
 Heads: 8 arch / 5 pos / 14 next / 18 skill towers — 12 core + 6 wide (64→16→1)
 ~224K params · ONNX 548 KB</pre>
-      <p class="doc-note">The old test was too easy — a memorizing model scored 1.0. The current test is leak-free <i>by design</i> — train and test never overlap, so the 1.0 score can&rsquo;t come back. But &ldquo;leak-free&rdquo; covers the test, not the champion: the v5 champion was promoted with its promotion gate waived, and the original run files needed to re-derive its numbers have a lineage gap, disclosed in <a href="/status">Status</a>. The full scorecard, the training commands and the promote gate live in the <a href="/research.html">research notebook</a>.</p>
+      <p class="caption">The old test was too easy — a memorizing model scored 1.0. The current test is leak-free <i>by design</i> — train and test never overlap, so the 1.0 score can&rsquo;t come back. But &ldquo;leak-free&rdquo; covers the test, not the champion: the v5 champion was promoted with its promotion gate waived, and the original run files needed to re-derive its numbers have a lineage gap, disclosed in <a href="/status">Status</a>. The full scorecard, the training commands and the promote gate live in the <a href="/research.html">research notebook</a>.</p>
+      <p id="era-crossed"><b>Era Crossed.</b> The correct answer is the nearest other-decade career by cosine similarity in the 64-d embedding (from eratwins.json); the three distractors are three of the other four shipped top-5 candidates. Similarity shown is cosine &times; 100 &mdash; a closeness score, not a percentage of anything. 1,313 rounds are pre-dealt into 131 games at build time; one game (~4 KB) downloads per visit.</p>
     </section>
 
     <section id="the-map">
       <div class="doc-eyebrow">Where does the map lie?</div>
       <h2>The map</h2>
       <p>Two maps, both PCA(3), both min-max scaled. The league map (Atlas, Play) flattens the 14 era-normalized stat traits — its three axes keep about 62% of those traits&rsquo; variance. The explorer map flattens the model&rsquo;s 64-d embedding, whose first three axes keep only about 27% of its variance — so on either map, &ldquo;nearby&rdquo; is approximate, and the model&rsquo;s true nearest seasons are computed in the full spaces, not read off the picture. Axes are named from their correlations.</p>
-      <p class="doc-note">The Atlas map&rsquo;s axes:</p>
+      <p id="twenty-questions"><b>Twenty Questions.</b> The question tree is built offline from the season vectors, archetype assignments and honors data by greedy maximum information gain over 25 yes/no attributes; leaves of five or fewer players resolve by name. Every career resolves within 20 questions (worst case 18). The map is the same 3D projection of the 64-d embedding as Map Hunt; answers fade every season of a ruled-out career.</p>
+      <p class="caption">The Atlas map&rsquo;s axes:</p>
       <table class="data-table">
         <thead><tr><th scope="col">Axis</th><th scope="col">Low end</th><th scope="col">High end</th></tr></thead>
         <tbody>
@@ -150,7 +147,7 @@ Heads: 8 arch / 5 pos / 14 next / 18 skill towers — 12 core + 6 wide (64→16�
         <li>Rim protection + offensive glass</li><li>Three-point volume (low finishing)</li><li>Playmaking + steals</li><li>Offensive glass + defensive glass</li>
         <li>Three-point volume + shot volume</li><li>Three-point volume + three-point accuracy</li><li>Scoring volume + shot volume</li><li>Rim pressure (FTs) + defensive glass</li>
       </ol>
-      <p class="doc-note">The three-point archetypes describe season-level specialist shooters: a season lands in one when shooting dominates its statistical shape. Star shooters usually sit in scoring-volume archetypes instead — their shot volume dominates their profile more than their accuracy does.</p>
+      <p class="caption">The three-point archetypes describe season-level specialist shooters: a season lands in one when shooting dominates its statistical shape. Star shooters usually sit in scoring-volume archetypes instead — their shot volume dominates their profile more than their accuracy does.</p>
     </section>
 
     <section id="dossier">
@@ -164,22 +161,22 @@ Heads: 8 arch / 5 pos / 14 next / 18 skill towers — 12 core + 6 wide (64→16�
       <div class="doc-eyebrow">What do the Insights cards claim?</div>
       <h2>Insights — shareable findings</h2>
       <p>The <a href="/insights">Insights</a> page curates seven findings about money and sacrifice: the 2016 cap spike, the most expensive seats in basketball, the max-money cheat code, the biggest invisible sacrifices, Love vs Bosh, the biggest same-team role shrinks, and the hometown discount leaderboard. They are the <em>From the ledger</em> series: salary, tax and ticket findings assembled by hand from named public sources (Spotrac, Hoops Rumors, Basketball-Reference and the others printed on each card), each with its source, sample and window on the card face. A ledger card never borrows the model&rsquo;s authority. Cards computed from the embedding model arrive as their own series when they ship — nothing on the Insights page advertises them meanwhile.</p>
-      <p class="doc-note">Every card deep-links (<code>/insights.html#&lt;slug&gt;</code>), exports a 1080&times;1350 PNG rendered in the browser, and has a crawler page at <code>/insights/&lt;slug&gt;</code> with a pre-rendered unfurl image. The daily spotlight never repeats a card shown in the grid below it.</p>
+      <p class="caption">Every card deep-links (<code>/insights.html#&lt;slug&gt;</code>), exports a 1080&times;1350 PNG rendered in the browser, and has a crawler page at <code>/insights/&lt;slug&gt;</code> with a pre-rendered unfurl image. The daily spotlight never repeats a card shown in the grid below it.</p>
     </section>
 
     <section id="drift">
       <div class="doc-eyebrow">How does the league change?</div>
       <h2>League drift — the headlines</h2>
-      <p class="doc-formula" aria-label="Orthogonal Procrustes: rotate one season's player map onto the next so rotations preserve distances — R transpose R equals identity. Rotation is the mean principal angle of Q against the identity; residual is the distance left after alignment.">Orthogonal Procrustes on consecutive-season shared players (≥ 30). Rotation = mean principal angle of Q against the identity; residual = Frobenius norm after alignment; chained to the 1996 root frame; RᵀR = I.</p>
+      <p class="caption doc-formula" aria-label="Orthogonal Procrustes: rotate one season's player map onto the next so rotations preserve distances — R transpose R equals identity. Rotation is the mean principal angle of Q against the identity; residual is the distance left after alignment.">Orthogonal Procrustes on consecutive-season shared players (≥ 30). Rotation = mean principal angle of Q against the identity; residual = Frobenius norm after alignment; chained to the 1996 root frame; RᵀR = I.</p>
       <p>The biggest rotation: the summer entering 2019–20 (2018–19 → 2019–20) at 12.49&deg;* — the league&rsquo;s playing style turned further that summer than any other in the window. *The 2019–20 season was COVID-shortened and finished in a bubble, so that rotation may reflect schedule and roster disruption as much as a genuine style shift. Next-largest: 2020–21 → 2021–22 at 11.35&deg;.</p>
       <p>Where careers end up, from the same trajectories (n = 1,313 careers with &ge;4 charted seasons): 51% of players stay stable specialists, 20% migrate to a neighbouring role, 13% drift, 10% reinvent themselves once, and 5% bloom late (shares rounded). Players with the longest careers are the ones who reinvented — 9.3 charted seasons on average, against 8.3 for everyone else. That gap is confounded by selection: the reinvention label needs at least two seasons on each side of the switch, so short careers can never earn it. These are class means with wide within-class spreads — a pattern, not a prediction about any one player. The steepest single fall is Interior Finishing + Defensive Glass: 16.54% of minutes early in the window to 7.98% late (&minus;8.56 points).</p>
-      <p class="doc-note">These numbers are what the Trends page charted until October 2026, drawn from the same drift series.</p>
+      <p class="caption">These numbers are what the Trends page charted until October 2026, drawn from the same drift series.</p>
     </section>
 
     <section id="quotes">
       <div class="doc-eyebrow">Words we stand by</div>
       <h2>Buried sentences, worth quoting</h2>
-      <p class="doc-note">The site&rsquo;s voice at its most honest, one anchor link each:</p>
+      <p class="caption">The site&rsquo;s voice at its most honest, one anchor link each:</p>
       <blockquote class="vh-quote" id="quote-chimera"><p>&ldquo;A Chimera&rsquo;s fused vector never existed as a real season.&rdquo;</p><a class="vh-quote__src" href="#limitations">from What can&rsquo;t it do?</a></blockquote>
       <blockquote class="vh-quote" id="quote-recompute"><p>&ldquo;Every data number can be recomputed from source.&rdquo;</p><a class="vh-quote__src" href="#vector-space">from What does the model see?</a></blockquote>
       <blockquote class="vh-quote" id="quote-how-players-play"><p>&ldquo;The model&rsquo;s cards measure how players play, not how good they are.&rdquo;</p><a class="vh-quote__src" href="/insights">from the Insights hub</a></blockquote>
@@ -211,7 +208,7 @@ Heads: 8 arch / 5 pos / 14 next / 18 skill towers — 12 core + 6 wide (64→16�
 
     <section id="colophon">
       <div class="doc-eyebrow">Colophon</div>
-      <p class="doc-note">Page transitions, the Pixel Replay wipe and the site&rsquo;s music (written in ABC notation and synthesized in your browser, no audio files) follow <a href="https://github.com/alchaincyf/huashu-motion" rel="noopener">huashu-motion</a>; the music code is ported in part from it, Copyright (c) 2026 Huashu, <a href="https://github.com/alchaincyf/huashu-motion/blob/main/LICENSE" rel="noopener">MIT License</a>.</p>
+      <p class="caption">Page transitions, the Pixel Replay wipe and the site&rsquo;s music (written in ABC notation and synthesized in your browser, no audio files) follow <a href="https://github.com/alchaincyf/huashu-motion" rel="noopener">huashu-motion</a>; the music code is ported in part from it, Copyright (c) 2026 Huashu, <a href="https://github.com/alchaincyf/huashu-motion/blob/main/LICENSE" rel="noopener">MIT License</a>.</p>
     </section>
   </article>
 </div>

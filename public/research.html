@@ -28,20 +28,18 @@
 <link rel="stylesheet" href="/assets/shell.css?v=398d5e37"/>
 <style>
 .doc{ padding-top:0; }
-.doc-toc{ display:flex; flex-wrap:wrap; justify-content:center; gap:0; border-top:1px solid var(--line); border-bottom:1px solid var(--line); max-width:980px; margin:0 auto; width:100%; }
-.doc-toc a{ display:inline-flex; gap:7px; align-items:baseline; padding:14px 9px; text-decoration:none; font-family:var(--font-display); font-size:11px; font-weight:600; font-stretch:112%; letter-spacing:.14em; text-transform:uppercase; color:var(--fg-2); transition:color var(--dur-1) var(--ease); }
-.doc-toc a span{ color:var(--fg-3); font-variant-numeric:tabular-nums; }
-.doc-toc a:hover{ color:var(--fg); } .doc-toc a:hover span{ color:var(--accent); }
+.doc-toc{ display:flex; flex-wrap:wrap; justify-content:center; gap:var(--s-2); max-width:980px; margin:0 auto; width:100%; padding:var(--s-4) 0; border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+@media (max-width:640px){ .doc-toc{ flex-wrap:nowrap; justify-content:flex-start; overflow-x:auto; scroll-snap-type:x proximity; } .doc-toc .chip-link{ scroll-snap-align:start; } }
+.doc-toc .chip-link span{ color:var(--fg-3); }
 .doc-body{ width:100%; max-width:760px; margin:var(--s-6) auto 0; }
 .doc-body section{ padding:var(--s-7) 0; border-bottom:1px solid var(--line); }
 .doc-body section:last-child{ border-bottom:0; }
 .doc-eyebrow{ font-family:var(--font-display); font-size:var(--t-2xs); font-weight:600; font-stretch:112%; letter-spacing:.24em; text-transform:uppercase; color:var(--accent); margin-bottom:12px; }
 .doc-body h2{ font-size:var(--t-xl); margin:0 0 16px; }
-.doc-body p{ font-size:16px; line-height:1.75; color:var(--fg-2); margin:0 0 16px; }
+:where(.doc-body p){ font-size:16px; line-height:1.75; color:var(--fg-2); margin:0 0 16px; }
 .doc-body a{ color:var(--fg); text-decoration-color:var(--accent-line); }
 .doc-body .data-table{ margin:8px 0 20px; }
-.doc-note{ font-size:14px !important; color:var(--fg-3) !important; }
-.doc-formula{ font-size:14px !important; line-height:1.75 !important; padding:16px 20px; border-left:2px solid var(--accent); background:var(--surface); color:var(--fg-2) !important; }
+.doc-formula{ padding:16px 20px; border-left:2px solid var(--accent); background:var(--surface); }
 .doc-defs{ display:grid; grid-template-columns:1fr 1fr; gap:0; margin:16px 0 0; border-top:1px solid var(--line); }
 .doc-defs > div{ padding:14px 0; border-bottom:1px solid var(--line); }
 .doc-defs > div:nth-child(even){ padding-left:20px; border-left:1px solid var(--line); }
@@ -55,15 +53,10 @@
 @media (max-width:640px){ .doc-defs, .doc-list{ grid-template-columns:1fr; columns:1; } .doc-defs > div:nth-child(even){ padding-left:0; border-left:0; } .cqs-strip{ flex-wrap:wrap; } .cqs-badge{ flex:1 1 33%; } }
 </style>
 <style>
-:root{
-  --mono:ui-monospace,monospace;--sans:ui-sans-serif,system-ui;
-  --page-gutter:clamp(12px,3.2vw,20px);
-}
 html,body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:18px;line-height:1.65;overflow-x:clip;-webkit-text-size-adjust:100%}
 *,*::before,*::after{box-sizing:border-box}
 img,svg,video,canvas{max-width:100%;height:auto;display:block}
 a{color:inherit}
-.site-nav{position:sticky;top:0;z-index:100}
 
 /* main shell mobile-first */
 .research-main.network-main{
@@ -146,7 +139,7 @@ a{color:inherit}
 }
 .drift-card__head{padding:14px 16px 10px;border-bottom:1px solid var(--line)}
 .card-kicker{
-  font-family:var(--mono);font-size:10px;font-weight:800;
+  font-family:var(--mono);font-size:var(--t-2xs);font-weight:800;
   text-transform:uppercase;letter-spacing:.08em;color:var(--fg-2);
   display:flex;gap:6px;align-items:center;
 }
@@ -160,7 +153,7 @@ a{color:inherit}
 /* cockpit */
 .cockpit-grid{
   display:grid;grid-template-columns:1fr;gap:0;
-  border-top:1px solid #f0ede5;
+  border-top:1px solid var(--line);
 }
 @media(min-width:900px){.cockpit-grid{grid-template-columns:1fr 1fr}}
 .cockpit-panel{padding:14px 16px;min-width:0}
@@ -192,9 +185,9 @@ a{color:inherit}
   display:flex;flex-direction:column;gap:2px;
 }
 .pipe-step b{font-size:12px}
-.pipe-step i{font-style:normal;font-family:var(--mono);font-size:10px;color:var(--fg-2)}
+.pipe-step i{font-style:normal;font-family:var(--mono);font-size:var(--t-2xs);color:var(--fg-2)}
 .step-num{
-  font-family:var(--mono);font-size:10px;font-weight:800;
+  font-family:var(--mono);font-size:var(--t-2xs);font-weight:800;
   background:var(--accent);color:var(--on-accent);border-radius:999px;
   width:18px;height:18px;display:inline-flex;align-items:center;justify-content:center;
 }
@@ -205,7 +198,7 @@ a{color:inherit}
 .weight-chip{
   border:1px solid var(--line-2);border-radius:999px;
   padding:4px 8px;background:var(--surface);
-  font-family:var(--mono);font-size:10px;font-weight:800;
+  font-family:var(--mono);font-size:var(--t-2xs);font-weight:800;
   display:inline-flex;gap:6px;align-items:center;
 }
 .weight-chip b{opacity:.6}
@@ -219,10 +212,10 @@ a{color:inherit}
 @media(min-width:700px){.manim-grid{grid-template-columns:1fr 1fr}}
 .manim-card{
   border:1px solid var(--line-2);border-radius:14px;
-  overflow:hidden;background:#000;box-shadow:none;
+  overflow:hidden;background:var(--void);box-shadow:none;
   display:flex;flex-direction:column;
 }
-.manim-card video{width:100%;aspect-ratio:16/9;object-fit:cover;background:#000}
+.manim-card video{width:100%;aspect-ratio:16/9;object-fit:cover;background:var(--void)}
 .manim-caption{
   padding:10px 12px;background:var(--surface);
   font-size:13px;line-height:1.5;color:var(--fg-2);
@@ -314,25 +307,25 @@ a{color:inherit}
 .network-map-layout{display:grid;grid-template-columns:1fr;gap:0}
 @media(min-width:900px){.network-map-layout{grid-template-columns:1fr 360px}}
 .network-map-stage{padding:12px;background:var(--void);border-radius:var(--radius-lg)}
-.network-map-canvas{width:100%;aspect-ratio:1/1;max-height:560px;background:#111;display:block;border-radius:12px;border:2px solid #222}
+.network-map-canvas{width:100%;aspect-ratio:1/1;max-height:560px;background:var(--void);display:block;border-radius:12px;border:2px solid var(--void-line-2)}
 .network-map-legend{display:flex;gap:6px 14px;flex-wrap:wrap;padding:10px 0 0;list-style:none;margin:0}
 .network-map-legend__item{display:inline-flex;align-items:center;gap:6px;font:600 12px/1.3 var(--font-sans)}
 .network-map-legend__swatch{width:11px;height:11px;border-radius:3px;flex:0 0 auto;box-shadow:inset 0 0 0 1px rgba(255,255,255,.35)}
-.network-map-legend__name{color:#E9E3D3}/* explicit light ink: the legend sits on the always-dark --void stage, so inherited --fg was dark-on-dark in the paper theme */
-.network-map-axes{padding-top:10px;margin-top:10px;border-top:1px solid rgba(233,227,211,.25)}
-/* Every text element in this block carries an explicit #E9E3D3 (12.76:1 on the
-   stage's #1E2022) behind an ID-scoped selector — do not drop either. The block
+.network-map-legend__name{color:var(--void-ink)}/* explicit light ink: the legend sits on the always-dark --void stage, so inherited --fg was dark-on-dark in the paper theme */
+.network-map-axes{padding-top:10px;margin-top:10px;border-top:1px solid var(--void-line-2)}
+/* Every text element in this block carries an explicit var(--void-ink) (11.79:1 on the
+   stage's var(--void)) behind an ID-scoped selector — do not drop either. The block
    sits inside .doc-body on the always-dark --void stage, and two ancestor traps
    silently beat the old class-only rules in the paper theme: .doc-body p
-   (0,1,1) overrode the title/row color with --fg-2 #57574F (2.24:1), and
+   (0,1,1) overrode the title/row color with --fg-2 (2.24:1), and
    atlas.css b,strong{color:var(--fg)} painted the axis labels --ink (about
    1:1). No element here may rely on inheritance for its color. */
-#network-map-axes .network-map-axes__title{font:700 11px/1.4 var(--font-sans);letter-spacing:.08em;text-transform:uppercase;color:#E9E3D3;margin:0 0 6px}
-#network-map-axes .network-map-axes__row{font:400 12px/1.5 var(--font-sans);color:#E9E3D3;margin:0 0 6px}
-#network-map-axes .network-map-axes__label{font-weight:700;color:#E9E3D3}
-#network-map-axes .network-map-axes__end{display:block;color:#E9E3D3}
-#network-map-axes .network-map-axes__end em{font-style:normal;font-weight:700;color:#E9E3D3}
-.network-insights__note{font:400 11px/1.5 var(--font-sans);color:#E9E3D3;opacity:.85;margin:8px 0 0}
+#network-map-axes .network-map-axes__title{font:700 11px/1.4 var(--font-sans);letter-spacing:.08em;text-transform:uppercase;color:var(--void-ink);margin:0 0 6px}
+#network-map-axes .network-map-axes__row{font:400 12px/1.5 var(--font-sans);color:var(--void-ink);margin:0 0 6px}
+#network-map-axes .network-map-axes__label{font-weight:700;color:var(--void-ink)}
+#network-map-axes .network-map-axes__end{display:block;color:var(--void-ink)}
+#network-map-axes .network-map-axes__end em{font-style:normal;font-weight:700;color:var(--void-ink)}
+.network-insights__note{font:400 11px/1.5 var(--font-sans);color:var(--fg-3);margin:8px 0 0} /* sits on the board, never the void */
 
 /* next */
 .site-next{
@@ -347,7 +340,7 @@ a{color:inherit}
   box-shadow:none}
 .network-arch-pre{
   font-family:var(--mono);font-size:11px;line-height:1.5;
-  background:#111;color:#ddd;border-radius:10px;
+  background:var(--void);color:var(--void-ink);border-radius:10px;
   padding:12px;overflow:auto;max-height:60vh;
   border:1px solid var(--line-2);white-space:pre-wrap;word-break:break-word;
 }
@@ -361,7 +354,7 @@ a{color:inherit}
 .research-head > p.mono{ max-width:84ch; margin-left:auto !important; margin-right:auto !important; text-align:center; font-size:13px !important; line-height:1.7 !important; color:var(--fg-3) !important; }
 .research-head .cqs-strip{ width:100%; margin:0; background:var(--surface); }
 .cqs-badge{ align-items:center; text-align:center; padding:18px 12px; }
-.cqs-badge span{ font-family:var(--font-display); font-size:9.5px; font-weight:600; font-stretch:112%; letter-spacing:.14em; text-transform:uppercase; color:var(--fg-3); }
+.cqs-badge span{ font-family:var(--font-display); font-size:var(--t-2xs); font-weight:600; font-stretch:112%; letter-spacing:.14em; text-transform:uppercase; color:var(--fg-3); }
 .cqs-badge b{ font-size:clamp(22px,2.4vw,30px) !important; font-variant-numeric:tabular-nums; }
 .cqs-badge.is-primary{ background:transparent !important; color:var(--fg-3) !important; box-shadow:inset 0 -2px 0 var(--accent); }
 .cqs-badge.is-primary b{ color:var(--accent) !important; }
@@ -385,14 +378,14 @@ a{color:inherit}
   </header>
 
   <nav class="doc-toc" aria-label="On this page">
-    <a href="#graded">Scorecard</a><a href="#training-cockpit">Cockpit</a><a href="#frontier">Frontier</a><a href="#manim-mtnn">Architecture</a><a href="#network-flow">Flow</a><a href="#explorer">Explorer</a><a href="#pipeline">Pipeline</a><a href="#arch-spec">Spec</a><a href="#skills">Skills</a><a href="#forecast-method">Forecast</a><a href="#accuracy-harness">Harness</a>
+    <a class="chip-link" href="#graded">Scorecard</a><a class="chip-link" href="#training-cockpit">Cockpit</a><a class="chip-link" href="#frontier">Frontier</a><a class="chip-link" href="#manim-mtnn">Architecture</a><a class="chip-link" href="#network-flow">Flow</a><a class="chip-link" href="#explorer">Explorer</a><a class="chip-link" href="#pipeline">Pipeline</a><a class="chip-link" href="#arch-spec">Spec</a><a class="chip-link" href="#skills">Skills</a><a class="chip-link" href="#forecast-method">Forecast</a><a class="chip-link" href="#accuracy-harness">Harness</a>
   </nav>
 
   <article class="doc-body">
 <section id="graded">
       <div class="doc-eyebrow">The lab, graded</div>
       <h2>The model, graded — the lab scorecard</h2>
-      <p class="doc-note">Split out of Methods 2026-10-23: the scorecard, the architecture and the live exhibits live here now, under the same recompute promise.</p>
+      <p class="caption">Split out of Methods 2026-10-23: the scorecard, the architecture and the live exhibits live here now, under the same recompute promise.</p>
 <p class="mono" style="font-size:12px; color:var(--fg-2); margin:6px 0 2px;">Promote-gate baseline, re-anchored 2026-07-24. The old baseline was measured on the pre-protocol loop that trained on held-out positives — its recall@10 of 1.0 was memorization, so the gate demanded ≥0.98 and no honest model could ever pass it. The current baseline is leak-free and averaged across seeds; it is computed by the gate at promotion time (pipeline/composite_score.py), not republished here as decimals.</p>
 <div class="cqs-strip" aria-label="Promote gate baseline (leak-free, multi-seed)">
 <div class="cqs-badge is-primary"><b>leak-free</b><span>CQS baseline protocol</span></div>
@@ -454,7 +447,7 @@ a{color:inherit}
 </div>
 
 <div class="cockpit-panel" style="margin-top:12px;border:1px dashed var(--line-2);border-radius:12px;background:var(--surface);">
-<h3>Forecast — same family, one season forward <span style="font-family:var(--mono);font-size:10px;background:var(--accent-wash);color:var(--accent);border:1px solid var(--line-2);border-radius:999px;padding:2px 8px;margin-left:6px">Where you're headed</span></h3>
+<h3>Forecast — same family, one season forward <span style="font-family:var(--mono);font-size:var(--t-2xs);background:var(--accent-wash);color:var(--accent);border:1px solid var(--line-2);border-radius:999px;padding:2px 8px;margin-left:6px">Where you're headed</span></h3>
 <p style="font-size:13px;line-height:1.6;margin:8px 0">A deterministic TimesFM-lite forecaster (numpy, seed 7) projects player embeddings one season forward from 3-season windows — <b>7,096 forecasts</b> served from <code>assets/timesfm_forecasts.json</code> (built 2026-09-02), The metrics in that file are train-split, so this stays <b>research-only</b>: it does not drive the map or any prediction product. Stone dashed = uncertainty, terracotta dashed = headed direction. ONE champion served — MTNN v5.</p>
 <div style="display:flex;gap:6px;flex-wrap:wrap;margin:8px 0"><span class="stats-chip">8-d forecast head</span><span class="stats-chip">7,096 forecasts</span><span class="stats-chip">research-only</span><span class="stats-chip">Past → Modern → Headed</span></div>
 <canvas role="img" aria-label="Forecast lab chart — projected next-season embedding, first predicted dimension across 50 players" id="forecast-lab-canvas" width="800" height="180" style="width:100%;border:1px solid var(--line-2);border-radius:10px;background:var(--surface)"></canvas>
@@ -487,7 +480,7 @@ a{color:inherit}
 </div>
 <div class="manim-card">
 <video autoplay loop muted playsinline controls preload="metadata" src="assets/manim/ChimeraEquation.mp4" aria-label="ChimeraEquation"></video>
-<div class="manim-caption"><b>ChimeraEquation — how Chimera scores</b><br>Donor A + Donor B → fuse in 64-d → nearest real season among 12,966 by cosine. The argmin behind daily puzzle. <span style="font-family:var(--mono);font-size:10px;background:var(--accent-wash);color:var(--accent);border:1px solid var(--line-2);border-radius:999px;padding:1px 6px">MTNN v5 · 64-d</span></div>
+<div class="manim-caption"><b>ChimeraEquation — how Chimera scores</b><br>Donor A + Donor B → fuse in 64-d → nearest real season among 12,966 by cosine. The argmin behind daily puzzle. <span style="font-family:var(--mono);font-size:var(--t-2xs);background:var(--accent-wash);color:var(--accent);border:1px solid var(--line-2);border-radius:999px;padding:1px 6px">MTNN v5 · 64-d</span></div>
 </div>
 <div class="manim-card">
 <video autoplay loop muted playsinline controls preload="metadata" src="assets/manim/InputFamilies.mp4" aria-label="InputFamilies"></video>
@@ -633,9 +626,9 @@ a{color:inherit}
 <section id="forecast-method">
       <div class="doc-eyebrow">Research log · Experimental</div>
       <h2>Forecast — where a player is headed</h2>
-      <p class="doc-formula">Three-season context → next-season embedding (first 8 of 64 dimensions). Source: the served 64-d MTNN v5 embedding, 12,966 × 64. A deterministic numpy forecaster (patch length 3, cross-variate least squares, seed 7), 7,096 windows, chronological split — train ≤2021, validation 2022–23, test ≥2024; the metrics stored in the file are train-split, research-only. No quantile calibration yet. Not TimesFM-3 (non-commercial) or a validated TimesFM-2.5.</p>
+      <p class="caption doc-formula">Three-season context → next-season embedding (first 8 of 64 dimensions). Source: the served 64-d MTNN v5 embedding, 12,966 × 64. A deterministic numpy forecaster (patch length 3, cross-variate least squares, seed 7), 7,096 windows, chronological split — train ≤2021, validation 2022–23, test ≥2024; the metrics stored in the file are train-split, research-only. No quantile calibration yet. Not TimesFM-3 (non-commercial) or a validated TimesFM-2.5.</p>
       <p>One contract everywhere: <code>assets/timesfm_forecasts.json</code>, 7,096 forecasts, with an honest failure message if the file is missing.</p>
-      <p class="doc-note">Future work: chronological, player-aware splits with no leakage; saved seeds and weights; naive-last and drift baselines; MAE / RMSE plus angular error; quantile coverage.</p>
+      <p class="caption">Future work: chronological, player-aware splits with no leakage; saved seeds and weights; naive-last and drift baselines; MAE / RMSE plus angular error; quantile coverage.</p>
     </section>
 <section id="accuracy-harness">
       <div class="doc-eyebrow">Research log</div>
@@ -648,12 +641,12 @@ a{color:inherit}
           <tr><td class="num">V4</td><td>Chimera determinism across 30 dates; cosine &lt; 0.3 between donors</td></tr>
         </tbody>
       </table>
-      <p class="doc-note">MTNN extras: leak-free recall@10 via leakfree.py, purity@20, next-profile MAE. ONNX 548 KB.</p>
+      <p class="caption">MTNN extras: leak-free recall@10 via leakfree.py, purity@20, next-profile MAE. ONNX 548 KB.</p>
     </section>
 
     <section id="colophon">
       <div class="doc-eyebrow">Colophon</div>
-      <p class="doc-note">Page transitions, the Pixel Replay wipe and the site&rsquo;s music (written in ABC notation and synthesized in your browser, no audio files) follow <a href="https://github.com/alchaincyf/huashu-motion" rel="noopener">huashu-motion</a>; the music code is ported in part from it, Copyright (c) 2026 Huashu, <a href="https://github.com/alchaincyf/huashu-motion/blob/main/LICENSE" rel="noopener">MIT License</a>.</p>
+      <p class="caption">Page transitions, the Pixel Replay wipe and the site&rsquo;s music (written in ABC notation and synthesized in your browser, no audio files) follow <a href="https://github.com/alchaincyf/huashu-motion" rel="noopener">huashu-motion</a>; the music code is ported in part from it, Copyright (c) 2026 Huashu, <a href="https://github.com/alchaincyf/huashu-motion/blob/main/LICENSE" rel="noopener">MIT License</a>.</p>
     </section>
   </article>
 </div>

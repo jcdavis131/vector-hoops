@@ -1,0 +1,622 @@
+[
+ {
+  "page": "methods",
+  "w": 390,
+  "theme": "light",
+  "title": "How it works — methods — Vector Hoops",
+  "h1": [
+   "Every data number can be recomputed from source"
+  ],
+  "textLen": 12415,
+  "bad": [
+   " "
+  ],
+  "loading": [],
+  "low": [
+   {
+    "t": "Vector Hoops",
+    "ratio": 1.33,
+    "tag": "span"
+   },
+   {
+    "t": "Explore",
+    "ratio": 1.33,
+    "tag": "span"
+   }
+  ],
+  "overflow": false,
+  "scrollW": 390,
+  "tiny": 14,
+  "height": 11648,
+  "errors": [],
+  "consoleErr": [],
+  "failed": []
+ },
+ {
+  "page": "models/mtnn-v5",
+  "w": 390,
+  "theme": "light",
+  "title": "MTNN v5 — model card — Vector Hoops",
+  "h1": [
+   "MTNN v5, the champion behind the map"
+  ],
+  "textLen": 6575,
+  "bad": [
+   " "
+  ],
+  "loading": [],
+  "low": [
+   {
+    "t": "Vector Hoops",
+    "ratio": 1.33,
+    "tag": "span"
+   },
+   {
+    "t": "Explore",
+    "ratio": 1.33,
+    "tag": "span"
+   }
+  ],
+  "overflow": false,
+  "scrollW": 390,
+  "tiny": 6,
+  "height": 6605,
+  "errors": [],
+  "consoleErr": [],
+  "failed": []
+ },
+ {
+  "page": "404",
+  "w": 390,
+  "theme": "light",
+  "title": "Not found — Vector Hoops",
+  "h1": [
+   "There’s no page at this address."
+  ],
+  "textLen": 486,
+  "bad": [
+   " "
+  ],
+  "loading": [],
+  "low": [
+   {
+    "t": "Vector Hoops",
+    "ratio": 1.33,
+    "tag": "span"
+   }
+  ],
+  "overflow": false,
+  "scrollW": 390,
+  "tiny": 1,
+  "height": 1272,
+  "errors": [],
+  "consoleErr": [],
+  "failed": []
+ },
+ {
+  "page": "methods",
+  "w": 390,
+  "theme": "dark",
+  "title": "How it works — methods — Vector Hoops",
+  "h1": [
+   "Every data number can be recomputed from source"
+  ],
+  "textLen": 12415,
+  "bad": [
+   " "
+  ],
+  "loading": [],
+  "low": [
+   {
+    "t": "Skip to content",
+    "ratio": 1.07,
+    "tag": "a"
+   },
+   {
+    "t": "Install",
+    "ratio": 1.14,
+    "tag": "button"
+   }
+  ],
+  "overflow": false,
+  "scrollW": 390,
+  "tiny": 14,
+  "height": 11648,
+  "errors": [],
+  "consoleErr": [],
+  "failed": []
+ },
+ {
+  "page": "models/mtnn-v5",
+  "w": 390,
+  "theme": "dark",
+  "title": "MTNN v5 — model card — Vector Hoops",
+  "h1": [
+   "MTNN v5, the champion behind the map"
+  ],
+  "textLen": 6575,
+  "bad": [
+   " "
+  ],
+  "loading": [],
+  "low": [
+   {
+    "t": "Skip to content",
+    "ratio": 1.07,
+    "tag": "a"
+   }
+  ],
+  "overflow": false,
+  "scrollW": 390,
+  "tiny": 6,
+  "height": 6605,
+  "errors": [],
+  "consoleErr": [],
+  "failed": []
+ },
+ {
+  "page": "404",
+  "w": 390,
+  "theme": "dark",
+  "title": "Not found — Vector Hoops",
+  "h1": [
+   "There’s no page at this address."
+  ],
+  "textLen": 486,
+  "bad": [
+   " "
+  ],
+  "loading": [],
+  "low": [
+   {
+    "t": "Skip to content",
+    "ratio": 1.07,
+    "tag": "a"
+   }
+  ],
+  "overflow": false,
+  "scrollW": 390,
+  "tiny": 1,
+  "height": 1272,
+  "errors": [],
+  "consoleErr": [],
+  "failed": []
+ },
+ {
+  "page": "status",
+  "w": 390,
+  "theme": "light",
+  "title": "Status — Vector Hoops",
+  "h1": [
+   "System status"
+  ],
+  "textLen": 2686,
+  "bad": [
+   " "
+  ],
+  "loading": [],
+  "low": [
+   {
+    "t": "Vector Hoops",
+    "ratio": 1.33,
+    "tag": "span"
+   },
+   {
+    "t": "pass",
+    "ratio": 1.33,
+    "tag": "span"
+   },
+   {
+    "t": "degraded",
+    "ratio": 1.33,
+    "tag": "span"
+   },
+   {
+    "t": "stale",
+    "ratio": 1.33,
+    "tag": "span"
+   }
+  ],
+  "overflow": false,
+  "scrollW": 390,
+  "tiny": 1,
+  "height": 3516,
+  "errors": [],
+  "consoleErr": [],
+  "failed": []
+ },
+ {
+  "page": "offline",
+  "w": 390,
+  "theme": "light",
+  "title": "Offline — Vector Hoops",
+  "h1": [
+   "You’re off the network."
+  ],
+  "textLen": 574,
+  "bad": [
+   " "
+  ],
+  "loading": [],
+  "low": [
+   {
+    "t": "Vector Hoops",
+    "ratio": 1.33,
+    "tag": "span"
+   }
+  ],
+  "overflow": false,
+  "scrollW": 390,
+  "tiny": 1,
+  "height": 1272,
+  "errors": [],
+  "consoleErr": [],
+  "failed": []
+ },
+ {
+  "page": "playoff-runs",
+  "w": 390,
+  "theme": "light",
+  "title": "Greatest Playoff Runs — Vector Hoops",
+  "h1": [
+   "Greatest Playoff Runs"
+  ],
+  "textLen": 2543,
+  "bad": [
+   " "
+  ],
+  "loading": [],
+  "low": [
+   {
+    "t": "Vector Hoops",
+    "ratio": 1.33,
+    "tag": "span"
+   },
+   {
+    "t": "Explore",
+    "ratio": 1.33,
+    "tag": "span"
+   }
+  ],
+  "overflow": false,
+  "scrollW": 390,
+  "tiny": 10,
+  "height": 3645,
+  "errors": [],
+  "consoleErr": [],
+  "failed": []
+ },
+ {
+  "page": "feed-health",
+  "w": 390,
+  "theme": "light",
+  "title": "Feed Health — Vector Hoops (internal)",
+  "h1": [
+   "Feed Health"
+  ],
+  "textLen": 1803,
+  "bad": [
+   " "
+  ],
+  "loading": [],
+  "low": [
+   {
+    "t": "Vector Hoops",
+    "ratio": 1.33,
+    "tag": "span"
+   }
+  ],
+  "overflow": false,
+  "scrollW": 390,
+  "tiny": 1,
+  "height": 2601,
+  "errors": [],
+  "consoleErr": [],
+  "failed": []
+ },
+ {
+  "page": "status",
+  "w": 390,
+  "theme": "dark",
+  "title": "Status — Vector Hoops",
+  "h1": [
+   "System status"
+  ],
+  "textLen": 2686,
+  "bad": [
+   " "
+  ],
+  "loading": [],
+  "low": [
+   {
+    "t": "Skip to content",
+    "ratio": 1.07,
+    "tag": "a"
+   }
+  ],
+  "overflow": false,
+  "scrollW": 390,
+  "tiny": 1,
+  "height": 3516,
+  "errors": [],
+  "consoleErr": [],
+  "failed": []
+ },
+ {
+  "page": "offline",
+  "w": 390,
+  "theme": "dark",
+  "title": "Offline — Vector Hoops",
+  "h1": [
+   "You’re off the network."
+  ],
+  "textLen": 574,
+  "bad": [
+   " "
+  ],
+  "loading": [],
+  "low": [
+   {
+    "t": "Skip to content",
+    "ratio": 1.07,
+    "tag": "a"
+   }
+  ],
+  "overflow": false,
+  "scrollW": 390,
+  "tiny": 1,
+  "height": 1272,
+  "errors": [],
+  "consoleErr": [],
+  "failed": []
+ },
+ {
+  "page": "playoff-runs",
+  "w": 390,
+  "theme": "dark",
+  "title": "Greatest Playoff Runs — Vector Hoops",
+  "h1": [
+   "Greatest Playoff Runs"
+  ],
+  "textLen": 2543,
+  "bad": [
+   " "
+  ],
+  "loading": [],
+  "low": [
+   {
+    "t": "Skip to content",
+    "ratio": 1.07,
+    "tag": "a"
+   }
+  ],
+  "overflow": false,
+  "scrollW": 390,
+  "tiny": 10,
+  "height": 3645,
+  "errors": [],
+  "consoleErr": [],
+  "failed": []
+ },
+ {
+  "page": "feed-health",
+  "w": 390,
+  "theme": "dark",
+  "title": "Feed Health — Vector Hoops (internal)",
+  "h1": [
+   "Feed Health"
+  ],
+  "textLen": 1803,
+  "bad": [
+   " "
+  ],
+  "loading": [],
+  "low": [
+   {
+    "t": "Skip to content",
+    "ratio": 1.07,
+    "tag": "a"
+   }
+  ],
+  "overflow": false,
+  "scrollW": 390,
+  "tiny": 1,
+  "height": 2601,
+  "errors": [],
+  "consoleErr": [],
+  "failed": []
+ },
+ {
+  "page": "methods",
+  "w": 1280,
+  "theme": "light",
+  "title": "How it works — methods — Vector Hoops",
+  "h1": [
+   "Every data number can be recomputed from source"
+  ],
+  "textLen": 12430,
+  "bad": [
+   " "
+  ],
+  "loading": [],
+  "low": [
+   {
+    "t": "Vector Hoops",
+    "ratio": 1.33,
+    "tag": "span"
+   },
+   {
+    "t": "Explore",
+    "ratio": 1.33,
+    "tag": "span"
+   }
+  ],
+  "overflow": false,
+  "scrollW": 1280,
+  "tiny": 15,
+  "height": 8125,
+  "errors": [],
+  "consoleErr": [],
+  "failed": []
+ },
+ {
+  "page": "status",
+  "w": 1280,
+  "theme": "light",
+  "title": "Status — Vector Hoops",
+  "h1": [
+   "System status"
+  ],
+  "textLen": 2701,
+  "bad": [
+   " "
+  ],
+  "loading": [],
+  "low": [
+   {
+    "t": "Vector Hoops",
+    "ratio": 1.33,
+    "tag": "span"
+   },
+   {
+    "t": "pass",
+    "ratio": 1.33,
+    "tag": "span"
+   },
+   {
+    "t": "degraded",
+    "ratio": 1.33,
+    "tag": "span"
+   },
+   {
+    "t": "stale",
+    "ratio": 1.33,
+    "tag": "span"
+   }
+  ],
+  "overflow": false,
+  "scrollW": 1280,
+  "tiny": 2,
+  "height": 3200,
+  "errors": [],
+  "consoleErr": [],
+  "failed": []
+ },
+ {
+  "page": "offline",
+  "w": 1280,
+  "theme": "light",
+  "title": "Offline — Vector Hoops",
+  "h1": [
+   "You’re off the network."
+  ],
+  "textLen": 589,
+  "bad": [
+   " "
+  ],
+  "loading": [],
+  "low": [
+   {
+    "t": "Vector Hoops",
+    "ratio": 1.33,
+    "tag": "span"
+   }
+  ],
+  "overflow": false,
+  "scrollW": 1280,
+  "tiny": 2,
+  "height": 1102,
+  "errors": [],
+  "consoleErr": [],
+  "failed": []
+ },
+ {
+  "page": "methods",
+  "w": 1280,
+  "theme": "dark",
+  "title": "How it works — methods — Vector Hoops",
+  "h1": [
+   "Every data number can be recomputed from source"
+  ],
+  "textLen": 12430,
+  "bad": [
+   " "
+  ],
+  "loading": [],
+  "low": [
+   {
+    "t": "Skip to content",
+    "ratio": 1.07,
+    "tag": "a"
+   },
+   {
+    "t": "Install",
+    "ratio": 1.14,
+    "tag": "button"
+   }
+  ],
+  "overflow": false,
+  "scrollW": 1280,
+  "tiny": 15,
+  "height": 8125,
+  "errors": [],
+  "consoleErr": [],
+  "failed": []
+ },
+ {
+  "page": "status",
+  "w": 1280,
+  "theme": "dark",
+  "title": "Status — Vector Hoops",
+  "h1": [
+   "System status"
+  ],
+  "textLen": 2701,
+  "bad": [
+   " "
+  ],
+  "loading": [],
+  "low": [
+   {
+    "t": "Skip to content",
+    "ratio": 1.07,
+    "tag": "a"
+   }
+  ],
+  "overflow": false,
+  "scrollW": 1280,
+  "tiny": 2,
+  "height": 3200,
+  "errors": [],
+  "consoleErr": [],
+  "failed": []
+ },
+ {
+  "page": "offline",
+  "w": 1280,
+  "theme": "dark",
+  "title": "Offline — Vector Hoops",
+  "h1": [
+   "You’re off the network."
+  ],
+  "textLen": 589,
+  "bad": [
+   " "
+  ],
+  "loading": [],
+  "low": [
+   {
+    "t": "Skip to content",
+    "ratio": 1.07,
+    "tag": "a"
+   }
+  ],
+  "overflow": false,
+  "scrollW": 1280,
+  "tiny": 2,
+  "height": 1102,
+  "errors": [],
+  "consoleErr": [],
+  "failed": []
+ }
+]
