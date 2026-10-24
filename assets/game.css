@@ -17,6 +17,7 @@
 /* the error card's heading reads as the kit state title */
 :where(.game) .state--error > h2{ margin: 0; }
 :where(.game) .state--error > p{ margin: 0; }
+:where(.game) .game-noscript{ margin: 0; padding: var(--s-4); text-align: center; }
 @media (prefers-reduced-motion: reduce){
   :where(.game) .bar > i{ transition: none; }
 }
@@ -267,8 +268,10 @@
 :where(.game--map) .mh-dist{ font-size: var(--t-sm); color: var(--fg-2); }
 :where(.game--map) .mh-warmer{ color: var(--accent-2); }
 :where(.game--map) .mh-colder{ color: var(--blue); }
-:where(.game--map) .embed3d-mount{ position: relative; height: min(72vw, 460px); min-height: 380px; overflow: hidden; border: 1px solid var(--line-2); border-radius: var(--radius-lg); background: var(--surface-2); }
-:where(.game--map) .embed3d-placeholder{ position: absolute; inset: 0; border-radius: 0; }
+:where(.game--map) .mh-map{ min-width: 0; padding: var(--s-3); border: 1px solid var(--line); border-radius: var(--radius-lg); }
+:where(.game--map) .embed3d-mount{ position: relative; min-width: 0; }
+:where(.game--map) .embed3d-placeholder{ min-height: 320px; }
+:where(.game--map) .embed3d-mount .embed3d__note{ margin-bottom: 0; }
 :where(.game--map) .mh-noscript{ margin-top: 10px; }
 :where(.game--map) .mh-fallback-row{ display: flex; gap: var(--s-2); }
 :where(.game--map) .mh-fallback-row .input{ flex: 1; }
@@ -285,23 +288,10 @@
    /twenty-questions
    ========================================================================== */
 :where(.game--tq) .game-status .chip-link:disabled{ opacity: .45; cursor: default; }
-:where(.game--tq) #map-wrap{ position: relative; min-height: 340px; overflow: hidden; background: var(--surface-2); border: 1px solid var(--line-2); border-radius: var(--radius); }
-:where(.game--tq) #tq-canvas{ position: absolute; inset: 0; display: block; width: 100%; height: 100%; }
-:where(.game--tq) #map-overlay{
-  position: absolute; left: 10px; right: 10px; top: 10px; z-index: 2;
-  display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--s-2); pointer-events: none;
-}
-:where(.game--tq) #map-overlay .chip{ background: color-mix(in srgb, var(--surface) 92%, transparent); }
-:where(.game--tq) #map-legend{
-  position: absolute; right: 10px; bottom: 10px; z-index: 2; max-width: 230px; padding: 7px 10px;
-  font-size: var(--t-xs); line-height: 1.5; pointer-events: none;
-  background: color-mix(in srgb, var(--surface) 94%, transparent); border: 1px solid var(--line-2); border-radius: var(--radius);
-}
-@media (max-width: 719px){
-  :where(.game--tq) #map-legend{ left: 10px; right: 10px; bottom: 8px; max-width: none; padding: 4px 10px; line-height: 1.4; }
-  :where(.game--tq) #map-legend .legend-long{ display: none; }
-  :where(.game--tq) #map-wrap{ min-height: 300px; }
-}
+:where(.game--tq) #map-wrap{ min-width: 0; padding: var(--s-3); border: 1px solid var(--line); border-radius: var(--radius-lg); }
+:where(.game--tq) .tq-map{ min-width: 0; }
+:where(.game--tq) .tq-map .embed3d__note{ margin-bottom: 0; }
+:where(.game--tq) .tq-map-key{ margin: var(--s-2) 0 0; }
 :where(.game--tq) #q-text{ margin: 6px 0 0; font-size: var(--t-xl); line-height: 1.25; letter-spacing: -.01em; }
 :where(.game--tq) #tie-text{ margin: 6px 0 0; font-size: var(--t-xl); }
 :where(.game--tq) #answer-log{ margin-top: 10px; }
@@ -328,12 +318,15 @@
 @media (max-width: 560px){
   :where(.game--era) .opts{ grid-template-columns: 1fr; }
 }
+/* each option is a kit card as a button (button.card.opt). Inside #round-card the
+   kit's .card .card rule gives it the raised surface; this adds the button resets,
+   the tap layout and the pick states. */
 :where(.game--era) .opt{
   appearance: none; display: flex; flex-direction: column; gap: 4px; min-height: 76px; padding: 14px;
-  text-align: left; cursor: pointer; color: var(--fg); font: inherit;
-  background: var(--surface); border: 1px solid var(--line-2); border-radius: var(--radius);
+  text-align: left; cursor: pointer; font: inherit;
 }
 :where(.game--era) .opt:hover:not([disabled]){ border-color: var(--accent); }
+:where(.game--era) .opt:focus-visible{ outline: 2px solid var(--accent); outline-offset: 2px; }
 :where(.game--era) .opt[disabled]{ cursor: default; }
 :where(.game--era) .opt .nm{ font-size: var(--t-md); font-weight: 800; line-height: 1.2; }
 :where(.game--era) .opt .ss{ font-family: var(--font-code); font-size: var(--t-xs); color: var(--fg-3); }

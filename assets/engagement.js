@@ -226,9 +226,13 @@
         }
         return;
       }
-      // Stall detection: all answer buttons disabled, no reveal shown.
+      // Stall detection: all answer buttons disabled, no reveal shown. The
+      // buttons also start disabled while the tree loads (q-card aria-busy),
+      // so only a loaded game can stall.
       var by = document.getElementById('btn-yes');
-      if (by && by.disabled && reveal && reveal.hidden && !document.querySelector('.vh-nearmiss')) {
+      var qcard = document.getElementById('q-card');
+      var loaded = qcard && qcard.getAttribute('aria-busy') === 'false';
+      if (loaded && by && by.disabled && reveal && reveal.hidden && !document.querySelector('.vh-nearmiss')) {
         var card = el('div', 'vh-nearmiss card',
           '<p class="vh-nearmiss__k">So close</p>' +
           '<p>You ran all 20 questions and the map narrowed 2,426 careers down to a handful. ' +

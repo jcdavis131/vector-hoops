@@ -1,6 +1,6 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
 <title>Era Crossed — Vector Hoops</title>
-<meta name="description" content="A past star, four modern candidates. Pick the true closest twin — ranked by the 64-d MTNN embedding. 10 rounds, no repeats."/>
+<meta name="description" content="A past star, four modern candidates. Pick the true closest twin, as the model ranks them. 10 rounds, no repeats."/>
 <link rel="canonical" href="https://hoops.dumbmodel.com/play/era-crossed"/>
 <meta name="color-scheme" content="light dark"/>
 <meta name="theme-color" content="#0F1114" media="(prefers-color-scheme: dark)"/>
@@ -21,10 +21,10 @@
 <link rel="stylesheet" href="/assets/fonts.css?v=8f376b2a"/>
 <link rel="stylesheet" href="/assets/atlas.css?v=31711e9d"/>
 <link rel="stylesheet" href="/assets/shell.css?v=398d5e37"/>
-<link rel="stylesheet" href="/assets/game.css?v=0e919957"/>
+<link rel="stylesheet" href="/assets/game.css?v=d663ac90"/>
 </head><body class="game game--era">
 <a class="skip-link" href="#main">Skip to content</a>
-<noscript><div role="alert" style="padding:16px;text-align:center">Enable JavaScript — Era Crossed needs it to deal the rounds.</div></noscript>
+<noscript><p class="game-noscript">Enable JavaScript: Era Crossed needs it to deal the rounds.</p></noscript>
 
 <nav class="site-nav" data-active="/play" aria-label="Vector Hoops site"><noscript class="site-nav__noscript"><a href="/">Atlas</a><a href="/play">Play</a><a href="/map-guess">Map Hunt</a><a href="/live">Live</a><a href="/players">Players</a><a href="/insights">Insights</a><a href="/taxonomy">Taxonomy</a><a href="/methods">Methods</a><a href="/models/mtnn-v5">Models</a></noscript></nav>
 <div id="main" class="main main--narrow" role="main">
@@ -82,20 +82,11 @@
         <li>The three wrong options aren&rsquo;t random: they&rsquo;re the next-closest shipped candidates, so every round is genuinely hard.</li>
         <li>The similarity shown after you pick is a closeness score out of 100, not a percentage of anything.</li>
         <li>Streak: consecutive games at 7+/10. Saved on this device only.</li>
+        <li>How the model measures style: <a href="/methods#the-model">Methods</a>.</li>
       </ul>
     </div>
   </details>
 
-  <details class="disclosure provenance">
-    <summary>How it was built</summary>
-    <div class="disclosure__body caption">
-      <ul>
-        <li>The correct answer is the nearest <em>other-decade</em> career by 64-d MTNN embedding cosine.</li>
-        <li>Similarity shown after you pick is embedding cosine &times; 100 &mdash; a closeness score, not a percentage of anything.</li>
-      </ul>
-      <p>Provenance: quiz built 2026-10-20 from assets/eratwins.json &mdash; twin = nearest other-decade career by 64-d MTNN embedding cosine; distractors = 3 of the other 4 shipped top-5 candidates. 1,313 rounds pre-dealt into 131 games at build time &mdash; only one game's rounds (~4KB) download per visit.</p>
-    </div>
-  </details>
 </div>
 
 <!-- footer:stamped -->
@@ -134,5 +125,5 @@
 <script src="/assets/keyboard-a11y.js?v=e79ec37c"></script>
 <script src="/assets/site-nav.js?v=13e9219d" defer></script>
 <script src="/assets/toast.js?v=06285043"></script>
-<script src="/assets/inline-era-crossed.js?v=7f4a61f6"></script>
+<script src="/assets/inline-era-crossed.js?v=b5bc4e01"></script>
 </body></html>
