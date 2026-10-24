@@ -1,32 +1,30 @@
 <!doctype html>
 <html lang="en"><head>
-<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
-<link rel="manifest" href="/manifest.json">
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
 <title>Taxonomy of Play Styles — Vector Hoops</title>
 <meta name="description" content="Every NBA play style, organized: 2,426 players clustered into 22 stat-backed archetypes across 5 families — from 3&D wings to rim runners."/>
-
-<link rel="stylesheet" href="assets/responsive.css?v=cc8e5207"/>
-<link rel="stylesheet" href="assets/final-qa.css?v=fb603ee5"/>
-<link rel="stylesheet" href="assets/unified.css?v=fd25e8ca"/>
-<link rel="stylesheet" href="assets/motion.css?v=aa8dedc2"/>
-<link rel="stylesheet" href="assets/fonts.css?v=8f376b2a"/>
-<meta name="color-scheme" content="light dark"/>
-<meta name="theme-color" content="#0F1114" media="(prefers-color-scheme: dark)"/>
-<meta name="theme-color" content="#FCFBF7" media="(prefers-color-scheme: light)"/>
-<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml"/>
-<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png"/>
 <link rel="canonical" href="https://hoops.dumbmodel.com/taxonomy"/>
+<meta name="color-scheme" content="light dark"/>
+<meta name="theme-color" content="#FCFBF7" media="(prefers-color-scheme: light)"/>
+<meta name="theme-color" content="#0F1114" media="(prefers-color-scheme: dark)"/>
 <meta property="og:type" content="article"/>
 <meta property="og:site_name" content="Vector Hoops"/>
 <meta property="og:url" content="https://hoops.dumbmodel.com/taxonomy"/>
 <meta property="og:title" content="Taxonomy of Play Styles — Vector Hoops"/>
 <meta property="og:description" content="2,426 players, 22 archetypes, 5 families. Find where every NBA play style lives."/>
+<meta property="og:image" content="https://hoops.dumbmodel.com/assets/og/taxonomy.png"/>
+<meta property="og:image:width" content="1200"/>
+<meta property="og:image:height" content="630"/>
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:title" content="Taxonomy of Play Styles — Vector Hoops"/>
 <meta name="twitter:description" content="2,426 players, 22 archetypes, 5 families. Find where every NBA play style lives."/>
-<meta property="og:image" content="https://hoops.dumbmodel.com/assets/og/taxonomy.png"/>
 <meta name="twitter:image" content="https://hoops.dumbmodel.com/assets/og/taxonomy.png"/>
-<link rel="stylesheet" href="/assets/atlas.css?v=a737547a"/>
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml"/>
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png"/>
+<link rel="manifest" href="/manifest.json"/>
+<link rel="stylesheet" href="/assets/fonts.css?v=8f376b2a"/>
+<link rel="stylesheet" href="/assets/atlas.css?v=31711e9d"/>
 <link rel="stylesheet" href="/assets/shell.css?v=398d5e37"/>
 <style>
 .vh-tax__wrap{max-width:960px;margin:0 auto;padding:0 var(--s-3) var(--s-6)}
@@ -36,7 +34,7 @@
 .vh-tax__hero p{font:400 15px/1.6 var(--font-sans);color:var(--fg-2);margin:0 auto;max-width:64ch}
 .vh-tax__meta{display:inline-block;margin-top:12px;font:600 12px/1 var(--font-sans);letter-spacing:.08em;text-transform:uppercase;color:var(--gold,#D4AF69);border:1px solid var(--line);border-radius:999px;padding:8px 14px;background:var(--surface)}
 .vh-tax__search{display:flex;gap:10px;align-items:center;max-width:520px;margin:0 auto var(--s-4)}
-.vh-tax__search input{flex:1;font:400 15px/1.4 var(--font-sans);color:var(--fg);background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 16px}
+.vh-tax__search input{flex:1;font:400 16px/1.4 var(--font-sans);color:var(--fg);background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 16px}
 .vh-tax__search input:focus{outline:2px solid var(--accent);outline-offset:1px}
 .vh-tax__search-note{font:600 12.5px/1 var(--font-sans);color:var(--fg-2);white-space:nowrap}
 .vh-tax__fam{margin:0 0 var(--s-5)}
@@ -98,7 +96,7 @@
   <div id="taxonomy-tree"></div>
   <p class="vh-tax__err" id="taxonomy-err" hidden></p>
 
-  <p class="vh-tax__foot">How it's built: each player's 14-feature stat profile (per-100 possessions, z-scored within season so eras compare honestly) is collapsed to a career-typical vector — the median season, robust to late-career decline. Ward agglomerative clustering on all 2,426 players yields one dendrogram; 5 families and 22 archetypes are cut from it. Archetype names come from each cluster's stat signature (percentiles vs all players), never vibes — 20 sanity anchors verified, including Curry/Lillard (sharpshooting stars), Gobert/Mutombo (rim runners), Rodman/Wallace (rebound specialists) and Nash/Stockton (elite point guards). Magic Johnson is absent: his career predates the 1996–97 dataset. Full method and QA: <a href="/methods.html">methods</a>. Note: these 22 archetypes are career-level — a separate clustering from the model's 8 season archetypes used on the Atlas and in the games.</p>
+  <p class="vh-tax__foot">How it's built: each player's 14-feature stat profile (per-100 possessions, z-scored within season so eras compare honestly) is collapsed to a career-typical vector — the median season, robust to late-career decline. Ward agglomerative clustering on all 2,426 players yields one dendrogram; 5 families and 22 archetypes are cut from it. Archetype names come from each cluster's stat signature (percentiles vs all players), never vibes — 20 sanity anchors verified, including Curry/Lillard (sharpshooting stars), Gobert/Mutombo (rim runners), Rodman/Wallace (rebound specialists) and Nash/Stockton (elite point guards). Magic Johnson is absent: his career predates the 1996–97 dataset. Full method and QA: <a href="/methods">methods</a>. Note: these 22 archetypes are career-level — a separate clustering from the model's 8 season archetypes used on the Atlas and in the games.</p>
 </div>
 
 <!-- footer:stamped -->

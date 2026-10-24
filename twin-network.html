@@ -1,33 +1,37 @@
 <!doctype html>
 <html lang="en"><head>
-<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
-<link rel="manifest" href="/manifest.json">
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
 <title>Twin Networks — Vector Hoops</title>
 <meta name="description" content="Every player-season sits in a neighborhood of statistical twins. Explore the twin network and stat flow of any of 12,966 player-seasons, measured in the MTNN v5 embedding."/>
-<link rel="stylesheet" href="assets/shell.css?v=398d5e37"/>
-<link rel="stylesheet" href="assets/responsive.css?v=cc8e5207"/>
-<link rel="stylesheet" href="assets/final-qa.css?v=fb603ee5"/>
-<link rel="stylesheet" href="assets/unified.css?v=fd25e8ca"/>
-<link rel="stylesheet" href="assets/motion.css?v=aa8dedc2"/>
-<link rel="stylesheet" href="assets/insights-cards.css?v=58bee766"/>
-<meta name="color-scheme" content="dark light"/>
-<meta name="theme-color" content="#07090C" media="(prefers-color-scheme: dark)"/>
-<meta name="theme-color" content="#F3F1EC" media="(prefers-color-scheme: light)"/>
-<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml"/>
-<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png"/>
 <link rel="canonical" href="https://hoops.dumbmodel.com/twin-network"/>
+<meta name="color-scheme" content="light dark"/>
+<meta name="theme-color" content="#FCFBF7" media="(prefers-color-scheme: light)"/>
+<meta name="theme-color" content="#0F1114" media="(prefers-color-scheme: dark)"/>
 <meta property="og:type" content="website"/>
 <meta property="og:site_name" content="Vector Hoops"/>
 <meta property="og:url" content="https://hoops.dumbmodel.com/twin-network"/>
 <meta property="og:title" content="Twin Networks — Vector Hoops"/>
 <meta property="og:description" content="Pick any player-season and see its neighborhood of statistical twins — plus the stat flow that built it. Measured, shareable."/>
+<meta property="og:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png"/>
+<meta property="og:image:width" content="1200"/>
+<meta property="og:image:height" content="630"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="Twin Networks — Vector Hoops"/>
+<meta name="twitter:description" content="Pick any player-season and see its neighborhood of statistical twins — plus the stat flow that built it. Measured, shareable."/>
+<meta name="twitter:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png"/>
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml"/>
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png"/>
+<link rel="manifest" href="/manifest.json"/>
 <link rel="stylesheet" href="/assets/fonts.css?v=8f376b2a"/>
-<link rel="stylesheet" href="/assets/atlas.css?v=a737547a"/>
+<link rel="stylesheet" href="/assets/atlas.css?v=31711e9d"/>
+<link rel="stylesheet" href="/assets/shell.css?v=398d5e37"/>
+<link rel="stylesheet" href="/assets/insights-cards.css?v=58bee766"/>
 <style>
 .vh-tn__picker{display:flex;gap:10px;flex-wrap:wrap;margin:0 0 18px;align-items:flex-end}
 .vh-tn__field{display:flex;flex-direction:column;gap:6px;flex:1 1 220px;min-width:0}
 .vh-tn__field label{font:700 11px/1.4 var(--font-sans);letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
-.vh-tn__field input,.vh-tn__field select{font:400 15px/1.4 var(--font-sans);color:var(--fg);background:var(--surface-2,var(--surface));border:1px solid var(--line);border-radius:10px;padding:10px 12px;width:100%}
+.vh-tn__field input,.vh-tn__field select{font:400 16px/1.4 var(--font-sans);color:var(--fg);background:var(--surface-2,var(--surface));border:1px solid var(--line);border-radius:10px;padding:10px 12px;width:100%}
 .vh-tn__metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:0 0 16px}
 .vh-tn__metric{background:var(--surface-2,var(--surface));border:1px solid var(--line);border-radius:12px;padding:12px 14px}
 .vh-tn__metric b{display:block;font:800 clamp(22px,4vw,30px)/1.1 var(--font-display);color:var(--gold,#D4AF69)}
@@ -40,7 +44,7 @@
 <a class="skip-link" href="#main">Skip to content</a>
 <noscript><div role="alert" style="padding:16px;text-align:center">Enable JS — Twin Networks needs JavaScript</div></noscript>
 
-<nav class="site-nav" data-active="/twin-network" aria-label="Vector Hoops site"></nav>
+<nav class="site-nav" data-active="/twin-network" aria-label="Vector Hoops site"><noscript class="site-nav__noscript"><a href="/">Atlas</a><a href="/play">Play</a><a href="/map-guess">Map Hunt</a><a href="/live">Live</a><a href="/players">Players</a><a href="/insights">Insights</a><a href="/taxonomy">Taxonomy</a><a href="/methods">Methods</a><a href="/models/mtnn-v5">Models</a></noscript></nav>
 <div id="main" class="main" role="main" style="padding-top:0">
   <header class="title-card">
     <div class="title-card__eyebrow reveal">Insights</div>
@@ -50,7 +54,7 @@
   </header>
 
   <div class="vh-ins__wrap">
-    <a class="vh-tn__back" href="/insights.html">← All insights</a>
+    <a class="vh-tn__back" href="/insights">← All insights</a>
 
     <article class="vh-ins__card vh-ins__card--featured" aria-label="Twin network explorer">
       <div class="vh-ins__kicker">Twin Network</div>
@@ -82,7 +86,7 @@
       <p class="vh-ins__foot">Flow widths are proportional to |z-score| share of the three defining stats in the 14-dim era-honest style vector. The era twin is the nearest other-decade career in the 64-d embedding. Twin coverage spans careers with 4+ charted seasons — seasons outside the pool show an honest empty state, never a placeholder.</p>
     </article>
 
-    <p class="vh-ins__foot" style="text-align:center">Methods and provenance: <a href="/methods.html#insights">methods.html#insights</a> · Every figure is computed from the served vectors, never invented.</p>
+    <p class="vh-ins__foot" style="text-align:center">Methods and provenance: <a href="/methods#insights">methods.html#insights</a> · Every figure is computed from the served vectors, never invented.</p>
   </div>
 </div>
 
