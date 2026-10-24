@@ -22,7 +22,9 @@ def _index() -> dict:
 
 def test_every_espn_team_lands_on_the_map() -> None:
     idx = _index()
-    espn = [t["abbr"] for t in json.loads((ROOT / "docs/live-recon/team_map.json").read_text(encoding="utf-8")).values()]
+    espn = [
+        t["abbr"] for t in json.loads((ROOT / "docs/live-recon/team_map.json").read_text(encoding="utf-8")).values()
+    ]
     assert len(set(espn)) == 30
     d = json.loads((ROOT / "assets/projections/embed3d.json").read_text(encoding="utf-8"))
     teams, base = d["meta"]["teams"], d["meta"]["season_base"]
