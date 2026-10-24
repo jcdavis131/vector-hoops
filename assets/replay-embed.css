@@ -36,3 +36,15 @@
 .live-root .rp-embed__bar .rp-cams button:first-child{border-radius:6px 0 0 6px;margin-left:0;}
 .live-root .rp-embed__bar .rp-cams button:last-child{border-radius:0 6px 6px 0;}
 .live-root .rp-embed__bar .rp-cams button.on{background:var(--ink);color:var(--card);border-color:var(--ink);}
+/* Compact/Full view toggle: a segmented control in the plate's own voice. */
+.live-root .rp-view-toggle{display:inline-flex;margin:10px 0 0;}
+.live-root .rp-view-toggle button{min-height:36px;padding:6px 14px;border:2px solid var(--ink);border-radius:0;
+  background:var(--card);color:var(--ink);font:700 11px var(--mono);letter-spacing:.06em;cursor:pointer;}
+.live-root .rp-view-toggle button:first-child{border-radius:6px 0 0 6px;}
+.live-root .rp-view-toggle button:last-child{border-radius:0 6px 6px 0;margin-left:-2px;}
+.live-root .rp-view-toggle button.on{background:var(--ink);color:var(--card);}
+.live-root .rp-view-toggle button:active{transform:scale(.95);}
+/* Full view: the /replay page inline. The frame resizes to its same-origin
+   content (replay-live.js); 900px is the fallback before the first measure. */
+.live-root .rp-full-frame{display:block;width:100%;height:900px;border:0;border-radius:8px;margin-top:10px;
+  background:#0F1114;box-shadow:0 0 0 2px var(--ink);}

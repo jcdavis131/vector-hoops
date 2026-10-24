@@ -177,6 +177,24 @@
           "value": "public, max-age=0, s-maxage=60, stale-while-revalidate=300"
         }
       ],
+      "source": "/play/era-crossed"
+    },
+    {
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, s-maxage=60, stale-while-revalidate=300"
+        }
+      ],
+      "source": "/schedule"
+    },
+    {
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, s-maxage=60, stale-while-revalidate=300"
+        }
+      ],
       "source": "/players"
     },
     {
@@ -240,7 +258,43 @@
           "value": "public, max-age=0, s-maxage=60, stale-while-revalidate=300"
         }
       ],
+      "source": "/twin-network"
+    },
+    {
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, s-maxage=60, stale-while-revalidate=300"
+        }
+      ],
+      "source": "/models/mtnn-v5"
+    },
+    {
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, s-maxage=60, stale-while-revalidate=300"
+        }
+      ],
       "source": "/twenty-questions"
+    },
+    {
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, s-maxage=60, stale-while-revalidate=300"
+        }
+      ],
+      "source": "/status"
+    },
+    {
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, s-maxage=60, stale-while-revalidate=300"
+        }
+      ],
+      "source": "/feed-health"
     }
   ],
   "rewrites": [
@@ -259,6 +313,14 @@
     {
       "destination": "/play.html",
       "source": "/play"
+    },
+    {
+      "destination": "/play/era-crossed.html",
+      "source": "/play/era-crossed"
+    },
+    {
+      "destination": "/schedule.html",
+      "source": "/schedule"
     },
     {
       "destination": "/players.html",
@@ -293,12 +355,33 @@
       "destination": "/map-guess.html"
     },
     {
+      "source": "/twin-network",
+      "destination": "/twin-network.html"
+    },
+    {
+      "source": "/models/mtnn-v5",
+      "destination": "/models/mtnn-v5.html"
+    },
+    {
       "source": "/twenty-questions",
       "destination": "/twenty-questions.html"
+    },
+    {
+      "source": "/status",
+      "destination": "/status.html"
+    },
+    {
+      "source": "/feed-health",
+      "destination": "/feed-health.html"
     }
   ],
   "trailingSlash": false,
   "redirects": [
+    {
+      "source": "/insights/era-uniqueness",
+      "destination": "/insights",
+      "permanent": true
+    },
     {
       "source": "/atlas",
       "destination": "/",

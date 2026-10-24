@@ -27,8 +27,8 @@
 <meta name="twitter:title" content="Greatest Playoff Runs — Vector Hoops"/>
 <meta name="twitter:description" content="Every great May, ranked: the ten greatest individual playoff runs, duos and trios, and the twelve greatest team runs of the last 30 years."/>
 <meta name="twitter:image" content="https://hoops.dumbmodel.com/assets/og/playoff-runs.png"/>
-<link rel="stylesheet" href="/assets/atlas.css?v=c43e0f47"/>
-<link rel="stylesheet" href="/assets/shell.css?v=b7460aa9"/>
+<link rel="stylesheet" href="/assets/atlas.css?v=a737547a"/>
+<link rel="stylesheet" href="/assets/shell.css?v=398d5e37"/>
 <style>
 .vh-runs__wrap{max-width:880px;margin:0 auto;padding:0 var(--s-3) var(--s-6)}
 .vh-runs__tabs{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 var(--s-4);position:sticky;top:var(--nav-h,60px);padding:12px 0;z-index:5;background:color-mix(in srgb,var(--bg) 88%,transparent)}
@@ -88,40 +88,47 @@
     <section id="board-teams" class="vh-runs__board" role="tabpanel"></section>
     <p class="vh-runs__foot">Ranked by an all-around, two-way score: per-possession dominance first, winning second.</p>
     <details class="vh-runs__foot vh-runs__details" id="how-scored"><summary>How it's scored</summary>
-      An all-around, two-way score — per-100 playoff scoring plus shooting efficiency, plus defensive impact (DBPM, points prevented per 100 possessions, counting one-for-one with scoring), plus a quarter-share of the team's playoff net rating. Then +2 per round won and +4 for the title — winning matters, but it never swamps the per-possession signal. Duos and trios are the best two-way units whose members each played real rotation roles (40+ regular-season games, 12+ playoff games — every unit here won a series). Fives and starters aren't ranked: the source minutes field can't identify them, so we don't fake them. Team runs are ranked by official playoff net rating (Basketball-Reference), minimum two series won.
+      An all-around, two-way score — per-100 playoff scoring plus shooting efficiency, plus defensive impact (DBPM, points prevented per 100 possessions, counting one-for-one with scoring), plus a quarter-share of the team's playoff net rating. Then +2 per round won and +4 for the title — winning matters, but it never swamps the per-possession signal: the win bonus maxes out at 12, while the per-possession components (scoring + efficiency + defense + quarter-share of team net rating) sum to roughly 43–55 on the individual board and scale up for duos and trios. Duos and trios are the best two-way units whose members each played real rotation roles (40+ regular-season games, 12+ playoff games — every unit here won a series). Fives and starters aren't ranked: the source minutes field can't identify them, so we don't fake them. Team runs are ranked by official playoff net rating (Basketball-Reference), minimum two series won.
     </details>
     <p class="vh-runs__foot">Every figure recomputes from <a href="/methods.html">stats.nba.com splits, 1996-97 → 2025-26</a> and Basketball-Reference advanced stats.</p>
     <p class="vh-runs__foot" style="text-align:center">Sacrifice stories from the same playoffs: <a href="/insights.html#invisible-stardom">the biggest sacrifices nobody saw</a> — stars who shrank their games for a ring.</p>
   </div>
 </div>
 
+<!-- footer:stamped -->
 <footer class="site-footer">
   <nav class="site-footer__sitemap" aria-label="Sitemap">
     <div class="site-footer__col">
       <span class="site-footer__col-title">Play</span>
       <a href="/play">Daily Court</a>
+      <a href="/map-guess">Map Hunt</a>
+      <a href="/twenty-questions">Twenty Questions</a>
+      <a href="/play/era-crossed">Era Crossed</a>
+      <a href="/replay">Pixel Replay</a>
     </div>
     <div class="site-footer__col">
       <span class="site-footer__col-title">Explore</span>
-      <a href="/">Atlas</a>
       <a href="/live">Live</a>
+      <a href="/schedule">Schedule</a>
       <a href="/players">Players</a>
       <a href="/insights">Insights</a>
+      <a href="/twin-network">Twin Networks</a>
       <a href="/playoff-runs">Playoff Runs</a>
-
       <a href="/taxonomy">Taxonomy</a>
-      <a href="/methods">Methods</a>
     </div>
     <div class="site-footer__col">
       <span class="site-footer__col-title">How it works</span>
-      <a href="https://dumbmodel.com" rel="noopener">dumbmodel.com</a>
+      <a href="/methods">Methods</a>
+      <a href="/models/mtnn-v5">Models</a>
+      <a href="https://github.com/jcdavis131/vector-hoops" rel="noopener">Source on GitHub</a>
     </div>
   </nav>
-  <p class="site-footer__attribution">Every number recomputable from stats.nba.com · A <a href="https://dumbmodel.com">dumbmodel</a> project · <a href="https://github.com/jcdavis131/vector-hoops" rel="noopener">Source</a> · Nearest seasons by cosine similarity in the 64-dimensional MTNN v5 embedding.</p>
+  <p class="site-footer__attribution">Scores and stats from stats.nba.com and ESPN · A <a href="https://dumbmodel.com">dumbmodel</a> project</p>
 </footer>
+<!-- /footer:stamped -->
 <script src="/assets/vh-analytics.js?v=d838a3e1"></script>
-<script src="/assets/site-nav.js?v=08ff3eda"></script>
+<script src="/assets/site-nav.js?v=13e9219d"></script>
 <script src="assets/playoff-runs.js?v=27b39020"></script>
-<script src="/assets/inline-sw-register.js?v=48fb8eb4"></script>
-<script src="/assets/inline-share-btn.js?v=82cebde3"></script>
+<script src="/assets/inline-sw-register.js?v=3fccd5e4"></script>
+<script src="/assets/inline-share-btn.js?v=e041d558"></script>
 </body></html>

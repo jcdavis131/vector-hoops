@@ -28,8 +28,8 @@
 <meta name="twitter:description" content="The engineering log behind Vector Hoops: training cockpit, promote-gate scorecard, explorer and probe debuggers, architecture exhibits, lab pipeline. Written for engineers — not a fan explainer."/>
 <meta name="twitter:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png"/>
 <link rel="stylesheet" href="assets/fonts.css?v=8f376b2a"/>
-<link rel="stylesheet" href="/assets/atlas.css?v=c43e0f47"/>
-<link rel="stylesheet" href="/assets/shell.css?v=b7460aa9"/>
+<link rel="stylesheet" href="/assets/atlas.css?v=a737547a"/>
+<link rel="stylesheet" href="/assets/shell.css?v=398d5e37"/>
 <style>
 .doc{ padding-top:0; }
 .doc-toc{ display:flex; flex-wrap:wrap; justify-content:center; gap:0; border-top:1px solid var(--line); border-bottom:1px solid var(--line); max-width:980px; margin:0 auto; width:100%; }
@@ -59,7 +59,6 @@
 @media (max-width:640px){ .doc-defs, .doc-list{ grid-template-columns:1fr; columns:1; } .doc-defs > div:nth-child(even){ padding-left:0; border-left:0; } .cqs-strip{ flex-wrap:wrap; } .cqs-badge{ flex:1 1 33%; } }
 </style><style>
 :root{
-  --paper:#FFFEF7;--ink:#1A150F;--orange:#D55E00;--blue:#0072B2;--yellow:#F0E442;
   --mono:ui-monospace,monospace;--sans:ui-sans-serif,system-ui;
   --page-gutter:clamp(12px,3.2vw,20px);
 }
@@ -653,38 +652,50 @@ a{color:inherit}
       </table>
       <p class="doc-note">MTNN extras: leak-free recall@10 via leakfree.py, purity@20, next-profile MAE. ONNX 548 KB.</p>
     </section>
+
+    <section id="colophon">
+      <div class="doc-eyebrow">Colophon</div>
+      <p class="doc-note">Page transitions, the Pixel Replay wipe and the site&rsquo;s music (written in ABC notation and synthesized in your browser, no audio files) follow <a href="https://github.com/alchaincyf/huashu-motion" rel="noopener">huashu-motion</a>; the music code is ported in part from it, Copyright (c) 2026 Huashu, <a href="https://github.com/alchaincyf/huashu-motion/blob/main/LICENSE" rel="noopener">MIT License</a>.</p>
+    </section>
   </article>
 </div>
+<!-- footer:stamped -->
 <footer class="site-footer">
   <nav class="site-footer__sitemap" aria-label="Sitemap">
     <div class="site-footer__col">
       <span class="site-footer__col-title">Play</span>
       <a href="/play">Daily Court</a>
+      <a href="/map-guess">Map Hunt</a>
+      <a href="/twenty-questions">Twenty Questions</a>
+      <a href="/play/era-crossed">Era Crossed</a>
+      <a href="/replay">Pixel Replay</a>
     </div>
     <div class="site-footer__col">
       <span class="site-footer__col-title">Explore</span>
-      <a href="/">Atlas</a>
       <a href="/live">Live</a>
+      <a href="/schedule">Schedule</a>
       <a href="/players">Players</a>
       <a href="/insights">Insights</a>
+      <a href="/twin-network">Twin Networks</a>
       <a href="/playoff-runs">Playoff Runs</a>
-
       <a href="/taxonomy">Taxonomy</a>
-      <a href="/methods">Methods</a>
     </div>
     <div class="site-footer__col">
       <span class="site-footer__col-title">How it works</span>
-      <a href="https://dumbmodel.com" rel="noopener">dumbmodel.com</a>
+      <a href="/methods">Methods</a>
+      <a href="/models/mtnn-v5">Models</a>
+      <a href="https://github.com/jcdavis131/vector-hoops" rel="noopener">Source on GitHub</a>
     </div>
   </nav>
-  <p class="site-footer__attribution">Every number recomputable from stats.nba.com · A <a href="https://dumbmodel.com">dumbmodel</a> project · <a href="https://github.com/jcdavis131/vector-hoops" rel="noopener">Source</a> · Colophon: page transitions, the Pixel Replay wipe and the site&rsquo;s music (written in ABC notation and synthesized in your browser, no audio files) follow <a href="https://github.com/alchaincyf/huashu-motion" rel="noopener">huashu-motion</a>; the music code is ported in part from it, Copyright (c) 2026 Huashu, <a href="https://github.com/alchaincyf/huashu-motion/blob/main/LICENSE" rel="noopener">MIT License</a>.</p>
+  <p class="site-footer__attribution">Scores and stats from stats.nba.com and ESPN · A <a href="https://dumbmodel.com">dumbmodel</a> project</p>
 </footer>
+<!-- /footer:stamped -->
 <script src="assets/error-boundary.js?v=8079215c"></script>
 <script src="assets/keyboard-a11y.js?v=39777a87"></script>
 <script src="assets/vh-analytics.js?v=d838a3e1" defer></script>
-<script src="assets/site-nav.js?v=08ff3eda" defer></script>
+<script src="assets/site-nav.js?v=13e9219d" defer></script>
 <script src="assets/pwa-install.js?v=b954d9d1"></script>
-<script src="/assets/inline-sw-register.js?v=48fb8eb4"></script>
+<script src="/assets/inline-sw-register.js?v=3fccd5e4"></script>
 
 <script src="assets/network-viz.js?v=f07df411"></script>
 <script src="assets/site-facts.js?v=f8edaf37" defer></script>

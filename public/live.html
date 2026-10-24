@@ -4,8 +4,8 @@
 <link rel="manifest" href="/manifest.json">
 <title>Live — Vector Hoops</title>
 <meta name="description" content="Courtside Live: the second-screen companion for NBA games. Win probability, atlas twins, ghost watch, shot charts — the second screen for NBA nights."/>
-<link rel="stylesheet" href="assets/responsive.css?v=cc8e5207"/><link rel="stylesheet" href="assets/final-qa.css?v=fb603ee5"/><link rel="stylesheet" href="assets/unified.css?v=fd25e8ca"/><link rel="stylesheet" href="assets/motion.css?v=aa8dedc2"/><link rel="stylesheet" href="assets/fonts.css?v=8f376b2a"/><link rel="stylesheet" href="assets/atlas.css?v=c43e0f47"/>
-<link rel="stylesheet" href="assets/shell.css?v=b7460aa9"/><link rel="stylesheet" href="assets/live.css?v=a4526c48"/><link rel="stylesheet" href="assets/realtime/realtime.css?v=540a748b"/><link rel="stylesheet" href="assets/replay-embed.css?v=62df0d6d"/>
+<link rel="stylesheet" href="assets/responsive.css?v=cc8e5207"/><link rel="stylesheet" href="assets/final-qa.css?v=fb603ee5"/><link rel="stylesheet" href="assets/unified.css?v=fd25e8ca"/><link rel="stylesheet" href="assets/motion.css?v=aa8dedc2"/><link rel="stylesheet" href="assets/fonts.css?v=8f376b2a"/><link rel="stylesheet" href="assets/atlas.css?v=a737547a"/>
+<link rel="stylesheet" href="assets/shell.css?v=398d5e37"/><link rel="stylesheet" href="assets/live.css?v=d3db96c2"/><link rel="stylesheet" href="assets/realtime/realtime.css?v=540a748b"/><link rel="stylesheet" href="assets/replay-embed.css?v=389c1bf6"/>
 <meta name="color-scheme" content="dark light"/>
 <meta name="theme-color" content="#F4EFE2"/>
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml"/>
@@ -71,6 +71,8 @@
 <main id="main" tabindex="-1">
   <p id="live-loading" class="caption" role="status" style="padding:12px 4px">Loading today&rsquo;s games&hellip;</p>
   <div class="stickybar"><div class="board">
+  <div id="routeNotice" hidden></div>
+  <div id="ghMount"></div>
   <div class="scorebug">
     <div class="team"><div class="abbr" id="aAbbr">–</div><div class="rec" id="aRec"></div></div>
     <div class="mid"><div class="score"><span id="aScore">0</span> – <span id="hScore">0</span></div>
@@ -88,12 +90,17 @@
   </div></div>
 
   <div class="card" id="pregame" hidden></div>
+  <div class="card" id="morning" hidden></div>
 
   <details class="band" id="band-game" open>
   <summary><span class="band__k">Band A</span><span class="band__t">The game</span><span class="band__d">replay · win probability · momentum · shot chart</span></summary>
   <div class="band__body">
 <div class="card rp-embed" id="rpPlate" hidden>
     <div class="plate"><span class="pno">PLATE 01</span><h2>PIXEL REPLAY</h2><span class="prule"></span><span class="pmeta" id="rpPlateMeta">from ESPN play-by-play</span></div>
+    <div class="rp-view-toggle" role="group" aria-label="Replay size">
+      <button type="button" id="rpViewCompact" class="on" aria-pressed="true">Compact</button><button type="button" id="rpViewFull" aria-pressed="false">Full</button>
+    </div>
+    <div id="rpCompact">
     <div class="rp-embed__screen">
       <canvas id="rpCanvas" data-mode="embed" width="400" height="225" role="img" aria-label="Animated pixel replay of this game, a play behind the live feed"></canvas>
     </div>
@@ -107,6 +114,11 @@
     </div>
     <p id="rpNow" class="rp-embed__now" aria-live="polite"></p>
     <p class="caption">Plays and shot spots are ESPN&rsquo;s; the other nine players are projected by our model, and which basket each team shoots at is assumed: a projection, not tracking data. The page timeline drives the court.</p>
+    </div>
+    <div id="rpFullWrap" hidden>
+      <iframe id="rpFullFrame" class="rp-full-frame" title="Full Pixel Replay" loading="lazy"></iframe>
+      <p class="caption">The complete replay for this game — every camera, the timeline, big moments and the box score.</p>
+    </div>
   </div>
   <div class="card">
     <div class="plate"><span class="pno">PLATE 02</span><h2>WIN PROBABILITY</h2><span class="prule"></span><span class="pmeta">our heuristic · honest uncertainty bands</span></div>
@@ -141,8 +153,8 @@
   <summary><span class="band__k">Band B</span><span class="band__t">The story</span><span class="band__d">live moments · key runs · ghost watch · milestone watch · play by play</span></summary>
   <div class="band__body">
 <div class="card liveonly">
-    <div class="plate"><span class="pno">PLATE 03</span><h2>GHOST WATCH</h2><span class="prule"></span><span class="pmeta">Which of 6,000 past games does this one rhyme with?</span></div>
-    <div id="ghosts"><span style="font-size:12px;color:#6b675c">Matching live lines against 6,000 historic games…</span></div>
+    <div class="plate"><span class="pno">PLATE 03</span><h2>GHOST WATCH</h2><span class="prule"></span><span class="pmeta">Which of 6,000 past player-games does this one rhyme with? &middot; regular seasons 2023&ndash;24 &rarr; 2025&ndash;26 &middot; per-36 box-score match</span></div>
+    <div id="ghosts"><span style="font-size:12px;color:#6b675c">Matching live lines against 6,000 historic player-games (2023&ndash;24 &rarr; 2025&ndash;26 regular seasons)&hellip;</span></div>
     
   </div>
 <div class="card">
@@ -181,7 +193,7 @@
     <div class="embed3d-mount" data-projection="pca" style="height:420px"></div>
   </div>
 <div class="card">
-    <div class="plate"><span class="pno">PLATE 07</span><h2>ATLAS</h2><span class="prule"></span><span class="pmeta">12,966 player-seasons &middot; 64-d MTNN</span></div>
+    <div class="plate"><span class="pno">PLATE 07</span><h2>ATLAS</h2><span class="prule"></span><span class="pmeta">12,966 player-seasons &middot; 14-stat PCA view &middot; twins from the 64-d MTNN embedding</span></div>
     <div class="shot-toggle" id="atlasModes" role="tablist" aria-label="Atlas views">
       <button data-m="twins" class="picked">TWINS</button><button data-m="matchup">MATCHUP</button><button data-m="trail">TRAIL</button>
     </div>
@@ -201,41 +213,53 @@
 
 
 </div>
+<!-- footer:stamped -->
 <footer class="site-footer">
   <nav class="site-footer__sitemap" aria-label="Sitemap">
     <div class="site-footer__col">
       <span class="site-footer__col-title">Play</span>
       <a href="/play">Daily Court</a>
+      <a href="/map-guess">Map Hunt</a>
+      <a href="/twenty-questions">Twenty Questions</a>
+      <a href="/play/era-crossed">Era Crossed</a>
+      <a href="/replay">Pixel Replay</a>
     </div>
     <div class="site-footer__col">
       <span class="site-footer__col-title">Explore</span>
-      <a href="/">Atlas</a>
       <a href="/live">Live</a>
+      <a href="/schedule">Schedule</a>
       <a href="/players">Players</a>
       <a href="/insights">Insights</a>
+      <a href="/twin-network">Twin Networks</a>
       <a href="/playoff-runs">Playoff Runs</a>
-
       <a href="/taxonomy">Taxonomy</a>
-      <a href="/methods">Methods</a>
     </div>
     <div class="site-footer__col">
       <span class="site-footer__col-title">How it works</span>
-      <a href="https://dumbmodel.com" rel="noopener">dumbmodel.com</a>
+      <a href="/methods">Methods</a>
+      <a href="/models/mtnn-v5">Models</a>
+      <a href="https://github.com/jcdavis131/vector-hoops" rel="noopener">Source on GitHub</a>
     </div>
   </nav>
-  <p class="site-footer__attribution">Live scores via ESPN · Every number recomputable from stats.nba.com · A <a href="https://dumbmodel.com">dumbmodel</a> project · <a href="https://github.com/jcdavis131/vector-hoops" rel="noopener">Source</a> · Nearest seasons by cosine similarity in the 64-dimensional MTNN v5 embedding.</p>
+  <p class="site-footer__attribution">Scores and stats from stats.nba.com and ESPN · A <a href="https://dumbmodel.com">dumbmodel</a> project</p>
 </footer>
+<!-- /footer:stamped -->
 <script src="assets/vh-analytics.js?v=d838a3e1" defer></script>
-<script src="assets/site-nav.js?v=08ff3eda" defer></script>
+<script src="assets/site-nav.js?v=13e9219d" defer></script>
 <script src="assets/vh-peers.js?v=860629b9" defer></script>
 <script src="assets/realtime/realtime.js?v=c6ee0c22" defer></script>
-<script src="assets/replay-espn.js?v=af4e5d05" defer></script>
+<script src="assets/replay-espn.js?v=7d2cbf02" defer></script>
 <script src="assets/replay-model.js?v=023bb286" defer></script>
-<script src="assets/replay.js?v=a18e7f02" defer></script>
-<script src="assets/replay-live.js?v=31eb2ec7" defer></script>
+<script src="assets/replay.js?v=6738966b" defer></script>
+<script src="assets/replay-live.js?v=c9f51427" defer></script>
+<script src="assets/game-route.js?v=ae0bf9df" defer></script>
+<script src="assets/game-header.js?v=758eca08" defer></script>
+<script src="assets/plate.js?v=9ffa45dd" defer></script>
+<script src="assets/pregame.js?v=e88c245f" defer></script>
+<script src="assets/scoreboard.js?v=1d769757" defer></script>
 <script src="assets/embed-3d.js?v=f929c396" defer></script>
-<script src="assets/live.js?v=1936cf49" defer></script>
-<script src="assets/live-atlas.js?v=6d7fafa9" defer></script>
+<script src="assets/live.js?v=c699b5dd" defer></script>
+<script src="assets/live-atlas.js?v=02bd5fc4" defer></script>
 <script src="assets/engagement.js?v=9afde51a" defer></script>
 </body>
 </html>

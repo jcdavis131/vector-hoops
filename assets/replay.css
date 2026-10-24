@@ -50,7 +50,7 @@ body{ background:var(--rp-board); color:var(--rp-ink); }
 .rp-buttons button[aria-pressed="true"]{ background:var(--rp-coin); color:var(--rp-void); border-color:var(--rp-coin); }
 .rp-buttons .rp-play{ min-width:64px; font-size:16px; background:var(--rp-coin); color:var(--rp-void); border-color:var(--rp-coin); }
 .rp-speed, .rp-check{ font:600 11px var(--rp-mono); color:var(--rp-glow); display:flex; gap:6px; align-items:center; min-height:36px; }
-.rp-speed select{ min-height:30px; background:var(--rp-void2); color:var(--rp-glow); border:1px solid var(--rp-glow2); border-radius:4px; font:700 12px var(--rp-mono); }
+.rp-speed select{ appearance:auto; -webkit-appearance:menulist; width:auto; padding:0 8px; min-height:30px; background:var(--rp-void2); color:var(--rp-glow); border:1px solid var(--rp-glow2); border-radius:4px; font:700 12px var(--rp-mono); }
 .rp-timeline{ position:relative; margin-top:12px; }
 #rpScrub{ width:100%; min-height:28px; accent-color:var(--rp-coin); margin:0; }
 .rp-marks{ position:relative; height:10px; margin-top:2px; }
@@ -97,3 +97,26 @@ body{ background:var(--rp-board); color:var(--rp-ink); }
 .rp-live[aria-pressed="true"] .dot{ animation:rpPulse 1.4s ease-in-out infinite; }
 @keyframes rpPulse{ 50%{ opacity:.25 } }
 @media (prefers-reduced-motion: reduce){ .rp-live[aria-pressed="true"] .dot{ animation:none } }
+
+/* Box score panel: team quarter totals + player lines. Same tokens as the other
+   panels (paper/night-board adaptive); mono tabular numerals, no decoration. */
+.rp-box{ overflow-x:auto; }
+.rp-boxt{ width:100%; border-collapse:collapse; margin:0 0 12px; color:var(--rp-ink);
+  font:600 11px var(--rp-mono); font-variant-numeric:tabular-nums; }
+.rp-boxt th, .rp-boxt td{ padding:3px 4px; text-align:right; white-space:nowrap; border-bottom:1px solid var(--rp-line); }
+.rp-boxt thead th{ color:var(--rp-ink2); font-size:10px; letter-spacing:.04em; }
+.rp-boxt tbody th{ text-align:left; font-weight:700; }
+.rp-boxt .tot{ font-weight:800; }
+.rp-boxt .sw{ display:inline-block; width:8px; height:8px; margin-right:5px; box-shadow:0 0 0 1px var(--rp-ink); }
+.rp-boxteam{ display:flex; align-items:center; margin:12px 0 4px; font:800 11px var(--rp-mono); letter-spacing:.1em; color:var(--rp-ink); }
+.rp-boxteam .sw{ width:8px; height:8px; margin-right:6px; box-shadow:0 0 0 1px var(--rp-ink); }
+.rp-boxt tr.dnp{ color:var(--rp-ink2); }
+.rp-boxt .dnp-note{ text-align:left; font-size:10px; }
+.rp-boxsrc{ margin:8px 0 0; font:600 10px var(--rp-mono); letter-spacing:.06em; color:var(--rp-ink2); }
+
+/* chrome=0: chromeless embed for the /live plate's Full view — the cabinet and
+   side panels only, none of the page chrome. */
+body.rp-chrome0 .site-nav, body.rp-chrome0 .rp-head, body.rp-chrome0 .rp-games,
+body.rp-chrome0 #routeNotice, body.rp-chrome0 #gameHeader,
+body.rp-chrome0 .site-footer{ display:none; }
+body.rp-chrome0 .rp{ padding-block:12px 20px; }

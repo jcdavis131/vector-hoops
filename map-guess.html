@@ -13,9 +13,10 @@
 <meta name="twitter:description" content="A mystery star hides in the 3D map of 12,966 player-seasons. Tap points, get warmer or colder."/>
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml"/>
 <link rel="manifest" href="/manifest.json"/>
-<link rel="stylesheet" href="assets/shell.css?v=b7460aa9"/>
+<link rel="stylesheet" href="assets/atlas.css?v=a737547a"/>
+<link rel="stylesheet" href="assets/shell.css?v=398d5e37"/>
 <style>
-:root{--paper:#FFFEF7;--ink:#1A150F;--radius:14px;--mono:ui-monospace,monospace;--sans:ui-sans-serif,system-ui}
+:root{--radius:14px;--mono:ui-monospace,monospace;--sans:ui-sans-serif,system-ui}
 *{box-sizing:border-box}html,body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:18px;line-height:1.6;overflow-x:clip}
 button,.input{min-height:44px}
 .main{max-width:880px;margin:0 auto;padding:12px clamp(12px,3vw,20px) calc(92px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:14px}
@@ -26,7 +27,7 @@ button,.input{min-height:44px}
 .small-mono{font-family:var(--mono);font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase}
 .game-title{margin:0;font-size:clamp(26px,6vw,40px);line-height:.95;letter-spacing:-.02em}
 .game-subtitle{margin:8px 0 0;font-size:15px;line-height:1.55;color:var(--fg-2);max-width:64ch}
-.mode-tabs{display:flex;gap:8px;overflow-x:auto;flex-wrap:nowrap;padding:4px 0 8px;scrollbar-width:none}
+.mode-tabs{display:flex;gap:8px;overflow-x:auto;flex-wrap:nowrap;padding:4px 0 8px;scrollbar-width:none;border:0;background:none;border-radius:0}
 .mode-tab{flex:0 0 auto;appearance:none;border:1px solid var(--line-2);border-radius:999px;padding:8px 14px;background:var(--surface);font-family:var(--mono);font-size:11px;font-weight:900;text-transform:uppercase;cursor:pointer;min-height:40px;display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
 .mode-tab.is-active{background:var(--accent);color:var(--on-accent)}
 .mode-tab.is-link{text-decoration:none;color:var(--ink)}
@@ -58,7 +59,6 @@ button,.input{min-height:44px}
 .vh-toast.is-visible{opacity:1;transform:translateX(-50%) translateY(0)}
 .site-footer{border-top:1px solid var(--line);margin-top:26px;padding:22px clamp(12px,3vw,20px) 40px;font-size:13px;color:var(--fg-3);max-width:880px;margin-left:auto;margin-right:auto}
 .site-footer a{color:var(--fg-2)}
-@media (prefers-color-scheme:dark){:root{--paper:#101216}}
 </style>
 </head>
 <body>
@@ -175,11 +175,39 @@ button,.input{min-height:44px}
     <p style="font-size:14px;color:var(--fg-2);margin:0">The mystery is one of 64 notable player-seasons, the same star for everyone today, picked by the calendar. Distance is cosine distance in the 64-d MTNN v5 embedding (L2-normalized), the same space the twin engine uses. Twin Hunt hands you a player and asks for their <b>era twin</b> — the season from another decade that plays most alike, straight from the same twin data as Daily Court.</p>
   </section>
 </main>
+<!-- footer:stamped -->
 <footer class="site-footer">
-  <p>Every number recomputable from stats.nba.com · A <a href="https://dumbmodel.com">dumbmodel</a> project · <a href="/play">Classic Daily Court</a> · <a href="/">The atlas</a> · Nearest seasons by cosine similarity in the 64-dimensional MTNN v5 embedding.</p>
+  <nav class="site-footer__sitemap" aria-label="Sitemap">
+    <div class="site-footer__col">
+      <span class="site-footer__col-title">Play</span>
+      <a href="/play">Daily Court</a>
+      <a href="/map-guess">Map Hunt</a>
+      <a href="/twenty-questions">Twenty Questions</a>
+      <a href="/play/era-crossed">Era Crossed</a>
+      <a href="/replay">Pixel Replay</a>
+    </div>
+    <div class="site-footer__col">
+      <span class="site-footer__col-title">Explore</span>
+      <a href="/live">Live</a>
+      <a href="/schedule">Schedule</a>
+      <a href="/players">Players</a>
+      <a href="/insights">Insights</a>
+      <a href="/twin-network">Twin Networks</a>
+      <a href="/playoff-runs">Playoff Runs</a>
+      <a href="/taxonomy">Taxonomy</a>
+    </div>
+    <div class="site-footer__col">
+      <span class="site-footer__col-title">How it works</span>
+      <a href="/methods">Methods</a>
+      <a href="/models/mtnn-v5">Models</a>
+      <a href="https://github.com/jcdavis131/vector-hoops" rel="noopener">Source on GitHub</a>
+    </div>
+  </nav>
+  <p class="site-footer__attribution">Scores and stats from stats.nba.com and ESPN · A <a href="https://dumbmodel.com">dumbmodel</a> project</p>
 </footer>
+<!-- /footer:stamped -->
 <script src="/assets/embed-3d.js?v=f929c396"></script>
 <script src="assets/map-hunt.js?v=dfeccf8d"></script>
 <script src="assets/viral-share.js?v=cf0464c7"></script>
-<script src="assets/site-nav.js?v=08ff3eda" defer></script>
+<script src="assets/site-nav.js?v=13e9219d" defer></script>
 </body></html>
