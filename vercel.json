@@ -285,15 +285,6 @@
           "value": "public, max-age=0, s-maxage=60, stale-while-revalidate=300"
         }
       ],
-      "source": "/twin-network"
-    },
-    {
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=0, s-maxage=60, stale-while-revalidate=300"
-        }
-      ],
       "source": "/status"
     },
     {
@@ -304,15 +295,6 @@
         }
       ],
       "source": "/feed-health"
-    },
-    {
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=0, s-maxage=60, stale-while-revalidate=300"
-        }
-      ],
-      "source": "/play/era-crossed"
     }
   ],
   "rewrites": [
@@ -385,20 +367,12 @@
       "destination": "/twenty-questions.html"
     },
     {
-      "source": "/twin-network",
-      "destination": "/twin-network.html"
-    },
-    {
       "source": "/status",
       "destination": "/status.html"
     },
     {
       "source": "/feed-health",
       "destination": "/feed-health.html"
-    },
-    {
-      "source": "/play/era-crossed",
-      "destination": "/play/era-crossed.html"
     }
   ],
   "trailingSlash": false,
