@@ -105,3 +105,5 @@ body.rp-chrome0 .site-nav, body.rp-chrome0 .rp-head, body.rp-chrome0 .rp-games,
 body.rp-chrome0 #routeNotice, body.rp-chrome0 #gameHeader,
 body.rp-chrome0 .site-footer{ display: none; }
 body.rp-chrome0 .rp{ padding-block: 12px 20px; }
+/* game-header.js markup (.gh-*): layout only until the kit styles it (kit request, wave 2.4) */
+#gameHeader .gh{ display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; font-size: var(--t-sm); color: var(--fg-2); }

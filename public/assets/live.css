@@ -243,3 +243,8 @@ svg.shot .annot{ font-family: var(--font-code); fill: var(--fg-2); }
 .rp-full-frame{ display: block; width: 100%; height: 900px; margin-top: var(--s-3); border: 0;
   border-radius: var(--radius-lg); background: var(--bg); box-shadow: 0 0 0 1px var(--line-2); }
 @media (max-width: 480px){ .rp-embed__full{ margin-left: 0; } }
+
+/* the off-day replay link carries a score line: it wraps instead of running off the card */
+#offgame-replay{ white-space: normal; height: auto; padding-top: 8px; padding-bottom: 8px; text-align: center; }
+/* game-header.js markup (.gh-*): layout only until the kit styles it (kit request, wave 2.4) */
+#ghMount .gh{ display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; }
