@@ -32,25 +32,30 @@
 .vh-tax__hero h1{font:800 clamp(30px,5.4vw,46px)/1.05 var(--font-display);letter-spacing:-.02em;margin:0 0 10px}
 .vh-tax__hero h1 .vh-tax__accent{color:var(--accent)}
 .vh-tax__hero p{font:400 15px/1.6 var(--font-sans);color:var(--fg-2);margin:0 auto;max-width:64ch}
-.vh-tax__meta{display:inline-block;margin-top:12px;font:600 12px/1 var(--font-sans);letter-spacing:.08em;text-transform:uppercase;color:var(--gold,#D4AF69);border:1px solid var(--line);border-radius:999px;padding:8px 14px;background:var(--surface)}
+.vh-tax__stats{display:inline-flex;margin:var(--s-3) auto 0;text-align:left;max-width:100%}
+.vh-tax__stats > .stat{min-width:104px}
+.vh-tax__share{margin:var(--s-3) 0 0 var(--s-2);vertical-align:bottom}
+@media(max-width:560px){.vh-tax__stats{display:flex}.vh-tax__share{margin-left:0}}
 .vh-tax__search{display:flex;gap:10px;align-items:center;max-width:520px;margin:0 auto var(--s-4)}
-.vh-tax__search input{flex:1;font:400 16px/1.4 var(--font-sans);color:var(--fg);background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 16px}
+.vh-tax__search input{flex:1;font:400 16px/1.4 var(--font-sans);color:var(--fg);background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-xl);padding:12px 16px}
 .vh-tax__search input:focus{outline:2px solid var(--accent);outline-offset:1px}
 .vh-tax__search-note{font:600 12.5px/1 var(--font-sans);color:var(--fg-2);white-space:nowrap}
 .vh-tax__fam{margin:0 0 var(--s-5)}
-.vh-tax__famhead{background:var(--void,#1E2022);color:#F9F6F0;border-radius:16px;padding:22px 24px;margin:0 0 12px;box-shadow:var(--shadow-soft)}
-.vh-tax__famhead h2{font:800 clamp(20px,3.4vw,27px)/1.2 var(--font-display);margin:0 0 6px;letter-spacing:-.01em;color:#F9F6F0}
+/* family head: the kit model window (.card.card--void remaps --fg/--fg-2/--accent/--line to the void pairings) */
+.vh-tax__famhead{margin:0 0 12px;padding:22px 24px}
+.vh-tax__famhead h2{font:800 clamp(20px,3.4vw,27px)/1.2 var(--font-display);margin:0 0 6px;letter-spacing:-.01em;color:var(--fg)}
 .vh-tax__famhead h2::before{content:"";display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--accent);margin-right:10px;vertical-align:2px}
-.vh-tax__famhead p{font:400 14px/1.6 var(--font-sans);color:#cfc9bd;margin:0 0 8px;max-width:62ch}
-.vh-tax__fammeta{font:600 11.5px/1 var(--font-sans);letter-spacing:.1em;text-transform:uppercase;color:#D4AF69}/* explicit hex: --gold remaps to near-black in the paper theme, which made this count line invisible on the dark famhead card */
-.vh-tax__arch{background:var(--surface);border:1px solid var(--line);border-radius:14px;margin:0 0 10px;box-shadow:var(--shadow-soft);overflow:hidden}
-.vh-tax__archsum{display:flex;align-items:center;gap:14px;padding:16px 20px;cursor:pointer;list-style:none}
+.vh-tax__famhead p{font:400 14px/1.6 var(--font-sans);color:var(--fg-2);margin:0 0 var(--s-3);max-width:62ch}
+.vh-tax__fammeta{display:inline-flex;background:transparent}
+.vh-tax__fammeta > .stat{min-width:0;padding:8px 14px;white-space:nowrap}
+.vh-tax__arch{padding:0;margin:0 0 10px;overflow:hidden}
+.vh-tax__archsum{display:flex;align-items:center;gap:14px;min-height:44px;padding:16px 20px;cursor:pointer;list-style:none}
 .vh-tax__archsum::-webkit-details-marker{display:none}
 .vh-tax__archsum:hover .vh-tax__archname{color:var(--accent)}
 .vh-tax__archname{font:700 clamp(16px,2.6vw,20px)/1.3 var(--font-display);letter-spacing:-.01em;flex:0 1 auto}
 .vh-tax__archmeta{font:400 12.5px/1.5 var(--font-sans);color:var(--fg-2);flex:1 1 auto}
 .vh-tax__chev{font-size:18px;color:var(--accent);transition:transform .18s ease;flex:0 0 auto}
-.vh-tax__archsum::after{content:"Details";font:700 10.5px/1 var(--font-sans);letter-spacing:.12em;text-transform:uppercase;color:var(--fg-3);flex:0 0 auto}
+.vh-tax__archsum::after{content:"Details";font:700 var(--t-xs)/1 var(--font-sans);letter-spacing:.12em;text-transform:uppercase;color:var(--fg-3);flex:0 0 auto}
 .vh-tax__arch[open] .vh-tax__archsum::after{content:"Hide"}
 .vh-tax__arch[open] .vh-tax__chev{transform:rotate(180deg)}
 .vh-tax__archbody{padding:0 20px 20px;border-top:1px solid var(--line)}
@@ -60,16 +65,14 @@
 .vh-tax__signame{font:600 11.5px/1.2 var(--font-sans);letter-spacing:.04em;color:var(--fg-2);text-align:right}
 .vh-tax__sigbar{position:relative;height:10px;border-radius:99px;background:color-mix(in srgb,var(--line) 55%,transparent)}
 .vh-tax__sigbar i{position:absolute;top:0;bottom:0;border-radius:99px}
-.vh-tax__sigbar i.is-pos{background:linear-gradient(90deg,var(--accent),var(--gold,#D4AF69))}
-.vh-tax__sigbar i.is-neg{background:color-mix(in srgb,#7a8699 80%,transparent)}
+.vh-tax__sigbar i.is-pos{background:linear-gradient(90deg,var(--accent),var(--coin-text))}
+.vh-tax__sigbar i.is-neg{background:color-mix(in srgb,var(--fg-3) 70%,transparent)}
 .vh-tax__sigbar b{position:absolute;top:-2px;bottom:-2px;width:2px;background:var(--fg-3);opacity:.7}
 .vh-tax__sigpct{font:700 12.5px/1 var(--font-sans);color:var(--fg)}
 .vh-tax__sigpct small{font-weight:400;color:var(--fg-2)}
 .vh-tax__sigcap{font:400 12px/1.5 var(--font-sans);color:var(--fg-3);margin:0 0 14px}
 .vh-tax__members{display:flex;flex-wrap:wrap;gap:8px}
-.vh-tax__chip{font:600 13px/1.4 var(--font-sans);color:var(--fg);background:color-mix(in srgb,var(--surface) 60%,var(--bg));border:1px solid var(--line);border-radius:999px;padding:7px 13px;text-decoration:none}
-.vh-tax__chip span{font:400 11px/1 var(--font-sans);color:var(--fg-2);margin-left:7px;letter-spacing:.06em}
-.vh-tax__chip:hover{border-color:var(--accent);color:var(--accent)}
+.vh-tax__chip span{font-weight:400;color:var(--fg-3);margin-left:2px}
 .vh-tax__more{font:400 12.5px/1.5 var(--font-sans);color:var(--fg-2);flex-basis:100%}
 .vh-tax__foot{font:400 12.5px/1.7 var(--font-sans);color:var(--fg-3);margin:var(--s-5) 0 0;max-width:68ch}
 .vh-tax__foot a{color:var(--accent)}
@@ -85,7 +88,7 @@
   <div class="vh-tax__hero">
     <h1>Taxonomy of <span class="vh-tax__accent">Play Styles</span></h1>
     <p>Every NBA player-season since 1996, distilled to <span data-fact="players">2,426</span> career play styles and organized into 22 archetypes across 5 families — clustered from stat profiles, named from the numbers. Find your favorite player. See who they really play like.</p>
-    <span class="vh-tax__meta" id="tax-meta">loading…</span> <button class="vh-tax__meta" id="vh-share-btn" type="button" style="cursor:pointer">Share</button>
+    <div class="stat-strip vh-tax__stats" id="tax-meta"><div class="stat"><b data-tax="players">2,426</b>Players</div><div class="stat"><b data-tax="families">5</b>Families</div><div class="stat"><b data-tax="archetypes">22</b>Archetypes</div></div> <button class="btn vh-tax__share" id="vh-share-btn" type="button">Share</button>
   </div>
 
   <div class="vh-tax__search">
@@ -132,7 +135,7 @@
 <!-- /footer:stamped -->
 <script src="/assets/vh-analytics.js?v=d838a3e1"></script>
 <script src="/assets/site-nav.js?v=13e9219d"></script>
-<script src="assets/taxonomy.js?v=4a2de619"></script>
+<script src="assets/taxonomy.js?v=30f8a398"></script>
 <script src="assets/inline-sw-register.js?v=3fccd5e4"></script>
 <script src="assets/site-facts.js?v=f8edaf37" defer></script>
 <script src="assets/inline-share-btn.js?v=e041d558"></script>

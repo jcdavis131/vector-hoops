@@ -26,58 +26,12 @@
 <link rel="stylesheet" href="/assets/fonts.css?v=8f376b2a"/>
 <link rel="stylesheet" href="/assets/atlas.css?v=31711e9d"/>
 <link rel="stylesheet" href="/assets/shell.css?v=398d5e37"/>
-<style>
-.vh-ins__wrap{max-width:880px;margin:0 auto;padding:0 var(--s-3) var(--s-6)}
-.vh-ins__spotlabel{font:700 12px/1.4 var(--font-sans);letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin:0 0 var(--s-2)}
-.vh-ins__card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:clamp(20px,4vw,36px);margin:0 0 var(--s-4);box-shadow:var(--shadow-soft)}
-.vh-ins__card--featured{border-color:var(--accent-line);box-shadow:0 12px 40px rgba(0,0,0,.18)}
-.vh-ins__kicker{font:700 12px/1.4 var(--font-sans);letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin:0 0 8px}
-.vh-ins__kicker--money{color:var(--gold)}
-.vh-ins__kicker--entity{color:var(--moss,#8A9A8B)}
-.vh-ins__card[data-theme="money"]{border-top:3px solid var(--gold)}
-.vh-ins__card[data-theme="entity"]{border-top:3px solid var(--moss,#8A9A8B)}
-.vh-ins__skeleton{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:clamp(20px,4vw,36px);margin:0 0 var(--s-4);animation:vh-sk-pulse 1.4s ease-in-out infinite}
-.vh-ins__sk-line{height:14px;border-radius:7px;background:var(--line);margin:0 0 12px}
-.vh-ins__sk-kicker{width:32%;height:11px}
-.vh-ins__sk-title{width:78%;height:26px;border-radius:8px}
-.vh-ins__sk-short{width:46%}
-.vh-ins__sk-viz{height:120px;border-radius:12px;background:var(--line);margin-top:16px}
-@keyframes vh-sk-pulse{0%,100%{opacity:1}50%{opacity:.55}}
-.vh-ins__title{font:700 clamp(24px,4.6vw,36px)/1.15 var(--font-display);margin:0 0 10px;letter-spacing:-.01em}
-.vh-ins__tldr{font:500 clamp(16px,2.6vw,19px)/1.55 var(--font-sans);color:var(--fg);margin:0 0 16px;max-width:62ch}
-.vh-ins__tldr span{display:block;font:700 11px/1.4 var(--font-sans);letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin:0 0 4px}
-.vh-ins__lede{font:400 15px/1.6 var(--font-sans);color:var(--fg-2);margin:0 0 18px;max-width:60ch}
-.vh-ins__stat{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin:0 0 18px}
-.vh-ins__statnum{font:800 clamp(44px,9vw,72px)/1 var(--font-display);color:var(--gold,#D4AF69);letter-spacing:-.02em}
-.vh-ins__statlabel{font:400 14px/1.5 var(--font-sans);color:var(--fg-2);max-width:34ch}
-.vh-ins__vizwrap{background:var(--void,#1E2022);border-radius:12px;padding:18px 16px;margin:0 0 16px}
-.vh-ins__viz{width:100%;height:auto;display:block}
-.vh-ins__svglabel{font:400 13px var(--font-sans);fill:var(--fg-2)}
-.vh-ins__svgval{font:700 13px var(--font-sans);fill:var(--fg)}
-.vh-ins__svgtag{font:400 12px var(--font-sans);fill:var(--fg-3)}
-.vh-ins__vizwrap .vh-ins__svglabel{fill:#b9b2a4}
-.vh-ins__vizwrap .vh-ins__svgval{fill:#F9F6F0}
-.vh-ins__vizwrap .vh-ins__svgtag{fill:#9a927f}
-.vh-ins__vizwrap .vh-ins__svgval--in{fill:#1E2022}
-.vh-ins__foot{font:400 12.5px/1.6 var(--font-sans);color:var(--fg-3);margin:0 0 18px}
-.vh-ins__but{font:400 13.5px/1.6 var(--font-sans);color:var(--fg-2);margin:0 0 18px;padding-left:12px;border-left:3px solid var(--gold,#D4AF69)}
-.vh-ins__but span{display:block;font:700 11px/1.4 var(--font-sans);letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin:0 0 4px}
-.vh-ins__series{grid-column:1/-1;margin:28px 0 2px;border-top:2px solid var(--line-strong,rgba(128,128,128,.35));padding-top:18px}
-.vh-ins__series-title{font:700 22px/1.25 var(--font-display,inherit);margin:0 0 4px}
-.vh-ins__series-sub{font:400 13.5px/1.55 var(--font-sans);color:var(--fg-2);margin:0}
-.vh-ins__examples{font:400 14px/1.6 var(--font-sans);color:var(--fg-2);margin:0 0 18px}
-.vh-ins__examples span{display:block;font:700 11px/1.4 var(--font-sans);letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin:0 0 6px}
-.vh-ins__share{display:flex;gap:10px;flex-wrap:wrap}
-.vh-ins__error{padding:24px;text-align:center;color:var(--fg-2)}
-.vh-ins__flash{animation:vhInsFlash 2.2s ease}
-@keyframes vhInsFlash{0%,60%{box-shadow:0 0 0 3px var(--accent)}100%{box-shadow:var(--shadow-soft)}}
-@media(max-width:560px){.vh-ins__vizwrap{padding:14px 10px}}
-</style>
+<link rel="stylesheet" href="/assets/insights-cards.css?v=437cf324"/>
 </head><body>
 <a class="skip-link" href="#main">Skip to content</a>
 <noscript>
-<div role="alert" style="padding:16px;text-align:center">Enable JS — Vector Hoops Insights needs JavaScript for the interactive cards. The findings, without the interactive bits:</div>
-<ol style="max-width:640px;margin:0 auto;padding:0 16px 24px;font:400 14px/1.6 var(--font-sans);color:var(--fg-2)">
+<div role="alert" class="vh-ins__noscript">Enable JS — Vector Hoops Insights needs JavaScript for the interactive cards. The findings, without the interactive bits:</div>
+<ol class="vh-ins__noscript-list">
 <li><b>The summer the salary cap broke</b> — when the cap jumped 34% in one summer, teams bid against the new money, not production.</li>
 <li><b>The most expensive seats in basketball</b> — $115M in cap-adjusted dollars for zero 2021-22 games.</li>
 <li><b>The max-money cheat code</b> — true superstars outproduce even max money.</li>
@@ -98,15 +52,16 @@
   </header>
 
   <div class="vh-ins__wrap">
+    <nav class="vh-ins__index" id="insights-index" aria-label="All findings" hidden></nav>
     <section id="insights-spotlight" aria-label="Insight of the day"></section>
     <section id="insights-list" aria-label="All insights">
       <div class="vh-ins__skeleton" aria-hidden="true"><div class="vh-ins__sk-line vh-ins__sk-kicker"></div><div class="vh-ins__sk-line vh-ins__sk-title"></div><div class="vh-ins__sk-line"></div><div class="vh-ins__sk-line vh-ins__sk-short"></div><div class="vh-ins__sk-viz"></div></div>
       <div class="vh-ins__skeleton" aria-hidden="true"><div class="vh-ins__sk-line vh-ins__sk-kicker"></div><div class="vh-ins__sk-line vh-ins__sk-title"></div><div class="vh-ins__sk-line"></div><div class="vh-ins__sk-line vh-ins__sk-short"></div><div class="vh-ins__sk-viz"></div></div>
       <div class="vh-ins__skeleton" aria-hidden="true"><div class="vh-ins__sk-line vh-ins__sk-kicker"></div><div class="vh-ins__sk-line vh-ins__sk-title"></div><div class="vh-ins__sk-line"></div><div class="vh-ins__sk-line vh-ins__sk-short"></div><div class="vh-ins__sk-viz"></div></div>
     </section>
-    <p class="vh-ins__foot" style="text-align:center">The full leaderboard: <a href="/playoff-runs">greatest playoff runs</a> — 42 ranked runs across individuals, duos, trios and teams.</p>
-    <p class="vh-ins__foot" style="text-align:center">More from the atlas: <a href="/taxonomy">a taxonomy of play styles</a>.</p>
-    <p class="vh-ins__foot" style="text-align:center">Methods and provenance: <a href="/methods#insights">methods.html#insights</a> · Every card names its source, sample and window on the card.</p>
+    <p class="vh-ins__foot vh-ins__foot--c">The full leaderboard: <a href="/playoff-runs">greatest playoff runs</a> — 42 ranked runs across individuals, duos, trios and teams.</p>
+    <p class="vh-ins__foot vh-ins__foot--c">More from the atlas: <a href="/taxonomy">a taxonomy of play styles</a>.</p>
+    <p class="vh-ins__foot vh-ins__foot--c">Methods and provenance: <a href="/methods#insights">methods.html#insights</a> · Every card names its source, sample and window on the card.</p>
   </div>
 </div>
 
@@ -143,5 +98,5 @@
 <!-- /footer:stamped -->
 <script src="/assets/vh-analytics.js?v=d838a3e1"></script>
 <script src="/assets/site-nav.js?v=13e9219d"></script>
-<script src="assets/insights.js?v=cd5f89ba"></script><script src="assets/inline-sw-register.js?v=3fccd5e4"></script>
+<script src="assets/insights.js?v=3350231c"></script><script src="assets/inline-sw-register.js?v=3fccd5e4"></script>
 </body></html>

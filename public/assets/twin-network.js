@@ -6,8 +6,10 @@
 (function (global) {
   'use strict';
 
-  var VOID = '#1E2022', PAPER = '#F9F6F0', TERRA = '#C17C60',
-      GOLD = '#D4AF69', MUTED = '#8b8578', LINE = '#3a3d40';
+  /* Chart marks are token classes (.vh-ins__mark*, insights-cards.css): the
+     panels are the void on both themes. Only the era hues stay literal —
+     they encode time and the kit has no data palette on the void yet. */
+  var MUTED = '#8b8578';
 
   // Era → color (functional: color encodes time, nothing else).
   // Drafting Board tokens: pencil gray → terra → marker blue → marker red,
@@ -166,11 +168,10 @@
       var lx = nb._x, ly = nb._y + out * 28;
       // text halo (dark stroke under the fill) keeps labels readable where
       // dense neighborhoods overlap — readability without leader lines.
-      var halo = ' style="paint-order:stroke;stroke:#1E2022;stroke-width:3px"';
       s += '<circle cx="' + nb._x.toFixed(1) + '" cy="' + nb._y.toFixed(1) + '" r="14" fill="' + eraColor(nb._dec) + '" opacity="0.92"/>';
-      s += '<text x="' + lx.toFixed(1) + '" y="' + ly.toFixed(1) + '" text-anchor="middle" class="vh-ins__svglabel"' + halo + '>' +
+      s += '<text x="' + lx.toFixed(1) + '" y="' + ly.toFixed(1) + '" text-anchor="middle" class="vh-ins__svglabel vh-ins__svghalo">' +
         esc(pretty(q.name)) + '</text>';
-      s += '<text x="' + lx.toFixed(1) + '" y="' + (ly + out * 15).toFixed(1) + '" text-anchor="middle" class="vh-ins__svgval"' + halo + '>' +
+      s += '<text x="' + lx.toFixed(1) + '" y="' + (ly + out * 15).toFixed(1) + '" text-anchor="middle" class="vh-ins__svgval vh-ins__svghalo">' +
         esc(shortSeason(q.season)) + ' · ' + simBand(nb.sim) + '</text>';
     });
     // center node: size ∝ Twin Centrality (sqrt-scaled; max 61 → r 33).
@@ -178,11 +179,9 @@
     // and the picker value. Text here only ever collided with twin labels.
     var cr = 16 + Math.sqrt(centrality || 0) * 2.2;
     if (cr > 34) cr = 34;
-    s += '<circle cx="' + cx + '" cy="' + cy + '" r="' + cr.toFixed(1) + '" fill="' + GOLD + '"/>';
-    s += '<circle cx="' + cx + '" cy="' + cy + '" r="' + (cr - 5).toFixed(1) + '" fill="none" stroke="#1E2022" stroke-width="2" opacity="0.5"/>';
-    // the folded metrics: one caption line, not boxes
-    s += '<text x="' + cx + '" y="' + (H - 8) + '" text-anchor="middle" class="vh-ins__svglabel">' +
-      'Twin Centrality ' + centrality + ' of 12,966 neighbor sets · Era-Bridge ' + eraBridge + ' of 8 twins from another decade</text>';
+    s += '<circle cx="' + cx + '" cy="' + cy + '" r="' + cr.toFixed(1) + '" class="vh-ins__mark vh-ins__mark--gold"/>';
+    s += '<circle cx="' + cx + '" cy="' + cy + '" r="' + (cr - 5).toFixed(1) + '" class="vh-ins__mark--ring"/>';
+    // the metrics are a .stat-strip above the panel (metricsHTML), legible at 390
     // era legend, top-left — clear of the caption
     var lx0 = 14;
     decades.forEach(function (dec, i) {
@@ -211,52 +210,54 @@
     var s = '<svg viewBox="0 0 ' + W + ' ' + H + '" class="vh-ins__viz" role="img" aria-label="stat flow of ' + esc(pretty(p.name)) + '">';
     var heads = ['Archetype', 'Stat signature', 'Era twin'];
     heads.forEach(function (h, i) {
-      s += '<text x="' + (X[i] + CW / 2) + '" y="22" text-anchor="middle" class="vh-ins__svglabel" style="text-transform:uppercase;letter-spacing:.12em;font-size:11px">' + h + '</text>';
+      s += '<text x="' + (X[i] + CW / 2) + '" y="22" text-anchor="middle" class="vh-ins__svglabel vh-ins__svghead">' + h + '</text>';
     });
-    function link(x1, y1, x2, y2, w, color, label) {
+    function link(x1, y1, x2, y2, w, cls, label) {
       var mx = (x1 + x2) / 2;
       s += '<path d="M' + x1 + ',' + y1 + ' C' + mx + ',' + y1 + ' ' + mx + ',' + y2 + ' ' + x2 + ',' + y2 +
-        '" fill="none" stroke="' + (color || TERRA) + '" stroke-width="' + w.toFixed(1) + '" opacity="0.7"/>';
+        '" class="' + (cls || 'vh-ins__line') + '" stroke-width="' + w.toFixed(1) + '" opacity="0.7"/>';
       if (label) {
         s += '<text x="' + mx.toFixed(1) + '" y="' + ((y1 + y2) / 2 - 6).toFixed(1) + '" text-anchor="middle" class="vh-ins__svglabel">' + esc(label) + '</text>';
       }
     }
-    function node(x, y, w, h, fill, lines, dashed) {
-      s += '<rect x="' + x + '" y="' + y + '" width="' + w + '" height="' + h + '" rx="8" fill="' + fill + '"' +
-        (dashed ? ' stroke-dasharray="6 4" stroke="' + MUTED + '" stroke-width="1.5"' : '') + '/>';
+    function node(x, y, w, h, cls, lines) {
+      s += '<rect x="' + x + '" y="' + y + '" width="' + w + '" height="' + h + '" rx="8" class="' + cls + '"/>';
+      var ink = cls.indexOf('--gold') !== -1 ? ' vh-ins__svgval--on-gold' : '';
       lines.forEach(function (ln, i) {
+        // a line past ~16 chars is squeezed to the node width, never cut
+        var fit = String(ln).length > 16 ? '" textLength="' + (w - 10) + '" lengthAdjust="spacingAndGlyphs' : '';
         s += '<text x="' + (x + w / 2) + '" y="' + (y + h / 2 - (lines.length - 1) * 8 + i * 16) +
-          '" text-anchor="middle" class="vh-ins__svgval">' + esc(ln) + '</text>';
+          '" text-anchor="middle" class="vh-ins__svgval' + ink + fit + '">' + esc(ln) + '</text>';
       });
     }
     // Archetype node (the era lives in the twin column now)
     var archLines = wrap2(p.archetype || 'Unknown');
-    node(X[0], 138, CW, 70, '#2a2d30', archLines);
+    node(X[0], 138, CW, 70, 'vh-ins__mark--node', archLines);
     // Stat nodes: heights proportional to |z| share; flows labeled with z
     var tot = p.top3.reduce(function (a, t) { return a + Math.abs(t.z); }, 0) || 1;
     var y = 56, Htot = 218;
     p.top3.forEach(function (t) {
       var h = Math.max(30, (Math.abs(t.z) / tot) * Htot);
-      var lbl = t.label.length > 16 ? t.label.slice(0, 15) + '…' : t.label;
+      var lbl = t.label;
       var zlbl = (t.z > 0 ? '+' : '') + t.z.toFixed(2) + 'σ';
-      node(X[1], y, CW, h, '#2a2d30', [lbl, zlbl]);
+      node(X[1], y, CW, h, 'vh-ins__mark--node', [lbl, zlbl]);
       var share = Math.abs(t.z) / tot;
-      link(X[0] + CW, 173, X[1], y + h / 2, Math.max(2, share * 30), TERRA, zlbl);
+      link(X[0] + CW, 173, X[1], y + h / 2, Math.max(2, share * 30), 'vh-ins__line', zlbl);
       t._cy = y + h / 2;
       y += h + 8;
     });
     // Twin node (or honest empty state) — band label, never a naked number
     var tw = state.twins[p.name.toLowerCase() + '|' + p.season];
     if (tw && tw.twin) {
-      node(X[2], 138, CW, 70, GOLD, [pretty(tw.twin.name).split(' ').slice(-1)[0], shortSeason(tw.twin.season)]);
+      node(X[2], 138, CW, 70, 'vh-ins__mark vh-ins__mark--gold', [pretty(tw.twin.name).split(' ').slice(-1)[0], shortSeason(tw.twin.season)]);
       s += '<text x="' + (X[2] + CW / 2) + '" y="' + (138 + 88) + '" text-anchor="middle" class="vh-ins__svglabel">' +
         simBand(Number(tw.twin.similarity)) + '</text>';
       p.top3.forEach(function (t) {
         var share = Math.abs(t.z) / tot;
-        link(X[1] + CW, t._cy, X[2], 173, Math.max(2, share * 30), GOLD);
+        link(X[1] + CW, t._cy, X[2], 173, Math.max(2, share * 30), 'vh-ins__line--gold');
       });
     } else {
-      node(X[2], 138, CW, 70, 'none', ['No era twin', 'charted'], true);
+      node(X[2], 138, CW, 70, 'vh-ins__mark--empty', ['No era twin', 'charted']);
       s += '<text x="' + (X[2] + CW / 2) + '" y="' + (138 + 88) + '" text-anchor="middle" class="vh-ins__svglabel">pool: 4+ seasons</text>';
     }
     return s + '</svg>';
@@ -267,6 +268,13 @@
   function setStatus(msg) {
     var el = document.getElementById('tn-status');
     if (el) el.textContent = msg;
+  }
+
+  function metricsHTML(centrality, eraBridge) {
+    return '<div class="stat-strip">' +
+      '<div class="stat"><b>' + esc(String(centrality)) + '</b>Twin Centrality · of 12,966 neighbor sets</div>' +
+      '<div class="stat"><b>' + esc(String(eraBridge)) + ' of 8</b>Era-Bridge · twins from another decade</div>' +
+      '</div>';
   }
 
   function render(id) {
@@ -283,8 +291,10 @@
     var eraBridgeCount = neighbors.filter(function (nb) {
       return state.byId[nb.id].decade !== p.decade;
     }).length;
-    // P1: the metric boxes are gone — centrality + era-bridge fold into the
-    // diagram caption. The #tn-metrics container is removed from the page.
+    // Wave 2.6: the two metrics are a kit .stat-strip above the panel (the
+    // in-SVG caption scaled to ~7px at 390). Same numbers, same wording.
+    var mx = document.getElementById('tn-metrics');
+    if (mx) mx.innerHTML = metricsHTML(state.counts[id], eraBridgeCount);
     document.getElementById('tn-vizwrap').innerHTML =
       networkSVG(p, neighbors, state.counts[id], eraBridgeCount);
 

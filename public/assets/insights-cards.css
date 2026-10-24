@@ -1,27 +1,105 @@
-/* Vector Hoops Insights card system (.vh-ins__*) — shared by insights.html and twin-network.html */
+/* Vector Hoops Insights card system (.vh-ins__*): the one page sheet for insights.html and twin-network.html.
+   Wave 2.6: every card is the kit .card (atlas.css owns surface, border, radius and the hard step shadow);
+   every chart panel is a .card--void host, so the svg text classes below read the void pairings through the
+   kit's alias remap (--fg -> --void-ink, --fg-2/--fg-3 -> --void-ink-2, --accent -> --void-accent).
+   Chart marks use the constant tokens: --void-accent (ember), --coin-2 (gold), --void-ink (tracks). */
 .vh-ins__wrap{max-width:880px;margin:0 auto;padding:0 var(--s-3) var(--s-6)}
 .vh-ins__spotlabel{font:700 12px/1.4 var(--font-sans);letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin:0 0 var(--s-2)}
-.vh-ins__card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:clamp(20px,4vw,36px);margin:0 0 var(--s-4);box-shadow:var(--shadow-soft)}
-.vh-ins__card--featured{border-color:var(--accent-line);box-shadow:0 12px 40px rgba(0,0,0,.18)}
-.vh-ins__kicker{font:700 12px/1.4 var(--font-sans);letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin:0 0 8px}
-.vh-ins__title{font:700 clamp(24px,4.6vw,36px)/1.15 var(--font-display);margin:0 0 10px;letter-spacing:-.01em}
+
+/* ---- card: the kit .card plus spacing; featured = accent border, same hard step ---- */
+.vh-ins__card{margin:0 0 var(--s-4);padding:clamp(20px,4vw,36px)}
+.vh-ins__card--featured{border-color:var(--accent-line)}
+.vh-ins__card[data-theme="money"]{border-top:3px solid var(--coin-text)}
+.vh-ins__card[data-theme="entity"]{border-top:3px solid var(--data-moss)}
+.vh-ins__kicker{display:block;font:700 12px/1.4 var(--font-sans);letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin:0 0 8px}
+.vh-ins__kicker--money{color:var(--coin-text)}
+.vh-ins__kicker--entity{color:var(--fg-2)}
+.vh-ins__num{margin-right:.6em;color:var(--fg-3)}
+.vh-ins__title,.vh-ins__card .vh-ins__title{font:700 clamp(24px,4.6vw,36px)/1.15 var(--font-display);margin:0 0 10px;letter-spacing:-.01em;color:var(--fg)}
+
+/* ---- collapsible card: <details class="card vh-ins__card"> with the head in its <summary> ---- */
+.vh-ins__sum{display:block;min-height:48px;cursor:pointer;list-style:none;position:relative;padding-right:40px}
+.vh-ins__sum::-webkit-details-marker{display:none}
+.vh-ins__sum::after{
+  content:"+";position:absolute;top:0;right:0;display:grid;place-content:center;
+  width:28px;height:28px;border:1px solid var(--line-2);border-radius:50%;
+  font:500 var(--t-base)/1 var(--font-text);color:var(--fg-2)
+}
+.vh-ins__card[open] > .vh-ins__sum::after{content:"\2212"}
+.vh-ins__sum:hover .vh-ins__title{color:var(--accent-2)}
+details.vh-ins__card:not([open]) .vh-ins__title{margin:0}
+.vh-ins__body{padding-top:var(--s-2)}
+
+/* ---- the card index: every finding's title in one phone screenful ---- */
+.vh-ins__index{margin:0 0 var(--s-5)}
+.vh-ins__indexhead{display:flex;align-items:center;justify-content:space-between;gap:var(--s-2);flex-wrap:wrap;margin:0 0 var(--s-2)}
+.vh-ins__indexhead .vh-ins__spotlabel{margin:0}
+.vh-ins__index .row-list__num{min-width:2.4em}
+.vh-ins__index .row-list__main{white-space:normal}
+.vh-ins__today{color:var(--accent-2)}
+
+/* ---- skeleton (loading) ---- */
+.vh-ins__skeleton{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-xl);padding:clamp(20px,4vw,36px);margin:0 0 var(--s-4);animation:vh-sk-pulse 1.4s ease-in-out infinite}
+.vh-ins__sk-line{height:14px;border-radius:7px;background:var(--line);margin:0 0 12px}
+.vh-ins__sk-kicker{width:32%;height:11px}
+.vh-ins__sk-title{width:78%;height:26px;border-radius:var(--radius-lg)}
+.vh-ins__sk-short{width:46%}
+.vh-ins__sk-viz{height:120px;border-radius:var(--radius-xl);background:var(--line);margin-top:16px}
+@keyframes vh-sk-pulse{0%,100%{opacity:1}50%{opacity:.55}}
+
+/* ---- card body ---- */
 .vh-ins__tldr{font:500 clamp(16px,2.6vw,19px)/1.55 var(--font-sans);color:var(--fg);margin:0 0 16px;max-width:62ch}
 .vh-ins__tldr span{display:block;font:700 11px/1.4 var(--font-sans);letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin:0 0 4px}
 .vh-ins__lede{font:400 15px/1.6 var(--font-sans);color:var(--fg-2);margin:0 0 18px;max-width:60ch}
 .vh-ins__stat{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin:0 0 18px}
-.vh-ins__statnum{font:800 clamp(44px,9vw,72px)/1 var(--font-display);color:var(--gold,#D4AF69);letter-spacing:-.02em}
+.vh-ins__statnum{font:800 clamp(44px,9vw,72px)/1 var(--font-display);color:var(--coin-text);letter-spacing:-.02em}
 .vh-ins__statlabel{font:400 14px/1.5 var(--font-sans);color:var(--fg-2);max-width:34ch}
-.vh-ins__vizwrap{background:var(--void,#1E2022);border-radius:12px;padding:18px 16px;margin:0 0 16px}
+
+/* ---- chart panel: a .card--void host (class="card--void vh-ins__vizwrap"), dark on both themes ---- */
+.vh-ins__vizwrap{background:var(--void);color:var(--void-ink);border-radius:var(--radius-xl);padding:18px 16px;margin:0 0 16px}
 .vh-ins__viz{width:100%;height:auto;display:block}
 .vh-ins__svglabel{font:400 13px var(--font-sans);fill:var(--fg-2)}
 .vh-ins__svgval{font:700 13px var(--font-sans);fill:var(--fg)}
-.vh-ins__vizwrap .vh-ins__svglabel{fill:#b9b2a4}
-.vh-ins__vizwrap .vh-ins__svgval{fill:#F9F6F0}
+.vh-ins__svgtag{font:400 12px var(--font-sans);fill:var(--fg-3)}
+.vh-ins__svghead{text-transform:uppercase;letter-spacing:.12em;font-size:11px}
+.vh-ins__svgval--in{fill:var(--void)}
+.vh-ins__svghalo{paint-order:stroke;stroke:var(--void);stroke-width:3px}
+/* chart marks: constant on both themes, like the void they sit on */
+.vh-ins__track{fill:var(--void-ink);opacity:.06}
+.vh-ins__spine{stroke:var(--void-ink)}
+.vh-ins__mark{fill:var(--void-accent)}
+.vh-ins__mark--gold{fill:var(--coin-2)}
+.vh-ins__mark--muted{fill:var(--void-ink-2)}
+.vh-ins__mark--neg{fill:var(--void-accent);fill-opacity:.7}
+.vh-ins__mark--node{fill:var(--void-line)}
+.vh-ins__mark--empty{fill:none;stroke:var(--void-ink-2);stroke-width:1.5;stroke-dasharray:6 4}
+.vh-ins__mark--ring{fill:none;stroke:var(--void);stroke-width:2;opacity:.5}
+.vh-ins__line{fill:none;stroke:var(--void-accent)}
+.vh-ins__line--gold{fill:none;stroke:var(--coin-2)}
+.vh-ins__svgval--on-gold{fill:var(--coin-ink)}
+
+/* ---- notes, caveats, series ---- */
 .vh-ins__foot{font:400 12.5px/1.6 var(--font-sans);color:var(--fg-3);margin:0 0 18px}
+.vh-ins__foot--c{text-align:center}
+.vh-ins__but{font:400 13.5px/1.6 var(--font-sans);color:var(--fg-2);margin:0 0 18px;padding-left:12px;border-left:3px solid var(--coin-text)}
+.vh-ins__but span{display:block;font:700 11px/1.4 var(--font-sans);letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin:0 0 4px}
+/* the ellipsis is drawn, not written: a leaf whose text ends in "…" reads as a loading leftover (D26) */
+.vh-ins__but span::after{content:"\2026"}
+.vh-ins__series{grid-column:1/-1;margin:28px 0 var(--s-3);border-top:2px solid var(--line-2);padding-top:18px}
+.vh-ins__series-title{font:700 22px/1.25 var(--font-display);margin:0 0 4px}
+.vh-ins__series-sub{font:400 13.5px/1.55 var(--font-sans);color:var(--fg-2);margin:0}
 .vh-ins__examples{font:400 14px/1.6 var(--font-sans);color:var(--fg-2);margin:0 0 18px}
 .vh-ins__examples span{display:block;font:700 11px/1.4 var(--font-sans);letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin:0 0 6px}
 .vh-ins__share{display:flex;gap:10px;flex-wrap:wrap}
 .vh-ins__error{padding:24px;text-align:center;color:var(--fg-2)}
+.vh-ins__vizwrap .vh-ins__error{color:var(--void-ink-2)}
+
+/* deep-link flash: an outline pulse, so the card keeps its hard step shadow throughout */
 .vh-ins__flash{animation:vhInsFlash 2.2s ease}
-@keyframes vhInsFlash{0%,60%{box-shadow:0 0 0 3px var(--accent)}100%{box-shadow:var(--shadow-soft)}}
+@keyframes vhInsFlash{0%,60%{outline:3px solid var(--accent);outline-offset:2px}100%{outline:3px solid transparent;outline-offset:2px}}
+@media (prefers-reduced-motion: reduce){.vh-ins__flash{animation:none;outline:3px solid var(--accent);outline-offset:2px}}
 @media(max-width:560px){.vh-ins__vizwrap{padding:14px 10px}}
+
+/* ---- no-JS fallback (insights.html <noscript>) ---- */
+.vh-ins__noscript{padding:16px;text-align:center}
+.vh-ins__noscript-list{max-width:640px;margin:0 auto;padding:0 16px 24px;font:400 14px/1.6 var(--font-sans);color:var(--fg-2)}
