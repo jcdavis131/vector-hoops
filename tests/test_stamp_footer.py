@@ -154,7 +154,7 @@ def test_insert_replace_and_lf(site: Path) -> None:
 
 
 def test_deferred_pages_are_left_alone(site: Path, capsys: pytest.CaptureFixture[str]) -> None:
-    assert {"index.html", "offline.html"} <= set(sf.DEFER)
+    assert "offline.html" in sf.DEFER and "index.html" not in sf.DEFER  # index stamped once #165 landed
     before = {name: (site / name).read_bytes() for name in sf.DEFER}
     assert sf.main(["--root", str(site)]) == 0
     assert {name: (site / name).read_bytes() for name in sf.DEFER} == before

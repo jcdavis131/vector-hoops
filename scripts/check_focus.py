@@ -259,9 +259,8 @@ def main() -> int:
                 # ended up with two skip links, which was the actual bug.
                 s = first.get("skip")
                 # two skip links to the same place is a defect; two to different
-                # places is not. teams.html offers "Skip to the content" and
-                # "Skip to all 30 teams" and that is correct bypass-blocks
-                # practice, while index.html had two links both pointing at
+                # places is not (a page with two distinct skip targets is correct
+                # bypass-blocks practice), while index.html had two links both pointing at
                 # #main and play.html injected a second one at body.firstChild,
                 # ahead of the static one it already had.
                 dupes = ev_dupe_skips(ws)
@@ -295,7 +294,7 @@ def main() -> int:
                   + (f"  in-shadow={shadowed}" if shadowed else ""))
 
         # the skip link has to actually move focus, not just scroll
-        ws.call("Page.navigate", {"url": f"http://127.0.0.1:{site}/teams.html"})
+        ws.call("Page.navigate", {"url": f"http://127.0.0.1:{site}/players.html"})
         time.sleep(2.0)
         tab(ws); enter(ws); time.sleep(0.4)
         r = ws.call("Runtime.evaluate", {"expression": DESCRIBE, "returnByValue": True})
@@ -303,7 +302,7 @@ def main() -> int:
         landed = d.get("id") or d.get("tag")
         if d.get("body") or landed != "main":
             failures.append(f"activating the skip link left focus on {landed!r}, not the main landmark")
-        print(f"\n  skip link on /teams.html moves focus to: {landed!r}")
+        print(f"\n  skip link on /players.html moves focus to: {landed!r}")
     finally:
         if ws:
             ws.close()

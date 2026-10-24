@@ -1,6 +1,6 @@
 /* assets/scoreboard.js — ONE ESPN scoreboard fetch module.
  *
- * V7 (PRD-SPEC.md): schedule.html and teams.html reuse this module — no
+ * V7 (PRD-SPEC.md): schedule.html reuses this module — no
  * second schedule implementation. live.js also reads through it (its inline
  * mapping was extracted here verbatim, including the long-standing away-
  * color quirk where the away entry falls back to the home team's color —
