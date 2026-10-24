@@ -14,8 +14,9 @@
 <link rel="manifest" href="/manifest.json"/>
 <link rel="canonical" href="https://hoops.dumbmodel.com/replay"/>
 <link rel="stylesheet" href="/assets/fonts.css?v=8f376b2a"/>
-<link rel="stylesheet" href="/assets/shell.css?v=b7460aa9"/>
-<link rel="stylesheet" href="/assets/replay.css?v=306f2451"/>
+<link rel="stylesheet" href="/assets/atlas.css?v=a737547a"/>
+<link rel="stylesheet" href="/assets/shell.css?v=398d5e37"/>
+<link rel="stylesheet" href="/assets/replay.css?v=3648957a"/>
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
@@ -28,6 +29,8 @@
     <p class="rp-lede">Pick a game, hit play, and spin the court. Pause on any possession, rewind it, loop it. Tonight's games follow the live feed a play behind, the same plate you see on <a href="/live">Courtside Live</a>.</p>
   </header>
 
+  <div id="routeNotice" hidden></div>
+  <div id="gameHeader"></div>
   <section class="rp-games" aria-label="Games">
     <div id="rpGames" class="rp-gamelist" role="list"><span class="rp-muted">Loading games…</span></div>
   </section>
@@ -43,7 +46,7 @@
         <button type="button" data-cam="follow" aria-pressed="false">Follow ball</button>
       </div>
       <p class="rp-hint">Drag to rotate · scroll or pinch to zoom · ↑↓ tilt · space plays/pauses</p>
-      <p class="rp-sr-note" id="rp-sr-note">Screen-reader users: the <a href="#rpFeed">play-by-play list</a> below is the full text alternative to this animation.</p>
+      <p class="rp-sr-note visually-hidden" id="rp-sr-note">Screen-reader users: the <a href="#rpFeed">play-by-play list</a> below is the full text alternative to this animation.</p>
     </div>
 
     <div class="rp-controls">
@@ -87,6 +90,10 @@
       <h2>Play-by-play</h2>
       <ol id="rpFeed" class="rp-feed"></ol>
     </div>
+    <div class="rp-panel">
+      <h2>Box score</h2>
+      <div id="rpBox" class="rp-box"><p class="rp-muted">Box score not up yet.</p></div>
+    </div>
   </section>
 
   <section class="rp-panel rp-honest" aria-label="How this works">
@@ -99,12 +106,44 @@
     </details>
   </section>
 </main>
+<!-- footer:stamped -->
 <footer class="site-footer">
-  <p class="site-footer__attribution">Play-by-play from cdn.nba.com and ESPN · A <a href="https://dumbmodel.com">dumbmodel</a> project</p>
+  <nav class="site-footer__sitemap" aria-label="Sitemap">
+    <div class="site-footer__col">
+      <span class="site-footer__col-title">Play</span>
+      <a href="/play">Daily Court</a>
+      <a href="/map-guess">Map Hunt</a>
+      <a href="/twenty-questions">Twenty Questions</a>
+      <a href="/play/era-crossed">Era Crossed</a>
+      <a href="/replay">Pixel Replay</a>
+    </div>
+    <div class="site-footer__col">
+      <span class="site-footer__col-title">Explore</span>
+      <a href="/live">Live</a>
+      <a href="/schedule">Schedule</a>
+      <a href="/players">Players</a>
+      <a href="/insights">Insights</a>
+      <a href="/twin-network">Twin Networks</a>
+      <a href="/playoff-runs">Playoff Runs</a>
+      <a href="/taxonomy">Taxonomy</a>
+    </div>
+    <div class="site-footer__col">
+      <span class="site-footer__col-title">How it works</span>
+      <a href="/methods">Methods</a>
+      <a href="/models/mtnn-v5">Models</a>
+      <a href="https://github.com/jcdavis131/vector-hoops" rel="noopener">Source on GitHub</a>
+    </div>
+  </nav>
+  <p class="site-footer__attribution">Scores and stats from stats.nba.com and ESPN · A <a href="https://dumbmodel.com">dumbmodel</a> project</p>
 </footer>
-<script src="/assets/site-nav.js?v=08ff3eda" defer></script>
-<script src="/assets/replay-espn.js?v=af4e5d05" defer></script>
+<!-- /footer:stamped -->
+<script src="/assets/site-nav.js?v=13e9219d" defer></script>
+<script src="/assets/replay-espn.js?v=7d2cbf02" defer></script>
+<script src="/assets/replay-boxscore.js?v=668dad18" defer></script>
 <script src="/assets/replay-model.js?v=023bb286" defer></script>
-<script src="/assets/replay.js?v=a18e7f02" defer></script>
+<script src="/assets/game-route.js?v=ae0bf9df" defer></script>
+<script src="/assets/game-header.js?v=758eca08" defer></script>
+<script src="/assets/plate.js?v=9ffa45dd" defer></script>
+<script src="/assets/replay.js?v=6738966b" defer></script>
 </body>
 </html>

@@ -17,17 +17,30 @@
 
   var EXPLORE = [
     { href: '/', label: 'Atlas', desc: 'The map of 12,966 player-seasons' },
-    { href: '/map-guess', label: 'Map Hunt', desc: 'Find the mystery star on the 3D map — new tonight', live: true },
+    { href: '/map-guess', label: 'Map Hunt', desc: 'Find the mystery star on the 3D map' },
     { href: '/live', label: 'Live', desc: 'Live game companion: win probability, atlas twins, shot charts', live: true },
+    { href: '/schedule', label: 'Schedule', desc: 'Seven days of games — tonight on Live, last night on Replay' },
     { href: '/players', label: 'Players', desc: 'Directory, skill profiles and leaderboards' },
     { href: '/insights', label: 'Insights', desc: 'Findings from the model — and from the ledger' },
     { href: '/twin-network', label: 'Twin Networks', desc: 'Every player\u2019s nearest neighbors, mapped as a network' },
-    { href: '/teams', label: 'Teams', desc: 'Thirty team intro loops and season snapshots' },
     { href: '/playoff-runs', label: 'Playoff Runs', desc: 'The greatest postseason runs, ranked' },
     { href: '/twenty-questions', label: 'Twenty Questions', desc: 'Think of a player — 20 yes/no questions, the map dims the rest' },
     { href: '/taxonomy', label: 'Taxonomy', desc: 'A taxonomy of play styles' },
     { href: '/methods', label: 'Methods', desc: 'Trust: every number recomputed from source, and the model graded' },
     { href: '/models/mtnn-v5', label: 'Models', desc: 'Model registry and the MTNN v5 champion card' }
+  ];
+
+  // The games, in the order the footer's Play column lists them. One flat object
+  // per line, single quotes, no `{`/`}` in a value, no nested objects, no `]`:
+  // scripts/stamp_footer.py and scripts/check_design.py (D12) read this list and
+  // EXPLORE straight out of the source, and the stamper refuses a list it cannot
+  // read in full.
+  var GAMES = [
+    { href: '/play', label: 'Daily Court' },
+    { href: '/map-guess', label: 'Map Hunt' },
+    { href: '/twenty-questions', label: 'Twenty Questions' },
+    { href: '/play/era-crossed', label: 'Era Crossed' },
+    { href: '/replay', label: 'Pixel Replay' }
   ];
 
   // Centre circle of a court, seen from above: the site's mark.
@@ -260,5 +273,5 @@
   }
 
   var api = global.VHSiteNav = global.VHSiteNav || {};
-  api.mount = mount; api.explore = EXPLORE;
+  api.mount = mount; api.explore = EXPLORE; api.games = GAMES;
 })(window);

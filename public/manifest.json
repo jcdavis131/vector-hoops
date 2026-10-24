@@ -1,5 +1,5 @@
 {
-  "id": "/?pov=owner",
+  "id": "/",
   "name": "Vector Hoops — An atlas of NBA player-seasons",
   "short_name": "Hoops",
   "description": "12,966 NBA player-seasons placed by how they played. Pick one and see the three that play most alike, or play the Daily Court.",
@@ -12,8 +12,8 @@
     "browser"
   ],
   "orientation": "any",
-  "background_color": "#07090C",
-  "theme_color": "#07090C",
+  "background_color": "#0F1114",
+  "theme_color": "#0F1114",
   "lang": "en",
   "dir": "ltr",
   "categories": [

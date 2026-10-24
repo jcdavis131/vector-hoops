@@ -15,14 +15,14 @@
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:title" content="Team intros &mdash; Vector Hoops"/>
 <meta name="twitter:description" content="Thirty seamless team intro loops: every NBA team's 2026-27 roster glowing inside the embedding atlas."/>
-<link rel="stylesheet" href="assets/shell.css?v=b7460aa9">
 <link rel="stylesheet" href="assets/responsive.css?v=cc8e5207">
 <link rel="stylesheet" href="assets/final-qa.css?v=fb603ee5">
 <link rel="stylesheet" href="assets/unified.css?v=fd25e8ca">
 <link rel="stylesheet" href="assets/motion.css?v=aa8dedc2">
+<link rel="stylesheet" href="assets/atlas.css?v=a737547a">
+<link rel="stylesheet" href="assets/shell.css?v=398d5e37">
 <style>
 :root{
-  --paper:#FFFEF7;--ink:#1A150F;
   --mono:ui-monospace,monospace;--sans:ui-sans-serif,system-ui;
   --page-gutter:clamp(12px,3.2vw,20px);
 }
@@ -98,6 +98,7 @@ a{color:inherit}
            data-src="assets/team-intros/atlanta-loop-phone.mp4"
            poster="assets/team-intros/atlanta-loop-poster.jpg"
            aria-label="Atlanta Hawks team intro loop"></video>
+    <div class="team-card__sched" data-abbr="ATL"></div>
   </article>
   <article class="team-card" id="team-boston">
     <header class="team-card__head">
@@ -108,6 +109,7 @@ a{color:inherit}
            data-src="assets/team-intros/boston-loop-phone.mp4"
            poster="assets/team-intros/boston-loop-poster.jpg"
            aria-label="Boston Celtics team intro loop"></video>
+    <div class="team-card__sched" data-abbr="BOS"></div>
   </article>
   <article class="team-card" id="team-brooklyn">
     <header class="team-card__head">
@@ -118,6 +120,7 @@ a{color:inherit}
            data-src="assets/team-intros/brooklyn-loop-phone.mp4"
            poster="assets/team-intros/brooklyn-loop-poster.jpg"
            aria-label="Brooklyn Nets team intro loop"></video>
+    <div class="team-card__sched" data-abbr="BKN"></div>
   </article>
   <article class="team-card" id="team-charlotte">
     <header class="team-card__head">
@@ -128,6 +131,7 @@ a{color:inherit}
            data-src="assets/team-intros/charlotte-loop-phone.mp4"
            poster="assets/team-intros/charlotte-loop-poster.jpg"
            aria-label="Charlotte Hornets team intro loop"></video>
+    <div class="team-card__sched" data-abbr="CHA"></div>
   </article>
   <article class="team-card" id="team-chicago">
     <header class="team-card__head">
@@ -138,6 +142,7 @@ a{color:inherit}
            data-src="assets/team-intros/chicago-loop-phone.mp4"
            poster="assets/team-intros/chicago-loop-poster.jpg"
            aria-label="Chicago Bulls team intro loop"></video>
+    <div class="team-card__sched" data-abbr="CHI"></div>
   </article>
   <article class="team-card" id="team-cleveland">
     <header class="team-card__head">
@@ -148,6 +153,7 @@ a{color:inherit}
            data-src="assets/team-intros/cleveland-loop-phone.mp4"
            poster="assets/team-intros/cleveland-loop-poster.jpg"
            aria-label="Cleveland Cavaliers team intro loop"></video>
+    <div class="team-card__sched" data-abbr="CLE"></div>
   </article>
   <article class="team-card" id="team-dallas">
     <header class="team-card__head">
@@ -158,6 +164,7 @@ a{color:inherit}
            data-src="assets/team-intros/dallas-loop-phone.mp4"
            poster="assets/team-intros/dallas-loop-poster.jpg"
            aria-label="Dallas Mavericks team intro loop"></video>
+    <div class="team-card__sched" data-abbr="DAL"></div>
   </article>
   <article class="team-card" id="team-denver">
     <header class="team-card__head">
@@ -168,6 +175,7 @@ a{color:inherit}
            data-src="assets/team-intros/denver-loop-phone.mp4"
            poster="assets/team-intros/denver-loop-poster.jpg"
            aria-label="Denver Nuggets team intro loop"></video>
+    <div class="team-card__sched" data-abbr="DEN"></div>
   </article>
   <article class="team-card" id="team-detroit">
     <header class="team-card__head">
@@ -178,6 +186,7 @@ a{color:inherit}
            data-src="assets/team-intros/detroit-loop-phone.mp4"
            poster="assets/team-intros/detroit-loop-poster.jpg"
            aria-label="Detroit Pistons team intro loop"></video>
+    <div class="team-card__sched" data-abbr="DET"></div>
   </article>
   <article class="team-card" id="team-golden-state">
     <header class="team-card__head">
@@ -188,6 +197,7 @@ a{color:inherit}
            data-src="assets/team-intros/golden-state-loop-phone.mp4"
            poster="assets/team-intros/golden-state-loop-poster.jpg"
            aria-label="Golden State Warriors team intro loop"></video>
+    <div class="team-card__sched" data-abbr="GS"></div>
   </article>
   <article class="team-card" id="team-houston">
     <header class="team-card__head">
@@ -198,6 +208,7 @@ a{color:inherit}
            data-src="assets/team-intros/houston-loop-phone.mp4"
            poster="assets/team-intros/houston-loop-poster.jpg"
            aria-label="Houston Rockets team intro loop"></video>
+    <div class="team-card__sched" data-abbr="HOU"></div>
   </article>
   <article class="team-card" id="team-indiana">
     <header class="team-card__head">
@@ -208,6 +219,7 @@ a{color:inherit}
            data-src="assets/team-intros/indiana-loop-phone.mp4"
            poster="assets/team-intros/indiana-loop-poster.jpg"
            aria-label="Indiana Pacers team intro loop"></video>
+    <div class="team-card__sched" data-abbr="IND"></div>
   </article>
   <article class="team-card" id="team-la-clippers">
     <header class="team-card__head">
@@ -218,6 +230,7 @@ a{color:inherit}
            data-src="assets/team-intros/la-clippers-loop-phone.mp4"
            poster="assets/team-intros/la-clippers-loop-poster.jpg"
            aria-label="LA Clippers team intro loop"></video>
+    <div class="team-card__sched" data-abbr="LAC"></div>
   </article>
   <article class="team-card" id="team-la-lakers">
     <header class="team-card__head">
@@ -228,6 +241,7 @@ a{color:inherit}
            data-src="assets/team-intros/la-lakers-loop-phone.mp4"
            poster="assets/team-intros/la-lakers-loop-poster.jpg"
            aria-label="Los Angeles Lakers team intro loop"></video>
+    <div class="team-card__sched" data-abbr="LAL"></div>
   </article>
   <article class="team-card" id="team-memphis">
     <header class="team-card__head">
@@ -238,6 +252,7 @@ a{color:inherit}
            data-src="assets/team-intros/memphis-loop-phone.mp4"
            poster="assets/team-intros/memphis-loop-poster.jpg"
            aria-label="Memphis Grizzlies team intro loop"></video>
+    <div class="team-card__sched" data-abbr="MEM"></div>
   </article>
   <article class="team-card" id="team-miami">
     <header class="team-card__head">
@@ -248,6 +263,7 @@ a{color:inherit}
            data-src="assets/team-intros/miami-loop-phone.mp4"
            poster="assets/team-intros/miami-loop-poster.jpg"
            aria-label="Miami Heat team intro loop"></video>
+    <div class="team-card__sched" data-abbr="MIA"></div>
   </article>
   <article class="team-card" id="team-milwaukee">
     <header class="team-card__head">
@@ -258,6 +274,7 @@ a{color:inherit}
            data-src="assets/team-intros/milwaukee-loop-phone.mp4"
            poster="assets/team-intros/milwaukee-loop-poster.jpg"
            aria-label="Milwaukee Bucks team intro loop"></video>
+    <div class="team-card__sched" data-abbr="MIL"></div>
   </article>
   <article class="team-card" id="team-minnesota">
     <header class="team-card__head">
@@ -268,6 +285,7 @@ a{color:inherit}
            data-src="assets/team-intros/minnesota-loop-phone.mp4"
            poster="assets/team-intros/minnesota-loop-poster.jpg"
            aria-label="Minnesota Timberwolves team intro loop"></video>
+    <div class="team-card__sched" data-abbr="MIN"></div>
   </article>
   <article class="team-card" id="team-new-orleans">
     <header class="team-card__head">
@@ -278,6 +296,7 @@ a{color:inherit}
            data-src="assets/team-intros/new-orleans-loop-phone.mp4"
            poster="assets/team-intros/new-orleans-loop-poster.jpg"
            aria-label="New Orleans Pelicans team intro loop"></video>
+    <div class="team-card__sched" data-abbr="NO"></div>
   </article>
   <article class="team-card" id="team-new-york">
     <header class="team-card__head">
@@ -288,6 +307,7 @@ a{color:inherit}
            data-src="assets/team-intros/new-york-loop-phone.mp4"
            poster="assets/team-intros/new-york-loop-poster.jpg"
            aria-label="New York Knicks team intro loop"></video>
+    <div class="team-card__sched" data-abbr="NY"></div>
   </article>
   <article class="team-card" id="team-oklahoma-city">
     <header class="team-card__head">
@@ -298,6 +318,7 @@ a{color:inherit}
            data-src="assets/team-intros/oklahoma-city-loop-phone.mp4"
            poster="assets/team-intros/oklahoma-city-loop-poster.jpg"
            aria-label="Oklahoma City Thunder team intro loop"></video>
+    <div class="team-card__sched" data-abbr="OKC"></div>
   </article>
   <article class="team-card" id="team-orlando">
     <header class="team-card__head">
@@ -308,6 +329,7 @@ a{color:inherit}
            data-src="assets/team-intros/orlando-loop-phone.mp4"
            poster="assets/team-intros/orlando-loop-poster.jpg"
            aria-label="Orlando Magic team intro loop"></video>
+    <div class="team-card__sched" data-abbr="ORL"></div>
   </article>
   <article class="team-card" id="team-philadelphia">
     <header class="team-card__head">
@@ -318,6 +340,7 @@ a{color:inherit}
            data-src="assets/team-intros/philadelphia-loop-phone.mp4"
            poster="assets/team-intros/philadelphia-loop-poster.jpg"
            aria-label="Philadelphia 76ers team intro loop"></video>
+    <div class="team-card__sched" data-abbr="PHI"></div>
   </article>
   <article class="team-card" id="team-phoenix">
     <header class="team-card__head">
@@ -328,6 +351,7 @@ a{color:inherit}
            data-src="assets/team-intros/phoenix-loop-phone.mp4"
            poster="assets/team-intros/phoenix-loop-poster.jpg"
            aria-label="Phoenix Suns team intro loop"></video>
+    <div class="team-card__sched" data-abbr="PHX"></div>
   </article>
   <article class="team-card" id="team-portland">
     <header class="team-card__head">
@@ -338,6 +362,7 @@ a{color:inherit}
            data-src="assets/team-intros/portland-loop-phone.mp4"
            poster="assets/team-intros/portland-loop-poster.jpg"
            aria-label="Portland Trail Blazers team intro loop"></video>
+    <div class="team-card__sched" data-abbr="POR"></div>
   </article>
   <article class="team-card" id="team-sacramento">
     <header class="team-card__head">
@@ -348,6 +373,7 @@ a{color:inherit}
            data-src="assets/team-intros/sacramento-loop-phone.mp4"
            poster="assets/team-intros/sacramento-loop-poster.jpg"
            aria-label="Sacramento Kings team intro loop"></video>
+    <div class="team-card__sched" data-abbr="SAC"></div>
   </article>
   <article class="team-card" id="team-san-antonio">
     <header class="team-card__head">
@@ -358,6 +384,7 @@ a{color:inherit}
            data-src="assets/team-intros/san-antonio-loop-phone.mp4"
            poster="assets/team-intros/san-antonio-loop-poster.jpg"
            aria-label="San Antonio Spurs team intro loop"></video>
+    <div class="team-card__sched" data-abbr="SA"></div>
   </article>
   <article class="team-card" id="team-toronto">
     <header class="team-card__head">
@@ -368,6 +395,7 @@ a{color:inherit}
            data-src="assets/team-intros/toronto-loop-phone.mp4"
            poster="assets/team-intros/toronto-loop-poster.jpg"
            aria-label="Toronto Raptors team intro loop"></video>
+    <div class="team-card__sched" data-abbr="TOR"></div>
   </article>
   <article class="team-card" id="team-utah">
     <header class="team-card__head">
@@ -378,6 +406,7 @@ a{color:inherit}
            data-src="assets/team-intros/utah-loop-phone.mp4"
            poster="assets/team-intros/utah-loop-poster.jpg"
            aria-label="Utah Jazz team intro loop"></video>
+    <div class="team-card__sched" data-abbr="UTAH"></div>
   </article>
   <article class="team-card" id="team-washington">
     <header class="team-card__head">
@@ -388,20 +417,50 @@ a{color:inherit}
            data-src="assets/team-intros/washington-loop-phone.mp4"
            poster="assets/team-intros/washington-loop-poster.jpg"
            aria-label="Washington Wizards team intro loop"></video>
+    <div class="team-card__sched" data-abbr="WSH"></div>
   </article>
 
 </div>
 
 </main>
 
+<!-- footer:stamped -->
 <footer class="site-footer">
-  <div class="site-footer__links"><a href="/play">Play</a><a href="/players">Players</a><a href="/teams">Teams</a><a href="/methods">Methods</a><a href="https://github.com/jcdavis131/vector-hoops" rel="noopener">Source</a></div>
-  <p class="site-footer__attribution">Every number recomputable from stats.nba.com &middot; A <a href="https://dumbmodel.com">dumbmodel</a> project · Nearest seasons by cosine similarity in the 64-dimensional MTNN v5 embedding.</p>
+  <nav class="site-footer__sitemap" aria-label="Sitemap">
+    <div class="site-footer__col">
+      <span class="site-footer__col-title">Play</span>
+      <a href="/play">Daily Court</a>
+      <a href="/map-guess">Map Hunt</a>
+      <a href="/twenty-questions">Twenty Questions</a>
+      <a href="/play/era-crossed">Era Crossed</a>
+      <a href="/replay">Pixel Replay</a>
+    </div>
+    <div class="site-footer__col">
+      <span class="site-footer__col-title">Explore</span>
+      <a href="/live">Live</a>
+      <a href="/schedule">Schedule</a>
+      <a href="/players">Players</a>
+      <a href="/insights">Insights</a>
+      <a href="/twin-network">Twin Networks</a>
+      <a href="/playoff-runs">Playoff Runs</a>
+      <a href="/taxonomy">Taxonomy</a>
+    </div>
+    <div class="site-footer__col">
+      <span class="site-footer__col-title">How it works</span>
+      <a href="/methods">Methods</a>
+      <a href="/models/mtnn-v5">Models</a>
+      <a href="https://github.com/jcdavis131/vector-hoops" rel="noopener">Source on GitHub</a>
+    </div>
+  </nav>
+  <p class="site-footer__attribution">Scores and stats from stats.nba.com and ESPN · A <a href="https://dumbmodel.com">dumbmodel</a> project</p>
 </footer>
+<!-- /footer:stamped -->
 
 <script src="assets/error-boundary.js?v=8079215c"></script>
 <script src="assets/keyboard-a11y.js?v=39777a87"></script>
-<script src="assets/site-nav.js?v=08ff3eda" defer></script>
+<script src="assets/site-nav.js?v=13e9219d" defer></script>
+<script src="assets/scoreboard.js?v=1d769757" defer></script>
+<script src="assets/team-schedules.js?v=bf3b03cd" defer></script>
 <script src="assets/pwa-install.js?v=b954d9d1"></script>
 <script src="/assets/inline-teams.js?v=fa730cef"></script>
 </body>

@@ -36,3 +36,6 @@ assets/mtnn_training/
 !pipeline/cache/_fetch_meta/
 !pipeline/cache/_fetch_meta/*.json
 .qa/
+
+# scripts/check_design.py --json receipts; CI uploads them as an artifact
+design-report.json
