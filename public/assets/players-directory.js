@@ -8,12 +8,15 @@
      fetch() literal below gets its ?v= token from scripts/stamp_assets.py. */
   var SWINGS_URL = 'assets/playoff-swings.json';
   var POSITIONS = ['PG', 'SG', 'SF', 'PF', 'C'];
-  var MAX_ROWS = 400;
+  /* The directory shows PAGE rows and grows by PAGE on "Show more"; search,
+     filters and letters always run over every player. (It used to print the
+     first 400, a ~22,000px page at 1280.) */
+  var PAGE = 60;
 
   var els = {};
   var PLAYERS = [];
   var SWINGS = {}; // normalized name -> [{season, rs_pts100, po_pts100, delta, po_gp}]
-  var state = { q: '', pos: '', arch: '', letter: '' };
+  var state = { q: '', pos: '', arch: '', letter: '', shown: PAGE };
   var dossierTriggerEl = null;
   var dossierPrevUrl = null; // URL before the dossier opened; restored on close
 
@@ -78,6 +81,8 @@
     els.alphabet = document.getElementById('wiki-alphabet');
     els.count = document.getElementById('wiki-count');
     els.list = document.getElementById('wiki-list');
+    els.moreRow = document.getElementById('wiki-more-row');
+    els.more = document.getElementById('wiki-more');
     els.dossierBackdrop = document.getElementById('dossier-backdrop');
     els.dossierModal = document.getElementById('dossier-modal');
     els.dossierTitle = document.getElementById('dossier-title');
@@ -157,9 +162,15 @@
 
   function render() {
     var filtered = PLAYERS.filter(matches);
-    els.count.textContent = filtered.length + ' player' + (filtered.length === 1 ? '' : 's') +
-      (filtered.length > MAX_ROWS ? ' \u2014 showing first ' + MAX_ROWS + ', narrow your search' : '');
-    var shown = filtered.slice(0, MAX_ROWS);
+    var total = filtered.length;
+    var shown = filtered.slice(0, state.shown);
+    var rest = total - shown.length;
+    els.count.textContent = (rest > 0 ? 'Showing ' + shown.length.toLocaleString('en-US') + ' of ' : '') +
+      total.toLocaleString('en-US') + ' player' + (total === 1 ? '' : 's');
+    if (els.moreRow) {
+      els.moreRow.hidden = rest <= 0;
+      if (els.more) els.more.textContent = 'Show ' + Math.min(PAGE, rest) + ' more';
+    }
     if (shown.length === 0) {
       els.list.innerHTML = '<li><div class="wiki-empty">No players match. Try a different search or clear filters.</div></li>';
       return;
@@ -240,17 +251,20 @@
     var searchTimer = null;
     els.search.addEventListener('input', function () {
       state.q = els.search.value.trim().toLowerCase();
-      /* Debounce: re-rendering 400 rows on every keystroke blocks the main
+      state.shown = PAGE;
+      /* Debounce: re-rendering the rows on every keystroke blocks the main
          thread and can hang the renderer. Wait for a pause in typing. */
       if (searchTimer) clearTimeout(searchTimer);
       searchTimer = setTimeout(render, 180);
     });
     els.filterPos.addEventListener('change', function () {
       state.pos = els.filterPos.value;
+      state.shown = PAGE;
       render();
     });
     els.filterArch.addEventListener('change', function () {
       state.arch = els.filterArch.value;
+      state.shown = PAGE;
       render();
     });
     els.alphabet.addEventListener('click', function (ev) {
@@ -258,11 +272,22 @@
       if (!btn || btn.disabled) return;
       var letter = btn.getAttribute('data-letter');
       state.letter = state.letter === letter ? '' : letter;
+      state.shown = PAGE;
       Array.prototype.forEach.call(els.alphabet.querySelectorAll('button'), function (b) {
         b.classList.toggle('is-active', b.getAttribute('data-letter') === state.letter);
       });
       render();
     });
+    if (els.more) {
+      els.more.addEventListener('click', function () {
+        /* Keep focus where the reader is: on the first newly shown row. */
+        var first = state.shown;
+        state.shown += PAGE;
+        render();
+        var rows = els.list.querySelectorAll('.wiki-row');
+        if (rows[first]) rows[first].focus();
+      });
+    }
     els.list.addEventListener('click', function (ev) {
       var grades = ev.target.closest('[data-skills-slug]');
       if (grades) {

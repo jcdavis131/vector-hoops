@@ -36,7 +36,6 @@ const CORE = [
 '/assets/apple-touch-icon.png',
 '/assets/icon-192.png',
 '/assets/icon-512.png',
-'/assets/unified.css',
 '/assets/error-boundary.js',
 '/assets/keyboard-a11y.js',
 '/assets/arc-projections.js',

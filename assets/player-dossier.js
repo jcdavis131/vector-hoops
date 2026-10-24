@@ -175,7 +175,7 @@
   }
 
   var CSS = '.vh-dos__meta{opacity:.85;margin:0 0 4px}' +
-    '.vh-dos__honors{color:#e0762e;font-weight:600;margin:0 0 8px;font-size:13px}' +
+    '.vh-dos__honors{color:var(--accent-2);font-weight:600;margin:0 0 8px;font-size:13px}' +
     '.vh-dos__traits{display:grid;gap:3px;margin:6px 0}' +
     '.vh-dos__trait{display:grid;grid-template-columns:130px 1fr 44px;gap:8px;align-items:center;font-size:12px}' +
     '.vh-dos__label{opacity:.75;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}' +
@@ -204,14 +204,14 @@
     /* v4 honesty grammar — embedding-truth vs map-approximation surfaces.
        truth (64-d MTNN embedding: twin bands, peers, game feedback): solid marker.
        approximation (the 2-D atlas of 14 stats): dashed marker. Light touch. */
-    '.vh-truth{border-inline-start:3px solid #e0762e;padding-inline-start:10px}' +
+    '.vh-truth{border-inline-start:3px solid var(--accent);padding-inline-start:10px}' +
     '.vh-approx{border-inline-start:3px dashed rgba(128,128,128,.55);padding-inline-start:10px}' +
     '.twin-why__qual{font-size:12px;opacity:.75;margin:6px 0;font-style:italic}' +
     '.twin-band__detail{font-size:12px;opacity:.8;margin-top:4px;line-height:1.5}' +
     '@media(max-width:520px){.vh-dos__trait{grid-template-columns:104px 1fr 40px}}' +
     /* keep the modal title + close reachable while the long dossier scrolls */
     '#dossier-modal>div:first-child{position:sticky;top:-14px;z-index:3;' +
-    'background:var(--surface,#fff);padding:10px 0;margin-top:-4px}';
+    'background:var(--surface);padding:10px 0;margin-top:-4px}';
 
   function injectCss() {
     if (document.getElementById('vh-dos-css')) return;
