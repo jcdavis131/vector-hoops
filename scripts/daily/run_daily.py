@@ -373,6 +373,8 @@ class Runner:
         rc = self.run("a.fetch", cmd, timeout=3600)
         doc = json.loads(report.read_text(encoding="utf-8")) if report.exists() else None
         self.steps["fetch"] = rc in (0, 3)
+        if rc not in (0, 3):
+            self.notes.append(f"fetch FAILED (exit {rc}; see the run log): no new games this run")
         if rc == 3:
             self.notes.append("fetch partial: some files deferred or failed (the next run picks them up)")
         return rc, doc
@@ -552,12 +554,14 @@ def main(argv: list[str] | None = None) -> int:
         body = pr_body(dt.date.today().isoformat(), added, mh_end, r.checks, report, r.notes)
         (STATE_DIR / "last_summary.md").write_text(body, encoding="utf-8", newline="\n")
         failed = sorted(k for k, v in r.steps.items() if not v)
+        # A failed fetch alone still lands Map Hunt and status (the time bombs); anything else blocks the PR.
+        blocking = [k for k in failed if k != "fetch"]
         log(f"steps: {r.steps}; Map Hunt ends {mh_end}; games added {len(added)}")
-        if a.open_pr and data and not bad and not failed:
+        if a.open_pr and data and not bad and not blocking:
             if r.open_pr(dt.date.today().isoformat(), body, data) != 0:
                 failed.append("pr")
-        elif a.open_pr and (bad or failed):
-            log("not opening a PR: " + ("files outside the data paths changed" if bad else f"failed {failed}"))
+        elif a.open_pr and (bad or blocking):
+            log("not opening a PR: " + ("files outside the data paths changed" if bad else f"failed {blocking}"))
         elif a.open_pr:
             log("nothing changed; no PR")
         log(f"daily run done in {time.monotonic() - t0:.0f}s")
