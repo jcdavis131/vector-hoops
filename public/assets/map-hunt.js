@@ -46,7 +46,9 @@
     } catch (e) {}
     return p;
   }
-  function fetchJSON(u) { return fetch(u, { cache: 'force-cache' }).then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status + ' ' + u); return r.json(); }); }
+  /* index.json and candidates.json are fetched by literal URL so stamp_assets.py
+     versions them (?v=<sha8>); assets/*.json is cached for an hour */
+  function jsonOf(req, u) { return req.then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status + ' ' + u); return r.json(); }); }
   function fetchU8(u) {
     return fetch(u, { cache: 'force-cache' }).then(function (r) {
       if (!r.ok) throw new Error('HTTP ' + r.status + ' ' + u);
@@ -336,10 +338,11 @@
     state.mode = p.mode === 'th' ? 'th' : 'mh';
     state.replay = !!p.day && p.day !== todayKey();
 
-    fetchJSON(ASSET_BASE + 'index.json').then(function (idx) {
+    jsonOf(fetch('assets/map-hunt/index.json?v=764b5a7f', { cache: 'force-cache' }), 'index.json').then(function (idx) {
       var dayInfo = idx.days && idx.days[state.day];
       if (!dayInfo) throw new NoPuzzle(state.day);
-      return fetchJSON(ASSET_BASE + 'candidates.json').then(function (cands) {
+      state.mhPool = +idx.mh_pool || null; state.thPool = +idx.th_pool || null;
+      return jsonOf(fetch('assets/map-hunt/candidates.json?v=f34bb08b', { cache: 'force-cache' }), 'candidates.json').then(function (cands) {
         state.candList = cands;
         cands.forEach(function (c) { state.candByIdx[c[0]] = c; });
         if (state.mode === 'mh') {
@@ -393,7 +396,13 @@
       t.classList.toggle('is-active', on);
       if (on) t.setAttribute('aria-current', 'page'); else t.removeAttribute('aria-current');
     });
-    var pool = $('#mh-pool-count'); if (pool) pool.textContent = fmt(state.candList.length);
+    /* pool sizes come from index.json (build_map_hunt.py); the page's static text is the fallback */
+    var pool = $('#mh-pool-count'); if (pool && state.mhPool) pool.textContent = fmt(state.mhPool);
+    var thLine = $('#mh-th-pool');
+    if (thLine) {
+      thLine.hidden = state.mode !== 'th';
+      var thN = $('#mh-th-count'); if (thN && state.thPool) thN.textContent = fmt(state.thPool);
+    }
   }
   function wireTabs() {
     document.querySelectorAll('.game-modes [data-mode]').forEach(function (t) {

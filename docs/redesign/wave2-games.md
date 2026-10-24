@@ -22,17 +22,25 @@ index.html, live.html: engagement.js).
 - **One true count.** "12,966" is said once on the page, in the lede, as `<span data-fact="player_seasons">`
   (site-facts.js now loads here, so it follows the data). Cut from the per-tap rows ("closer than X% of all
   player-seasons"), the puzzle line, the static loading placeholder and the meta/og/twitter descriptions.
-  The provenance's false "one of 64 notable player-seasons" now reads the real pool size (1,313,
-  `#mh-pool-count`, filled from candidates.json at runtime). Embed3D's own loading state still says 12,966
-  while the map loads (embed-3d.js copy).
+  The provenance's "one of 64 notable player-seasons" is correct and stays: build_map_hunt.py draws the
+  mystery from `mh_pool` (quiz-pool seasons whose player has a dossier in entity-index.json), 64 rows, and
+  every `mh` day in index.json is inside it. The builder now writes `mh_pool` (64) and `th_pool` (1,313,
+  the whole candidates.json, Twin Hunt's given-player pool) into index.json; `#mh-pool-count` is filled from
+  `mh_pool` with 64 as the static fallback, and Twin Hunt mode alone shows its own sentence with `th_pool`.
+  index.json was rewritten with only the two fields added (`days` and `generated` byte-identical); a full
+  builder rerun changed 3 puzzle bytes by one quantization step (float rounding), so the shipped puzzles
+  were kept. index.json and candidates.json are now fetched by literal URL, so stamp_assets.py versions
+  them. Embed3D's own loading state still says 12,966 while the map loads (embed-3d.js copy).
+  (Review fix: an earlier commit on this branch wrongly replaced 64 with 1,313.)
 - **Research chrome**: `variant:'game'` (no switcher, no clustering legend). Meta/og/twitter "true 64-d
   cosine distance" gone; the provenance says "distance in the model's embedding" and links /methods#the-model.
 - **Plain links**: the mode chip-links lost their emoji ("Daily Map Hunt", "Twin Hunt", "Daily Court").
 - **Layout**: the mount sat in a fixed-height `overflow:hidden` box, which would have clipped the legend and
   note Embed3D appends inside the host. It is now `.mh-map.card--void` (Play's `#map-wrap` pattern) and the
   mount sizes to its content. The static placeholder's 60-line hex SVG sketch is gone (Embed3D replaces the
-  host's content with its own currentColor sketch at mount); a one-line `.state--loading` stays for no-JS
-  timing.
+  host's content with its own currentColor sketch at mount); a one-line `.state--loading` ("Loading the map…") stays for the moment before mount; it no longer promises
+  a search box, which appears only when Embed3D is missing or mount() throws (Embed3D's own error state
+  offers a retry).
 - **Escaping**: names, seasons, the day key, error messages and the datalist options go through `esc()`.
   The "no puzzle for this day" error no longer throws HTML through `Error.message`.
 - Restore no longer plays the win/lose sound or scrolls to the result on page load.
@@ -50,7 +58,10 @@ index.html, live.html: engagement.js).
   changed only in its lineage note. The map file is 59 KB (was 238 KB).
 - **Dimming**: `setDim(rows of careers still possible)` after every answer, tie elimination and undo;
   `setDim(null)` when nothing is ruled out. On the reveal the player's seasons are `setHighlight` + kept lit.
-  A tapped dot toasts "Name · season · still possible / ruled out" (so the game note's "tap a dot" is true).
+  A tapped dot toasts "Name · season · still possible / ruled out" (so the game note's "tap a dot" is true);
+  before the tree loads, or after the reveal, it gives name and season only.
+  The tree and the join are fetched by literal URL, so stamp_assets.py gives both a `?v=<sha8>` token
+  (assets/*.json is cached for an hour; an unversioned URL could pair the new JS with the old `{points}` file).
   embed-3d.js loads synchronously before the game script; the game stays playable if the map or the join fails.
 - **Copy**: the map is now the 3D projection of the embedding, so the "2-D atlas projection of the 14
   features, not the 64-d embedding" lines were false and went with the provenance block. How to play says

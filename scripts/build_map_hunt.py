@@ -4,7 +4,8 @@
 Stdlib + numpy. Outputs under assets/map-hunt/:
 
   candidates.json   compact quiz pool: [index, name, season, twinIndex, twinName, twinSeason, sim]
-  index.json        {v, generated, days: {dayKey: {mh: mysteryIdx, th: givenIdx, tht: twinIdx}}}
+  index.json        {v, generated, mh_pool, th_pool, days: {dayKey: {mh: mysteryIdx, th: givenIdx, tht: twinIdx}}}
+                    (mh_pool / th_pool: how many seasons each mode draws from)
   puzzles/<day>-mh.u8  12,966 uint8 cosine distances TO the mystery player
   puzzles/<day>-th.u8  12,966 uint8 cosine distances TO the twin-hunt target (the twin)
 
@@ -146,7 +147,7 @@ def main() -> int:
         f.unlink()
 
     (OUT / "index.json").write_text(json.dumps(
-        {"v": 1, "generated": dt.date.today().isoformat(), "days": days},
+        {"v": 1, "generated": dt.date.today().isoformat(), "mh_pool": nm, "th_pool": nc, "days": days},
         separators=(",", ":")))
 
     # Sanity: mystery is its own nearest (dist 0) and twin is near the given.

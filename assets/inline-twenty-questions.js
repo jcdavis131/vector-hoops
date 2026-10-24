@@ -7,8 +7,6 @@
  * 12,966 rows when the file is built). */
 (function(){
 'use strict';
-var TREE_URL='assets/twenty-questions-tree.json';
-var MAP_URL='assets/twenty-questions-map.json';
 var POSITIONS=['PG','SG','SF','PF','C'];
 var CLUSTERS=['Offensive glass + rim protection','Offensive glass, low shot volume','Three-point volume, quiet elsewhere','Defensive glass + rim pressure','Shot volume + three-point volume','Three-point accuracy + volume','Playmaking + steals','Scoring volume + shot volume'];
 var MAXQ=20;
@@ -71,7 +69,7 @@ function onPick(i){
   if(!MAP||!CAREER)return;
   var info=MAP.info(i);if(!info)return;
   var ci=CAREER[i], still=aliveFlag&&aliveFlag[ci];
-  toast(info.name+' · '+info.season+(revealed?'':(still?' · still possible':' · ruled out')));
+  toast(info.name+' · '+info.season+(revealed||!aliveFlag?'':(still?' · still possible':' · ruled out')));
 }
 function mountMap(){
   var host=$('tq-map');
@@ -284,7 +282,8 @@ var mapStarted=false;
 function boot(){
   // The question UI goes live the moment the tree (298K) lands. The map and
   // the row->career join follow; syncMap() no-ops until both are in.
-  fetch(TREE_URL).then(function(r){if(!r.ok)throw new Error('tree '+r.status);return r.json();})
+  // literal URLs: stamp_assets.py versions them (?v=<sha8>), so a new page never reads an old payload
+  fetch('assets/twenty-questions-tree.json?v=05f1e6d3').then(function(r){if(!r.ok)throw new Error('tree '+r.status);return r.json();})
   .then(function(t){
     T=t;
     if(!T.tree||!T.paths){throw new Error('bad payload');}
@@ -295,7 +294,7 @@ function boot(){
   if(mapStarted)return;
   mapStarted=true;
   mountMap();
-  fetch(MAP_URL).then(function(r){if(!r.ok)throw new Error('map '+r.status);return r.json();})
+  fetch('assets/twenty-questions-map.json?v=44b5f395').then(function(r){if(!r.ok)throw new Error('map '+r.status);return r.json();})
   .then(function(m){
     if(!m.career||!m.career.length){throw new Error('bad payload');}
     setCareers(m.career);syncMap();
