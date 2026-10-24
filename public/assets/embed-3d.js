@@ -167,7 +167,8 @@
     var variant = String(opts.variant || ds.variant || 'home');
     if (!VARIANTS[variant]) variant = 'home';
     var projection = opts.projection || ds.projection || 'pca';
-    var height = +opts.height || parseInt(ds.height, 10) || 420;
+    // atlas.css floors .embed3d__canvas at 320px; a smaller buffer would stretch and mis-pick
+    var height = Math.max(320, +opts.height || parseInt(ds.height, 10) || 420);
     var onSelect = typeof opts.onSelect === 'function' ? opts.onSelect : null;
     var hasMM = typeof global.matchMedia === 'function';
     var reduceMotion = hasMM && global.matchMedia('(prefers-reduced-motion: reduce)').matches;

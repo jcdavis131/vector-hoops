@@ -1051,8 +1051,7 @@ function mountEmbed3D(){
   if(!el||!window.Embed3D)return;
   try{window.Embed3D.mount(el,{variant:'live',projection:'pca',highlightIds:[],onSelect:function(){}});}catch(e){}
 }
-mountEmbed3D();
-window.addEventListener('load',mountEmbed3D);
+if(document.readyState==='complete')mountEmbed3D();else window.addEventListener('load',mountEmbed3D,{once:true});
 
 $('refreshBtn').onclick=loadGame;
 $('dayPrev').onclick=()=>gotoDay(-1);

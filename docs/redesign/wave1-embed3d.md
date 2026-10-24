@@ -98,3 +98,10 @@ Inline style left in embed-3d.js is geometry or data, never chrome: `canvas.styl
 3. map-guess fresh (loading sketch on the void, then the game variant: no switcher, no legend), 390 and 1280, light and dark.
 4. map-guess error: block `assets/projections/embed3d.json` and check for `.embed3d__state--error`, "HTTP 404 for ...", and that retry works.
 5. live.html Style Map plate: the live variant with no switcher. The legend stays hidden until wave 2 wires `setGroups`.
+
+## Review follow-up (0f77ce35 review, APPROVE)
+- Canvas height floored at 320 px in JS to match the sheet's min-height (no stretch, no pick drift).
+- live.js mounts once, on load (the second mount re-fetched and flashed the loading sketch).
+- scripts/test_embed3d_contract.js removed: tests/embed3d.test.mjs replaces it and its DOM stub no longer fit.
+- Deferred to wave 2.3: Map Hunt keeps no handle, so the game variant's warmer/colder rings and legend are never drawn (as before this branch). Wire `overlay()` from handleTap and after restore.
+- The stamped token in the receipts above is stale; the pages carry whatever stamp_assets last wrote.
