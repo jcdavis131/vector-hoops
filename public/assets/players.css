@@ -134,7 +134,8 @@ body.vh-modal-open{ overflow: hidden; overscroll-behavior: contain; }
 }
 .pp-rarity b{ color: var(--fg); font-variant-numeric: tabular-nums; }
 .pp-rarity--gold{
-  background: linear-gradient(180deg, var(--coin-wash-1), var(--coin-wash-2));
+  background-color: var(--coin-wash-2);
+  background-image: linear-gradient(180deg, var(--coin-wash-1), var(--coin-wash-2));
   border: 1px solid var(--coin-deep); color: var(--coin-ink);
 }
 .pp-rarity--gold b{ color: var(--coin-ink); }
@@ -195,6 +196,7 @@ body.vh-modal-open{ overflow: hidden; overscroll-behavior: contain; }
 
 /* grade pills: the number in mono, the tier in the fill */
 .pp-skill__grade, .pp-badge__grade{
+  flex: 0 0 auto; white-space: nowrap;
   min-width: 34px; padding: 1px 8px; text-align: center;
   font-family: var(--font-code); font-size: 12px; font-weight: 700; font-variant-numeric: tabular-nums;
   color: var(--fg); background: var(--surface);
@@ -202,7 +204,8 @@ body.vh-modal-open{ overflow: hidden; overscroll-behavior: contain; }
 }
 .pp-badge__grade{ min-width: 28px; padding: 1px 7px; }
 .pp-skill__grade--gold, .pp-badge--gold .pp-badge__grade{
-  background: linear-gradient(180deg, var(--coin-wash-1), var(--coin-wash-2));
+  background-color: var(--coin-wash-2);
+  background-image: linear-gradient(180deg, var(--coin-wash-1), var(--coin-wash-2));
   color: var(--coin-ink); border-color: var(--coin-deep);
 }
 .pp-skill__grade--blue{ background: var(--blue); color: var(--on-accent); border-color: var(--blue); }
@@ -249,9 +252,21 @@ body.vh-modal-open{ overflow: hidden; overscroll-behavior: contain; }
   letter-spacing: .08em; text-transform: uppercase; color: var(--fg-2);
   background: var(--surface); border: 1px solid var(--line-2); border-radius: 999px;
 }
-.pp-tag--accent{ color: var(--accent-2); background: var(--accent-wash); border-color: var(--accent-line); }
+.pp-tag--accent{ color: var(--accent-2); background: var(--surface); border-color: var(--accent-line); }
 .pp-tag--ink{ color: var(--bg); background: var(--fg); border-color: var(--fg); }
 .pp-tag--soft{ background: var(--surface-2); }
+.np-splits{ list-style: none; margin: 6px 0 0; padding: 0; }
+.np-split{
+  display: grid; grid-template-columns: minmax(0, 1fr); grid-auto-flow: column; grid-auto-columns: minmax(56px, 72px); gap: var(--s-2);
+  padding: 6px 0; border-bottom: 1px solid var(--line);
+  font-size: var(--t-sm); font-variant-numeric: tabular-nums;
+}
+.np-split > span + span{ text-align: right; font-family: var(--font-code); }
+.np-split--head{
+  font-family: var(--font-display); font-size: var(--t-xs); font-weight: 600; font-stretch: 112%;
+  letter-spacing: .12em; text-transform: uppercase; color: var(--fg-3);
+}
+.np-split--head > span + span{ font-family: var(--font-display); }
 .po-series{ list-style: none; padding: 0; margin: var(--s-2) 0; display: flex; flex-direction: column; gap: 4px; }
 .po-series__item{
   display: flex; justify-content: space-between; gap: var(--s-2);
@@ -260,7 +275,7 @@ body.vh-modal-open{ overflow: hidden; overscroll-behavior: contain; }
   color: var(--fg); background: var(--surface);
   border: 1px solid var(--line-2); border-radius: var(--radius);
 }
-.po-series__item--won{ background: var(--accent-wash); }
+.po-series__item--won{ border-left: 3px solid var(--accent); }
 .po-series__item--finals{ background: var(--surface-2); }
 .po-series__item--champ{ background: var(--fg); color: var(--bg); border-color: var(--fg); }
 .po-games{ margin-top: var(--s-2); }
@@ -294,7 +309,8 @@ body.vh-modal-open{ overflow: hidden; overscroll-behavior: contain; }
 .pp-featured__grade{
   display: inline-block; margin-top: 6px; padding: 1px 7px;
   font-family: var(--font-code); font-size: var(--t-xs); font-weight: 700; font-variant-numeric: tabular-nums;
-  background: linear-gradient(180deg, var(--coin-wash-1), var(--coin-wash-2));
+  background-color: var(--coin-wash-2);
+  background-image: linear-gradient(180deg, var(--coin-wash-1), var(--coin-wash-2));
   color: var(--coin-ink); border: 1px solid var(--coin-deep); border-radius: 999px;
 }
 
