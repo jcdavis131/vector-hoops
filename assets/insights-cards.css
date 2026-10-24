@@ -17,15 +17,8 @@
 .vh-ins__num{margin-right:.6em;color:var(--fg-3)}
 .vh-ins__title,.vh-ins__card .vh-ins__title{font:700 clamp(24px,4.6vw,36px)/1.15 var(--font-display);margin:0 0 10px;letter-spacing:-.01em;color:var(--fg)}
 
-/* ---- collapsible card: <details class="card vh-ins__card"> with the head in its <summary> ---- */
-.vh-ins__sum{display:block;min-height:48px;cursor:pointer;list-style:none;position:relative;padding-right:40px}
-.vh-ins__sum::-webkit-details-marker{display:none}
-.vh-ins__sum::after{
-  content:"+";position:absolute;top:0;right:0;display:grid;place-content:center;
-  width:28px;height:28px;border:1px solid var(--line-2);border-radius:50%;
-  font:500 var(--t-base)/1 var(--font-text);color:var(--fg-2)
-}
-.vh-ins__card[open] > .vh-ins__sum::after{content:"\2212"}
+/* ---- collapsible card: <details class="card vh-ins__card">; the kit's details.card > summary
+   draws the 48px head and the +/- glyph, this only colours the title on hover ---- */
 .vh-ins__sum:hover .vh-ins__title{color:var(--accent-2)}
 details.vh-ins__card:not([open]) .vh-ins__title{margin:0}
 .vh-ins__body{padding-top:var(--s-2)}

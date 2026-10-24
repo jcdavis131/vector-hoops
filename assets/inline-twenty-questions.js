@@ -77,7 +77,7 @@ function mountMap(){
   if(!window.Embed3D||typeof window.Embed3D.mount!=='function'){
     toast('The map didn’t load — the questions still work.');return;
   }
-  try{MAP=window.Embed3D.mount(host,{variant:'game',height:360,onSelect:onPick});}
+  try{MAP=window.Embed3D.mount(host,{variant:'game',height:360,onSelect:onPick,note:false});/* the page's .tq-map-key is the map's one note */}
   catch(e){MAP=null;console.warn('twenty-questions: map mount failed',e);}
 }
 function setCareers(arr){

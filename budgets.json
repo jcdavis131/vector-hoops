@@ -1,13 +1,13 @@
 {
   "version": 1,
   "measured_commit": "1feb2ad54926660e222e919e90ac4fde7f17ba55",
-  "method": "Per page: page HTML bytes + CSS/JS/JSON bytes referenced by markup (script src, link href), asset literals inside inline scripts, and JSON fetched by the page's JS bundles (one level, string literals). Budgets are 1.5x measured, rounded up to 1 KiB, with a 32 KiB floor. Interaction budgets are 1.25x measured, rounded up to 1 KiB. Rows marked +3% (404.html, map-guess.html, players.html, status.html; wave 1.1, atlas.css grew 25 KB, measured on eb5cd6cf + the kit) are measured + 3%, rounded up to 1 KiB, pending the wave-1.2 re-baseline; feed-health.html and schedule.html likewise (wave 1.2 head template: both now load fonts.css + atlas.css, feed-health also site-nav.js; measured on forge/w1-shell). map-guess.html re-measured +3% in wave 1.3 (it now loads fonts.css and game.css; 196,804 bytes on forge/w1-game). map-guess.html re-measured +3% again on wave 1.4 (embed-3d.js +10.7 KB: variant chrome, setDim/overlay/setGroups, kit states; 206.9 KiB measured on forge/w1-embed3d). offline.html re-measured +3% in wave 2.7 (it now loads fonts.css + atlas.css + shell.css + site-nav.js and the stamped footer; 103,175 bytes on forge/w2docs). The full 1.5x re-baseline follows wave 1.4.",
+  "method": "Per page: page HTML bytes + CSS/JS/JSON bytes referenced by markup (script src, link href), asset literals inside inline scripts, and JSON fetched by the page's JS bundles (one level, string literals). Budgets are 1.5x measured, rounded up to 1 KiB, with a 32 KiB floor. Interaction budgets are 1.25x measured, rounded up to 1 KiB. Rows marked +3% (404.html, map-guess.html, players.html, status.html; wave 1.1, atlas.css grew 25 KB, measured on eb5cd6cf + the kit) are measured + 3%, rounded up to 1 KiB, pending the wave-1.2 re-baseline; feed-health.html and schedule.html likewise (wave 1.2 head template: both now load fonts.css + atlas.css, feed-health also site-nav.js; measured on forge/w1-shell). map-guess.html re-measured +3% in wave 1.3 (it now loads fonts.css and game.css; 196,804 bytes on forge/w1-game). map-guess.html re-measured +3% again on wave 1.4 (embed-3d.js +10.7 KB: variant chrome, setDim/overlay/setGroups, kit states; 206.9 KiB measured on forge/w1-embed3d). offline.html re-measured +3% in wave 2.7 (it now loads fonts.css + atlas.css + shell.css + site-nav.js and the stamped footer; 103,175 bytes on forge/w2docs). 404.html, feed-health.html, map-guess.html, offline.html, schedule.html and status.html re-measured +3% in the wave 2 kit pass (atlas.css +5.3 KB: status pills, choice/collapsible cards, Embed3D legend swatches, modal geometry; map-guess also embed-3d.js +2.8 KB for ready/onLoad, the guess ring and the note/loading options; measured on forge/w2kit; 220,611 bytes for map-guess). The full 1.5x re-baseline follows wave 1.4.",
   "pages": {
     "404.html": {
-      "budget_bytes": 106496
+      "budget_bytes": 112640
     },
     "feed-health.html": {
-      "budget_bytes": 118784
+      "budget_bytes": 123904
     },
     "index.html": {
       "budget_bytes": 3661824
@@ -40,13 +40,13 @@
       "budget_bytes": 696320
     },
     "map-guess.html": {
-      "budget_bytes": 219136
+      "budget_bytes": 227328
     },
     "methods.html": {
       "budget_bytes": 503808
     },
     "offline.html": {
-      "budget_bytes": 106496
+      "budget_bytes": 112640
     },
     "play.html": {
       "budget_bytes": 1556480
@@ -67,7 +67,7 @@
       "budget_bytes": 165888
     },
     "status.html": {
-      "budget_bytes": 110592
+      "budget_bytes": 117760
     },
     "twenty-questions.html": {
       "budget_bytes": 964608
@@ -82,7 +82,7 @@
       "budget_bytes": 502784
     },
     "schedule.html": {
-      "budget_bytes": 135168
+      "budget_bytes": 141312
     }
   },
   "interaction": {

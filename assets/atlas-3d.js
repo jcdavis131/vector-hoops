@@ -128,6 +128,7 @@
       variant: 'home',
       greyscale: true,
       projection: 'pca',
+      loadingText: false, /* the plate meta states the count (#atlas-count) */
       onSelect: function (id) { select(id); }
     });
   }

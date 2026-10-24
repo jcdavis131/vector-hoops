@@ -54,6 +54,11 @@
   --accent-line: rgba(224,72,59,.45);
   --ok:        var(--data-moss);
   --bad:       var(--marker-red);
+  --warn:      #C27A0E;  /* warn state mark (dots, hairlines) - 3.33:1 on board; never text */
+  /* status text: AA on board, surface-2 and their own 10% tint (.pill--ok/--warn/--bad) */
+  --ok-text:   #1C7331;  /* 5.72:1 board, 4.60:1 tint on surface-2 */
+  --warn-text: #7A5200;  /* 6.68:1 board, 5.36:1 tint on surface-2 */
+  --bad-text:  #A9342B;  /* 6.31:1 board, 5.02:1 tint on surface-2 */
   --scrim:     rgba(35,35,35,.45);
   --blue:      var(--marker-blue);
 
@@ -172,6 +177,10 @@
     --accent-line: rgba(255,122,51,.45);
     --ok:        #3DBE8B;
     --bad:       #E5624F;
+    --warn:      #E8A33D;  /* 8.77:1 on night board */
+    --ok-text:   #3DBE8B;  /* 8.05:1 board, 6.09:1 tint on surface-2 */
+    --warn-text: #E8C766;  /* 11.52:1 board, 8.29:1 tint on surface-2 */
+    --bad-text:  #FF8A7A;  /* 8.26:1 board, 6.24:1 tint on surface-2 */
     --scrim:     rgba(3,4,6,.72);
     --blue:      #7FA7D9;
 
@@ -411,7 +420,7 @@ p{ text-wrap: pretty; }
 /* ==========================================================================
    Controls
    ========================================================================== */
-.btn, .btn-play, .pp-btn, .trail-btn{
+.btn, .btn-play, .trail-btn{
   appearance: none;
   display: inline-flex; align-items: center; justify-content: center; gap: 10px;
   min-height: 44px; padding: 0 20px;
@@ -427,8 +436,8 @@ p{ text-wrap: pretty; }
   cursor: pointer;
   transition: border-color var(--dur-1) var(--ease), background var(--dur-1) var(--ease), color var(--dur-1) var(--ease), transform var(--dur-1) var(--ease);
 }
-.btn:hover, .pp-btn:hover, .trail-btn:hover{ border-color: var(--fg-3); background: var(--surface-2); transform: none; box-shadow: none; }
-.btn:active, .pp-btn:active, .trail-btn:active{ transform: translateY(1px); box-shadow: none; }
+.btn:hover, .trail-btn:hover{ border-color: var(--fg-3); background: var(--surface-2); transform: none; box-shadow: none; }
+.btn:active, .trail-btn:active{ transform: translateY(1px); box-shadow: none; }
 .btn[disabled], .btn:disabled, .trail-btn:disabled{ opacity: .45; cursor: not-allowed; }
 /* .btn-primary is defined once, in the pipe block below (one rule, one token: --pipe). */
 .btn-accent{ background: transparent; color: var(--accent-2); border-color: var(--accent-line); }
@@ -454,6 +463,16 @@ p{ text-wrap: pretty; }
   transition: color var(--dur-1) var(--ease), border-color var(--dur-1) var(--ease), background var(--dur-1) var(--ease);
 }
 a.pill:hover, button.pill:hover{ color: var(--fg); border-color: var(--fg-3); }
+/* a pill is one line, never a two-line lozenge; text past its container clips
+   (an inline-flex box cannot ellipsize its bare text: wrap it in .pill__text for the dots) */
+.pill, .chip{ white-space: nowrap; max-width: 100%; overflow: hidden; }
+.pill__text{ min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+/* status pills: the state colour is the text, the hairline and a 10% tint of itself.
+   --ok-text / --warn-text / --bad-text are AA on paper, raised paper and that tint, both themes. */
+.pill--ok, .pill--warn, .pill--bad{ border-color: currentColor; background: color-mix(in srgb, currentColor 10%, transparent); }
+.pill--ok{ color: var(--ok-text); }
+.pill--warn{ color: var(--warn-text); }
+.pill--bad{ color: var(--bad-text); }
 .pill-yellow, .pill-blue{ background: var(--accent-wash); color: var(--accent-2); border-color: var(--accent-line); }
 .pill-green{ background: var(--pipe); color: var(--on-accent); border-color: var(--pipe); }  /* a green pill is green: pipe pairing 5.72:1 */
 
@@ -504,6 +523,9 @@ input[type="range"]{ accent-color: var(--accent); }
 }
 .tab-pills button:hover, .mode-tab:hover{ color: var(--fg); }
 .tab-pills button.is-active, .mode-tab.is-active, .mode-tab.is-active.daily-active{ background: var(--surface-2); color: var(--fg); box-shadow: inset 0 -2px 0 var(--accent); }
+@media (max-width: 420px){
+  .tab-pills button, .mode-tab{ padding: 0 12px; letter-spacing: .1em; }
+}
 
 /* ==========================================================================
    Data tables — the instrument panel
@@ -543,12 +565,13 @@ table{ border-collapse: collapse; width: 100%; }
 .wiki-filters{ display: flex; gap: var(--s-2); }
 .wiki-filters select{ width: auto; min-width: 170px; font-family: var(--font-text); font-size: 16px; font-weight: 450; box-shadow: none; border: 1px solid var(--line-2); background-color: var(--surface); }
 @media (max-width: 720px){
-  .wiki-search-row{ grid-template-columns: 1fr; }
+  .wiki-search-row{ grid-template-columns: minmax(0, 1fr); }
   .wiki-filters select{ flex: 1 1 0; min-width: 0; }
 }
-.wiki-alphabet{ display: flex; flex-wrap: wrap; gap: 0; justify-content: space-between; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 4px 0; }
+/* 44px letters on an even grid: 8 to a row at 390, one row from ~1180px */
+.wiki-alphabet{ display: grid; grid-template-columns: repeat(auto-fill, minmax(44px, 1fr)); gap: 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 4px 0; }
 .wiki-alphabet button{
-  min-width: 28px; min-height: 32px; padding: 0;
+  min-width: 44px; min-height: 44px; padding: 0;
   font-family: var(--font-display); font-size: 11px; font-weight: 600; font-stretch: 112%;
   color: var(--fg-2); background: none; border: 0; border-radius: var(--radius); box-shadow: none; cursor: pointer;
 }
@@ -591,7 +614,10 @@ table{ border-collapse: collapse; width: 100%; }
 .skillbar-list .bar i{ background: var(--accent); }
 .vh-skill-badges span{ background: none; border: 1px solid var(--accent-line); color: var(--accent); box-shadow: none; font-family: var(--font-display); font-stretch: 112%; letter-spacing: .1em; }
 
-/* Modal */
+/* Modal: the backdrop covers the viewport and centres the card; tapping it closes (pages bind that) */
+.vh-modal-backdrop{ position: fixed; inset: 0; z-index: 80; display: grid; place-items: center; padding: var(--s-4); cursor: pointer; }
+.vh-modal{ width: 100%; max-width: 560px; max-height: 80vh; overflow: auto; cursor: auto; }
+body.vh-modal-open{ overflow: hidden; overscroll-behavior: contain; }
 .vh-modal-backdrop{ background: var(--scrim); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
 .vh-modal{ background: var(--surface); color: var(--fg); border: 1px solid var(--line-2); border-radius: var(--radius-lg); box-shadow: 0 30px 80px rgba(0,0,0,.45); padding: clamp(20px, 3vw, 32px); }
 
@@ -628,13 +654,14 @@ table{ border-collapse: collapse; width: 100%; }
   color: var(--fg); font-variant-numeric: tabular-nums lining-nums;
 }
 .stat--xl b, .stat--xl .stat__num{ font-size: var(--t-2xl); letter-spacing: var(--track-display); }
+/* every tile draws its left and top hairline 1px outside itself; the strip clips the
+   ones on its own edge, so tiles are joined across a row and wrapped rows get a rule too */
 .stat-strip{
-  display: flex; flex-wrap: wrap; gap: 0;
+  display: flex; flex-wrap: wrap; gap: 0; overflow: hidden;
   border: 1px solid var(--line); border-radius: var(--radius);
   background: var(--surface);
 }
-.stat-strip > .stat{ flex: 1 1 0; min-width: 120px; }
-.stat-strip > .stat + .stat{ border-left: 1px solid var(--line); }
+.stat-strip > .stat{ flex: 1 1 0; min-width: 120px; margin: -1px 0 0 -1px; border-top: 1px solid var(--line); border-left: 1px solid var(--line); }
 
 /* Site footer styles live in assets/shell.css (three-slot nav rebuild). */
 
@@ -721,11 +748,11 @@ table{ border-collapse: collapse; width: 100%; }
 .card{
   box-shadow: 5px 5px 0 var(--step);
 }
-.btn, .btn-play, .pp-btn, .trail-btn{
+.btn, .btn-play, .trail-btn{
   border-color: var(--block-line);
   box-shadow: 3px 3px 0 var(--block);
 }
-.btn:hover, .pp-btn:hover, .trail-btn:hover{
+.btn:hover, .trail-btn:hover{
   border-color: var(--block-line);
   transform: translate(-1px,-1px);
   box-shadow: 4px 4px 0 var(--block);
@@ -733,25 +760,25 @@ table{ border-collapse: collapse; width: 100%; }
 /* :not() carries its argument's weight, so this is (0,6,0): without the
    exclusions it outranked .btn-primary:hover and the lifeline's hover and
    painted paper under them (pre-existing on the primary; fixed with the kit). */
-.btn:hover:not(.btn-accent):not(.btn-primary):not(.btn-play):not(.lifeline), .pp-btn:hover{
+.btn:hover:not(.btn-accent):not(.btn-primary):not(.btn-play):not(.lifeline){
   background: var(--surface-2);
 }
-.btn:active, .pp-btn:active, .trail-btn:active{
+.btn:active, .trail-btn:active{
   transform: translate(2px,2px);
   box-shadow: 1px 1px 0 var(--block);
 }
-.btn[disabled], .btn:disabled, .pp-btn[disabled], .pp-btn:disabled, .trail-btn:disabled{
+.btn[disabled], .btn:disabled, .trail-btn:disabled{
   box-shadow: none;
 }
 
 /* ---- the single primary action per view: one rule, one token (--pipe).
    Cam's hue call is pending; flipping --pipe to --marker-red flips every primary. ---- */
-.btn-primary, .btn-play, .pp-btn--yellow, .trail-btn{
+.btn-primary, .btn-play, .trail-btn{
   background: var(--pipe);
   border-color: var(--block-line);
   color: var(--on-accent);
 }
-.btn-primary:hover, .btn-play:hover, .pp-btn--yellow:hover, .trail-btn:hover{
+.btn-primary:hover, .btn-play:hover, .trail-btn:hover{
   background: var(--pipe-deep);
   border-color: var(--block-line);
   color: var(--on-accent);
@@ -935,7 +962,7 @@ section .today-strip__links a:first-child:hover{ background: var(--pipe-deep); }
 
 /* ---- print stays ink on paper ---- */
 @media print{
-  .card, .btn, .pp-btn, #streak-pill, .progress-dot.is-done,
+  .card, .btn, #streak-pill, .progress-dot.is-done,
   .court-card.is-solved, section .today-strip__label{ box-shadow: none !important; }
 }
 
@@ -977,6 +1004,34 @@ section .today-strip__links a:first-child:hover{ background: var(--pipe-deep); }
 }
 .card--door:hover{ border-color: var(--line-2); transform: none; }
 .card--door:focus-visible{ outline: 2px solid var(--accent); outline-offset: 2px; }
+/* Collapsible card: <details class="card"> whose <summary> is the head (seed insights'
+   .vh-ins__sum). 48px summary, the +/- glyph of .disclosure in a 28px circle on the right. */
+details.card > summary{
+  display: block; position: relative; min-height: 48px; padding-right: 40px;
+  cursor: pointer; list-style: none;
+}
+details.card > summary::-webkit-details-marker{ display: none; }
+details.card > summary::after{
+  content: "+"; position: absolute; top: 0; right: 0;
+  display: grid; place-content: center; width: 28px; height: 28px;
+  border: 1px solid var(--line-2); border-radius: 50%;
+  font-family: var(--font-text); font-size: var(--t-base); font-weight: 500; line-height: 1; color: var(--fg-2);
+}
+details.card[open] > summary::after{ content: "\2212"; }
+details.card > summary:focus-visible{ outline: 2px solid var(--focus); outline-offset: 4px; border-radius: var(--radius); }
+/* Choice card: a <button class="card card--choice"> option (seed Era Crossed .opt). Button
+   resets, a tap layout, the focus ring, and the pick states; inside another .card the kit's
+   .card .card rule gives it the raised surface. */
+.card--choice{
+  appearance: none; display: flex; flex-direction: column; gap: 4px; width: 100%; min-height: 76px; padding: 14px;
+  text-align: left; cursor: pointer; font: inherit; color: var(--fg);
+  transition: border-color var(--dur-1) var(--ease), background var(--dur-1) var(--ease);
+}
+.card--choice:hover:not([disabled]){ border-color: var(--accent); }
+.card--choice:focus-visible{ outline: 2px solid var(--focus); outline-offset: 2px; }
+.card--choice[disabled]{ cursor: default; }
+.card--choice.is-correct{ border-color: var(--ok-text); background: color-mix(in srgb, var(--ok-text) 10%, var(--surface)); }
+.card--choice.is-wrong{ border-color: var(--bad-text); background: color-mix(in srgb, var(--bad-text) 8%, var(--surface)); }
 /* card children, usable in any card */
 .card__n{
   font-family: var(--font-display); font-size: var(--t-xs); font-weight: 700; font-stretch: 112%;
@@ -1061,6 +1116,11 @@ section .today-strip__links a:first-child:hover{ background: var(--pipe-deep); }
   color: inherit; text-decoration: none;
 }
 .row-list__main{ flex: 1 1 auto; min-width: 0; font-family: var(--font-text); font-size: var(--t-base); font-weight: 600; letter-spacing: -.005em; color: var(--fg); }
+/* title slot: <span class="row-list__main"><span class="row-list__title">..</span><span class="caption">..</span></span> */
+.row-list__main:has(> .row-list__title){ padding: 12px 0; }
+.row-list__title{ display: block; }
+.row-list__title + .caption{ display: block; margin-top: 2px; font-weight: 400; }
+.row-list > li > a:hover .row-list__title, .row-list__row > a:hover .row-list__title{ color: var(--accent-2); }
 .row-list__meta{ flex: 0 0 auto; font-family: var(--font-text); font-size: var(--t-sm); color: var(--fg-3); font-variant-numeric: tabular-nums; white-space: nowrap; }
 .row-list__num{ flex: 0 0 auto; font-family: var(--font-code); font-size: var(--t-sm); color: var(--fg-2); font-variant-numeric: tabular-nums; }
 
@@ -1092,6 +1152,7 @@ section .today-strip__links a:first-child:hover{ background: var(--pipe-deep); }
    appears when the clipboard is denied (seed play.html:253 + its feedback contract). ---- */
 .share-bar{ display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-2); margin-top: var(--s-3); }
 .share-bar .btn{ flex: 1 1 120px; }
+.share-bar--compact .btn{ flex: 1 1 0; min-width: 0; padding: 0 10px; letter-spacing: .1em; }
 .share-bar__status{ flex-basis: 100%; margin: 0; min-height: 1.5em; font-size: var(--t-sm); color: var(--fg-2); }
 .share-bar__status:empty{ min-height: 0; }
 .share-bar__copy{
@@ -1199,7 +1260,8 @@ section .today-strip__links a:first-child:hover{ background: var(--pipe-deep); }
    them in task 1.4 (today it inlines style.cssText and hyphenated names).
      .embed3d > .embed3d__bar (a .seg for projection + .embed3d__axis)
               > .embed3d__frame > canvas.embed3d__canvas + .embed3d__state + .embed3d__tip
-              > .embed3d__legend (none for home, warm/cold for game, team swatches for live)
+              > .embed3d__legend (none for home; ring keys + the selected point for game;
+                                  team swatches for live)
               > .embed3d__note ---- */
 .embed3d{ position: relative; width: 100%; min-width: 0; }
 .embed3d__bar{ display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-2) var(--s-3); padding: 0 0 var(--s-2); }
@@ -1221,6 +1283,17 @@ section .today-strip__links a:first-child:hover{ background: var(--pipe-deep); }
 }
 .embed3d__key{ display: inline-flex; align-items: center; gap: 6px; }
 .embed3d__swatch{ display: inline-block; width: 10px; height: 10px; border-radius: 2px; flex: 0 0 auto; }
+/* ring keys: the ring as the map draws it, a coloured circle on a void disc */
+.embed3d__swatch--ring{ width: 14px; height: 14px; border-radius: 50%; background: var(--void); border: 2px solid var(--void-ink); }
+.embed3d__swatch--exact{ border-color: var(--void-accent); }
+.embed3d__swatch--warm{ border-color: var(--data-terra); }
+.embed3d__swatch--cold{ border-color: var(--void-ink-2); }
+.embed3d__swatch--guess{ border-style: dashed; border-color: var(--void-ink); }
+/* the selected point: the mark-coloured dot inside its ring */
+.embed3d__swatch--sel{
+  width: 14px; height: 14px; border-radius: 50%;
+  background: radial-gradient(circle, var(--void-accent) 0 2.5px, var(--void) 3px 4px, var(--void-accent) 4.5px 5.5px, var(--void) 6px);
+}
 .embed3d__note{ margin: var(--s-2) 0 0; max-width: 70ch; font-size: var(--t-sm); line-height: 1.55; color: var(--fg-2); }
 .embed3d__note b{ color: var(--fg); }
 .embed3d__tip{
@@ -1229,6 +1302,7 @@ section .today-strip__links a:first-child:hover{ background: var(--pipe-deep); }
   color: var(--void-ink); background: var(--void-surface);
   border: 1px solid var(--void-line); border-radius: var(--radius);
 }
+.embed3d__tip.is-visible{ display: block; }
 .embed3d__tip b{ color: var(--void-ink); }
 .embed3d__tip .num{ color: var(--void-ink-2); }
 /* the state covers the frame; it is a void host (remapped above), so .state rules read right inside it */

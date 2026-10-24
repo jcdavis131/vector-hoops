@@ -14,15 +14,26 @@
        greyscale: bool                 accepted for #165 compatibility; every
                                        variant now draws depth-shaded greys
        dim: [ids]   overlay: [rings]   groups: [{label,color,ids}]
+       onLoad: function(handle){}      once, when the data has loaded
+                                       (same moment handle.ready resolves)
+       note: 'text' | false            game/live only: replace the default
+                                       note, or drop it (the page says it)
+       loadingText: 'text' | false     the loading state's second line; false
+                                       for pages that already state the count
+       selectedLabel: 'text'           game only: legend key for setSelected's
+                                       point (default "Selected")
      }
      handle = { setProjection(name), setHighlight(ids), setSelected(id),
                 setDim(ids), overlay(rings), setGroups(groups), find(q),
-                info(i), snapshot(), destroy() }
+                info(i), snapshot(), destroy(), ready }
+     handle.ready is a Promise that resolves with the handle once the data
+     has loaded (after a retry, if the first fetch failed). It never rejects;
+     a handle destroyed before loading leaves it pending.
 
    Chrome (all styled by atlas.css, no inline chrome here):
      .embed3d[data-variant] > .embed3d__bar (home only: .seg projection + .embed3d__axis)
-       > .embed3d__frame > canvas.embed3d__canvas + .embed3d__state + .embed3d__tip
-       > .embed3d__legend (home: none; game: warm/cold keys for guess rings;
+       > .embed3d__frame > canvas.embed3d__canvas + .embed3d__state + .embed3d__tip(.is-visible)
+       > .embed3d__legend (home: none; game: ring keys + the selected point;
                            live: team swatches from setGroups)
        > .embed3d__note
    The game and live variants carry no research chrome: no projection switcher,
@@ -41,17 +52,17 @@
 
   var VARIANTS = { home: 1, game: 1, live: 1 };
 
-  /* What each projection preserves / distorts. Shown in the home note. */
+  /* What each projection preserves / distorts, in plain words (the switcher
+     buttons carry the names). Shown in the home note. */
   var PROJ_NOTES = {
-    pca: 'PCA shows the widest spread but keeps only ~27% of the differences — nearby dots can mislead.',
-    tsne: 't-SNE keeps tight groups together, but gaps between groups mean nothing.',
-    umap: 'UMAP keeps tight groups together, but gaps between groups mean nothing.'
+    pca: 'This view shows the widest spread but keeps only ~27% of the differences, so nearby dots can mislead.',
+    tsne: 'This view keeps tight groups together, but the gaps between groups mean nothing.',
+    umap: 'This view keeps tight groups together, but the gaps between groups mean nothing.'
   };
-  var PROJ_AXIS = {
-    pca: 'PCA dim 1–3 (arbitrary units)',
-    tsne: 't-SNE dim 1–3 (arbitrary units)',
-    umap: 'UMAP dim 1–3 (arbitrary units)'
-  };
+  var AXIS_NOTE = 'Axes in arbitrary units';
+  var LOADING_TEXT = '12,966 player-seasons, placed by how they played.';
+  /* ring kinds and their legend keys, in legend order */
+  var RING_KEYS = [['exact', 'Found it'], ['warm', 'Warmer guess'], ['cold', 'Colder guess'], ['guess', 'Guess']];
   function projLabel(name) {
     return name === 'tsne' ? 't-SNE' : String(name).toUpperCase();
   }
@@ -152,6 +163,10 @@
     return s || fallback;
   }
 
+  function escText(s) {
+    return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+
   function el(tag, cls) {
     var n = global.document.createElement(tag);
     if (cls) n.className = cls;
@@ -170,6 +185,12 @@
     // atlas.css floors .embed3d__canvas at 320px; a smaller buffer would stretch and mis-pick
     var height = Math.max(320, +opts.height || parseInt(ds.height, 10) || 420);
     var onSelect = typeof opts.onSelect === 'function' ? opts.onSelect : null;
+    var onLoad = typeof opts.onLoad === 'function' ? opts.onLoad : null;
+    var noteOverride = variant !== 'home' && (opts.note === false || typeof opts.note === 'string') ? opts.note : null;
+    var loadingText = opts.loadingText === false ? '' : typeof opts.loadingText === 'string' ? opts.loadingText : LOADING_TEXT;
+    var selectedLabel = typeof opts.selectedLabel === 'string' && opts.selectedLabel ? opts.selectedLabel : 'Selected';
+    var resolveReady;
+    var ready = new Promise(function (res) { resolveReady = res; });
     var hasMM = typeof global.matchMedia === 'function';
     var reduceMotion = hasMM && global.matchMedia('(prefers-reduced-motion: reduce)').matches;
     /* #165 semantics, now the one atlas look: depth-shaded greys, selection =
@@ -225,8 +246,8 @@
     function showLoading() {
       stateEl.className = 'embed3d__state embed3d__state--loading';
       stateEl.removeAttribute('role');
-      stateEl.innerHTML = sketchSvg() +
-        '<p><span class="state__label">Loading the map</span><br>12,966 player-seasons, placed by how they played.</p>';
+      stateEl.innerHTML = sketchSvg() + '<p><span class="state__label">Loading the map</span>' +
+        (loadingText ? '<br>' + escText(loadingText) : '') + '</p>';
       stateEl.hidden = false;
     }
     function showError(msg) {
@@ -370,6 +391,12 @@
       stateEl.innerHTML = '';
       resize();
       if (!state.raf) state.raf = requestAnimationFrame(frame);
+      if (resolveReady) {
+        var res = resolveReady;
+        resolveReady = null;
+        res(handle);
+        if (onLoad) { try { onLoad(handle); } catch (e) { /* a page callback must not break the map */ } }
+      }
     }
 
     /* ---- projection switcher (home only) ---- */
@@ -393,18 +420,23 @@
       });
       bar.appendChild(seg);
       var axis = el('span', 'embed3d__axis');
-      axis.textContent = PROJ_AXIS[state.proj] || '';
+      axis.textContent = AXIS_NOTE;
       bar.appendChild(axis);
-      state.axisLabel = axis;
     }
 
     function renderNote() {
       var text;
       if (variant === 'home') {
-        /* Panel S10: plain words, with the number. #165 greyscale wording. */
-        note.innerHTML = '<b>' + projLabel(state.proj) + '</b> — ' + (PROJ_NOTES[state.proj] || '') +
+        /* Panel S10: plain words, with the number. #165 greyscale wording. The
+           switcher names the projection; the note says what it keeps. */
+        note.textContent = (PROJ_NOTES[state.proj] || '') +
           ' Points are shaded by depth — nearer dots are brighter. Color appears only on your selection and its twins.' +
           ' Each dot is one player-season. Axes are arbitrary units.';
+        return;
+      }
+      if (noteOverride !== null) {
+        note.hidden = noteOverride === false;
+        note.textContent = noteOverride === false ? '' : noteOverride;
         return;
       }
       if (variant === 'game') {
@@ -417,11 +449,13 @@
       note.textContent = text;
     }
 
-    function key(label, color, ring) {
+    /* A legend key. `color` is a data colour (a team's) painted as the
+       swatch's background; `mod` instead names a token-coloured swatch that
+       atlas.css draws (.embed3d__swatch--ring.embed3d__swatch--warm, --sel). */
+    function key(label, color, mod) {
       var k = el('span', 'embed3d__key');
-      var sw = el('span', 'embed3d__swatch');
-      /* data colour (a team's, or a token resolved above), not chrome */
-      if (ring) { sw.style.border = '2px solid ' + color; } else { sw.style.background = color; }
+      var sw = el('span', 'embed3d__swatch' + (mod ? ' embed3d__swatch--' + mod : ''));
+      if (!mod) sw.style.background = color;
       k.appendChild(sw);
       k.appendChild(global.document.createTextNode(label));
       return k;
@@ -432,12 +466,13 @@
       if (state.groups.length) {
         state.groups.forEach(function (g) { keys.push(key(g.label, g.css)); });
       }
-      if (variant === 'game' && state.rings.length) {
+      if (variant === 'game') {
+        if (state.selectedId != null) keys.push(key(selectedLabel, null, 'sel'));
         var kinds = {};
         state.rings.forEach(function (r) { kinds[r.kind] = true; });
-        if (kinds.exact) keys.push(key('Found it', COL.css.mark, true));
-        if (kinds.warm) keys.push(key('Warmer guess', COL.css.terra, true));
-        if (kinds.cold) keys.push(key('Colder guess', COL.css.voidInk2, true));
+        RING_KEYS.forEach(function (rk) {
+          if (kinds[rk[0]]) keys.push(key(rk[1], null, 'ring embed3d__swatch--' + rk[0]));
+        });
       }
       keys.forEach(function (k) { legend.appendChild(k); });
       legend.hidden = !keys.length;
@@ -453,7 +488,6 @@
         Object.keys(state.buttons).forEach(function (k) {
           state.buttons[k].setAttribute('aria-pressed', k === name ? 'true' : 'false');
         });
-        if (state.axisLabel) state.axisLabel.textContent = PROJ_AXIS[name] || '';
       }
       renderNote();
     }
@@ -464,7 +498,10 @@
 
     /* C1.1: the selected point, styled apart from the twin highlights. */
     function setSelected(id) {
-      state.selectedId = (id == null || id < 0) ? null : id;
+      var next = (id == null || id < 0) ? null : id;
+      var keyChanged = (next == null) !== (state.selectedId == null);
+      state.selectedId = next;
+      if (keyChanged) renderLegend();
     }
 
     /* Fade every point outside `ids` (Twenty Questions' remaining candidates).
@@ -473,17 +510,21 @@
       state.dim = ids == null ? null : new Set(ids);
     }
 
-    /* Guess rings: [{id, kind:'warm'|'cold'|'exact', r:px, color}]; [] clears. */
+    /* Guess rings: [{id, kind:'warm'|'cold'|'exact'|'guess', r:px, color}]; [] clears.
+       'guess' is the neutral ring (a first guess, or one at the same distance):
+       a dashed --void-ink ring. An unknown kind is drawn as 'guess', never as
+       a warmer/colder claim. */
     function overlay(rings) {
       state.rings = (rings || []).filter(function (r) { return r && r.id != null; }).map(function (r) {
-        var kind = r.kind === 'warm' || r.kind === 'cold' || r.kind === 'exact' ? r.kind : 'warm';
+        var kind = r.kind === 'warm' || r.kind === 'cold' || r.kind === 'exact' || r.kind === 'guess' ? r.kind : 'guess';
         return { id: r.id, kind: kind, r: +r.r > 0 ? +r.r : 10, color: r.color || null };
       });
       renderLegend();
     }
     function ringColor(r) {
       if (r.color) return resolveColor(r.color, COL.css.mark);
-      return r.kind === 'exact' ? COL.css.mark : r.kind === 'cold' ? COL.css.voidInk2 : COL.css.terra;
+      return r.kind === 'exact' ? COL.css.mark : r.kind === 'cold' ? COL.css.voidInk2
+        : r.kind === 'guess' ? COL.css.voidInk : COL.css.terra;
     }
 
     /* Colour groups: [{label, color, ids}]; [] clears. A point in two groups
@@ -662,16 +703,18 @@
       return best;
     }
 
-    /* tip and cursor are geometry/state, toggled per event (atlas.css owns the look) */
+    /* the tip shows with .is-visible (atlas.css owns the look); its position
+       and the cursor are geometry/state, set per event */
+    function showTip(on) { tip.className = on ? 'embed3d__tip is-visible' : 'embed3d__tip'; }
     function hover(e) {
-      if (!state.loaded || !onSelect) { tip.style.display = ''; return; }
+      if (!state.loaded || !onSelect) { showTip(false); return; }
       var idx = pick(e);
-      if (idx < 0) { tip.style.display = ''; canvas.style.cursor = ''; return; }
+      if (idx < 0) { showTip(false); canvas.style.cursor = ''; return; }
       canvas.style.cursor = 'pointer';
       var r = canvas.getBoundingClientRect();
       tip.textContent = state.names[idx] + ' · ' + state.seasons[idx] +
         (state.teams[idx] ? ' · ' + state.teams[idx] : '');
-      tip.style.display = 'block';
+      showTip(true);
       tip.style.left = (e.clientX - r.left + 14) + 'px';
       tip.style.top = (e.clientY - r.top - 10) + 'px';
     }
@@ -764,9 +807,12 @@
           if (j === undefined) return;
           var c = ringColor(r);
           ctx.strokeStyle = c;
+          var dashed = r.kind === 'guess' && typeof ctx.setLineDash === 'function';
+          if (dashed) ctx.setLineDash([4, 3]);
           ctx.beginPath();
           ctx.arc(sx[j], syy[j], r.r * (0.6 + 0.4 * sz[j]), 0, 6.2832);
           ctx.stroke();
+          if (dashed) ctx.setLineDash([]);
           if (r.kind === 'exact') { ctx.fillStyle = c; dot(sx[j], syy[j], 3 + sz[j] * 2.5, false); }
         });
       }
@@ -809,7 +855,7 @@
     var handle = {
       setProjection: setProjection, setHighlight: setHighlight, setSelected: setSelected,
       setDim: setDim, overlay: overlay, setGroups: setGroups, find: find,
-      info: info, snapshot: snapshot, destroy: destroy
+      info: info, snapshot: snapshot, destroy: destroy, ready: ready
     };
     host.__embed3d = handle;
     load();

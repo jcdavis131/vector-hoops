@@ -48,7 +48,7 @@ function round(){
   var box=$('opts');box.innerHTML='';
   r.o.forEach(function(o,i){
     var b=document.createElement('button');
-    b.type='button';b.className='card opt';b.dataset.i=i;
+    b.type='button';b.className='card card--choice opt';b.dataset.i=i;
     b.innerHTML='<span class="nm">'+esc(o.n)+'</span><span class="ss">'+esc(o.s)+' \u00B7 <kbd>'+(i+1)+'</kbd></span>';
     b.addEventListener('click',function(){pick(i);});
     box.appendChild(b);

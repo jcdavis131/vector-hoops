@@ -10,10 +10,6 @@
 .players-tabs{ display: flex; justify-content: center; margin-bottom: var(--s-2); }
 
 /* ---- directory ---- */
-/* At <=720px atlas makes the row one 1fr track (= minmax(auto,1fr)); the two
-   selects' intrinsic width then pushed the row past the card at 390px. */
-.wiki-search-row > *{ min-width: 0; }
-.wiki-filters{ min-width: 0; }
 #wiki-list{ margin-top: var(--s-3); }
 /* The row is a <button>: reset it into a flex row (atlas re-skins it). */
 .wiki-row{
@@ -45,10 +41,7 @@
 .vh-dossier__swings .swing-note{ font-size: var(--t-xs); color: var(--fg-3); }
 .vh-dossier__swings .swing-more{ margin-top: 6px; font-size: 12px; }
 
-/* ---- dossier modal: geometry (atlas owns its colours) ---- */
-.vh-modal-backdrop{ position: fixed; inset: 0; z-index: 80; display: grid; place-items: center; padding: var(--s-4); cursor: pointer; }
-.vh-modal{ width: 100%; max-width: 560px; max-height: 80vh; overflow: auto; cursor: auto; }
-body.vh-modal-open{ overflow: hidden; overscroll-behavior: contain; }
+/* ---- dossier modal: atlas.css owns the backdrop, the card and the scroll lock ---- */
 .dossier-head{ display: flex; justify-content: space-between; gap: 10px; align-items: center; }
 .dossier-head .hd{ margin: 0; font-size: var(--t-md); }
 .dossier-body{ margin-top: 10px; font-size: 14px; line-height: 1.6; }

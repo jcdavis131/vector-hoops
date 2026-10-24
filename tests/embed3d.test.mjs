@@ -23,11 +23,11 @@ class El {
     this.tagName = String(tag).toUpperCase();
     this.children = []; this.parentNode = null; this.attrs = {}; this.listeners = {};
     this.dataset = {}; this.hidden = false; this._html = ''; this._text = '';
-    this.className = ''; this.cssTextWrites = 0;
+    this.className = ''; this.cssTextWrites = 0; this.styleWrites = [];
     const self = this;
     const styleTarget = {};
     this.style = new Proxy(styleTarget, {
-      set(t, k, v) { if (k === 'cssText') self.cssTextWrites++; t[k] = v; return true; },
+      set(t, k, v) { if (k === 'cssText') self.cssTextWrites++; self.styleWrites.push(String(k)); t[k] = v; return true; },
     });
     this.clientWidth = 600; this.clientHeight = 420;
   }
@@ -59,7 +59,9 @@ function makeCtx(log) {
   ctx.fillRect = (x, y, w, h) => log.push({ op: 'fillRect', fill: ctx.fillStyle, alpha: ctx.globalAlpha, x, y, w, h });
   ctx.arc = (x, y, r) => log.push({ op: 'arc', x, y, r, fill: ctx.fillStyle, stroke: ctx.strokeStyle });
   ctx.fill = () => log.push({ op: 'fill', fill: ctx.fillStyle });
-  ctx.stroke = () => log.push({ op: 'stroke', stroke: ctx.strokeStyle });
+  ctx.dash = [];
+  ctx.setLineDash = (d) => { ctx.dash = Array.from(d); };
+  ctx.stroke = () => log.push({ op: 'stroke', stroke: ctx.strokeStyle, dash: ctx.dash.slice() });
   return ctx;
 }
 
@@ -177,10 +179,18 @@ test('variant chrome: classes only, home keeps the switcher, game and live drop 
       assert.equal(seg.children.length, 2);
       assert.deepEqual(seg.children.map((b) => b.getAttribute('aria-pressed')), ['true', 'false']);
       assert.ok(bar.q('embed3d__axis').textContent.includes('arbitrary units'));
+      // the switcher keeps the projection names; the runtime copy says what each view keeps, in plain words
+      assert.deepEqual(seg.children.map((b) => b.textContent), ['PCA', 't-SNE']);
+      assert.match(note.textContent, /widest spread/);
+      const before = note.textContent;
       seg.children[1].click();
       assert.equal(h.snapshot().projection, 'tsne');
       assert.deepEqual(seg.children.map((b) => b.getAttribute('aria-pressed')), ['false', 'true']);
-      assert.match(note.innerHTML, /t-SNE/);
+      assert.notEqual(note.textContent, before);
+      assert.match(note.textContent, /gaps between groups mean nothing/);
+      for (const t of [note.textContent + note.innerHTML, bar.q('embed3d__axis').textContent]) {
+        assert.doesNotMatch(t, /PCA|t-SNE|UMAP/, 'home: no projection jargon in the copy');
+      }
       assert.equal(w.q('embed3d__legend').hidden, true, 'home: no legend');
     } else {
       assert.equal(bar, null, `${variant}: no projection switcher`);
@@ -439,4 +449,135 @@ test('source: no inline chrome, colour or font literals left in embed-3d.js', ()
   assert.doesNotMatch(code, /['"][^'"\n]*#[0-9a-f]{3,8}\b[^'"\n]*['"]/i);
   assert.doesNotMatch(code, /system-ui|sans-serif|monospace|font-family/);
   assert.doesNotMatch(code, /k-means|silhouette/i);
+});
+
+test("overlay: the neutral 'guess' ring (dashed --void-ink, key \"Guess\"); unknown kinds are neutral", async () => {
+  const e = env();
+  const h = e.Embed3D.mount(e.host, { variant: 'game' });
+  await e.settle(); await e.settle();
+  h.overlay([{ id: 0, kind: 'guess' }, { id: 1, kind: 'bogus' }, { id: 2, kind: 'warm' }]);
+  const s = h.snapshot();
+  assert.deepEqual(s.rings.map((r) => r.kind), ['guess', 'guess', 'warm']);
+  assert.equal(s.rings[0].color, 'rgb(216,220,216)'); // guess = --void-ink
+  const legend = e.host.q('embed3d__legend');
+  const keys = legend.qa('embed3d__key');
+  assert.deepEqual(keys.map((k) => k.textContent), ['Warmer guess', 'Guess']);
+  // ring swatches are classes (atlas.css colours them), never a style.border write
+  const sw = keys[1].q('embed3d__swatch');
+  assert.ok(sw.classes.includes('embed3d__swatch--ring') && sw.classes.includes('embed3d__swatch--guess'), sw.className);
+  assert.ok(keys[0].q('embed3d__swatch').classes.includes('embed3d__swatch--warm'));
+  for (const k of keys) assert.deepEqual(k.q('embed3d__swatch').styleWrites, []);
+  e.log.length = 0; e.pump();
+  const strokes = e.log.filter((r) => r.op === 'stroke');
+  const guess = strokes.filter((r) => r.stroke === 'rgb(216,220,216)');
+  const warm = strokes.filter((r) => r.stroke === 'rgb(160,90,56)');
+  assert.equal(guess.length, 2);
+  assert.ok(guess.every((r) => r.dash.length === 2), 'guess rings are dashed');
+  assert.ok(warm.every((r) => r.dash.length === 0), 'other rings stay solid');
+});
+
+test('game legend: a key for the selected point, labelled by selectedLabel, follows setSelected', async () => {
+  const e = env();
+  const h = e.Embed3D.mount(e.host, { variant: 'game', selectedLabel: 'Answer' });
+  await e.settle(); await e.settle();
+  const legend = e.host.q('embed3d__legend');
+  assert.equal(legend.hidden, true);
+  h.setSelected(2);
+  assert.equal(legend.hidden, false);
+  let keys = legend.qa('embed3d__key');
+  assert.deepEqual(keys.map((k) => k.textContent), ['Answer']);
+  assert.ok(keys[0].q('embed3d__swatch').classes.includes('embed3d__swatch--sel'));
+  h.overlay([{ id: 0, kind: 'cold' }]);
+  assert.deepEqual(legend.qa('embed3d__key').map((k) => k.textContent), ['Answer', 'Colder guess']);
+  h.setSelected(null);
+  assert.deepEqual(legend.qa('embed3d__key').map((k) => k.textContent), ['Colder guess']);
+  // default label; home and live never show it
+  const e2 = env();
+  const h2 = e2.Embed3D.mount(e2.host, { variant: 'game' });
+  h2.setSelected(1);
+  assert.deepEqual(e2.host.q('embed3d__legend').qa('embed3d__key').map((k) => k.textContent), ['Selected']);
+  for (const variant of ['home', 'live']) {
+    const e3 = env();
+    e3.Embed3D.mount(e3.host, { variant }).setSelected(1);
+    assert.equal(e3.host.q('embed3d__legend').hidden, true, variant);
+  }
+});
+
+test('ready promise and onLoad: once, after load (info works), after a retry, never on destroy', async () => {
+  const e = env();
+  const calls = [];
+  const h = e.Embed3D.mount(e.host, { variant: 'game', onLoad: (hh) => calls.push(hh.info(0) && hh.info(0).name) });
+  assert.equal(typeof h.ready.then, 'function');
+  const got = await h.ready;
+  assert.equal(got, h);
+  assert.deepEqual(calls, ['Ann']);
+  assert.equal(h.snapshot().loaded, true);
+
+  // a failed first fetch keeps ready pending; the retry resolves it
+  let n = 0;
+  const e2 = env({ fetchImpl: () => (++n === 1 ? Promise.resolve({ ok: false, status: 503 }) : Promise.resolve({ ok: true, status: 200, json: () => Promise.resolve(fixture()) })) });
+  let loads = 0;
+  const h2 = e2.Embed3D.mount(e2.host, { onLoad: () => { loads++; } });
+  let resolved = false;
+  h2.ready.then(() => { resolved = true; });
+  await e2.settle(); await e2.settle();
+  assert.equal(resolved, false);
+  assert.equal(loads, 0);
+  stateOf(e2.host).children.find((c) => c.tagName === 'BUTTON').click();
+  await h2.ready;
+  assert.equal(loads, 1);
+
+  // a throwing onLoad does not break the map
+  const e3 = env();
+  const h3 = e3.Embed3D.mount(e3.host, { onLoad: () => { throw new Error('page bug'); } });
+  await h3.ready;
+  assert.equal(stateOf(e3.host).hidden, true);
+
+  // destroyed before load: no callback, no rejection
+  const e4 = env();
+  let fired = false;
+  const h4 = e4.Embed3D.mount(e4.host, { onLoad: () => { fired = true; } });
+  h4.ready.then(() => { fired = true; }, () => { fired = 'rejected'; });
+  h4.destroy();
+  await e4.settle(); await e4.settle();
+  assert.equal(fired, false);
+});
+
+test('tip: shown and hidden by .is-visible, never a style.display write', async () => {
+  const e = env();
+  e.Embed3D.mount(e.host, { variant: 'game', onSelect: () => {} });
+  await e.settle(); await e.settle();
+  e.pump();
+  const r = e.log.filter((x) => x.op === 'fillRect')[0];
+  const canvas = e.host.q('embed3d__canvas');
+  const tip = e.host.q('embed3d__tip');
+  canvas.dispatch('pointermove', { pointerId: 9, clientX: r.x + r.w / 2, clientY: r.y + r.h / 2 });
+  assert.ok(tip.classes.includes('is-visible'));
+  assert.match(tip.textContent, /·/);
+  canvas.dispatch('pointermove', { pointerId: 9, clientX: 5000, clientY: 5000 });
+  assert.ok(!tip.classes.includes('is-visible'));
+  assert.ok(!tip.styleWrites.includes('display'), JSON.stringify(tip.styleWrites));
+});
+
+test('note override (game/live only) and loadingText', async () => {
+  const e = env({ fetchImpl: () => new Promise(() => {}) });
+  e.Embed3D.mount(e.host, { variant: 'game', note: 'Faded dots are ruled out.', loadingText: false });
+  const note = e.host.q('embed3d__note');
+  assert.equal(note.textContent, 'Faded dots are ruled out.');
+  assert.equal(note.hidden, false);
+  const st = stateOf(e.host);
+  assert.match(st.innerHTML, /Loading the map/);
+  assert.doesNotMatch(st.innerHTML, /12,966|<br>/);
+
+  const e2 = env({ fetchImpl: () => new Promise(() => {}) });
+  e2.Embed3D.mount(e2.host, { variant: 'game', note: false, loadingText: 'Tonight <b>' });
+  assert.equal(e2.host.q('embed3d__note').hidden, true);
+  assert.match(stateOf(e2.host).innerHTML, /<br>Tonight &lt;b&gt;/);
+
+  // default copy unchanged; home ignores a note override (its projection note is the honesty line)
+  const e3 = env({ fetchImpl: () => new Promise(() => {}) });
+  e3.Embed3D.mount(e3.host, { variant: 'home', note: false });
+  assert.match(stateOf(e3.host).innerHTML, /12,966 player-seasons, placed by how they played\./);
+  assert.equal(e3.host.q('embed3d__note').hidden, false);
+  assert.match(e3.host.q('embed3d__note').textContent, /widest spread/);
 });

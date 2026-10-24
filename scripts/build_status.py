@@ -269,7 +269,8 @@ def render(snapshot: dict) -> str:
     e = html.escape
 
     def pill(state: str, label: str) -> str:
-        return f'<span class="st__pill st__pill--{state}">{e(label)}</span>'
+        cls = "pill" if state == "na" else f"pill pill--{state}"
+        return f'<span class="{cls}">{e(label)}</span>'
 
     dot = {"operational": "ok", "degraded": "warn", "incident": "bad"}[snapshot["overall"]]
     banner_label = {
