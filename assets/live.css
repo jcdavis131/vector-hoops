@@ -273,3 +273,9 @@
 .live-root .daynav #games:empty, .live-root .daynav #games.one {display:none;}
 .live-root .stickybar {padding:0 0 4px;}
 .live-root .wpnum {flex-wrap:wrap;column-gap:12px;row-gap:2px;}
+.live-root .odds-hero {text-align:center;padding:12px 4px 8px;}
+.live-root .odds-hero .ospread {font-size:34px;font-weight:800;letter-spacing:.02em;}
+.live-root .odds-hero .olab {display:block;font:700 9px var(--mono);letter-spacing:.22em;color:var(--ink2);margin-top:4px;}
+.live-root .orow {display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:6px;}
+.live-root .orow h4 {margin:0 0 3px;font:700 9px var(--mono);letter-spacing:.14em;color:var(--ink2);}
+.live-root .orow b {font-size:14px;}

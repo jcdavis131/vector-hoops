@@ -130,6 +130,16 @@
       (a.opp_tpar ? m('Opp 3P rate', a.opp_tpar, true) : '') + '</div>';
   }
 
+  /* Pregame odds via the repo's own /api/odds proxy (key stays server-side).
+   * Any failure or honest 503/404 -> null -> the card hides (injuries pattern).
+   * Never faked, never a waiting wall. */
+  function odds(aAbbr, hAbbr) {
+    return jget('/api/odds?away=' + encodeURIComponent(aAbbr) +
+      '&home=' + encodeURIComponent(hAbbr))
+      .then(function (d) { return (d && d.ok) ? d : null; })
+      .catch(function () { return null; });
+  }
+
   function injuries(aAbbr, hAbbr) {
     // Best effort: ESPN's site API injuries endpoint. Any failure -> card hides.
     return jget('https://site.api.espn.com/apis/site/v2/sports/basketball/nba/injuries')
@@ -160,9 +170,10 @@
     var dataP = jget(DATA_URL).catch(function () { return null; });
     var formP = lastTen(aAbbr, hAbbr).catch(function () { return null; });
     var injP = injuries(aAbbr, hAbbr);
+    var oddsP = odds(aAbbr, hAbbr);
 
-    Promise.all([dataP, formP, injP]).then(function (res) {
-      var doc = res[0], forms = res[1], injs = res[2];
+    Promise.all([dataP, formP, injP, oddsP]).then(function (res) {
+      var doc = res[0], forms = res[1], injs = res[2], od = res[3];
       var teams = (doc && doc.teams) || {};
       var asof = doc && doc.asof;
       if (!asof) { // K3: no asof -> the data cards don't ship
@@ -179,15 +190,37 @@
         (global.GameHeader ? global.GameHeader.html({ abbr: aAbbr }, { abbr: hAbbr }, venue, when, 'pre') : '') +
         '</div>';
 
+      // Odds — only when the proxy answered with real lines (else the card hides).
+      if (od) {
+        var asofOdds = od.asof;
+        try {
+          asofOdds = new Date(od.asof).toLocaleString('en-US',
+            { timeZone: 'America/Chicago', hour: 'numeric', minute: '2-digit' }) + ' CT';
+        } catch (e) { /* keep raw */ }
+        var mlBits = [aAbbr, hAbbr].map(function (ab) {
+          var p = od.moneyline[ab];
+          return esc(ab) + ' ' + (p > 0 ? '+' + p : p);
+        }).join(' · ');
+        var spTxt = od.spread ? esc(od.spread.abbr) + ' ' + od.spread.line : '—';
+        var totTxt = od.total ? 'O/U ' + od.total.line : '—';
+        html += '<div class="pcard">' + plate('01', 'ODDS',
+          'the-odds-api · median of ' + od.books + ' books · as of ' + esc(asofOdds)) +
+          '<div class="odds-hero"><span class="ospread">' + spTxt + '</span>' +
+          '<span class="olab">POINT SPREAD</span></div>' +
+          '<div class="orow"><div><h4>MONEYLINE</h4><b>' + mlBits + '</b></div>' +
+          '<div><h4>TOTAL</h4><b>' + totTxt + '</b></div></div>' +
+          '<p class="pnote">Market prices, not picks — lines move.</p></div>';
+      }
+
       // Form
-      html += '<div class="pcard">' + plate('01', 'FORM', 'ESPN scoreboard') +
+      html += '<div class="pcard">' + plate('02', 'FORM', 'ESPN scoreboard') +
         '<div class="frow"><div><h4>' + esc(aAbbr) + '</h4><div>' +
         formLine(forms ? forms[aAbbr] || [] : [], opts.aRec) + '</div></div>' +
         '<div><h4>' + esc(hAbbr) + '</h4><div>' +
         formLine(forms ? forms[hAbbr] || [] : [], opts.hRec) + '</div></div></div></div>';
 
       // Style fingerprints + matchup edges
-      html += '<div class="pcard">' + plate('02', 'HOW THEY PLAY', '2025-26 team fingerprints · game logs') +
+      html += '<div class="pcard">' + plate('03', 'HOW THEY PLAY', '2025-26 team fingerprints · game logs') +
         '<div class="sgrid">' + styleCard(aAbbr, A) + styleCard(hAbbr, B) + '</div>';
       if (ed.length) {
         html += '<h4>Where the math points</h4><ul class="edges">' +
@@ -204,7 +237,7 @@
         }).join('') + '</ul>' +
           (t.trending[0].n < 3 ? '<p class="pnote">Thin sample — ' + t.trending[0].n + ' games is not a trend yet.</p>' : '');
       }
-      html += '<div class="pcard">' + plate('03', 'WHO\u2019S TRENDING', 'game logs · as of ' + esc(asof)) +
+      html += '<div class="pcard">' + plate('04', 'WHO\u2019S TRENDING', 'game logs · as of ' + esc(asof)) +
         '<div class="sgrid"><div><h4>' + esc(aAbbr) + '</h4>' + trendList(A, aAbbr) + '</div>' +
         '<div><h4>' + esc(hAbbr) + '</h4>' + trendList(B, hAbbr) + '</div></div></div>';
 
@@ -214,13 +247,13 @@
         return '<ul>' + t.starters.map(function (n) { return '<li>' + esc(n) + '</li>'; }).join('') + '</ul>' +
           '<p class="pnote">Probable, not official — from the last logged game.</p>';
       }
-      html += '<div class="pcard">' + plate('04', 'PROBABLE STARTERS', 'game logs · as of ' + esc(asof)) +
+      html += '<div class="pcard">' + plate('05', 'PROBABLE STARTERS', 'game logs · as of ' + esc(asof)) +
         '<div class="sgrid"><div><h4>' + esc(aAbbr) + '</h4>' + starterList(A, aAbbr) + '</div>' +
         '<div><h4>' + esc(hAbbr) + '</h4>' + starterList(B, hAbbr) + '</div></div></div>';
 
       // Injuries (only if the feed answered)
       if (injs && injs.length) {
-        html += '<div class="pcard">' + plate('05', 'INJURIES', 'ESPN · check closer to tip') +
+        html += '<div class="pcard">' + plate('06', 'INJURIES', 'ESPN · check closer to tip') +
           injs.join('') + '</div>';
       }
 
@@ -231,7 +264,7 @@
         return '<a href="https://www.espn.com/nba/team/_/name/' + ab.toLowerCase() + '/' + slug +
           '" target="_blank" rel="noopener">' + esc(ab) + ' news on ESPN</a>';
       }
-      html += '<div class="pcard">' + plate('06', 'NEWS', 'links out, never scraped') +
+      html += '<div class="pcard">' + plate('07', 'NEWS', 'links out, never scraped') +
         '<div class="nrow">' + newsLink(aAbbr) + ' ' + newsLink(hAbbr) + '</div></div>';
 
       finish(html);
