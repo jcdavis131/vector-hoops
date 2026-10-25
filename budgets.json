@@ -9,6 +9,9 @@
     "feed-health.html": {
       "budget_bytes": 123904
     },
+    "guide.html": {
+      "budget_bytes": 235520
+    },
     "index.html": {
       "budget_bytes": 3661824
     },
