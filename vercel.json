@@ -373,6 +373,10 @@
     {
       "source": "/feed-health",
       "destination": "/feed-health.html"
+    },
+    {
+      "source": "/guide",
+      "destination": "/guide.html"
     }
   ],
   "trailingSlash": false,
