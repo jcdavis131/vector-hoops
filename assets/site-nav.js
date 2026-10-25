@@ -28,6 +28,7 @@
     { href: '/taxonomy', label: 'Taxonomy', desc: 'A taxonomy of play styles' },
     { href: '/methods', label: 'Methods', desc: 'Trust: every number recomputed from source, and the model graded' },
     { href: '/models/mtnn-v5', label: 'Models', desc: 'Model registry and the MTNN v5 champion card' }
+    { href: '/guide', label: 'Guide', desc: 'The Ultimate Guide to the NBA, in plain words' }
   ];
 
   // The games, in the order the footer's Play column lists them. One flat object
