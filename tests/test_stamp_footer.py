@@ -230,6 +230,7 @@ def test_repo_site_nav_parses() -> None:
         "/taxonomy",
         "/methods",
         "/models/mtnn-v5",
+        "/guide",
     ]
     cols = dict(sf.columns(explore, games))
     assert "/" not in {h for h, _ in cols["Explore"]}

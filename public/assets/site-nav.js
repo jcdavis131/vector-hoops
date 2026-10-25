@@ -27,7 +27,7 @@
     { href: '/twenty-questions', label: 'Twenty Questions', desc: 'Think of a player — 20 yes/no questions, the map dims the rest' },
     { href: '/taxonomy', label: 'Taxonomy', desc: 'A taxonomy of play styles' },
     { href: '/methods', label: 'Methods', desc: 'Trust: every number recomputed from source, and the model graded' },
-    { href: '/models/mtnn-v5', label: 'Models', desc: 'Model registry and the MTNN v5 champion card' }
+    { href: '/models/mtnn-v5', label: 'Models', desc: 'Model registry and the MTNN v5 champion card' },
     { href: '/guide', label: 'Guide', desc: 'The Ultimate Guide to the NBA, in plain words' }
   ];
 
