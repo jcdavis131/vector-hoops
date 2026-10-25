@@ -148,20 +148,22 @@ function renderGames(){
 
 // ---- Timeline scrubber state ----
 const TL={n:0,view:-1,live:true,gameId:null,newCount:0};
-// ---- Bands (G2/T2.3): the 13 plates live in three collapsible groups.
-// A band's plates paint only while it is open (the old fold's perf contract):
-// opening a band replays the full render at real widths.
-function bandOpen(id){const b=$(id);return !!(b&&b.open);}
-function renderBand(id){
+// ---- Tabs (game-center redesign): the plates live in four tab panels.
+// A panel's plates paint only while its tab is active (the old band fold's
+// perf contract, carried over): opening a tab replays the full render at
+// real widths, so canvas charts are never painted into a hidden panel.
+function panelOpen(panel){const p=$('panel-'+panel);return !!(p&&!p.hidden);}
+function renderTab(tab){
   const d=window._lastD,g=window._lastG;
   if(!d)return;
   const idx=TL.live?TL.n-1:TL.view;
-  if(id==='band-game'){renderWP(d,g,idx);renderMomentum(d,g,idx);renderShotChart(d,g,idx);}
-  else if(id==='band-story'){renderGhosts(d);renderMoments(d,g,idx);renderRuns(d,g,idx);renderMiles(d);renderPlays(d,idx);}
-  else if(id==='band-players'){renderLeaders(d,g,idx);renderArche(d,g);syncAtlas(d,g);}
+  if(tab==='summary'){renderWP(d,g,idx);renderMomentum(d,g,idx);renderShotChart(d,g,idx);renderGcSummary(d,g,idx);}
+  else if(tab==='plays'){renderMoments(d,g,idx);renderRuns(d,g,idx);renderMiles(d);renderGcFeed(d,idx);}
+  else if(tab==='boxscore'){renderLeaders(d,g,idx);renderGcBox(d);}
+  else if(tab==='insights'){renderGhosts(d);renderArche(d,g);syncAtlas(d,g);}
   try{window.dispatchEvent(new Event('resize'));}catch(e){}
 }
-function resetBands(){['band-game','band-story','band-players'].forEach(id=>{const b=$(id);if(b){b.open=true;delete b._xc;}});}
+function resetTabs(){try{window.dispatchEvent(new CustomEvent('gamecenter:tab',{detail:{tab:'summary'}}));}catch(e){}}
 // G2/T2.3: no live game -> schedule strip + last-game replay + day arrows.
 // The 13 plates never render; ESPN fetch-driven init is skipped.
 function offGame(){
@@ -193,7 +195,7 @@ function selectGame(id){
   cur=id;clearInterval(timer);clearTimeout(pollTimer);renderGames();
   const m=$('main');if(m)m.hidden=false;
   const og=$('offgame');if(og)og.hidden=true;
-  resetBands();
+  resetTabs();
   const ln2=$('live-loading');if(ln2)ln2.hidden=true;
   TL.gameId=null;TL.n=0;TL.view=-1;TL.live=true;TL.newCount=0;wpDrawnFor=null;
   window._seenMom=new Set();window._lastPlayId=0;
@@ -244,18 +246,18 @@ function renderAll(d,g){
   // C2.4: panels follow game state — a pre-game selection renders ONLY the
   // pre-game module (HOU@SA regression: zero data plates, zero waiting walls).
   const pg=$('pregame');if(pg&&!isPre){pg.hidden=true;pg.dataset.gid='';}
-  ['band-game','band-story','band-players'].forEach(id=>{const b=$(id);if(b)b.hidden=isPre;});
+  // Summary's data cards hide pre-tip; the pre-game card stays. Plays shows
+  // its honest empty state pre-tip (see renderGcFeed), so its tab stays.
+  document.querySelectorAll('#panel-summary > .card').forEach(c=>{if(c.id!=='pregame')c.hidden=isPre;});
   renderMorning(d,g,isPost);
   const idx=TL.live?TL.n-1:TL.view;
   renderHeader(d,g,idx);
-  if(bandOpen('band-game')){renderWP(d,g,idx);renderMomentum(d,g,idx);renderShotChart(d,g,idx);}
-  if(bandOpen('band-story')){renderGhosts(d);renderMoments(d,g,idx);renderRuns(d,g,idx);renderMiles(d);renderPlays(d,idx);}
-  if(bandOpen('band-players')){renderLeaders(d,g,idx);renderArche(d,g);}
+  if(panelOpen('summary')){renderWP(d,g,idx);renderMomentum(d,g,idx);renderShotChart(d,g,idx);renderGcSummary(d,g,idx);}
+  if(panelOpen('plays')){renderMoments(d,g,idx);renderRuns(d,g,idx);renderMiles(d);renderGcFeed(d,idx);}
+  if(panelOpen('boxscore')){renderLeaders(d,g,idx);renderGcBox(d);}
+  if(panelOpen('insights')){renderGhosts(d);renderArche(d,g);}
+  renderGcPulse(d,g,idx);
   updateTlUI(d);
-  // Collapse bands with no data: a pre-tip selection leaves the story band
-  // empty, so it starts closed (still user-openable). Once per game only.
-  const plays=d.plays||[];
-  const bs=$('band-story');if(bs&&!plays.length&&!bs._xc){bs.open=false;bs._xc=true;}
   // the Pixel Replay plate (assets/replay-live.js) follows the same data and timeline
   try{window.dispatchEvent(new CustomEvent('courtside:render',{detail:{d:d,g:g,idx:idx,live:TL.live}}));}catch(e){}
 }
@@ -275,7 +277,7 @@ async function loadGame(){
       TL.n=n;
     }
     renderAll(d,g);
-    if(bandOpen('band-players')) syncAtlas(d,g);
+    if(panelOpen('insights')) syncAtlas(d,g);
     window._lastD=d;window._lastG=g;
     lastUpd=new Date();lastOkAt=lastUpd;failStreak=0;
     hideFeedCard();
@@ -572,21 +574,63 @@ function renderMomentum(d,g,idx){
 }
 
 let shotTeam='H';
-function renderPlays(d,idx){
-  const all=(d.plays||[]).slice(0,Math.max(0,idx+1));
-  const maxId=all.reduce((m,p)=>Math.max(m,+p.id||0),0);
-  const plays=all.slice().reverse().slice(0,14);
-  const ul=$('plays');ul.innerHTML='';
-  plays.forEach(p=>{
-    const li=document.createElement('li');
-    if(p.scoringPlay)li.className='score';
-    if(TL.live&&maxId&&+p.id>(+window._lastPlayId||0))li.className+=(li.className?' ':'')+'fresh';
-    const clk=(p.period?p.period.number+'Q ':'')+(p.clock?p.clock.displayValue:'');
-    li.innerHTML=`<span class="pc">${esc(clk)}</span><span>${p.scoringPlay?'<b>'+esc(p.text)+'</b>':esc(p.text)}</span><span class="sc">${esc(p.awayScore)}–${esc(p.homeScore)}</span>`;
-    ul.appendChild(li);
-  });
-  if(maxId)window._lastPlayId=maxId;
+
+/* ---- Game-center shared renders (assets/game-center.js) ---- */
+let gcFeedFilter='all';
+function gcRows(d,idx){
+  if(!window.GameCenter)return [];
+  return (d.plays||[]).slice(0,Math.max(0,idx+1)).map((p,i)=>window.GameCenter.normalizePlay(p,i));
 }
+function renderGcFeed(d,idx){
+  if(!window.GameCenter)return;
+  const rows=gcRows(d,idx);
+  if(!rows.length){const el=$('gcFeed');if(el)el.innerHTML='<li class="gc-muted">Waiting for tip&hellip; No plays on record for this game.</li>';return;}
+  window.GameCenter.renderFeed($('gcFeed'),rows,gcFeedFilter);
+}
+function renderGcSummary(d,g,idx){
+  if(!window.GameCenter)return;
+  const rows=gcRows(d,idx),ph=phaseOf(d).phase;
+  const last=rows.length?rows[rows.length-1]:null;
+  const elapsed=(last&&last.timeout&&last.wallMs)?Date.now()-last.wallMs:null;
+  const hero=window.GameCenter.stateHero(ph,last,elapsed);
+  const he=$('gcHero');
+  if(he){he.hidden=false;he.classList.toggle('gc-hero--timeout',hero.kind==='timeout');
+    he.innerHTML='<h2>'+esc(hero.title)+'</h2><p>'+esc(hero.detail)+'</p>';}
+  window.GameCenter.renderCatchUp($('gcCatchUp'),rows);
+}
+function renderGcBox(d){
+  if(!window.GameCenter)return;
+  window.GameCenter.renderBoxScore($('gcBox'),d.boxscore,['MIN','PTS','REB','AST','STL']);
+}
+function renderGcPulse(d,g,idx){
+  if(!window.GameCenter)return;
+  const rows=gcRows(d,idx),ph=phaseOf(d).phase;
+  let wp=null,note=null;
+  if(ph==='in'&&rows.length){
+    const last=rows[rows.length-1],margin=last.home-last.away;
+    const pl=(d.plays||[])[idx];
+    const secs=pl?secsLeftOf(pl):2880;
+    const w=ourWP(margin,secs);
+    const homeP=w.p>=0.5;
+    wp=homeP?w.p*100:(1-w.p)*100;
+    const team=homeP?(g?g.h.abbr:'Home'):(g?g.a.abbr:'Away');
+    window.GameCenter.renderPulse($('gcPulseBody'),window.GameCenter.pulse(rows,wp,team));
+    return;
+  }
+  if(ph==='pre')note='Win probability appears once the game tips.';
+  window.GameCenter.renderPulse($('gcPulseBody'),window.GameCenter.pulse(rows,null,'',note));
+}
+(function(){
+  const bar=document.querySelector('.gc-feed-filter');
+  if(!bar)return;
+  bar.addEventListener('click',e=>{
+    const b=e.target&&e.target.closest?e.target.closest('[data-gc-feed-filter]'):null;
+    if(!b)return;
+    gcFeedFilter=b.dataset.gcFeedFilter;
+    bar.querySelectorAll('[data-gc-feed-filter]').forEach(x=>{const on=x===b;x.classList.toggle('on',on);x.setAttribute('aria-pressed',on?'true':'false');});
+    if(window._lastD)renderGcFeed(window._lastD,TL.live?TL.n-1:TL.view);
+  });
+})();
 
 function renderLeaders(d,g,idx){
   const bp=d.boxscore&&d.boxscore.players;
@@ -1116,11 +1160,8 @@ loadGames();
 fetch('assets/ghost_db.json?v=3ccf22f9').then(r=>r.json()).then(d=>{GHOST_DB=d;GV=null;if(window._lastD)renderGhosts(window._lastD);}).catch(()=>{});
 fetch('assets/player_form.json?v=58db3287').then(r=>r.json()).then(d=>{FORM_DB=d;if(window._lastD)renderMiles(window._lastD);}).catch(()=>{});
 try{const mq=window.matchMedia('(prefers-color-scheme: dark)');const rt=()=>{if(window._lastD)renderAll(window._lastD,window._lastG);};if(mq.addEventListener)mq.addEventListener('change',rt);else if(mq.addListener)mq.addListener(rt);}catch(e){}
-// G2/T2.3: band toggles — opening a band paints its plates at real widths.
-['band-game','band-story','band-players'].forEach(id=>{
-  const b=$(id);
-  if(b)b.addEventListener('toggle',()=>{if(b.open)renderBand(id);});
-});
+// Game-center tabs — opening a tab paints its panels at real widths.
+document.addEventListener('gamecenter:tab',e=>{if(e&&e.detail)renderTab(e.detail.tab);});
 // G4/T4.3: one share affordance per storyline.
 (function(){
   const el=$('moments');

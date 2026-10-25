@@ -27,6 +27,7 @@
 <link rel="stylesheet" href="/assets/atlas.css?v=2f33917d"/>
 <link rel="stylesheet" href="/assets/shell.css?v=8b888c0a"/>
 <link rel="stylesheet" href="/assets/live.css?v=f8060f61"/>
+<link rel="stylesheet" href="/assets/game-center.css?v=9baed5e3"/>
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
@@ -81,17 +82,20 @@
 </div>
   </div></div>
 
+  <div class="gc-tabs" role="tablist" aria-label="Game views">
+    <button type="button" data-gc-tab="summary" aria-selected="true" class="on">Summary</button>
+    <button type="button" data-gc-tab="plays" aria-selected="false">Plays</button>
+    <button type="button" data-gc-tab="boxscore" aria-selected="false">Box Score</button>
+    <button type="button" data-gc-tab="insights" aria-selected="false">Insights</button>
+  </div>
+
+  <section data-gc-panel="summary" id="panel-summary">
   <div class="card" id="pregame" hidden></div>
   <div class="card" id="morning" hidden></div>
-
-  <details class="disclosure band" id="band-game" open>
-  <summary><span class="band__t">The game</span><span class="disclosure__hint">replay, win probability, momentum, shot chart</span></summary>
-  <div class="disclosure__body band__body">
+  <div id="gcHero" class="gc-hero" hidden></div>
+  <div id="gcCatchUp" class="gc-catchup" hidden></div>
 <div class="card rp-embed" id="rpPlate" hidden>
     <div class="plate"><span class="pno">PLATE 01</span><h2>PIXEL REPLAY</h2><span class="prule"></span><span class="pmeta" id="rpPlateMeta">from ESPN play-by-play</span></div>
-    <div class="seg rp-view-toggle" role="group" aria-label="Replay size">
-      <button type="button" id="rpViewCompact" class="on" aria-pressed="true">Compact</button><button type="button" id="rpViewFull" aria-pressed="false">Full</button>
-    </div>
     <div id="rpCompact">
     <div class="rp-embed__screen">
       <canvas id="rpCanvas" data-mode="embed" width="400" height="225" role="img" aria-label="Animated pixel replay of this game, a play behind the live feed"></canvas>
@@ -102,14 +106,10 @@
         <button type="button" data-cam="broadcast" class="on" aria-pressed="true">Broadcast</button><button type="button" data-cam="iso" aria-pressed="false">Arcade</button><button type="button" data-cam="follow" aria-pressed="false">Follow</button>
       </div>
       <span class="rp-embed__lag num" id="rpLag"></span>
-      <a class="chip-link rp-embed__full" id="rpFull" href="/replay">Full replay &#8599;</a>
+      <a class="chip-link rp-embed__full" id="rpFull" href="/replay">Full replay on Pixel Replay &#8599;</a>
     </div>
     <p id="rpNow" class="rp-embed__now" aria-live="polite"></p>
     <p class="caption">Plays and shot spots are ESPN&rsquo;s; the other nine players are projected by our model, and which basket each team shoots at is assumed: a projection, not tracking data. The page timeline drives the court.</p>
-    </div>
-    <div id="rpFullWrap" hidden>
-      <iframe id="rpFullFrame" class="rp-full-frame" title="Full Pixel Replay" loading="lazy"></iframe>
-      <p class="caption">The complete replay for this game: every camera, the timeline, big moments and the box score.</p>
     </div>
   </div>
   <div class="card">
@@ -132,22 +132,15 @@
   </div>
 <div class="card">
     <div class="plate"><span class="pno">PLATE 04</span><h2>SHOT CHART</h2><span class="prule"></span><span class="pmeta">attempts so far</span></div>
+    <details class="disclosure"><summary>Show shot chart</summary>
     <div class="seg shot-toggle" id="shotToggle" role="group" aria-label="Whose shots">
       <button type="button" data-t="A" aria-pressed="false">AWAY</button><button type="button" data-t="H" aria-pressed="true">HOME</button><button type="button" data-t="B" aria-pressed="false">BOTH</button>
     </div>
     <svg id="shotSvg" class="shot" viewBox="0 0 50 54" role="img" aria-label="Shot chart"></svg>
-    <div class="zone-stats" id="zoneStats"></div>
+    <div class="zone-stats" id="zoneStats"></div></details>
   </div>
-  </div>
-</details>
-
-<details class="disclosure band" id="band-story" open>
-  <summary><span class="band__t">The story</span><span class="disclosure__hint">ghost watch, moments, runs, milestones, play by play</span></summary>
-  <div class="disclosure__body band__body">
-<div class="card liveonly">
-    <div class="plate"><span class="pno">PLATE 05</span><h2>GHOST WATCH</h2><span class="prule"></span><span class="pmeta">which of 6,000 past player-games this one rhymes with &middot; 2023&ndash;24 to 2025&ndash;26 &middot; per-36 box-score match</span></div>
-    <div id="ghosts"><p class="caption">Matching tonight&rsquo;s lines against 6,000 past player-games (2023&ndash;24 to 2025&ndash;26 regular seasons)&hellip;</p></div>
-  </div>
+</section>
+<section data-gc-panel="plays" id="panel-plays" hidden>
 <div class="card">
     <div class="plate"><span class="pno">PLATE 06</span><h2>BIG MOMENTS</h2><span class="prule"></span><span class="pmeta">auto-storylines</span></div>
     <div id="moments"><p class="caption">Waiting for tip&hellip;</p></div>
@@ -161,18 +154,27 @@
     <div id="miles"><p class="caption">Waiting for tip&hellip;</p></div>
   </div>
 <div class="card">
-    <div class="plate"><span class="pno">PLATE 09</span><h2>PLAY BY PLAY</h2><span class="prule"></span><span class="pmeta">every possession</span></div>
-    <ul id="plays" class="row-list plays"></ul>
+    <div class="plate"><span class="pno">PLAYS</span><h2>PLAY BY PLAY</h2><span class="prule"></span><span class="pmeta">every possession, newest first</span></div>
+    <div class="seg gc-feed-filter" role="group" aria-label="Play filter">
+      <button type="button" data-gc-feed-filter="all" class="on" aria-pressed="true">All</button><button type="button" data-gc-feed-filter="highlights" aria-pressed="false">Highlights</button><button type="button" data-gc-feed-filter="insights" aria-pressed="false">Insights</button>
+    </div>
+    <ol id="gcFeed" class="gc-feed"></ol>
   </div>
-  </div>
-</details>
-
-<details class="disclosure band" id="band-players" open>
-  <summary><span class="band__t">The players</span><span class="disclosure__hint">leaders, scoring by style, style map</span></summary>
-  <div class="disclosure__body band__body">
+</section>
+<section data-gc-panel="boxscore" id="panel-boxscore" hidden>
 <div class="card liveonly">
     <div class="plate"><span class="pno">PLATE 10</span><h2>LEADERS</h2><span class="prule"></span><span class="pmeta">box score</span></div>
     <div class="leaders"><div class="lcol" id="leadA"></div><div class="lcol" id="leadH"></div></div>
+  </div>
+<div class="card">
+    <div class="plate"><span class="pno">BOX SCORE</span><h2>BOX SCORE</h2><span class="prule"></span><span class="pmeta">starters, then bench</span></div>
+    <div id="gcBox"></div>
+  </div>
+</section>
+<section data-gc-panel="insights" id="panel-insights" hidden>
+<div class="card liveonly">
+    <div class="plate"><span class="pno">PLATE 05</span><h2>GHOST WATCH</h2><span class="prule"></span><span class="pmeta">which of 6,000 past player-games this one rhymes with &middot; 2023&ndash;24 to 2025&ndash;26 &middot; per-36 box-score match</span></div>
+    <div id="ghosts"><p class="caption">Matching tonight&rsquo;s lines against 6,000 past player-games (2023&ndash;24 to 2025&ndash;26 regular seasons)&hellip;</p></div>
   </div>
 <div class="card">
 <div class="plate"><span class="pno">PLATE 11</span><h2>SCORING BY STYLE</h2><span class="prule"></span><span class="pmeta">who&rsquo;s carrying the scoring</span></div>
@@ -184,8 +186,15 @@
     <p class="caption" id="atlasNote" aria-live="polite">Pick a player below, or tap a dot, to see their closest style twins.</p>
     <ul class="row-list live-map__players" id="atlasPlayers" aria-label="Tonight&rsquo;s players on the map" hidden></ul>
   </div>
+</section>
+<div class="gc-pulse">
+    <button type="button" id="gcPulseBtn" class="gc-pulse__btn" aria-expanded="false">Game Pulse</button>
+    <div id="gcPulseSheet" class="gc-pulse__sheet" hidden>
+      <div id="gcPulseBody"></div>
+      <button type="button" id="gcPulseClose" class="btn">Close</button>
+    </div>
   </div>
-</details>
+
 
 <p class="caption live-note" id="liveNote">Scores and plays refresh every 30 s while a game is live and every 5 minutes otherwise; if the feed stalls you see the last-known score with its time. Use the day arrows for other days and the timeline to rewind.</p>
   <div class="state state--error err" id="err" role="alert" hidden></div>
@@ -228,15 +237,16 @@
 <script src="assets/vh-peers.js?v=860629b9" defer></script>
 <script src="assets/replay-espn.js?v=7d2cbf02" defer></script>
 <script src="assets/replay-model.js?v=023bb286" defer></script>
-<script src="assets/replay.js?v=5f7739e1" defer></script>
-<script src="assets/replay-live.js?v=c9f51427" defer></script>
+<script src="assets/replay.js?v=56451bee" defer></script>
+<script src="assets/replay-live.js?v=7533a57a" defer></script>
 <script src="assets/game-route.js?v=ae0bf9df" defer></script>
 <script src="assets/game-header.js?v=758eca08" defer></script>
 <script src="assets/plate.js?v=9ffa45dd" defer></script>
 <script src="assets/pregame.js?v=cc9b4739" defer></script>
 <script src="assets/scoreboard.js?v=c6a50523" defer></script>
 <script src="assets/embed-3d.js?v=06cc9778" defer></script>
-<script src="assets/live.js?v=318c7224" defer></script>
+<script src="assets/game-center.js?v=14822b22" defer></script>
+<script src="assets/live.js?v=fbc38b51" defer></script>
 <script src="assets/live-atlas.js?v=b7584fc7" defer></script>
 <script src="assets/engagement.js?v=b09bf206" defer></script>
 </body>
