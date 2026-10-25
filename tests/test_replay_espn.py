@@ -91,11 +91,23 @@ def test_live_page_carries_the_plate() -> None:
     assert order.index("replay-espn") < order.index("replay") < order.index("replay-live") < order.index("live")
     plate = html[html.index('id="rpPlate"') : html.index("</div>\n", html.index("rp-embed__now"))]
     assert "projected" in plate and "assumed" in plate and "not tracking data" in plate
+    # Game-center redesign (2026-10-25, spec live-replay-redesign/REDESIGN.md):
+    # the three disclosure bands are replaced by four tabs, and the merged
+    # Compact/Full iframe toggle (PR #173) is replaced by the shared court
+    # component — Full is now the /replay link, not an iframe. The plays
+    # card (old PLATE 09) is now the shared feed and the box score is a tab
+    # panel, so neither carries a plate number; every other numbered plate
+    # is unchanged and still appears exactly once, in document order.
+    assert 'data-gc-tab="summary"' in html and 'data-gc-tab="plays"' in html
+    assert 'data-gc-tab="boxscore"' in html and 'data-gc-tab="insights"' in html
+    assert 'id="gcFeed"' in html and 'id="gcBox"' in html and 'id="gcPulseBtn"' in html
+    assert "rpFullFrame" not in html and "rpViewFull" not in html
+    assert 'href="/replay">Full replay on Pixel Replay' in html
     nums = [int(n) for n in re.findall(r"PLATE (\d\d)", html)]
-    # G2/T2.3: plates are band-grouped (The game / The story / The players).
-    # Wave 2.4 retired the old 2D atlas plate for the one Embed3D style map, so
-    # the page carries 12 plates, numbered in document order, each exactly once.
-    assert nums == list(range(1, 13)), "live page must carry plates 01-12 in order"
+    # Document order is no longer numeric by design: Ghost Watch (05) moved
+    # from the story band into the Insights tab, after the Plays tab's 06-08.
+    # What is preserved is the set: every other numbered plate, exactly once.
+    assert sorted(nums) == [1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12], "numbered plates, minus 09 (shared feed)"
     assert len(nums) == len(set(nums)), "each plate must appear exactly once"
     js = (ROOT / "assets" / "live.js").read_text(encoding="utf-8")
     assert "courtside:render" in js

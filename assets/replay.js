@@ -702,6 +702,11 @@
     if (S.i === cur.idx) return; cur.idx = S.i; var e = S.e;
     if (window.PixelReplay && window.PixelReplay.onEvent) try { window.PixelReplay.onEvent(S.i, G); } catch (er) { /* the host page's bug, not the replay's */ }
     if (nowEl) nowEl.textContent = fmtT(S.i) + ' · ' + (e[11] || '') + ' · ' + G.teams[0].tri + ' ' + e[8] + ' – ' + G.teams[1].tri + ' ' + e[9];
+    var gcFeed = document.getElementById('gcFeed');
+    if (gcFeed && typeof gcFeed.querySelectorAll === 'function') {
+      var rows = gcFeed.querySelectorAll('.gc-feed__row');
+      for (var gi = 0; gi < rows.length; gi++) rows[gi].classList.toggle('cur', +rows[gi].dataset.idx === S.i);
+    }
     if (!feedEl) return;
     feedEl.innerHTML = '';
     for (var k = Math.max(0, S.i - 7); k <= S.i; k++) { if (!EV[k][11]) continue; var li = document.createElement('li'); if (k === S.i) li.className = 'cur'; var t = document.createElement('span'); t.className = 't'; t.textContent = fmtT(k); var d = document.createElement('span'); d.textContent = EV[k][11]; li.appendChild(t); li.appendChild(d); feedEl.insertBefore(li, feedEl.firstChild); }
@@ -770,6 +775,33 @@
           window.GameHeader.render(ghEl,{a:{abbr:g.teams[0].tri},h:{abbr:g.teams[1].tri},
             venue:'',when:g.date||'',state:g.final?'post':(g.live?'in':'pre')});
         }
+      }
+    }catch(e){}
+    try{
+      if(window.GameCenter){
+        var spEl=document.getElementById('gcSplit');
+        if(spEl&&g.teams&&g.teams.length>1){
+          spEl.innerHTML=window.GameCenter.splitHeaderHtml(
+            {abbr:g.teams[0].tri,score:(g.score||[])[0],color:String(g.teams[0].c||'').replace('#','')},
+            {abbr:g.teams[1].tri,score:(g.score||[])[1],color:String(g.teams[1].c||'').replace('#','')},
+            g.final?'Final':(g.live?'Live':'Final'), g.final?'FINAL':(g.live?'LIVE':''));
+        }
+        var rows=EV.map(function(e,i){return window.GameCenter.fromReplayEvent(e,G.types,i);});
+        window.GameCenter.renderCatchUp(document.getElementById('gcCatchUp'),rows);
+        var qEl=document.getElementById('gcQuarters');
+        if(qEl&&g.quarters&&g.quarters.length){
+          var maxQ=0; g.quarters.forEach(function(q){maxQ=Math.max(maxQ,q.q.length);});
+          var qh='<table class="gc-box__table"><thead><tr><th scope="col"><span class="visually-hidden">Team</span></th>';
+          for(var qi=0;qi<maxQ;qi++)qh+='<th scope="col">'+(qi<4?'Q'+(qi+1):'OT'+(qi-3))+'</th>';
+          qh+='<th scope="col">T</th></tr></thead><tbody>';
+          g.quarters.forEach(function(q){qh+='<tr><th scope="row">'+q.abbr+'</th>';for(var qj=0;qj<maxQ;qj++)qh+='<td>'+(q.q[qj]!=null?q.q[qj]:'')+'</td>';qh+='<td>'+(q.t!=null?q.t:'')+'</td></tr>';});
+          qEl.innerHTML=qh+'</tbody></table>';
+        }
+        window.GameCenter.renderFeed(document.getElementById('gcFeed'),rows,'all',function(idx){
+          cur.live=false; seek(RT[idx]); cur.dir=1; attr('rpRev','aria-pressed','false'); setPlaying(true); liveUi();
+        });
+        var note=g.final?null:'Win probability is a live estimate — it appears on Courtside Live while the game is live.';
+        window.GameCenter.renderPulse(document.getElementById('gcPulseBody'),window.GameCenter.pulse(rows,null,'',note));
       }
     }catch(e){}
     var asOf = $('rpAsOf');

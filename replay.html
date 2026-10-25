@@ -28,6 +28,7 @@
 <link rel="stylesheet" href="/assets/atlas.css?v=2f33917d"/>
 <link rel="stylesheet" href="/assets/shell.css?v=8b888c0a"/>
 <link rel="stylesheet" href="/assets/replay.css?v=40e36c7c"/>
+<link rel="stylesheet" href="/assets/game-center.css?v=9baed5e3"/>
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
@@ -86,7 +87,24 @@
     </div>
   </section>
 
-  <section class="rp-side">
+  <div class="gc-tabs" role="tablist" aria-label="Game views">
+    <button type="button" data-gc-tab="summary" aria-selected="true" class="on">Summary</button>
+    <button type="button" data-gc-tab="plays" aria-selected="false">Plays</button>
+    <button type="button" data-gc-tab="boxscore" aria-selected="false">Box Score</button>
+    <button type="button" data-gc-tab="insights" aria-selected="false">Insights</button>
+  </div>
+
+  <section data-gc-panel="summary" id="panel-summary">
+    <div id="gcSplit"></div>
+    <div id="gcCatchUp" class="gc-catchup" hidden></div>
+    <div class="card rp-panel">
+      <div class="plate"><span class="pno">SUMMARY</span><h2>Score by quarter</h2><span class="prule"></span></div>
+      <div id="gcQuarters"></div>
+      <p class="caption">Quarter scores from the ESPN linescores. Shot spots and scores are real; the other nine players are modeled — see “What’s real, what’s staged” below.</p>
+    </div>
+  </section>
+
+  <section data-gc-panel="plays" id="panel-plays" hidden>
     <div class="card rp-panel">
       <div class="plate"><span class="pno">PLATE 01</span><h2>Big moments</h2><span class="prule"></span></div>
       <div class="seg rp-filter" role="group" aria-label="Moment filter">
@@ -99,14 +117,37 @@
       <ol id="rpMoments" class="rp-moments"></ol>
     </div>
     <div class="card rp-panel">
-      <div class="plate"><span class="pno">PLATE 02</span><h2>Play-by-play</h2><span class="prule"></span></div>
+      <div class="plate"><span class="pno">PLAYS</span><h2>Play-by-play</h2><span class="prule"></span></div>
+      <p class="caption">Tap a play to seek the court to it. The court highlights the matching row as it plays.</p>
+      <ol id="gcFeed" class="gc-feed"></ol>
+    </div>
+    <div class="card rp-panel">
+      <div class="plate"><span class="pno">NOW</span><h2>Now on court</h2><span class="prule"></span></div>
       <ol id="rpFeed" class="rp-feed"></ol>
     </div>
+  </section>
+
+  <section data-gc-panel="boxscore" id="panel-boxscore" hidden>
     <div class="card rp-panel">
       <div class="plate"><span class="pno">PLATE 03</span><h2>Box score</h2><span class="prule"></span></div>
       <div id="rpBox" class="rp-box"><p class="rp-muted">Box score not up yet.</p></div>
     </div>
   </section>
+
+  <section data-gc-panel="insights" id="panel-insights" hidden>
+    <div class="card rp-panel">
+      <div class="plate"><span class="pno">INSIGHTS</span><h2>What the model sees</h2><span class="prule"></span></div>
+      <p>Style twins, ghost watch and scoring by style live on Courtside Live while a game is current. For an archived game, this page keeps the two things that stay honest after the fact: the Big Moments filter and the full play-by-play above, plus the provenance below.</p>
+    </div>
+  </section>
+
+  <div class="gc-pulse">
+    <button type="button" id="gcPulseBtn" class="gc-pulse__btn" aria-expanded="false">Game Pulse</button>
+    <div id="gcPulseSheet" class="gc-pulse__sheet" hidden>
+      <div id="gcPulseBody"></div>
+      <button type="button" id="gcPulseClose" class="btn">Close</button>
+    </div>
+  </div>
 
   <section class="card rp-honest" aria-label="How this works">
     <div class="plate"><span class="pno">PLATE 04</span><h2>What's real, what's staged</h2><span class="prule"></span></div>
@@ -155,7 +196,8 @@
 <script src="/assets/replay-model.js?v=023bb286" defer></script>
 <script src="/assets/game-route.js?v=ae0bf9df" defer></script>
 <script src="/assets/game-header.js?v=758eca08" defer></script>
+<script src="/assets/game-center.js?v=14822b22" defer></script>
 <script src="/assets/plate.js?v=9ffa45dd" defer></script>
-<script src="/assets/replay.js?v=5f7739e1" defer></script>
+<script src="/assets/replay.js?v=56451bee" defer></script>
 </body>
 </html>

@@ -64,50 +64,8 @@
   });
   setInterval(showLag, 5000); // between polls too, so the age counts up instead of freezing
 
-  /* Compact/Full view toggle. Compact is the plate above, unchanged. Full
-   * renders the complete /replay page inline in an iframe (the same engine
-   * files, no fork): ?espn=<id> picks the game, &chrome=0 hides the page
-   * chrome and stands down the 24h guard so a live game replays inline
-   * instead of redirecting back to /live inside the frame. The iframe loads
-   * lazily on first switch and resizes to its same-origin content.
-   * The choice persists for the session in localStorage: it is a viewer
-   * preference, not content, hence not a URL param. */
-  var VIEW_KEY = 'vh-rp-view';
-  var vcBtn = document.getElementById('rpViewCompact'), vfBtn = document.getElementById('rpViewFull');
-  var compactBox = document.getElementById('rpCompact'), fullWrap = document.getElementById('rpFullWrap');
-  var frame = document.getElementById('rpFullFrame'), frameId = null, frameTimer = null;
-
-  function rpFullId() {
-    var m = /[?&]espn=([^&]+)/.exec(full && full.href ? full.href : '');
-    return m ? decodeURIComponent(m[1]) : shown;
-  }
-  function sizeRpFrame() {
-    if (!frame || !fullWrap || fullWrap.hidden) return;
-    try {
-      var h = frame.contentDocument.documentElement.scrollHeight;
-      if (h > 200) frame.style.height = h + 'px';
-    } catch (e) { /* not same-origin (SSO preview deploys): keep the fallback height */ }
-  }
-  function setRpView(v) {
-    var isFull = v === 'full';
-    if (vcBtn) { vcBtn.classList.toggle('on', !isFull); vcBtn.setAttribute('aria-pressed', String(!isFull)); }
-    if (vfBtn) { vfBtn.classList.toggle('on', isFull); vfBtn.setAttribute('aria-pressed', String(isFull)); }
-    if (compactBox) compactBox.hidden = isFull;
-    if (fullWrap) fullWrap.hidden = !isFull;
-    if (isFull) {
-      var id = rpFullId();
-      if (frame && id && id !== frameId) { frameId = id; frame.src = '/replay?espn=' + encodeURIComponent(id) + '&chrome=0'; }
-      sizeRpFrame();
-      if (!frameTimer) frameTimer = setInterval(sizeRpFrame, 2000);
-    } else if (frameTimer) { clearInterval(frameTimer); frameTimer = null; }
-    try { localStorage.setItem(VIEW_KEY, v); } catch (e) { /* private mode */ }
-  }
-  function refreshRpFull(id) { // the plate's game changed while Full is up
-    if (!fullWrap || fullWrap.hidden || !id || id === frameId) return;
-    frameId = null; setRpView('full');
-  }
-  if (vcBtn) vcBtn.addEventListener('click', function () { setRpView('compact'); });
-  if (vfBtn) vfBtn.addEventListener('click', function () { setRpView('full'); });
-  if (frame) frame.addEventListener('load', sizeRpFrame);
-  try { if (localStorage.getItem(VIEW_KEY) === 'full') setRpView('full'); } catch (e) { /* private mode */ }
+  /* Full view is now the /replay page itself (shared court component at
+   * full size, linked from the plate as "Full replay on Pixel Replay").
+   * The merged Compact/Full iframe toggle (PR #173, merged 2026-10-23)
+   * is removed here: no iframe, no localStorage view preference. */
 })();
