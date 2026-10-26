@@ -2,8 +2,10 @@
 
     blender -b --factory-startup --python scripts/sprites/build_sprites.py -- --out assets/sprites
 
-Builds a blocky, procedural player (no downloaded models or textures), poses it with keyframe
-values computed here, and renders every (elevation, direction, frame) cell with the Workbench
+Builds a chunky mini-figure player, in the style of a collectible vinyl toy (big round head,
+short wide body, simple face, team headband) — an original procedural design, not a licensed
+character, no downloaded models or textures — poses it with keyframe values computed here,
+and renders every (elevation, direction, frame) cell with the Workbench
 engine: studio light, no specular, no anti-aliasing, a dark outline, transparent film, Standard
 view transform. Team colours are not baked in: the jersey renders pure red, the shorts pure
 green and the trim pure blue, so replay.js recolours one atlas for any team (class = dominant
@@ -36,40 +38,48 @@ CW, CH = 32, 48  # cell size, px
 ELEVATIONS = [28, 62]  # camera pitch, degrees
 DIRS = 8  # player facing relative to the camera, 45 deg steps; 0 = facing the camera, 2 = facing screen right
 ORTHO = 3.1  # metres visible vertically
-TARGET_Z = 1.25
+TARGET_Z = 0.85  # chunky figure's centre of mass, not the old tall figure's
 
 
-# pose name -> list of frames; each frame: root z (m), lean (deg, forward +), arm L/R and leg L/R swing (deg, forward +)
+# pose name -> list of frames; each frame: root z (m), lean (deg, forward +), sway (deg,
+# sideways roll — the toy wobble), arm L/R and leg L/R swing (deg, forward +)
 def run_frames():
     out = []
     for k in range(4):
         s = math.sin(2 * math.pi * k / 4 + math.pi / 4)
-        out.append(dict(z=0.05 * abs(s), lean=12, al=-45 * s, ar=45 * s, ll=38 * s, lr=-38 * s))
+        out.append(dict(z=0.05 * abs(s), lean=8, sway=10 * s, al=-45 * s, ar=45 * s, ll=38 * s, lr=-38 * s))
     return out
 
 
 POSES = {
-    "idle": [dict(z=0, lean=4, al=6, ar=6, ll=0, lr=0), dict(z=-0.025, lean=6, al=10, ar=10, ll=0, lr=0)],
+    "idle": [
+        dict(z=0, lean=3, sway=-5, al=6, ar=6, ll=0, lr=0),
+        dict(z=-0.02, lean=5, sway=5, al=10, ar=10, ll=0, lr=0),
+    ],
     "run": run_frames(),
     "jumper": [
-        dict(z=-0.14, lean=8, al=55, ar=55, ll=18, lr=18),
-        dict(z=0.10, lean=0, al=140, ar=140, ll=0, lr=0),
-        dict(z=0.38, lean=-4, al=172, ar=168, ll=-6, lr=-6),
-        dict(z=0.18, lean=-2, al=158, ar=150, ll=0, lr=0),
+        dict(z=-0.14, lean=8, sway=0, al=55, ar=55, ll=18, lr=18),
+        dict(z=0.10, lean=0, sway=0, al=140, ar=140, ll=0, lr=0),
+        dict(z=0.38, lean=-4, sway=0, al=172, ar=168, ll=-6, lr=-6),
+        dict(z=0.18, lean=-2, sway=0, al=158, ar=150, ll=0, lr=0),
     ],
     "dunk": [
-        dict(z=-0.10, lean=16, al=40, ar=20, ll=30, lr=-10),
-        dict(z=0.45, lean=6, al=150, ar=50, ll=-20, lr=25),
-        dict(z=0.62, lean=0, al=180, ar=60, ll=-10, lr=15),
-        dict(z=0.50, lean=-6, al=172, ar=168, ll=10, lr=10),
+        dict(z=-0.10, lean=12, sway=-4, al=40, ar=20, ll=30, lr=-10),
+        dict(z=0.45, lean=6, sway=0, al=150, ar=50, ll=-20, lr=25),
+        dict(z=0.62, lean=0, sway=0, al=180, ar=60, ll=-10, lr=15),
+        dict(z=0.50, lean=-6, sway=4, al=172, ar=168, ll=10, lr=10),
     ],
-    "celebrate": [dict(z=0.14, lean=-6, al=170, ar=170, ll=-8, lr=8), dict(z=0.0, lean=-2, al=135, ar=150, ll=0, lr=0)],
+    "celebrate": [
+        dict(z=0.14, lean=-6, sway=-6, al=170, ar=170, ll=-8, lr=8),
+        dict(z=0.0, lean=-2, sway=6, al=135, ar=150, ll=0, lr=0),
+    ],
 }
 ORDER = ["idle", "run", "jumper", "dunk", "celebrate"]
 FRAMES = [(p, i) for p in ORDER for i in range(len(POSES[p]))]
 
 SKIN = (0.55, 0.27, 0.13, 1)  # linear; about 195,143,100 on screen
 HAIR = (0.10, 0.07, 0.05, 1)
+FACE = (0.02, 0.02, 0.02, 1)  # near-black eyes/smile; never read as a team mask
 SHOE = (0.95, 0.95, 0.95, 1)
 SOCK = (0.85, 0.85, 0.85, 1)
 MASK_JERSEY = (1, 0, 0, 1)
@@ -106,7 +116,14 @@ def mat(name, rgba):
 MATS = {
     k: mat(k, v)
     for k, v in dict(
-        skin=SKIN, hair=HAIR, shoe=SHOE, sock=SOCK, jersey=MASK_JERSEY, shorts=MASK_SHORTS, trim=MASK_TRIM
+        skin=SKIN,
+        hair=HAIR,
+        face=FACE,
+        shoe=SHOE,
+        sock=SOCK,
+        jersey=MASK_JERSEY,
+        shorts=MASK_SHORTS,
+        trim=MASK_TRIM,
     ).items()
 }
 
@@ -122,6 +139,19 @@ def box(name, size, loc, m, parent):
     return o
 
 
+def sphere(name, scale, loc, m, parent):
+    bpy.ops.mesh.primitive_uv_sphere_add(segments=24, ring_count=16, location=(0, 0, 0))
+    o = bpy.context.active_object
+    o.name = name
+    o.scale = scale
+    o.location = loc
+    o.data.materials.append(MATS[m])
+    for p in o.data.polygons:
+        p.use_smooth = True
+    o.parent = parent
+    return o
+
+
 def empty(name, loc, parent=None):
     e = bpy.data.objects.new(name, None)
     sc.collection.objects.link(e)
@@ -130,28 +160,41 @@ def empty(name, loc, parent=None):
     return e
 
 
+# Chunky mini-figure proportions (total height ~1.60 m, head ~0.64 m across).
 # The body faces -Y. A limb swing of +a degrees (forward) is a rotation of -a about X.
 root = empty("root", (0, 0, 0))
-hips = empty("hips", (0, 0, 0.95), root)
-box("shorts", (0.52, 0.30, 0.20), (0, 0, 0.02), "shorts", hips)
-box("shorts_stripe_l", (0.02, 0.31, 0.20), (0.265, 0, 0.02), "trim", hips)
-box("shorts_stripe_r", (0.02, 0.31, 0.20), (-0.265, 0, 0.02), "trim", hips)
-torso = empty("torso", (0, 0, 0.1), hips)
-box("jersey", (0.54, 0.30, 0.60), (0, 0, 0.3), "jersey", torso)
-box("collar", (0.56, 0.31, 0.05), (0, 0, 0.6), "trim", torso)
-box("neck", (0.1, 0.1, 0.08), (0, 0, 0.66), "skin", torso)
-box("head", (0.24, 0.24, 0.27), (0, 0, 0.82), "skin", torso)
-box("hair", (0.25, 0.25, 0.06), (0, 0, 0.97), "hair", torso)
+hips = empty("hips", (0, 0, 0.52), root)
+box("shorts", (0.62, 0.36, 0.22), (0, 0, 0.0), "shorts", hips)
+box("shorts_stripe_l", (0.02, 0.37, 0.22), (0.315, 0, 0.0), "trim", hips)
+box("shorts_stripe_r", (0.02, 0.37, 0.22), (-0.315, 0, 0.0), "trim", hips)
+torso = empty("torso", (0, 0, 0.08), hips)
+box("jersey", (0.66, 0.38, 0.44), (0, 0, 0.22), "jersey", torso)
+box("collar", (0.68, 0.39, 0.05), (0, 0, 0.44), "trim", torso)
+box("neck", (0.12, 0.12, 0.08), (0, 0, 0.47), "skin", torso)
+# Big round vinyl head, ~40% of total height, smooth-shaded so it reads as a toy.
+sphere("head", (0.30, 0.28, 0.32), (0, 0, 0.68), "skin", torso)
+# Headband as four strips (a torus reads as a blindfold at 32 px and hides under the cap
+# overhang from the high camera); the front strip sits well above the eyes.
+box("headband_f", (0.52, 0.06, 0.07), (0, -0.26, 0.84), "trim", torso)
+box("headband_b", (0.52, 0.06, 0.07), (0, 0.26, 0.84), "trim", torso)
+box("headband_l", (0.06, 0.50, 0.07), (0.26, 0, 0.84), "trim", torso)
+box("headband_r", (0.06, 0.50, 0.07), (-0.26, 0, 0.84), "trim", torso)
+box("eye_l", (0.08, 0.02, 0.08), (0.115, -0.275, 0.70), "face", torso)
+box("eye_r", (0.08, 0.02, 0.08), (-0.115, -0.275, 0.70), "face", torso)
+box("smile", (0.20, 0.02, 0.03), (0, -0.275, 0.56), "face", torso)
+box("cap", (0.50, 0.48, 0.07), (0, 0, 0.95), "hair", torso)
+box("brim", (0.34, 0.16, 0.03), (0, -0.32, 0.92), "hair", torso)
 legs, arms = {}, {}
-for side, x in (("l", 0.12), ("r", -0.12)):
-    leg = empty("leg_" + side, (x, 0, -0.1), hips)
-    box("shortleg_" + side, (0.21, 0.24, 0.36), (0, 0, -0.16), "shorts", leg)  # baggy shorts to the knee
-    box("thigh_" + side, (0.15, 0.17, 0.80), (0, 0, -0.40), "skin", leg)
-    box("sock_" + side, (0.16, 0.18, 0.16), (0, 0, -0.70), "sock", leg)
-    box("shoe_" + side, (0.18, 0.28, 0.1), (0, -0.04, -0.82), "shoe", leg)
+for side, x in (("l", 0.14), ("r", -0.14)):
+    leg = empty("leg_" + side, (x, 0, -0.05), hips)
+    box("shortleg_" + side, (0.24, 0.28, 0.26), (0, 0, -0.10), "shorts", leg)  # baggy shorts to the knee
+    box("thigh_" + side, (0.18, 0.20, 0.26), (0, 0, -0.23), "skin", leg)
+    box("sock_" + side, (0.19, 0.21, 0.10), (0, 0, -0.38), "sock", leg)
+    box("shoe_" + side, (0.21, 0.36, 0.12), (0, -0.05, -0.41), "shoe", leg)  # oversized sneakers
     legs[side] = leg
-    arm = empty("arm_" + side, (x * 2.75, 0, 0.56), torso)
-    box("armm_" + side, (0.11, 0.13, 0.62), (0, 0, -0.31), "skin", arm)
+    arm = empty("arm_" + side, (x * 2.36, 0, 0.36), torso)
+    box("armm_" + side, (0.14, 0.16, 0.46), (0, 0, -0.23), "skin", arm)
+    sphere("hand_" + side, (0.075, 0.075, 0.075), (0, 0, -0.50), "skin", arm)
     arms[side] = arm
 
 cam_data = bpy.data.cameras.new("cam")
@@ -172,7 +215,7 @@ def set_camera(elev_deg):
 def set_pose(f, direction):
     root.rotation_euler = (0, 0, math.radians(direction * 45))
     root.location = (0, 0, f["z"])
-    torso.rotation_euler = (-math.radians(f["lean"]), 0, 0)
+    torso.rotation_euler = (-math.radians(f["lean"]), 0, math.radians(f.get("sway", 0)))
     arms["l"].rotation_euler = (-math.radians(f["al"]), 0, math.radians(-6))
     arms["r"].rotation_euler = (-math.radians(f["ar"]), 0, math.radians(6))
     legs["l"].rotation_euler = (-math.radians(f["ll"]), 0, 0)
@@ -261,7 +304,7 @@ meta = {
     "dirNote": "row = elevationIndex * dirs + dir; dir = player facing relative to the camera in 45 deg steps, 0 facing the camera, 2 facing screen right",
     "frames": [f"{p}:{k}" for p, k in FRAMES],
     "poses": {p: [i for i, (q, _) in enumerate(FRAMES) if q == p] for p in ORDER},
-    "anchors": [{"foot": anchor(e, 0.0), "head": anchor(e, 2.0)} for e in ELEVATIONS],
+    "anchors": [{"foot": anchor(e, 0.0), "head": anchor(e, 1.60)} for e in ELEVATIONS],
     "masks": {"jersey": "red channel dominant", "shorts": "green channel dominant", "trim": "blue channel dominant"},
     "hash": hashlib.sha256((OUT / "players.png").read_bytes()).hexdigest()[:8],  # replay.js puts it on the image URL
     "generator": "scripts/sprites/build_sprites.py (Blender "

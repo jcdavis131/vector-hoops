@@ -60,7 +60,7 @@
   {
    "foot": [
     16.0,
-    41.09
+    35.62
    ],
    "head": [
     16.0,
@@ -70,7 +70,7 @@
   {
    "foot": [
     16.0,
-    33.09
+    30.18
    ],
    "head": [
     16.0,
@@ -83,6 +83,6 @@
   "shorts": "green channel dominant",
   "trim": "blue channel dominant"
  },
- "hash": "655d3dac",
- "generator": "scripts/sprites/build_sprites.py (Blender 5.2.2 LTS, Workbench, procedural model)"
+ "hash": "16da5d8d",
+ "generator": "scripts/sprites/build_sprites.py (Blender 4.5.0, Workbench, procedural model)"
 }
