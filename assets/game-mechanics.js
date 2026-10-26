@@ -121,8 +121,20 @@
     lifelineStatus('Finding twins…');
     ensureVectors().then(function(v){
       var q=v[t.i]; if(!q||!q.v){ lifelineStatus('No vector for the mystery star.'); return; }
+      /* No self-twins: a player's own other seasons are the nearest rows in
+         embedding space, so excluding only the exact row fills the whole
+         reveal with the mystery star himself (e.g. Curry 2016-17 revealed
+         Curry 2014-15 / 2015-16 / 2017-18). Identity is person_id, not name:
+         distinct players share names (two Dee Browns, two Reggie Williams),
+         and person_id keeps them apart. Fall back to name only where a row
+         carries no person_id. */
+      var isSelf = function (row) {
+        if (!row) return false;
+        if (q.person_id && row.person_id) return row.person_id === q.person_id;
+        return row.name === q.name;
+      };
       var scored=[];
-      for(var i=0;i<v.length;i++){ if(i===t.i||!v[i].v) continue; scored.push([cosSim(q.v,v[i].v), i]); }
+      for(var i=0;i<v.length;i++){ if(i===t.i||isSelf(v[i])||!v[i].v) continue; scored.push([cosSim(q.v,v[i].v), i]); }
       scored.sort(function(a,b){ return b[0]-a[0]; });
       var top=scored.slice(0,3).map(function(s){ return s[1]; });
       var names=top.map(function(i){ return v[i].name+' '+v[i].season; });
