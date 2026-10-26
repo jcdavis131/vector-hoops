@@ -438,7 +438,7 @@
   var SPR = null, sheets = {}, cells = {}, cellN = 0;
   function loadSprites() {
     if (/[?&]sprites=0/.test(location.search) || typeof Image === 'undefined') return;
-    fetch('/assets/sprites/players.json?v=38993b8f').then(function (r) { return r.ok ? r.json() : null; }).then(function (m) {
+    fetch('/assets/sprites/players.json?v=08f78732').then(function (r) { return r.ok ? r.json() : null; }).then(function (m) {
       if (!m) return;
       var img = new Image();
       img.onload = function () { m.img = img; SPR = m; stats.sprites.ready = 1; };
