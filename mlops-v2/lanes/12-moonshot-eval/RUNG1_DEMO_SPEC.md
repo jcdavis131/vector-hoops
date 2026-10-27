@@ -212,6 +212,51 @@ claim about the fine level is a claim about an unrun demo.
    type) begins only on a passed rung 1, under its own
    pre-registration.
 
+## PATCH ADDITION — Appendix E2: location metrics BY HORIZON + coach-mode rule (binding)
+
+This appendix ADDS to §§2–5; it does not change the rung-1 task,
+baselines, kill rule, or DATA-GATED status.
+
+- **Location metrics BY HORIZON.** Every location metric in §2
+  (mean/median error in feet, by zone, by play type) is reported
+  BY HORIZON — 1-step, short-horizon, and long-horizon
+  separately — once multi-step location data exists to score it.
+  A model winning at 1 step and collapsing at 5 steps has not
+  learned a world model and must not be reported as one. The
+  rung-1 demo itself is a 1-step (next-shot) demo; its result is
+  a 1-step result, labelled as such, and it proves nothing about
+  longer horizons.
+- **Multi-step rollout claims require CURVES, not 1-step
+  accuracy.** Any claim about multi-step rollouts — coach-mode
+  multi-step counterfactuals, Live "what happens next" chains —
+  requires horizon-degradation CURVES (error vs horizon, with
+  the paired-bootstrap interval at each horizon), not a 1-step
+  number. Until those curves exist, **COACH MODE IS
+  SINGLE-STEP STEERS ONLY** (PANEL_REVIEW.md Addendum III-C, R6;
+  adopted unopposed by Seat 10).
+- **Citation hedges (do not quote without them).** GenTac ADE
+  figures (0.62 m @1 s → 4.55 m @5 s; FDE 1.22 m → 10.80 m) may
+  be cited ONLY as the error-growth LAW reference: GenTac is a
+  diffusion-based SOCCER model (arXiv preprint, Apr 2026), its
+  basketball generalization is CLAIMED, not measured, and its
+  method does not transfer to a 13k-row CPU design — never cite
+  its numbers as basketball results. CourtMotion is cited for
+  head STRUCTURE only (joint trajectory + event heads): its 35%
+  figure carries its attribution hedge — vs position-only
+  baselines WITH skeletal inputs, so the gain partly credits
+  the skeletal input, not the joint loss alone — and its
+  absolute ADE/FDE and dataset size are UNVERIFIED, so no
+  absolute location-accuracy promise may be drawn from it.
+  HiT-JEPA is SIMILARITY-only and must NEVER be cited as
+  forecasting evidence.
+- **Relation to the kill rule.** The §5 kill rule (fail to beat
+  carry-forward on the frozen test → fine level STOPS) is
+  unchanged and applies at the rung-1 (1-step) horizon. A
+  horizon-specific failure at longer horizons does not retro-
+  actively kill a passed rung 1, but it does block every
+  multi-step claim at the failed horizon until curves show a
+  pass there.
+
 ## 8. What this demo does not prove
 
 - Passing rung 1 does not prove the fine level, the hierarchy, or

@@ -403,3 +403,56 @@ Gates restated: NO training runs, NO merges, NO production writes
 without the user's separate word. Spec finalization BLOCKED until the
 user rules on III-A Q1–Q3, III-B Q1, IV Q1–Q3, and the prediction-first
 reframe. HOLD (§11) intact.
+
+## 10. Wave-2c synthesis (2026-10-27 ~03:59 CDT; coordinator-verified) — LAST KNOWN GAP CLOSED
+
+Eval-lane research patch APPLIED and verified (patch agent 21/21; all
+children complete). Only the four files in lanes/12-moonshot-eval/ were
+edited; no other lane, no repo checkout, no existing verdict or proposed
+value rewritten — every addition is marked "PATCH ADDITION", files stay
+DRAFT, and the forecast-headline framing label (user-directed, pending
+panel ratification) is untouched. Coordinator verified: py_compile passes
+on eval_forecast.py; PATCH ADDITION markers in all four files; by_horizon
+schema + AdamW+EMA fail-loud validation present by grep; no execution on
+real data; no training, merges, or production writes.
+- E1: by-horizon forecast reporting (1-step/short/long, all-or-none
+  horizon labels, else explicit not_computable — never a pooled
+  world-model claim) + similarity_metrics as a separate pass-through
+  block, never blended into the headline; "beating" tested per horizon.
+- E2: location metrics by horizon; multi-step rollout claims require
+  horizon-degradation curves; COACH MODE SINGLE-STEP STEERS ONLY until
+  curves exist; GenTac ADE cited ONLY as error-growth law reference
+  (soccer diffusion preprint, basketball generalization claimed not
+  measured); CourtMotion structure-only with attribution hedge; HiT-JEPA
+  similarity-only, never forecasting evidence. §5 kill rule unchanged.
+- E3: rank-collapse KILL TRIGGER (shared-latent collapse kills the joint
+  claim even if a headline metric looks alive); arm reporting requires
+  regularizer ablation 0/0.5×/1×/2×, latent rank per checkpoint, and the
+  conflict diagnostic logged BEFORE any method (diagnose → UW/FAMO →
+  CAGrad only if persistent; FairGrad excluded from Muon arms).
+- E4: AdamW+EMA (not plain AdamW) as optimizer-arm control, MAE-led
+  adoption, wall-clock measured on our rows; LLM "1% overhead" and
+  Moonlight ~2× FLOPs quotes banned.
+- E5: bio eval items as PROPOSED DEFAULTS (Panel IV-A BLOCKED labels
+  kept): per-tower error bands + T-A' precision-weighting pass rule;
+  two-threshold gate test T-E' (WARNING → consolidate + widen, no block;
+  ALARM → block + retrain + log; retrospective, no future labels;
+  failures down ≥30% AND false blocks up ≤10% AND within budget);
+  structured-pruning rules T-C' (whole towers/heads/columns only; 30% →
+  ≤1% degradation + ≥25% latency/size cut; 50% → ≤3% or rejected;
+  per-era degradation reported); multi-detector + co-stimulation OOD
+  test T-D' (≥90% injected corruptions pre-gate at lower false-alarm
+  than BOTH PSI monitor and k-NN baseline, ≥20 episodes). No bio
+  mechanism ships until its named test passes on basketball data;
+  literal swarm/morphogenesis/negative-selection/homeostasis-as-freeze
+  stay REJECTED. No new contract conflicts (C1/C2/§2d items left exactly
+  as delivered).
+With this patch, the eval lane IS research-compliant. There is NO
+remaining known lane gap: every lane is PASS, committed, or recorded as
+a condition (text M1–M7, eval E1–E4+E5 now satisfied by the patch). What
+remains is decisions only: user picks (twin + reframed competitions),
+user rulings (III-A Q1–Q3, III-B Q1, IV Q1–Q3, prediction-first reframe),
+and the open collection decisions (honors, width re-pin, roster
+002-filter, PBP transport, BBRef legal read). Gates restated: NO
+training runs, NO merges, NO production writes without the user's
+separate word. Spec finalization BLOCKED until the user rules.

@@ -143,6 +143,138 @@ required cohort):
   executed and the candidate returns to research-only. The floor
   report is kept as the record of what was claimed at switch time.
 
+## PATCH ADDITION — E3: rank-collapse KILL TRIGGER + arm reporting (binding)
+
+This section ADDS to the §3 collapse watch (item 4); it does not
+change the existing floor values.
+
+- **Rank-collapse KILL TRIGGER.** Shared-latent rank collapse
+  kills the JOINT claim even if a headline metric looks alive
+  (PANEL_REVIEW.md Addendum III-C, R4; UniJEPA precedent:
+  regularizer weight 0 → latent rank 3, collapsed, planning
+  destroyed). A joint-model report that shows a healthy headline
+  over a collapsed latent is a failed joint claim, not a pass
+  with a caveat. The trigger is evaluated on the same cohorts
+  as the floor (both val folds AND the frozen test).
+- **Arm reporting (required for any joint-model arm report).**
+  Every arm report must include: (a) the anti-collapse
+  regularizer ablation — 0 / 0.5× / 1× / 2×, with the metric at
+  each weight (zero-weight is expected to collapse and must be
+  demonstrated, not assumed away); (b) latent rank per
+  checkpoint — effective rank and/or embedding variance, tracked
+  across checkpoints, not a single end-of-run number; (c) the
+  conflict diagnostic — per-head loss scales + gradient cosine
+  — LOGGED BEFORE any conflict method is chosen. The conflict
+  protocol is: diagnose → uncertainty weighting (UW) or FAMO →
+  CAGrad ONLY if conflict persists after that step. PCGrad is a
+  conditional option alongside CAGrad, not the default.
+  **FairGrad is EXCLUDED from Muon arms** (magnitude-sensitive
+  + spectral-flattening interaction, Addendum III-C R5).
+  `eval_forecast.py` enforces the shape: an `arm_report` block
+  must carry all four keys (regularizer weight, latent rank,
+  conflict diagnostic, optimizer control) or none; absence is
+  recorded as "not_supplied", never as a pass.
+- **E4 cross-reference.** The optimizer control named in every
+  arm report is AdamW+EMA, NOT plain AdamW; adoption is MAE-led
+  (beat AdamW+EMA beyond the bootstrap interval on Fold 2, zero
+  stability cost); wall-clock is measured ON OUR ROWS (CPU
+  timing at 12,966 rows UNVERIFIED — never quote LLM "1%
+  overhead" or Moonlight ~2× FLOPs). See BASELINES.md Appendix E4.
+
+## PATCH ADDITION — Appendix E5: bio eval items (binding test specs)
+
+Status of everything in this appendix: DESIGN INPUT ONLY
+(CONTRACT.md §14/§14.1), HOLD (§11) intact, DRAFT. All thresholds
+below are **PROPOSED DEFAULTS pending calibration** on this
+system's history — never quoted as constants. **No bio mechanism
+ships until its named test passes on basketball data** (Panel
+IV-A BLOCKED item). Every bio arm must additionally beat BOTH
+the no-bio model AND the cheapest non-bio equivalent on the
+held-out next-season gate. Literal swarm / morphogenesis /
+negative-selection / homeostasis-as-freeze stay **REJECTED** —
+do not reintroduce them under any provision here. Bio language
+is internal-only by default (Panel IV Q3).
+
+### E5.1 Per-tower error bands as warning/alarm inputs
+
+Per-tower forecast error (which tower broke: player ageing vs
+league style vs tracking change) is reported as error BANDS per
+tower, per fold, and feeds the two-threshold gate in E5.2 as its
+diagnostic input: a WARNING names the tower(s) whose band
+breached, so consolidation targets the broken tower rather than
+reweighting everything. Per-tower bands are diagnostics, not a
+gate on their own — a band breach without a gate breach is a
+report line, not a block. (Precision-weighting test T-A':
+temporal split, ≥3 rolling origins; pass = ≥2% relative
+next-season stat RMSE improvement AND event-location error
+worsened by ≤1%, on the held-out TEST season — validation-only
+improvement fails. Both T-A' thresholds are PROPOSED DEFAULTS.)
+
+### E5.2 Two-threshold gate test (T-E', Panel IV-A)
+
+- **WARNING** (PSI 0.10–0.25 or ADWIN warning; thresholds
+  PROPOSED DEFAULTS, context-adjusted per era/role) →
+  consolidate + widen intervals, NO block.
+- **ALARM** (PSI >0.25 or DDM drift; PROPOSED DEFAULTS) →
+  block promotion + retrain + log cause.
+- **Test:** retrospective simulation over the 30 seasons in
+  order, with NO future labels used before deciding.
+- **Pass (all three, PROPOSED DEFAULTS):** gate failures down
+  ≥30% AND false blocks up ≤10% AND within the intervention
+  budget (e.g. at most one pre-emptive reweighting per season,
+  PROPOSED DEFAULT). Fewer failures achieved by blocking more
+  is conservatism, not prediction, and FAILS. Literal
+  homeostasis-as-freeze is rejected; only this specified
+  warning/alarm gate design is testable (Panel IV-A: (e) upgraded
+  from language to specified conditional mechanism under T-E').
+
+### E5.3 Structured-pruning pass rules (T-C', Panel IV-A)
+
+Pruning is STRUCTURAL only: whole tower dimensions / heads /
+embedding columns. Unstructured sparsity does NOT count — it
+does not speed CPU inference without sparse kernels. A pruning
+pass is followed by a short replay fine-tune (link to the
+replay protocol: 50/50 new + 2,000 reservoir, JEPA-error-
+prioritised; see SYNTHESIS.md §8.1/§9, T-B').
+
+- **30% reduction → ≤1% degradation AND ≥25% latency/size
+  cut** (both required; PROPOSED DEFAULTS).
+- **50% reduction → ≤3% degradation, or REJECTED** (PROPOSED
+  DEFAULT).
+- **Per-era degradation reported** on every pruning result:
+  an average win plus a minority-era destruction is a FAIL,
+  not a pass.
+- A tower is pruned only if its forecast lift is ≤ 0 within
+  the bootstrap interval (CONTRACT.md §14, mapping 3); the
+  pruned model must not regress held-out MAE beyond the stated
+  tolerance. Panel IV verdict on pruning (c): unanimous real
+  mechanism — the only mapping with full panel agreement — but
+  it still ships only on passing T-C' on basketball data.
+
+### E5.4 Multi-detector + co-stimulation OOD test (T-D', Panel IV-A)
+
+Literal immune negative selection is REJECTED (a fixed "self"
+in a league whose normal changes every era flags modern
+basketball as foreign). The testable salvage is
+multi-detector + co-stimulation: flag ONLY if two independent
+signals agree (co-stimulation), with detectors for regime shift
+that do not fire on every recurrence of a known shift.
+
+- **Test:** ≥20 injected-drift episodes; the detector must flag
+  **≥90% of injected corruptions BEFORE the gate**, at a
+  LOWER false-alarm rate than BOTH a single-threshold PSI
+  monitor AND a k-NN baseline (PROPOSED DEFAULTS).
+- **Pass** requires beating both baselines on false alarms, not
+  just one, and the ≥90% flag rate — a detector that flags
+  everything passes the flag rate and fails the false-alarm
+  leg. Panel IV-A: (d) upgraded from language to specified
+  conditional mechanism under T-D'; it still does not ship
+  until T-D' passes on basketball data.
+- **What stays poetry:** "the brain minimises free energy,
+  therefore…", literal negative selection, Hebbian-as-backprop
+  replacement, and any proposal that cannot be written as a
+  loss, a weight, or a gate.
+
 ## 6. Contract conflicts and notes (reported, not silently resolved)
 
 - C1: contract §2a prints Fold 2 val as 984 rows; Lane 3 implements

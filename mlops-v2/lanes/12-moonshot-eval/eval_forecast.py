@@ -159,6 +159,57 @@ summary. The script writes nothing anywhere else: no repo checkout,
 no registry, no production asset.
 
 Stdlib only. No torch, no numpy, no installs.
+
+PATCH ADDITIONS (SYNTHESIS.md SS7 patch conditions E1, E3, E4, E5;
+added, not rewritten -- the existing verdicts, values, and headline
+framing above stand unchanged):
+  E1 -- BY-HORIZON + SIMILARITY-SEPARATE REPORTING (binding):
+    Forecast error is reported BY HORIZON (1-step / short / long
+    separately) wherever a forecast file labels horizons; a
+    single-horizon next-season file reports by_horizon as
+    not_computable with the reason stated, never as a pooled
+    multi-horizon claim. Similarity metrics are reported in a
+    SEPARATE block (``similarity_metrics``), never blended into
+    the forecast headline and never averaged with dynamics
+    metrics. A model winning at 1 step and collapsing at 5 steps
+    must NOT be reportable as a world model: its report must show
+    the horizon breakdown, and any world-model claim requires the
+    horizon-degradation curves named in RUNG1_DEMO_SPEC.md.
+  E3 -- ARM REPORTING (binding, for joint-model arm reports):
+    When a forecast file carries an ``arm_report`` object, the
+    report passes it through and requires its four keys:
+    ``regularizer_weight`` (the anti-collapse ablation grid
+    0 / 0.5x / 1x / 2x, reported per arm), ``latent_rank``
+    (effective rank / embedding variance per checkpoint),
+    ``conflict_diagnostic`` (per-head loss scales + gradient
+    cosine, logged BEFORE any conflict method is chosen;
+    protocol: diagnose -> UW/FAMO -> CAGrad only if persistent;
+    FairGrad excluded from Muon arms), and
+    ``optimizer_control`` (see E4). Rank collapse is a KILL
+    TRIGGER for the joint claim: if the shared latent collapses,
+    the joint claim is dead even if a headline metric looks
+    alive (PANEL_REVIEW.md Addendum III-C, R4). Absence of
+    ``arm_report`` is recorded as "not_supplied", never as a pass.
+  E4 -- OPTIMIZER-ARM CONTROL (binding):
+    Wherever eval docs touch the optimizer arm, the control is
+    AdamW+EMA, NOT plain AdamW. Adoption is MAE-led: beat
+    AdamW+EMA beyond the bootstrap interval on Fold 2, with zero
+    stability cost. Wall-clock must be measured ON OUR ROWS:
+    CPU timing at 12,966 rows is UNVERIFIED -- never quote an
+    LLM "1% overhead" figure or Moonlight ~2x FLOPs (a 3B-active /
+    16B MoE pretraining comparison, not a small-model result).
+  E5 -- BIO EVAL ITEMS (schema hooks; full test specs live in
+    FLOOR_CONSTRAINT.md, Appendix E5):
+    Per-tower error bands feed warning/alarm inputs (see the
+    two-threshold gate test there); an optional
+    ``per_tower_errors`` object in the forecast file is passed
+    through verbatim as its own block, never blended into the
+    headline. All E5 thresholds are PROPOSED DEFAULTS pending
+    calibration; no bio mechanism ships until its named test
+    passes on basketball data (Panel IV-A BLOCKED item).
+    Literal swarm / morphogenesis / negative-selection /
+    homeostasis-as-freeze stay REJECTED and are not reintroduced
+    by any field in this schema.
 """
 
 import argparse
@@ -365,8 +416,22 @@ def scored_seasons(fold):
     return list(fold["val_seasons"]), "val"
 
 
+HORIZONS = ("1-step", "short", "long")
+
+ARM_REPORT_KEYS = ("regularizer_weight", "latent_rank",
+                   "conflict_diagnostic", "optimizer_control")
+
+
 def validate_forecasts(doc, rows_by_key, scored, fold, path):
-    """Return (model, space, forecast map). Fails loud, incl. leakage."""
+    """Return (model, space, forecast map, retrieval notes, extras).
+
+    extras (PATCH ADDITION E1/E3/E5) carries the optional, validated
+    pass-through blocks: ``horizons`` (per forecast key, when every
+    entry labels one of HORIZONS), ``arm_report``, ``similarity``,
+    and ``per_tower_errors``. All four are optional; none is ever
+    blended into the headline score. A partially supplied
+    arm_report fails loud: arm reporting is all four keys or none.
+    """
     if not isinstance(doc, dict):
         fail("forecast file %s: expected a JSON object" % path)
     model = doc.get("model")
@@ -404,8 +469,33 @@ def validate_forecasts(doc, rows_by_key, scored, fold, path):
         if r["season"] in scored:
             scored_keys.add((r["person_id"], r["season"]))
     fmap = {}
+    horizon_map = {}
     retrieval_checked = True
     retrieval_notes = []
+    # PATCH ADDITION E1/E3/E5: optional pass-through blocks, validated
+    # for shape only -- the harness never computes them, never blends
+    # them into the headline, and never claims a check it did not run.
+    arm_report = doc.get("arm_report")
+    if arm_report is not None:
+        if not isinstance(arm_report, dict):
+            fail("forecast file %s: 'arm_report' must be an object" % path)
+        for k in ARM_REPORT_KEYS:
+            if k not in arm_report:
+                fail("forecast file %s: 'arm_report' is missing required "
+                     "key %r (E3: regularizer_weight, latent_rank, "
+                     "conflict_diagnostic, optimizer_control -- all four "
+                     "or none)" % (path, k))
+        if arm_report["optimizer_control"] != "AdamW+EMA":
+            fail("forecast file %s: 'arm_report' optimizer_control must "
+                 "be 'AdamW+EMA', not plain AdamW (E4); got %r"
+                 % (path, arm_report["optimizer_control"]))
+    similarity = doc.get("similarity_metrics")
+    if similarity is not None and not isinstance(similarity, dict):
+        fail("forecast file %s: 'similarity_metrics' must be an object "
+             "(reported separately from dynamics, never blended)" % path)
+    per_tower = doc.get("per_tower_errors")
+    if per_tower is not None and not isinstance(per_tower, dict):
+        fail("forecast file %s: 'per_tower_errors' must be an object" % path)
     for i, e in enumerate(entries):
         if not isinstance(e, dict):
             fail("forecast file %s: entry %d is not an object" % (path, i))
@@ -446,6 +536,13 @@ def validate_forecasts(doc, rows_by_key, scored, fold, path):
             fail("forecast file %s: entry %d (%r) forecast keys must be "
                  "exactly the 14 stats, got %r"
                  % (path, i, key, sorted(fc.keys())))
+        horizon = e.get("horizon")
+        if horizon is not None:
+            if horizon not in HORIZONS:
+                fail("forecast file %s: entry %d (%r) has horizon %r; "
+                     "must be one of %r (E1 by-horizon reporting)"
+                     % (path, i, key, horizon, HORIZONS))
+            horizon_map[key] = horizon
         neighbors = e.get("neighbors")
         if neighbors is not None:
             if not isinstance(neighbors, list) or any(
@@ -475,7 +572,15 @@ def validate_forecasts(doc, rows_by_key, scored, fold, path):
                                "exclusion (if any retrieval was used) "
                                "must be attested by provenance, not "
                                "claimed from this file")
-    return model, space, fmap, retrieval_notes
+    if horizon_map and len(horizon_map) != len(fmap):
+        fail("forecast file %s: horizon labels are all-or-none (E1): "
+             "%d of %d entries label a horizon"
+             % (path, len(horizon_map), len(fmap)))
+    extras = {"horizons": horizon_map if horizon_map else None,
+              "arm_report": arm_report,
+              "similarity_metrics": similarity,
+              "per_tower_errors": per_tower}
+    return model, space, fmap, retrieval_notes, extras
 
 
 def score_cohort(pairs):
@@ -574,7 +679,7 @@ def main(argv=None):
                 if r["season"] == s:
                     train_persons.add(r["person_id"])
         scored_rows = [r for r in rows if r["season"] in scored]
-        model, space, fmap, retrieval_notes = validate_forecasts(
+        model, space, fmap, retrieval_notes, extras = validate_forecasts(
             load_json(args.forecasts, "forecast file"), rows_by_key,
             scored, fold, args.forecasts)
         pairs = [(r["stats"], fmap[(r["person_id"], r["season"])])
@@ -612,9 +717,52 @@ def main(argv=None):
                                     "embargoed; never blended into the "
                                     "headline",
             "retrieval_exclusion": retrieval_notes,
+            # PATCH ADDITION E1: by-horizon blocks, computed only when
+            # every forecast entry labels a horizon; otherwise an
+            # explicit not_computable, never a pooled claim. Similarity
+            # is a separate block, never part of the headline.
+            "by_horizon": (
+                {h: score_cohort(
+                    [(r["stats"], fmap[(r["person_id"], r["season"])])
+                     for r in scored_rows
+                     if extras["horizons"][(r["person_id"], r["season"])] == h])
+                 for h in HORIZONS}
+                if extras["horizons"] else {
+                    "status": "not_computable",
+                    "reason": "single-horizon (next-season) forecast file: "
+                              "no per-entry horizon labels; a world-model "
+                              "claim requires horizon-labelled forecasts "
+                              "and degradation curves (E1, RUNG1_DEMO_SPEC "
+                              "Appendix E2), not this pooled headline"}),
+            "similarity_metrics": (
+                extras["similarity_metrics"] if extras["similarity_metrics"]
+                is not None else {
+                    "status": "not_supplied",
+                    "reason": "similarity metrics are reported separately "
+                              "from dynamics metrics (E1); no similarity "
+                              "block was supplied with this forecast file, "
+                              "so none is claimed"}),
+            # PATCH ADDITION E3/E4/E5: arm reporting pass-through.
+            "arm_reporting": (
+                extras["arm_report"] if extras["arm_report"] is not None
+                else {
+                    "status": "not_supplied",
+                    "reason": "no arm_report supplied: regularizer ablation "
+                              "(0/0.5x/1x/2x), latent rank per checkpoint, "
+                              "conflict diagnostic, and AdamW+EMA control "
+                              "are REQUIRED for any joint-model arm report "
+                              "(E3/E4); absence is not a pass. Rank "
+                              "collapse kills the joint claim even if a "
+                              "headline metric looks alive (E3)."}),
+            "per_tower_errors": (
+                extras["per_tower_errors"] if extras["per_tower_errors"]
+                is not None else {
+                    "status": "not_supplied",
+                    "reason": "per-tower error bands (E5 warning/alarm "
+                              "inputs) not supplied with this file"}),
         }
         if args.compare:
-            model2, space2, fmap2, _ = validate_forecasts(
+            model2, space2, fmap2, _, _extras2 = validate_forecasts(
                 load_json(args.compare, "comparison forecast file"),
                 rows_by_key, scored, fold, args.compare)
             if space2 != space:

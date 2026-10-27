@@ -199,6 +199,65 @@ pending rethink brief's promotion-gate replacement, itself pending
 panel ratification and the user's ruling). Beating one or two is
 reported as exactly that — partial, not a pass.
 
+## PATCH ADDITION — E1: "beating" by horizon, similarity separate (binding)
+
+This section ADDS to the "beating" definition above; it does not
+change the existing folds, margins, or PROPOSED values.
+
+- **Forecast error BY HORIZON.** Where a forecast file labels
+  horizons, the paired-bootstrap "beats" test in §"What beating
+  means" is run PER HORIZON — 1-step, short, and long separately
+  — in addition to any pooled number. A model beats a baseline
+  only on the horizons it actually beats it on; the report states
+  the per-horizon verdicts, and a pooled win that hides a
+  long-horizon collapse is reported as exactly that. A model
+  winning at 1 step and collapsing at 5 steps must NOT be
+  reportable as a world model: a world-model claim requires the
+  horizon-degradation curves named in RUNG1_DEMO_SPEC.md
+  Appendix E2, not a 1-step win.
+- **Similarity SEPARATELY from dynamics.** Similarity metrics
+  (twin retrieval, twin agreement, embedding-space neighbour
+  quality) are reported in their own block in
+  `forecast_eval_report.json` (`similarity_metrics`), never
+  blended into the forecast headline, never averaged with
+  dynamics metrics, and never used to rescue a forecast miss
+  (or vice versa). The forecast gate is judged on forecast
+  numbers; the twin floor (FLOOR_CONSTRAINT.md) is judged on
+  twin numbers; the two verdicts sit side by side.
+- **Horizon labels are all-or-none.** `eval_forecast.py`
+  enforces this: a forecast file either labels every entry's
+  horizon (one of `1-step`, `short`, `long`) or none. A
+  partially labelled file fails loud. A single-horizon
+  next-season file is a 1-step result, labelled as such — it
+  is not evidence about short or long horizons.
+
+## PATCH ADDITION — E4: optimizer-arm control reference (binding)
+
+Wherever the eval docs touch the optimizer arm, the control is
+**AdamW+EMA, NOT plain AdamW** (PANEL_REVIEW.md Addendum III-C,
+R3: on the tabular benchmark, AdamW+EMA scored +0.66 on the plain
+MLP while Muon scored +0.32 — EMA alone beat Muon there, so Muon
+must beat the stronger control). Adoption is **MAE-led**: beat
+AdamW+EMA beyond the bootstrap interval on Fold 2, with zero
+stability cost. Wall-clock must be measured **ON OUR ROWS**:
+CPU timing at 12,966 rows is UNVERIFIED — never quote an LLM
+"1% overhead" figure or Moonlight ~2× FLOPs (a 3B-active/16B MoE
+pretraining comparison, not a small-model result). No claim that
+Muon is better may appear in any eval report; the deliverable is
+an ablation design, not an adoption decision.
+
+## PATCH ADDITION — E5: bio eval items (summary; full tests in FLOOR_CONSTRAINT.md Appendix E5)
+
+Bio mechanisms are judged ONLY by the named tests in
+FLOOR_CONSTRAINT.md Appendix E5 — per-tower error bands as
+warning/alarm inputs, the two-threshold gate test, structured
+pruning pass rules, and the multi-detector + co-stimulation OOD
+test. All thresholds there are PROPOSED DEFAULTS pending
+calibration. No bio mechanism ships until its named test passes
+on basketball data (Panel IV-A BLOCKED item). Literal swarm /
+morphogenesis / negative-selection / homeostasis-as-freeze stay
+REJECTED and are not reintroduced by any eval provision here.
+
 ## Contract conflicts and notes (reported, not silently resolved)
 
 - C1 (carried from Lane 3, FOLDS.md §0): contract §2a prints Fold 2
