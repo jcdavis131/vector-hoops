@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Steerable Twin Explorer — MTNN v5 prototype</title>
+<style>
+  body{font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;max-width:880px;margin:0 auto;padding:20px;color:#1a1a1a;line-height:1.45}
+  h1{font-size:1.6em;margin-bottom:.2em} h2{font-size:1.15em;margin-top:1.4em}
+  .sub{color:#555} .box{border:1px solid #ccc;border-radius:10px;padding:14px;margin:14px 0;background:#fafafa}
+  .warn{background:#fff8e1;border-color:#e6c200}
+  button{margin:3px;padding:8px 12px;border-radius:20px;border:1px solid #888;background:#fff;cursor:pointer;font-size:1em}
+  button.on{background:#1a1a1a;color:#fff;border-color:#1a1a1a}
+  input[type=range]{width:100%}
+  .row{display:flex;gap:8px;align-items:baseline;justify-content:space-between}
+  ol{padding-left:22px} li{margin:7px 0}
+  .bar{display:inline-block;height:10px;background:#2a7fff;border-radius:5px;vertical-align:middle}
+  .tag{font-size:.8em;background:#e8f0ff;border-radius:8px;padding:1px 7px;white-space:nowrap}
+  .tag.new{background:#ffe1e1} .muted{color:#666;font-size:.9em}
+  .big{font-size:1.1em} code{font-size:.9em}
+  details{margin-top:8px}
+</style>
+</head>
+<body>
+<h1>🏀 Steerable Twin Explorer</h1>
+<p class="sub big"><b>Pick a player. Pick a direction. Slide it. The twin list moves — live.</b>
+Every twin below is a real player-season from the champion model, ranked by cosine similarity in 64-d embedding space.</p>
+
+<div class="box">
+  <h2>1 · Start player</h2>
+  <div id="starts"></div>
+  <p id="startinfo" class="muted"></p>
+</div>
+
+<div class="box">
+  <h2>2 · Steering direction</h2>
+  <div id="dirs"></div>
+  <p id="plain"></p>
+  <details><summary>How this direction was derived (real data, no hand-waving)</summary>
+    <p id="deriv"></p>
+  </details>
+</div>
+
+<div class="box">
+  <h2>3 · Slide it</h2>
+  <label for="slider"><span id="sliderlabel"></span></label>
+  <input id="slider" type="range" min="-1" max="1" step="0.2" value="0">
+  <div class="row muted"><span>−1.0 · all the way away</span><span>0 · the real player</span><span>+1.0 · all the way toward</span></div>
+  <p><button id="reset">Reset slider to 0</button>
+     <button id="try1">Try this: Curry + Shooting → +1.0</button>
+     <button id="try2">Try this: Curry + Glass &amp; Rim bigs → +1.0</button></p>
+  <p class="muted">Slider stops are discrete precomputed steps (−1.0, −0.8, …, +1.0). Nothing is computed in your browser beyond looking up the precomputed list — the page states this plainly because it matters: this is <b>not</b> a live model rerun.</p>
+</div>
+
+<div class="box" id="movedbox">
+  <h2>✦ What moved</h2>
+  <p id="moved"></p>
+</div>
+
+<div class="box">
+  <h2>Top 10 twins <span class="muted" id="listhead"></span></h2>
+  <ol id="twins"></ol>
+  <p class="muted">Cosine = similarity in 64-d space (1.00 = identical direction). The start player's own other seasons are excluded — by person_id, so a twin can never be the same person in a different season. The badge on each twin is the steered trait: a skill grade (0–99) or a raw-stat era-z score.</p>
+</div>
+
+<div class="box warn">
+  <h2>⚠️ Read this before you trust a slide — limits, stated plainly</h2>
+  <ul>
+    <li><b>Steering is linear, not a model rerun.</b> We take the saved 64-d embedding, add a fixed direction vector times a slider value, re-normalize, and re-rank. The model itself never runs and never sees the steered point.</li>
+    <li><b>Directions are correlations, not model internals.</b> A skill direction is just “average embedding of high-skill players minus average of low-skill players.” It shows where high-skill players sit in embedding space; it does not prove the model uses that skill, and sliding can drag along correlated traits (e.g. more shooting also pulls in more scoring).</li>
+    <li><b>Tower-level steering is NOT available in v0.</b> Tower outputs are not a saved asset, and the saved <code>mtnn.onnx</code> is a stale 119→48 export, <b>not</b> the served v5 — it is not used here. No tower claim is made anywhere on this page.</li>
+    <li><b>Some sliders saturate — honestly.</b> A player already near the top of a trait (Curry on scoring, 97/99) barely moves when you push that trait further up; the interesting move is downward. The “What moved” box shows the number either way, including when it barely changes.</li>
+    <li><b>Watch out for the two spaces.</b> The famous Curry → Ginobili pair is a <b>14-d stat-space</b> Twin Reveal pair. In this page's <b>64-d embedding space</b> that pair scores only 0.4003 and ranks 390th (person-excluded) — it is <b>not</b> a 64-d top twin. This page's top twin for Curry 2016-17 is James Harden 2017-18 (0.8600). Never mix the two spaces up.</li>
+  </ul>
+</div>
+
+<div class="box">
+  <h2>Data provenance</h2>
+  <p>Champion model: <code>mtnn_v5_concat_b2_h160_t32_d64_mlp128_fus256</code> (incumbent 2026-07-25).
+  Embeddings: <code>mtnn_embeddings.f32</code>, 12,966 player-seasons × 64 dimensions, L2-normalized.
+  Skills: <code>skills.json</code> grades (12 skill columns; the meta file lists 18 skill keys but only these 12 grade columns exist, so only these 12 are used).
+  Stats: <code>vectors.json</code>, 14 per-100 stats, z-scored within season.
+  Archetype centers: <code>mtnn_meta.json</code>, 8 centroids in 64-d.
+  Twin search covers the <b>full 12,966-row</b> space on every slider step; every twin shown is a real computed row (name, season, cosine).
+  Baked data: <code>data.js</code> / <code>data.json</code>, produced by <code>precompute.py</code> — re-run it to reproduce every number on this page.
+  This demo runs by opening <code>index.html</code> directly: relative paths only, no server, no external fetches.</p>
+  <p class="muted">Prototype only. No training, no GPU, no production writes. SAE-based steering is a v1 design note in NOTES.md — it is not implemented here and nothing on this page pretends otherwise.</p>
+</div>
+
+<script src="data.js"></script>
+<script>
+(function(){
+  var D = window.STEER_DATA;
+  var state = {start: 0, dir: "skill-shooting", alpha: 0};
+  var startsEl = document.getElementById("starts");
+  var dirsEl = document.getElementById("dirs");
+  var slider = document.getElementById("slider");
+
+  function dirObj(id){ for (var i=0;i<D.directions.length;i++) if (D.directions[i].id===id) return D.directions[i]; }
+  function metricOf(twin, dir){
+    var m = dir.metric;
+    if (m === "FG3A") return "FG3A z " + twin.FG3A_z;
+    if (m === "FTA") return "FTA z " + twin.FTA_z;
+    var j = D.skill_keys.indexOf(m);
+    return D.skill_labels[m] + " " + twin.grades[j] + "/99";
+  }
+  function metricVal(twin, dir){
+    var m = dir.metric;
+    if (m === "FG3A") return twin.FG3A_z;
+    if (m === "FTA") return twin.FTA_z;
+    return twin.grades[D.skill_keys.indexOf(m)];
+  }
+  function metricName(dir){
+    var m = dir.metric;
+    if (m === "FG3A") return "three-point volume (FG3A era-z)";
+    if (m === "FTA") return "rim pressure (FTA era-z)";
+    return D.skill_labels[m] + " grade (0–99)";
+  }
+  function renderButtons(){
+    startsEl.innerHTML = "";
+    D.starts.forEach(function(s, i){
+      var b = document.createElement("button");
+      b.textContent = s.name + " " + s.season;
+      if (i === state.start) b.className = "on";
+      b.onclick = function(){ state.start = i; render(); };
+      startsEl.appendChild(b);
+    });
+    dirsEl.innerHTML = "";
+    var groups = ["Skill", "Archetype", "Raw stat group"];
+    groups.forEach(function(g){
+      var h = document.createElement("p"); h.innerHTML = "<b>" + g + "</b>"; dirsEl.appendChild(h);
+      D.directions.filter(function(d){ return d.group === g; }).forEach(function(d){
+        var b = document.createElement("button");
+        b.textContent = d.label;
+        if (d.id === state.dir) b.className = "on";
+        b.onclick = function(){ state.dir = d.id; render(); };
+        dirsEl.appendChild(b);
+      });
+    });
+  }
+  function render(){
+    renderButtons();
+    var s = D.starts[state.start];
+    var dir = dirObj(state.dir);
+    var a = state.alpha.toFixed(1);
+    var twins = s.directions[state.dir][a];
+    var base = s.directions[state.dir]["0.0"];
+    var baseKeys = {}; base.forEach(function(t, i){ baseKeys[t.name + " " + t.season] = i + 1; });
+    document.getElementById("startinfo").textContent =
+      s.name + " " + s.season + " — own grades: Shooting " + s.grades.shooting +
+      ", Playmaking " + s.grades.playmaking + ", Rim " + s.grades.rim +
+      ", Scoring " + s.grades.scoring + ", Offensive Glass " + s.grades.oreb + ".";
+    document.getElementById("plain").textContent = "What this slider does: " + dir.plain;
+    document.getElementById("deriv").textContent = dir.derivation;
+    document.getElementById("sliderlabel").textContent =
+      "Steer " + s.name + " " + s.season + " toward “" + dir.label + "”: " + (state.alpha > 0 ? "+" : "") + a;
+    slider.value = state.alpha;
+    document.getElementById("listhead").textContent =
+      "— " + s.name + " " + s.season + ", steered " + (state.alpha > 0 ? "+" : "") + a + " toward " + dir.label;
+    var meanNow = twins.reduce(function(acc, t){ return acc + metricVal(t, dir); }, 0) / 10;
+    var meanBase = base.reduce(function(acc, t){ return acc + metricVal(t, dir); }, 0) / 10;
+    var newNames = twins.filter(function(t){ return !(t.name + " " + t.season in baseKeys); }).length;
+    var fmt = function(v){ return (dir.metric === "FG3A" || dir.metric === "FTA") ? v.toFixed(2) : v.toFixed(1); };
+    var verb = state.alpha === 0 ? "At the unsteered position (slider 0), this is the player's real twin list."
+      : "Sliding to " + (state.alpha > 0 ? "+" : "") + a + " toward " + dir.label + " moved the top-10 average " + metricName(dir) +
+        " from " + fmt(meanBase) + " to " + fmt(meanNow) + "; " + newNames + " of the 10 names are new versus the unsteered list, and the top twin changed from " +
+        base[0].name + " " + base[0].season + " (" + base[0].cos.toFixed(4) + ") to " +
+        twins[0].name + " " + twins[0].season + " (" + twins[0].cos.toFixed(4) + ").";
+    document.getElementById("moved").textContent = verb + " " + dir.plain;
+    var ol = document.getElementById("twins"); ol.innerHTML = "";
+    twins.forEach(function(t, i){
+      var li = document.createElement("li");
+      var key = t.name + " " + t.season;
+      var tag = (key in baseKeys)
+        ? (baseKeys[key] === i + 1 ? "same spot" : "was #" + baseKeys[key])
+        : "NEW";
+      li.innerHTML = "<b>" + t.name + " " + t.season + "</b> · cos " + t.cos.toFixed(4) +
+        " <span class='bar' style='width:" + Math.round(t.cos * 120) + "px'></span>" +
+        " <span class='tag" + (tag === "NEW" ? " new" : "") + "'>" + tag + "</span>" +
+        " <span class='muted'>" + metricOf(t, dir) + "</span>";
+      ol.appendChild(li);
+    });
+  }
+  slider.addEventListener("input", function(){ state.alpha = parseFloat(slider.value); render(); });
+  document.getElementById("reset").onclick = function(){ state.alpha = 0; render(); };
+  document.getElementById("try1").onclick = function(){ state.start = 0; state.dir = "skill-shooting"; state.alpha = 1.0; render(); };
+  document.getElementById("try2").onclick = function(){ state.start = 0; state.dir = "arch-0"; state.alpha = 1.0; render(); };
+  render();
+})();
+</script>
+</body>
+</html>

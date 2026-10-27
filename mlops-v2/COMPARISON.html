@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MLOps v2 Prototype Competition — Head-to-Head</title>
+<style>
+body{font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;max-width:900px;margin:2rem auto;padding:0 1rem;line-height:1.55;color:#111}
+h1{font-size:1.6rem} h2{margin-top:2rem;border-top:2px solid #111;padding-top:.5rem}
+.demo{display:block;border:2px solid #111;padding:1rem;margin:1rem 0;text-decoration:none;color:#111}
+.demo:hover{background:#f5f5f5} .demo b{font-size:1.2rem}
+table{border-collapse:collapse;width:100%} th,td{border:1px solid #999;padding:.5rem;text-align:left;vertical-align:top}
+td.verdict{background:#fffde7;min-width:140px}
+.warn{background:#fff3e0;border-left:4px solid #e65100;padding:.75rem 1rem}
+.small{color:#555;font-size:.9rem}
+</style>
+</head>
+<body>
+<h1>Prototype Competition — Head-to-Head</h1>
+<p><b>Rule:</b> two builders competed head-to-head. The user compares both
+prototypes side by side and picks the winner. The coordinator does <b>not</b>
+declare a winner, does not average scores, and does not soften the comparison.
+The verdict column below is left <b>blank for the user</b>.</p>
+<p class="small">Both prototypes use the EXISTING champion v5 embeddings only
+(12,966 rows, 64-d). No training runs, no GPU, no new packages, no production
+changes were involved. Each demo runs by opening its page — no server needed.</p>
+
+<h2>The two prototypes</h2>
+<a class="demo" href="lanes/prototype-steerable/index.html">
+<b>Builder A — Steerable Twin Explorer</b><br>
+Player page: sliding one feature/direction moves the live twin list.
+4 start players (Curry 2016-17, Harden 2017-18, Giannis 2018-19, Jokic 2022-23),
+10 directions (5 skill-difference, 3 archetype-centroid, 2 stat-group),
+11 slider steps, top-10 twins recomputed over the full 12,966-row space,
+person-excluded. SAE steering is a v1 design note only, not implemented.
+<br><span class="small">Evidence: lanes/prototype-steerable/NOTES.md + precompute.py
+(440 baked twin lists, all verified 10 twins each, cosines in [0,1]).</span>
+</a>
+<a class="demo" href="lanes/prototype-attribution/index.html">
+<b>Builder B — Attribution Graph</b><br>
+Curry 2016-17 → Ginobili 2009-10 as a clickable node/edge graph:
+facets → both spaces → decision, plus dimension decomposition, stat-space
+ablations, and a counterfactual lab (skill select + slider through
+precomputed measured ranks). True served-model tower ablation is shown as an
+explicit gap node, not a faked number.
+<br><span class="small">Evidence: lanes/prototype-attribution/NOTES.md + precompute.py
+(all 5 causal checks computed over all 12,966 rows).</span>
+</a>
+
+<h2>Shared honesty facts (both demos agree — coordinator-verified)</h2>
+<div class="warn">
+<ul>
+<li>Curry 2016-17 → Ginobili 2009-10 is a <b>14-d stat-space Twin Reveal
+pair</b> (cosine 0.9623, rank 1). In the <b>64-d champion embedding
+space</b> it is cosine <b>0.4003, rank 390th</b> (person-excluded); the
+64-d top twin is James Harden 2017-18 at 0.86. Neither demo presents the
+pair as a 64-d top twin.</li>
+<li>The saved <code>mtnn.onnx</code> is 119→48, <b>not</b> the served 64-d v5;
+<code>mtnn_attr_pop.json</code> and <code>mtnn_jacobian.json</code> are stale
+48-d pre-v5 exports marked <code>not_from_served_net</code>. Neither demo
+uses them as v5 attributions.</li>
+<li>Steering directions (A) and counterfactual directions (B) are
+<b>correlations derived from real data</b> (skill-grade embedding means,
+archetype centroids, stat deciles) — not model internals, not interventions
+inside the model.</li>
+</ul>
+</div>
+
+<h2>Judging rubric — verdict left blank for the user</h2>
+<table>
+<tr><th>Criterion</th><th>What it means</th><th>Builder A evidence</th><th>Builder B evidence</th><th>USER VERDICT</th></tr>
+<tr><td>(1) Causal proof</td><td>Does the interaction change twins predictably, with measured numbers?</td>
+<td>Slider move changes twin lists predictably: Curry + Shooting to +0.6 lifts top-10 mean Shooting grade 78.6 → 93.3; at +1.0 top twin becomes Klay Thompson 2016-17 (0.7050), 5 of 10 names new.</td>
+<td>All 5 checks computed: both-space verification, dimension decomposition, 14-d leave-one-group-out (Playmaking hurts most, rank 1→3), facet comparison, counterfactual sweep (best push 390→263, never near top 10).</td>
+<td class="verdict"></td></tr>
+<tr><td>(2) Clarity</td><td>Can a fan get it in 30 seconds?</td>
+<td>One plain-words sentence per direction + a "What moved" box on every slide (metric before→after, new-name count, top-twin change).</td>
+<td>Headline on the page: "a stat twin, not an embedding twin"; clickable graph drives a detail panel.</td>
+<td class="verdict"></td></tr>
+<tr><td>(3) Honesty</td><td>Are limits stated plainly?</td>
+<td>Page states: steering is linear, not a model rerun; directions are correlations; tower/SAE steering unavailable in v0; steps are discrete precomputed positions; saturation cases disclosed.</td>
+<td>Page states: tower ablation unavailable (gap node); dimensions carry no basketball meaning and are not labeled as towers; counterfactuals are correlational; only 12 graded skills shown (meta lists 18 keys).</td>
+<td class="verdict"></td></tr>
+<tr><td>(4) Playability</td><td>Is it fun to use?</td>
+<td>4 starts × 10 sliders, instant list changes, dramatic flips (e.g. Curry toward centers on Glass+Rim).</td>
+<td>Clickable graph, counterfactual lab with skill select + slider, two-space top-5s side by side.</td>
+<td class="verdict"></td></tr>
+</table>
+
+<p><b>Known limits (both):</b> A cannot steer to arbitrary continuous values
+or players outside its 4 baked starts without re-running precompute. B's
+64-d dimension decomposition is exact arithmetic with no basketball meaning.
+Neither demo trains, retrains, or changes any production surface.</p>
+<p class="small">Coordinator synthesis: see SYNTHESIS.md in this directory and
+branch <code>scout/mlops-v2-draft</code> (worktree
+<code>~/workspace/vector-hoops-mlops-v2</code>, directory
+<code>mlops-v2/</code>). Comparison page itself carries no score and no
+winner — that decision belongs to the user.</p>
+</body>
+</html>
