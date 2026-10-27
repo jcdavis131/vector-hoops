@@ -34,9 +34,7 @@ def is_self(target, row):
 
 def top_twins(players, target, n=3):
     scored = [
-        (cos(target["v"], p["v"]), p)
-        for p in players
-        if p is not target and p.get("v") and not is_self(target, p)
+        (cos(target["v"], p["v"]), p) for p in players if p is not target and p.get("v") and not is_self(target, p)
     ]
     scored.sort(key=lambda z: -z[0])
     return scored[:n]
