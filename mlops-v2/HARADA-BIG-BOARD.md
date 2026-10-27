@@ -132,3 +132,11 @@
 - DATA DEEP DIVE SWARM (user, 2026-10-26 22:45 CDT): coordinator + 11 investigators on collection (see MEMORY). Synthesis pending → data-deep-dive/DATA_COLLECTION_DEEP_DIVE.md. Read-only + tiny probes; no bulk fetch; gates intact.
 
 - PANEL III-C DONE (2026-10-26 22:46 CDT): conditional-go STANDS, sharper — bridge = experimental arm; hierarchy level-by-level; Muon ablate vs AdamW+EMA; rank-collapse kill trigger; per-horizon location metrics. Deep-dive swarm still running.
+
+- BIO LENS (user, 2026-10-26 22:49 CDT): biological processes/frameworks as design guides (predictive coding, sleep/replay, pruning, immune drift-detection, homeostasis, evolution, swarm). Research running; coordinator notified; metaphors must pass a falsifiable test before entering any spec.
+
+- PANEL ROUND 3 RUNNING (user, 2026-10-26 22:50 CDT): Addendum IV = bio-architecture verdict (mechanism vs language vs poetry, falsifiable test per endorsement). Bio research still running in parallel.
+
+- DATA DEEP DIVE DONE (2026-10-26 22:53 CDT): synthesis + 11 lanes in data-deep-dive/. 143 = 1 blocking fetch (11 gamelog JSONLs) + 2 decisions. FLAG: BBRef Terms §5.11 bars AI training — legal read required. Trajectories: none at scale — fine level stays event-location. Open user decisions: honors, width re-pin, roster filter, PBP transport, BBRef legal read.
+
+- PANEL ROUND 3 DONE (2026-10-26 22:54 CDT): Addendum IV + IV-A — bio verdict: pruning unanimous real; (a) IWM-conditioning only; (b) replay split, test decides; (d)/(e) upgraded to specified mechanisms with tests (T-D'/T-E'); literal swarm/morphogenesis/immune/homeostasis-freeze rejected; causal readings rejected unopposed. Standing Q1–Q3 (Q2 needs his accept/amend/reject).

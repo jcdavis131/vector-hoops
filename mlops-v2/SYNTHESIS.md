@@ -244,3 +244,162 @@ III-A Q1–Q3 + III-B Q1 and on the prediction-first reframe. HOLD (§11)
 intact: no delivered lane doc, contract headline, eval protocol, or
 prototype brief was rewritten to the prediction-first framing; new scope
 work carries the "user-directed, pending panel ratification" label only.
+
+## 8. Bio-inspired design lens (user 2026-10-26 22:49 CDT — DESIGN INPUT, pending research)
+
+Recorded in CONTRACT §14, not applied as a rewrite: lane designs are to
+be examined through bio-inspired mechanisms, each earning its place by
+ablation, not by metaphor. Candidates: predictive coding / free-energy
+(JEPA predictor + surprise-driven learning); sleep + hippocampal replay
+(offline consolidation without new data); synaptic pruning (tower/feature
+pruning by forecast lift); immune self/non-self (drift/anomaly detection
+with amplification on confirmed drift); homeostasis / allostasis
+(predictive recalibration before a gate breach); evolution
+(variation-selection-inheritance hill-climb under held-out gates);
+critical periods (curriculum: coarse/invariant first, fine detail only
+after the III-C timescale diagnostic passes); swarm / stigmergy (tiered
+agent lanes via shared timeline signals — agent system only, never a model
+spec). Rule: any mechanism without a falsifiable test does not enter a
+spec. A deep-research run on bio-inspired frameworks is underway; its
+findings feed into lane designs on landing. Routing: model-code lane asked
+for a BIO_LENS appendix (mapping → falsifiable test per mechanism, nothing
+adopted, no restructure of the split-head design); the eval E1–E4 patch
+brief gains the bio items touching drift/recalibration/pruning gates when
+that pass is spawned. No lane doc was rewritten for this lens; no training,
+merge, or prod write is authorized by it.
+
+### 8.1 Bio research LANDED (2026-10-27 — rankings recorded, routing updated)
+
+Report read in full: research_notes/
+bio-inspired-adaptive-systems-20261027-0349/report.md (312 lines,
+index-level sources, nothing tested on basketball data). Rankings
+recorded in CONTRACT §14.1: (1) offline interleaved replay /
+consolidation, (2) precision-weighted predictive error as JEPA weight +
+per-tower gate, (3) structured pruning + EWC protection; close 4th:
+two-threshold homeostatic gate. Most misleading if literal: swarm /
+stigmergy (salvage EWMA sampling only) and morphogenesis / NCA (salvage
+positional encoding only); runner-up: literal immune negative selection
+(salvage multi-detector + co-stimulation OOD). Correction recorded:
+immune and homeostasis have defensible testable mechanisms, not just
+naming — the earlier dismissal was too strong. Caveats carried:
+thresholds are proposed defaults to calibrate; transfer numbers are
+secondary-summary indicative, not re-verified; predictive-coding energy
+efficiency UNVERIFIED. Routing: model-code BIO_LENS appendix follow-up
+updated to ground the appendix in the landed report (ranked mechanisms
+with exact pass rules, misleading-if-literal warnings, and a
+mechanism / language / poetry classification per mapping for Round 3's
+framing — the builder states its classification, the panel judges);
+eval patch brief gains E5 (bio eval items: per-tower error bands,
+two-threshold gate test, pruning pass rules, multi-detector OOD test).
+Panel Round 3 (Addendum IV) judges bake / keep-as-naming / reject per
+mapping; nothing is baked by this section. No lane doc rewritten; no
+training, merge, or prod write authorized.
+
+## 9. Wave-2b synthesis (2026-10-27 ~03:56 CDT; coordinator-verified)
+
+Model-code lane COMPLETE (20/20 children done). Coordinator verified on
+disk: lanes/11-moonshot-model/ holds model.py (758 lines), losses.py
+(846), optim.py (472), MOONSHOT_SPEC.md (594), MUON_ABLATION.md (242),
+BIO_LENS.md (451) — 3,363 lines total, all Python drafts pass py_compile.
+RESEARCH COMPLIANCE VERIFIED (the handoff's "untouched" line covered the
+bio phase only; the research follow-up WAS applied in an earlier phase):
+split-head CoJEPA blueprint, bridge/predictive-positives as EXPERIMENTAL
+ARM only (III-C R1), regularizer ablation grid (0.0/0.5/1.0/2.0) +
+effective-rank per-checkpoint monitoring, conflict protocol
+diagnose → UW/FAMO → CAGrad-or-PCGrad-conditional, AdamW+EMA control with
+MAE-led adoption, hierarchy earned level-by-level + shared-latent arm +
+Push-T caution — all present by grep. NO model research patch needed.
+BIO_LENS.md verified (451 lines; DOES-NOT-ENTER-SPEC / falsifiable /
+MECHANISM / POETRY markers present): ranked mechanisms with exact tests
+and kill rules, split verdicts (swarm: LANGUAGE for agent coordination +
+MECHANISM-candidate EWMA fragment + POETRY literal simulation;
+morphogenesis: MECHANISM fragment positional encoding + POETRY literal
+growth), DO-NOT-PROPOSE list, caveat banner (index-level sources,
+nothing on basketball data, thresholds proposed defaults). No model,
+loss, optimizer, or conflict file was restructured for the bio lens.
+One isolated failed tool call in the handoff did not affect deliverables.
+
+Panel Round 3 COMPLETE (Addendum IV at PANEL_REVIEW.md:1756 + IV-A
+follow-up; file now 2,428 lines). Verdict: NEITHER reject NOR adopt the
+bio lens. Pruning (c) unanimous real mechanism. (a) real ONLY as IWM
+conditioning (already in SPEC-3), else language. (b) replay SPLITS the
+panel (endorse vs language-until-T-B + wall-clock) — the test decides;
+the split costs nothing. (d)/(e) UPGRADED by research from language to
+SPECIFIED CONDITIONAL mechanisms with runnable tests (T-D': ≥90%
+injected corruptions flagged at lower false alarms than PSI/k-NN, ≥20
+episodes; T-E': ≥30% fewer gate failures, ≤10% more false blocks, budget
+respected) — neither ships until its test passes on basketball data.
+(a) gains precision weighting (T-A'); (b)/(c) gain runnable protocols
+(T-B': 50/50 new + 2,000 reservoir, JEPA-error-prioritised, ≥50%
+backward-transfer cut, match newest season, beat uniform mix, ≤20%
+update compute; T-C' pruning protocol). REJECTED outright: literal swarm
+(salvage EWMA), literal morphogenesis/NCA (salvage positional encoding),
+literal immune negative selection, literal homeostasis-as-freeze,
+evolving tower weights (evolution only over ≤30 hyperparameters, must
+beat random search). New discipline: every bio arm beats BOTH the no-bio
+model AND the cheapest non-bio equivalent. Causal reading of any mapping
+rejected UNOPPOSED (Seat 10) — especially story surfaces + coach mode.
+No seat's verdict flips to unconditional bake. IV Q1–Q3 STAND: Q1 default
+(run the replay arm) strengthened by T-B'; Q2 better posed (accept/amend/
+reject the two-threshold design + set the floor number + hard-vs-warning
+status); Q3 unchanged (bio language internal-only by default). IV-A
+BLOCKED items: quoting any threshold as a constant; any bio mechanism
+shipping before its named test passes on basketball data. The BIO_LENS
+appendix was NOT rewritten to record Round 3 (classifications stated,
+panel judges — as briefed); this section is the record.
+
+Data deep-dive COMPLETE (separate coordinator; 12 files, 5,380 lines,
+read-only + tiny probes, no bulk fetch, no live writes). Synthesis read
+in full: DATA_COLLECTION_DEEP_DIVE.md. Headlines incorporated into the
+collection plan (Scope A + overhaul lane): the 143 chain needs EXACTLY
+ONE blocking fetch (11 gamelog JSONLs 2015-16…2025-26, operator machine
+only) + derivations + 2 decisions (honors semantics, width re-pin);
+FA2 coverages are the success criterion, NOT 1.0 (form/competition/
+injury 0.3975, roster/team/system 0.2611); probe-gated waves (Tier-0
+offline derivations → probes → gamelogs → conditional shot backfill →
+PBP backfill → targeted gap-fill only); scale ESTIMATES (gamelogs
+~160–270 MB, shots ~2.6 GB, PBP ~17.5 GB; realistic ~2–3 weeks elapsed;
+PBP + box reliability the long pole; 16+ GB PBP transport through git is
+an OPEN design gap to decide BEFORE Wave 4); PBP text = 203 masked
+templates over 3,152 actions (15.5× dedup — embed templates once).
+Corrections adopted: "70 missing columns" is a SET DIFFERENCE, not a
+suffix (form 5 width-present but value-blocked; pedigree 7, not 2);
+Hatch stall refined to TLS-complete then zero bytes; PBP conversion
+magnitude discrepancy (0.022 ft vs 0.0002 ft by different checks) MUST be
+reconciled before baking into any tower. Fine level stays EVENT-location:
+no multi-season public per-frame trajectory source exists (only frozen
+~600-game 2015-16 SportVU mirrors; Second Spectrum partner-only).
+BIGGEST FLAG — LEGAL, NEW: Sports Reference Terms §5 item 11 expressly
+bars AI-model training; under a strict reading it reaches BBRef-fed MTNN
+training. Program NOT cleared for republication / further BBRef-fed
+training pending a legal read. Until it lands, BBRef-fed families are
+UNCLEARED for training (cross-check use is the safe posture); NBA
+primary terms and ESPN current terms likewise UNVERIFIED; salary
+upstream unidentified. Open decisions for the user (unchanged + new):
+honors semantics, width re-pin, roster 002-filter ruling, PBP transport
+decision, BBRef legal read. Deep-dive files are committed in wave-2b
+(the coordinator is the program's synthesis point; the deep-dive
+coordinator's investigation + synthesis are incorporated, not
+duplicated).
+
+Reframed-pair comparison page built by the coordinator (same governance
+as the twin comparison): COMPARISON_FORECAST.html links both reframed
+demos, states the shared honesty facts (v5 head unrunnable, baselines
+labelled, baselines do not beat carry-forward, moves computed not
+asserted, omissions stated), and carries the 4-criterion rubric with the
+USER VERDICT column BLANK. No winner, no scores, no recommendation.
+
+STILL OPEN after wave-2b (single known gap): eval-lane research patch
+E1–E4 + E5 (by-horizon + similarity-separate reporting; location metrics
+by horizon + coach single-step rule; rank-collapse kill trigger +
+regularizer/rank arm reporting + conflict diagnostic; AdamW+EMA control
+reference; bio eval items: per-tower error bands, two-threshold gate
+test, pruning pass rules, multi-detector OOD test). A patch agent is
+spawned for exactly this; the eval lane is NOT research-compliant until
+it lands. Everything else in the program is either PASS, committed, or
+awaiting a user/panel decision listed in §6/§7.
+
+Gates restated: NO training runs, NO merges, NO production writes
+without the user's separate word. Spec finalization BLOCKED until the
+user rules on III-A Q1–Q3, III-B Q1, IV Q1–Q3, and the prediction-first
+reframe. HOLD (§11) intact.

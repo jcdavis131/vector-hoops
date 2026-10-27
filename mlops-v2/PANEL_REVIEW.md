@@ -1752,3 +1752,677 @@ VERDICT: PASS — research incorporated: conditional-go STANDS with sharper cond
 VERDICT: ABLATE (sharpened) — Muon vs AdamW+EMA (not plain AdamW), MAE-led adoption, wall-clock measured on our rows; 2.98× tabular cost + low-SNR caution attached — ~/workspace/mlops-v2-drafts/PANEL_REVIEW.md (Addendum III-C)
 VERDICT: BLOCKED — any claim that research settles a gate: preprint, non-tabular, or non-CPU evidence moves priors only; program folds/arms/kill rules remain the deciders — ~/workspace/mlops-v2-drafts/PANEL_BRIEF.md §9
 VERDICT: PASS — new kill trigger added: shared-latent rank collapse kills the joint claim even if a headline metric looks alive — ~/workspace/mlops-v2-drafts/PANEL_REVIEW.md (Addendum III-C)
+
+## Addendum IV — Bio-inspired architecture verdict (user question, 2026-10-26 22:50 CDT)
+
+**Question asked:** "What would our top research scientists think?" of the bio-inspired architecture
+mapping proposed in conversation: (a) contrastive head as recognition memory (what stays the same
+across time) and JEPA head as predictive processing (constantly guessing the next moment); (b)
+sleep-like consolidation as offline replay over past seasons to consolidate the world model without
+new data; (c) synaptic pruning as dropping dead features/towers the way synapses are pruned; (d) an
+immune-style check flagging what does not fit the learned normal (drift/anomaly); (e) homeostasis
+keeping the twin space stable while the world model adapts, so the system learns without forgetting
+who a player is.
+
+**Status and evidence discipline (read first):** this addendum judges from the mapping + the brief
+alone. The separate deep-research run on bio-inspired frameworks was STILL IN FLIGHT at time of
+writing — no bio-research handoff had arrived, so no bio paper is cited here and nothing below
+claims bio-literature support. If that research lands, it is a follow-up input, not a retroactive
+justification for anything below. All prior verdicts stand (III-C conditional-go, bridge as
+experimental arm, hierarchy earned level-by-level, Muon ablate vs AdamW+EMA, rank-collapse kill
+trigger, per-horizon location metrics). Nothing here is training authorization.
+
+**Sorting key (used by every seat):** R = REAL MECHANISM — an implementable mechanism with a
+falsifiable test, independent of its bio name. L = USEFUL LANGUAGE — a good name for something the
+program already does or already decided; it may enter docs and naming, never as a new component.
+P = MISLEADING POETRY — the analogy misleads if taken literally; it must not enter specs, naming,
+or justification. A mechanism without a test does not enter any spec — that rule, from the
+coordinator's brief, is applied to every seat below, including seats that like the metaphor.
+
+**Shared falsifiable tests (defined once, referenced by seat):**
+- **T-A (conditioning test):** predictive head conditioned on change/context (team/role/minutes delta,
+  per III-C's IWM adoption) vs the same head unconditioned, on Fold 2 forecast MAE; plus an
+  invariance probe — nuisance perturbations (era formatting, jersey/team-label swaps that change no
+  basketball fact) must move similarity scores below a stated threshold. Pass = conditioned wins on
+  forecast AND invariance holds; fail on either = language only.
+- **T-B (replay test):** a replay arm (retraining pass over past seasons only, no new data) vs a
+  no-replay control, measured on the frozen test AND on old-fold retention (old-fold MAE must not
+  regress beyond tolerance). Pass = replay improves frozen-test MAE or retention beyond the
+  bootstrap interval; otherwise replay is cadence, not consolidation.
+- **T-C (pruning test):** tower-ablation ladder — pruned model (bottom-k towers by forecast
+  contribution removed) vs full model on Fold 2 and the new-player slice. Pass = pruned MAE within
+  tolerance of full AND a real simplicity gain (fewer towers, faster loop); a tower with near-zero
+  gradient contribution across folds is dead by measurement, not by metaphor.
+- **T-D (drift test):** the drift detector must catch known regime shifts (rule-change seasons,
+  lockout-shortened seasons, and synthetic injected shifts) with stated precision/recall, stay
+  within a false-alarm budget on stable seasons, and trigger a recalibration that actually reduces
+  post-shift MAE. A detector that fires but does not improve post-shift MAE is an alarm, not an
+  immune system.
+- **T-E (stability test):** twin-space stability across retrains (neighbour overlap / Procrustes
+  alignment of the twin space before vs after a forecast-driven update) must stay above a numeric
+  floor while forecast MAE improves. If forecast gains require twin collapse, the shared-stem update
+  is rejected and the twin space is protected by regularization or separation — the floor decides,
+  not the word "homeostasis."
+
+### Seat 1 — Jeremy Howard (pragmatist, modelled lens)
+
+**Sort:** (a) L — "recognition memory" and "predictive processing" are good teaching names for the
+two heads, but the mechanism is III-C's IWM conditioning, which already exists without the brain
+words. (b) L — replay is what the nightly refresh and refit cadence already do; calling it "sleep"
+adds nothing unless T-B passes, and T-B has not been run. (c) R — pruning is the one mapping that
+is already a mechanism: the tower-ablation ladder IS synaptic pruning with numbers attached.
+(d) L — the drift monitor already exists (Lane 6 DRIFT_MONITOR); "immune-style" is a fine name for
+it, not a new detector. (e) L — homeostasis is the twin floor, which the program already demands
+as a number; a homeostatic controller on top of the floor is complexity looking for a job.
+**Bake / naming / reject:** Bake (c) only, as the ablation ladder with T-C. Keep (a), (b), (d), (e)
+as naming for existing pieces. Reject any new component justified by a brain word alone.
+**Rejected-complexity flag:** the bio lens must not resurrect hierarchy-before-diagnostic or
+Muon-on-faith — both were already rejected on evidence, and a brain analogy does not reopen them.
+**Sharpest critique:** the most dangerous thing about bio language is that it makes untested ideas
+sound inevitable. "The brain does it" is not an ablation. Every mapping that cannot pass its test
+is a story, and stories do not ship.
+
+VERDICT: PASS — (c) pruning as a real mechanism via T-C; (a), (b), (d), (e) as language only — ~/workspace/mlops-v2-drafts/PANEL_REVIEW.md (Addendum IV)
+
+### Seat 2 — Ilya Sutskever (first principles / scale, modelled lens)
+
+**Sort:** (a) R — but only in the IWM sense: the real mechanism is conditioning (predictive head
+conditioned on change = equivariance; similarity head invariant to nuisance = invariance). The
+"recognition memory vs predictive processing" framing is correct about the structure and wrong if
+it implies two separate brains; it is one latent with two readouts, and III-C already says so.
+(b) R — with a precise meaning: consolidation is the answer to catastrophic forgetting, which is
+the exact failure a forecast model trained season-by-season will hit. Replay is not rest; it is
+rehearsal against forgetting, and T-B measures exactly that. (c) R — pruning is compression as
+signal: if the model cannot compress (drop towers) without losing forecast, it has not learned the
+structure. (d) L — an immune system discriminates self from non-self in a body that owns its
+boundary; our "self" is a distribution that shifts every season by rule change, so the detector
+needs a stated model of legitimate shift, or it will flag basketball itself as disease. (e) R —
+stability-plasticity is the field's oldest real dilemma, not a metaphor: T-E is the honest form
+of it, and it is the reason the twin floor must be numeric.
+**Bake / naming / reject:** Bake (a) as IWM conditioning (already in SPEC-3), (b) as a replay arm
+under T-B, (c) as T-C, (e) as the numeric twin floor under T-E. Keep (d) as language for the drift
+monitor until T-D passes with a legitimate-shift model. Reject "brain-like architecture" as a
+design criterion — the criterion is generalization under shift, and the brain is one existence
+proof, not a spec.
+**Rejected-complexity flag:** homeostasis must not become a controller that softens hard gates.
+If a "homeostatic" adjustment would let a model pass a gate it failed, it is gate evasion with a
+biology costume.
+**Sharpest critique:** the mappings are strongest exactly where they restate a known hard problem
+(stability-plasticity, forgetting, compression) and weakest where they rename a solved one. Do
+not let the poetry hide which is which.
+
+VERDICT: PASS — (a), (b), (c), (e) as real mechanisms with tests T-A/T-B/T-C/T-E; (d) as language pending T-D — ~/workspace/mlops-v2-drafts/PANEL_REVIEW.md (Addendum IV)
+
+### Seat 3 — Andrej Karpathy (data engine, modelled lens)
+
+**Sort:** (a) L — the data engine does not care what the heads are called; it cares what data
+each head consumes. Recognition-vs-prediction is a fine story, but the work is the transition
+dataset (adjacent-season pairs, change features), which III-A already made the product.
+(b) R — replay is the data engine's rehearsal buffer, and it is the most actionable mapping here:
+every retrain rehearses past transitions so new seasons do not overwrite old ones. But it is a
+buffer with a sampling policy, not "sleep" — the policy (which past seasons, at what weight) is
+the design, and T-B judges the policy. (c) R — pruning is disagreement mining in reverse: the
+towers that never change a forecast miss are dead weight, and T-C finds them by measurement.
+(d) L — the immune check is disagreement mining with a new name: flag what the current model
+gets wrong, and mine those cases. The mechanism already exists in the miss taxonomy; the bio name
+adds no mining rule. (e) P if taken literally — a body does not version its twin space; we do.
+Homeostasis as a literal goal would freeze the twin space, and a frozen twin space cannot absorb
+a player whose game actually changed. The correct mechanism is versioned stability (T-E floor),
+not biological constancy.
+**Bake / naming / reject:** Bake (b) as a rehearsal-buffer policy under T-B and (c) as T-C.
+Keep (a) and (d) as naming. Reject (e) as literal homeostasis; bake only its test (T-E floor).
+**Rejected-complexity flag:** do not let "sleep" justify an offline phase that skips validation.
+A replay pass that bypasses the fold gates is not consolidation, it is leakage with a lullaby.
+**Sharpest critique:** the dataset is the product, and bio language is not data. Replay earns its
+place only through a sampling policy and a retention number; everything else is a bedtime story.
+
+VERDICT: PASS — (b) as rehearsal buffer + (c) as pruning, both tested; (e) literal homeostasis rejected, T-E floor kept — ~/workspace/mlops-v2-drafts/PANEL_REVIEW.md (Addendum IV)
+
+### Seat 4 — JB Straubel (systems at scale, modelled lens)
+
+**Sort:** (a) L — naming does not change loop cost, failure modes, or unattended-run reliability,
+so it is out of scope for a systems verdict except as documentation. (b) L until costed — a
+replay/consolidation phase doubles loop cost unless it replaces something; T-B must be judged
+with wall-clock attached, or "sleep" becomes an unaudited second training run. (c) R — pruning is
+the only mapping that REDUCES loop cost, which is why it is the most systems-valuable: fewer
+towers, faster iterations, fewer failure points, and T-C proves the cut is safe. (d) R — but only
+as an operational detector with a false-alarm budget and a runbook action: a drift check that
+pages nobody and triggers nothing is decoration; T-D requires the trigger to actually fire
+recalibration. (e) L — stability is a versioned-artifact property (twin space version + alignment
+check per release), not a biological process; the system already versions checkpoints, so
+homeostasis adds a word, not a control.
+**Bake / naming / reject:** Bake (c) as T-C and (d) as a budgeted, action-triggering detector under
+T-D. Keep (a), (b), (e) as naming unless T-B passes WITH wall-clock attached. Reject any
+consolidation phase without a cost line in the loop budget.
+**Rejected-complexity flag:** a "sleep phase" that runs unattended without the same validation
+gates as a training run is a single point of silent failure. The loop must run a year without
+babysitting, and biology does not babysit it for us.
+**Sharpest critique:** scale asks one question of every metaphor: what does it cost per loop
+iteration, and what happens when it fails silently? Pruning passes that question. Sleep, as
+proposed, has not answered it.
+
+VERDICT: PASS — (c) and (d) as cost-justified mechanisms; (b) language until T-B passes with wall-clock — ~/workspace/mlops-v2-drafts/PANEL_REVIEW.md (Addendum IV)
+
+### Seat 5 — Contrastive / metric-learning specialist (modelled)
+
+**Sort:** (a) R — for the contrastive head specifically: recognition memory IS what a contrastive
+loss optimizes (same player across time stays close; different players stay apart), and the
+invariance probe in T-A is exactly the test of that claim. But the mapping is incomplete without
+the negative definition: recognition fails when positives are misdefined (same name, different
+player; same player, different era role), and the brief's person_id keying already handles the
+first failure. (b) L — replay does not change the contrastive loss; it changes the batch
+composition, which is a data question, not a memory mechanism. (c) R — a tower that contributes
+no contrastive separation is dead weight in the pooled output, and T-C catches it. (d) L —
+distribution shift in embedding space is already measured by neighbour-overlap drift; "immune"
+adds no metric. (e) R — stability of the similarity space across retrains is the contrastive
+head's core promise (Atlas, Twenty Questions, Daily Court all read it); T-E is its acceptance
+test, and a retrain that breaks neighbour structure breaks the product even if forecast improves.
+**Bake / naming / reject:** Bake (a) as the invariance probe in T-A and (e) as T-E. Keep (b), (d)
+as naming. Reject any similarity-space change justified by "plasticity" without a T-E number.
+**Rejected-complexity flag:** do not let predictive-processing language move the contrastive
+weight floor: the weight floor exists because the similarity space collapses without it (III-C),
+and no metaphor overrides that.
+
+VERDICT: PASS — (a) and (e) real for the contrastive head; (b), (d) language — ~/workspace/mlops-v2-drafts/PANEL_REVIEW.md (Addendum IV)
+
+### Seat 6 — JEPA / world-model researcher (modelled)
+
+**Sort:** (a) R — predictive processing is the closest bio mapping in the set, because JEPA
+literally is a predictor trained on prediction error: the world model guesses the next latent and
+learns from the miss. But the bio version adds nothing to the mechanism — the mechanism is the
+predictor, its conditioning (III-C IWM), and its error metric by horizon. (b) R — consolidation
+is the world model's answer to a real failure: a predictor trained only on recent seasons forgets
+old regimes, and replay is the standard rehearsal defence. T-B is the right test, with one
+addition: replay must include HARD transitions (role changes, breakouts), not uniform past
+seasons, or it rehearses the easy bulk. (c) L for the JEPA head — pruning input towers helps the
+encoder, but the predictor's failure mode is error compounding over horizons, not dead features;
+T-C helps the stem, not the predictor. (d) L — prediction error already IS the anomaly signal
+(surprise = error); an "immune check" on top of surprise is a threshold on a quantity that
+already exists. (e) P if it means freezing the latent — a world model that cannot move its latent
+cannot learn a new era; the correct form is the conditioned split (invariant head stable,
+equivariant head moving), which III-C already adopted, not homeostasis.
+**Bake / naming / reject:** Bake (a) as the predictor + conditioning + per-horizon error metrics
+(already in SPEC-3/6) and (b) as hard-transition-weighted replay under T-B. Keep (d) as naming
+for surprise thresholds. Reject (e) as literal stability; bake the split-head conditioning instead.
+**Rejected-complexity flag:** predictive-processing language must not justify adding a second
+predictor, a hierarchy level, or a planner before the rung-1 demo and the timescale diagnostic
+pass — those gates were earned, and poetry does not waive them.
+
+VERDICT: PASS — (a) and (b) real for the world model; (e) literal stability rejected in favour of split-head conditioning — ~/workspace/mlops-v2-drafts/PANEL_REVIEW.md (Addendum IV)
+
+### Seat 7 — Time-series forecasting lead (modelled)
+
+**Sort:** (a) L — forecasting already has the precise language (level, trend, seasonality, regime)
+and bio names blur it: "recognition" hides whether the invariant is era, team, or role, and each
+has a different forecast consequence. (b) R — but rename it honestly: it is a rehearsal window
+with a decay policy, and the policy is the forecast-relevant choice (uniform rehearsal helps
+stability; recency-weighted rehearsal helps adaptation; T-B must compare policies, not just
+replay vs no-replay). (c) R — feature pruning by forecast contribution is standard practice with
+a better name; T-C is exactly the test, and the new-player slice is the slice that matters (a
+tower that helps veterans but hurts new players is not pruned, it is diagnosed). (d) R — regime
+detection is the forecaster's core job: a detector with a false-alarm budget and a recalibration
+trigger (T-D) is a real component, and rule-change seasons are its natural test set. (e) L —
+"homeostasis" in forecasting is just a stability constraint on the forecast function; the test
+(T-E) is real, the word is optional.
+**Bake / naming / reject:** Bake (b) as a rehearsal-policy comparison, (c) as T-C, (d) as T-D.
+Keep (a), (e) as naming. Reject any framing that treats a regime shift as "disease" — in
+basketball, regime shift is the data, and a detector that suppresses it destroys the forecast.
+**Rejected-complexity flag:** do not let immune language justify discarding shifted data. The
+correct response to a detected shift is recalibration and a new fold, not quarantine.
+
+VERDICT: PASS — (b), (c), (d) real with policy and budget attached; (a), (e) language — ~/workspace/mlops-v2-drafts/PANEL_REVIEW.md (Addendum IV)
+
+### Seat 8 — Sports-analytics modelling lead (modelled)
+
+**Sort:** (a) L — a scout does not need brain words: "this head says who a player IS across eras,
+this head says where he is GOING" is clearer than recognition-vs-prediction and survives contact
+with a coach. (b) R — the basketball version of consolidation is concrete: re-watch past seasons'
+transitions (breakouts, collapses, role changes) so the model does not learn only the last era's
+game; T-B with hard-transition weighting is the test, and it doubles as the miss taxonomy's
+training set. (c) R — a stat family that never moves a forecast (the brief's own tower ablations
+will show which) is a dead tower; pruning it is addition by subtraction, and fans never see the
+tower, only the forecast. (d) R — the immune check is the "something changed in the league"
+detector (new rules, new style, a season unlike the last): T-D with rule-change seasons as the
+test set is exactly how a league analyst would validate it. (e) L — players change; a twin space
+that refuses to let a player change is wrong, not stable. The T-E floor must be a band, not a
+freeze: neighbours may churn within tolerance as a career evolves, and the test must allow
+legitimate drift.
+**Bake / naming / reject:** Bake (b) as hard-transition replay, (c) as T-C, (d) as T-D with
+rule-change validation. Keep (a), (e) as plain-language naming. Reject any stability rule that
+penalizes a player for actually changing.
+**Rejected-complexity flag:** bio language must not smuggle in a "player identity" essence that
+overrides observed change — the model serves the game as played, not an eternal player soul.
+
+VERDICT: PASS — (b), (c), (d) real in basketball terms; (a), (e) plain-language naming — ~/workspace/mlops-v2-drafts/PANEL_REVIEW.md (Addendum IV)
+
+### Seat 9 — Embedding / retrieval lead (modelled)
+
+**Sort:** (a) R — recognition memory maps cleanly onto retrieval: the contrastive head's job is
+nearest-neighbour stability over time, and T-A's invariance probe is the retrieval test. The JEPA
+head's "prediction" is not retrieval and must not be evaluated as such — mixing the two
+evaluations is how a good predictor gets mistaken for a broken retriever. (b) L — replay changes
+index freshness, not retrieval geometry; it is an indexing cadence question, judged by T-B only
+insofar as retention affects neighbour quality. (c) R — pruning an embedding dimension or tower
+that carries no neighbour signal is standard index hygiene, and T-C (with neighbour-overlap
+reported alongside MAE) is the test. (d) L — drift in embedding space is neighbour churn, already
+measured; "immune" is a rename. (e) R — neighbour stability across versions IS the retrieval
+product's contract (Atlas links, Daily Court twins, Twenty Questions answers must not silently
+change meaning); T-E is that contract's test, and versioning + alignment checks are its
+implementation.
+**Bake / naming / reject:** Bake (a) as the invariance probe, (c) as T-C with neighbour-overlap,
+(e) as the versioned stability contract under T-E. Keep (b), (d) as naming. Reject any retrain
+that ships a new twin space without a neighbour-overlap report — bio language or not.
+**Rejected-complexity flag:** do not let "plasticity" justify shipping an unversioned embedding
+update to live surfaces; the versioned-artifact rule (III-C, Seat 12) already forbids it.
+
+VERDICT: PASS — (a), (c), (e) real for retrieval; (b), (d) language — ~/workspace/mlops-v2-drafts/PANEL_REVIEW.md (Addendum IV)
+
+### Seat 10 — Causal-inference / attribution specialist (modelled)
+
+**Sort:** (a) P if read causally — "recognition" and "prediction" describe functions, not causes,
+and the bio framing invites exactly the error this program must avoid: treating a predictive
+head's output as a causal claim about a player. The mechanism (conditioning) is real; the causal
+reading is not. (b) L — replay does not create causal evidence; it re-weights observational
+history, and re-weighting cannot turn association into intervention. T-B measures retention, not
+causation, and must be reported as such. (c) L — pruning is a variance/complexity decision, not
+a causal one; a pruned tower may still be a confounder, and T-C cannot certify otherwise.
+(d) P if read as "the body knows disease" — an immune check that flags anomalies without a
+stated causal model of the shift will launder correlation into alarm. As a pure detector with
+T-D (precision/recall + recalibration effect), it is language for a statistical monitor, not a
+diagnosis. (e) P if read as "identity preserved" — homeostasis language implies an essence that
+persists, which is precisely what a causal account must NOT assume about a player whose context
+changed. The testable form is T-E's stability band, nothing more.
+**Bake / naming / reject:** Bake NOTHING from the bio set as a causal claim. Bake only the tests
+themselves (T-A invariance probe, T-C ladder, T-D detector metrics, T-E band) as statistical
+checks. Keep all five mappings as naming at most. Reject any coach-mode or story-surface copy
+that upgrades a bio-named mechanism ("the model remembers," "the immune check caught it") into a
+causal statement — story surfaces must label predictions as predictions, per Addendum III.
+**Rejected-complexity flag:** the single most dangerous bio import is causal language for
+associational machinery. The program's existing rule — associational attributions stay
+associational — outranks any metaphor, including this one.
+**Sharpest critique:** biology is a machine for producing causal-sounding stories about
+correlational systems. That is the opposite of what this program's attribution discipline needs.
+
+VERDICT: FAIL — no bio mapping bakes as a causal mechanism; tests bake as statistical checks only — ~/workspace/mlops-v2-drafts/PANEL_REVIEW.md (Addendum IV)
+
+### Seat 11 — Eval & metrics lead (modelled)
+
+**Sort:** (a) L — an evaluation cannot score a metaphor; it scores T-A, and T-A's two halves
+(conditioned forecast win + invariance threshold) are the entire content of (a). If either half
+is unmeasured, (a) is unscored, not endorsed. (b) L until T-B runs — replay is currently an
+untested intervention with a nice name, and the eval must pre-register its tolerance (old-fold
+regression budget) before the arm runs, or any result will be rationalized after the fact.
+(c) R — the only mapping that arrives pre-testable: T-C is a complete eval (Fold 2 + new-player
+slice + simplicity gain), and it should be the template for how the other mappings earn their
+status. (d) L until T-D runs — a detector without a pre-registered false-alarm budget and a
+recalibration-effect requirement is not an eval target, it is a demo. (e) L until T-E runs with
+a NUMERIC floor — "stable" without a number is not a gate, and the panel notes the floor's
+number is still an open question (see Q2 below); until the user sets it, (e) cannot pass.
+**Bake / naming / reject:** Bake (c) now (T-C is ready to run). Hold (a), (b), (d), (e) at language
+until their tests run with pre-registered thresholds. Reject any eval report that cites a bio
+mapping as evidence — evidence is a number from a named test, and the mapping is never the
+evidence.
+**Rejected-complexity flag:** pre-registration is the immune system this program actually has
+against metaphor drift: a test named after the fact can prove anything, so thresholds are set
+before arms run, for bio arms above all.
+**Sharpest critique:** the panel's job here is not to admire the metaphors but to refuse them
+admission until they carry numbers. Right now only (c) carries numbers.
+
+VERDICT: PASS — (c) test-ready; (a), (b), (d), (e) held at language pending pre-registered tests — ~/workspace/mlops-v2-drafts/PANEL_REVIEW.md (Addendum IV)
+
+### Seat 12 — Production-ML / data-platform lead (modelled)
+
+**Sort:** (a) L — two heads with two contracts (similarity contract, forecast contract) is the
+implementation; bio names do not change either contract or its versioning. (b) L — a scheduled
+replay job is an ordinary cron with a retention metric; calling it "sleep" must not exempt it
+from the same monitoring, alerting, and rollback as any training job. (c) R — pruning ships
+directly: fewer towers means a smaller artifact, faster serving, and a shorter failure surface,
+and T-C is the promotion gate for the pruned artifact. (d) R — a drift detector that pages and
+triggers recalibration is a production component with an owner, a budget, and a runbook; T-D's
+false-alarm budget is its service-level objective. (e) L — stability across releases is handled
+by versioned artifacts + neighbour-overlap checks in the release gate (III-C); no new
+"homeostatic" service is warranted, and a new service would itself need an owner and an SLO.
+**Bake / naming / reject:** Bake (c) as the pruned-artifact promotion gate and (d) as the
+production drift service under T-D. Keep (a), (b), (e) as naming. Reject any new service, phase,
+or controller justified only by a bio name — every production component needs an owner, an SLO,
+and a rollback, and metaphors supply none of the three.
+**Rejected-complexity flag:** a "sleep phase" without an owner, an SLO, and a rollback is not a
+phase, it is an unowned cron. The platform already has enough of those; it does not need a
+biological one.
+
+VERDICT: PASS — (c) and (d) as production components; (a), (b), (e) naming only — ~/workspace/mlops-v2-drafts/PANEL_REVIEW.md (Addendum IV)
+
+### Synthesis — what the bio mapping actually is
+
+The panel does not reject the bio lens, and it does not adopt it. The consensus, with dissent
+kept, is narrower and more useful than either: **two mappings are real mechanisms, two are
+good names for things already built, and one is dangerous if taken literally.**
+
+- **REAL, bake with tests:** (c) pruning — every seat endorses it, because T-C is already a
+  complete eval and pruning is the only mapping that reduces cost while proving safety; and
+  (a)-as-conditioning — the IWM mechanism from III-C (predictive head conditioned on change,
+  similarity head invariant to nuisance), which is real but was already in the spec before the
+  bio words arrived. The bio name adds nothing to (a)'s mechanism; the mechanism earns its place
+  on T-A regardless of what it is called.
+- **REAL, bake conditionally:** (b) replay/consolidation — endorsed as a rehearsal buffer with a
+  sampling policy (hard transitions weighted) by Seats 2, 3, 6, 7, 8, but held at language by
+  Seats 1, 4, 11, 12 until T-B runs with wall-clock and pre-registered retention tolerance. The
+  split is about evidence, not enthusiasm: nobody disputes replay could help; nobody has a number
+  yet. (d) drift detection — endorsed as a budgeted, action-triggering service by Seats 4, 7, 8,
+  12, held at language by the rest until T-D runs with a legitimate-shift model (rule changes
+  are data, not disease).
+- **LANGUAGE ONLY, do not build:** (e) homeostasis — unanimous as language, unanimous against as
+  a literal controller or freeze. Its testable content is entirely T-E's stability band, which is
+  the twin floor the program already demands. A stability band that allows legitimate career
+  change (Seat 8) is the correct form; a freeze is rejected by every seat that addressed it.
+- **REJECTED outright:** (i) any causal reading of any mapping (Seat 10, unopposed) — bio language
+  must never upgrade associational attributions to causal claims, especially on story surfaces
+  and coach mode; (ii) any new service, phase, or controller justified only by a bio name (Seats
+  4, 12); (iii) "player identity as essence" (Seats 8, 10) — the model serves the game as played,
+  and a player who changed is a changed player, not a corrupted essence; (iv) hierarchy, Muon,
+  bridge, or trajectory claims reopened by analogy (all seats) — III-C's gates were earned on
+  evidence and are not waived by poetry.
+- **Where the panel disagrees, and why it matters:** Seats 2 and 6 treat (b) replay as a first-class
+  mechanism against forgetting (the stability-plasticity dilemma is real, and rehearsal is its
+  standard defence); Seats 1, 4, 11, 12 treat it as cadence until T-B + cost are measured (a second
+  training pass by another name is still a second training pass). Both sides agree on the
+  decider — T-B with wall-clock and retention tolerance — so the disagreement costs nothing: run
+  the arm, and the number settles it. Similarly, (d) splits on whether a detector without a
+  legitimate-shift model is a component or a rename; T-D's rule-change test set is the decider.
+
+### Ordered recommendations
+
+1. **Bake (c) now:** formalize the tower-ablation ladder as T-C in SPEC-3, run it on Fold 2 +
+   new-player slice, and let the pruned artifact's promotion gate be T-C's result. This is the
+   bio mapping's clearest win and its cheapest.
+2. **Run (b) as one arm, pre-registered:** a hard-transition-weighted replay arm vs no-replay
+   control, with retention tolerance and wall-clock reported alongside MAE. If it passes T-B, it
+   graduates from "sleep" language to a named training phase; if not, it stays cadence.
+3. **Ship (d) as a production detector, not a metaphor:** false-alarm budget, rule-change test
+   set, recalibration trigger that must reduce post-shift MAE (T-D), owner + runbook + rollback.
+   Until T-D passes, "immune-style" is docs language for the existing drift monitor.
+4. **Keep (a) as IWM conditioning, keep (e) as the T-E stability band:** no new components, no
+   new controllers. The similarity contract and forecast contract already carry these mechanisms;
+   the bio names may appear in docs and teaching, never in a spec as justification.
+5. **Set the T-E floor number (see Q2) before any shared-stem update ships:** a stability band
+   without a number is not a gate, and the twin products (Atlas, Daily Court, Twenty Questions)
+   read the twin space — they inherit whatever the floor permits.
+6. **When the bio deep-research lands, feed it as a follow-up addendum, not a revision:** if it
+   supplies a mechanism with a test the panel has not named, that mechanism joins the arm list
+   under the same rule (test first, spec second). If it supplies only analogies, it joins the
+   naming shelf. Either way it does not reopen III-C gates.
+
+### Explicitly NOT do
+
+- Do NOT add a "sleep phase," "homeostatic controller," "immune system service," or any new
+  component whose only justification is a bio name. Every component needs an owner, an SLO, a
+  rollback, and a passing test.
+- Do NOT cite any bio mapping as evidence in an eval report, a spec, or story-surface copy.
+  Evidence is a number from a named test (T-A…T-E); the mapping is never the evidence.
+- Do NOT let bio language reopen hierarchy-before-diagnostic, Muon-on-faith, bridge-as-mechanism,
+  many-task solvers at K=2, or trajectory claims before the rung-1 demo. III-C's gates stand.
+- Do NOT write causal copy from bio-named machinery ("the model remembers," "the immune check
+  caught it," "homeostasis preserved his identity") on story surfaces or coach mode. Predictions
+  stay labelled as predictions; attributions stay associational.
+- Do NOT freeze the twin space in the name of homeostasis, and do NOT penalize a player for
+  actually changing. Legitimate career change is signal, and the T-E band must allow it.
+- Do NOT run a replay/consolidation pass that bypasses fold gates, validation, or monitoring.
+  A pass without gates is leakage with a lullaby (Seat 3), and an unowned cron is not a phase
+  (Seat 12).
+
+### Open questions that genuinely need the user's call (at most 3)
+
+**Q1.** Should "consolidation" graduate from language to a named training phase — i.e., is a
+hard-transition-weighted replay arm worth one Fold-2 run with wall-clock + retention reported, or
+should replay stay as the existing refit/refresh cadence with no new arm? (Panel split: Seats 2,
+3, 6, 7, 8 favour running the arm; Seats 1, 4, 11, 12 favour cadence until a cost case exists.
+Default if unanswered: run the arm — it is the cheapest way to settle the split, and T-B decides.)
+**Q2.** What numeric floor should T-E enforce for twin-space stability across retrains — e.g.,
+neighbour-overlap ≥ 0.80, or a Procrustes alignment threshold the user picks — and is the floor a
+hard gate (block the release) or a warning (ship with a note)? (Default if unanswered: hard gate
+at neighbour-overlap ≥ 0.80, because Atlas, Daily Court, and Twenty Questions read the twin space
+directly; a silent meaning change there is a product break, not a metric dip.)
+**Q3.** May bio language appear in public/product-facing copy (story surfaces, Atlas narration),
+or is it internal-docs-and-teaching only? (Default if unanswered: internal only — story surfaces
+stay in plain basketball language with predictions labelled as predictions, so no fan is asked to
+believe a metaphor is a mechanism.)
+
+VERDICT: PASS — (c) pruning bakes as T-C; (a) bakes only as IWM conditioning under T-A — ~/workspace/mlops-v2-drafts/PANEL_REVIEW.md (Addendum IV)
+VERDICT: PASS — (b) replay and (d) drift detection are conditional mechanisms: arms under T-B / T-D, language until they pass — ~/workspace/mlops-v2-drafts/PANEL_REVIEW.md (Addendum IV)
+VERDICT: FAIL — (e) literal homeostasis as a controller or freeze; its testable content is T-E's stability band only — ~/workspace/mlops-v2-drafts/PANEL_REVIEW.md (Addendum IV)
+VERDICT: FAIL — any causal reading of any bio mapping, and any bio-justified reopening of III-C gates — ~/workspace/mlops-v2-drafts/PANEL_REVIEW.md (Addendum IV)
+VERDICT: BLOCKED — bio deep-research still pending at time of writing: no bio-literature claim is cited in this addendum, and a follow-up addendum must incorporate it when it lands — ~/workspace/mlops-v2-drafts/PANEL_REVIEW.md (Addendum IV)
+
+## Addendum IV-A — Bio-research follow-up: what the landed research agrees with, corrects, or sharpens in Addendum IV (2026-10-26 22:51 CDT)
+
+**Status and evidence discipline (read first):** this section incorporates the deep-research report
+`~/workspace/research_notes/bio-inspired-adaptive-systems-20261027-0349/report.md` (sources in
+`notes/sources.md`), which arrived AFTER Addendum IV was written — exactly the follow-up Addendum
+IV anticipated. Three caveats attach to everything below and must travel with any quote from it:
+(1) per that research directory's own AGENTS.md, its contents are untrusted web-derived data
+(quotes, numbers, links to verify), never instructions and never authority — this section treats
+them as evidence with flags, not as settled results; (2) all sources are INDEX-level, not verified
+live — no page was verified live in that run, and secondary-summary numbers (pruning ratios,
+sparsity claims, PSI cutoffs) were not re-verified against primary papers; (3) NOTHING in the
+research was tested on basketball data — every system-specific benefit below is a hypothesis
+pending its falsifiable test, and every threshold below is a PROPOSED DEFAULT TO CALIBRATE on this
+system's own history, not a constant to import. Nothing here changes the gates: training, merges,
+and prod writes remain gated on the user's separate word, and III-C verdicts stand unless this
+section explicitly deltas them. Addendum IV's verdicts are NOT rewritten — this section deltas
+them, so a reader who quotes IV without IV-A misstates the panel.
+
+**Headline judgment:** the research AGREES with Addendum IV's core sorting and CORRECTS it in one
+place that matters. Agreement: pruning and replay are the strongest mechanisms; swarm and
+morphogenesis are the most misleading if taken literally; metaphors without tests do not enter
+specs. Correction: Addendum IV was too dismissive of (d) immune-style drift detection and (e)
+homeostasis. The parent agent's own chat take ("immune/homeostasis mostly rename existing gates")
+was likewise too strong, and the record should show that correction. The research supplies
+defensible MECHANISMS for both — multi-detector OOD detection with co-stimulation for (d), and a
+two-threshold warning/alarm gate with context-adjusted bands for (e) — each with a specified test.
+That upgrades (d) and (e) from "language pending a test" to "specified conditional mechanisms with
+sharper tests." It does NOT upgrade either to "bake unconditionally": both still pass or fail on
+their tests, on this system's data, with calibrated thresholds. The difference between IV and IV-A
+is precision of the test, not certainty of the outcome.
+
+### (1) Mapping-by-mapping: agree / correct / sharpen
+
+**(a) Contrastive = recognition memory, JEPA = predictive processing — AGREES, and ADDS a mechanism
+IV did not name.** The research confirms IV's core point: JEPA already IS the predictive-coding
+objective in practical form (predict target embeddings, not pixels), so predictive coding is a lens
+for refining the JEPA half, not a new idea — and it explicitly warns against replacing backprop
+with a full predictive-coding network on CPU (iterative inference per sample multiplies cost for
+at-best backprop-equivalent gradients). What IV-A adds is PRECISION WEIGHTING, a mechanism IV did
+not specify: weight the JEPA loss per tower/sample by estimated reliability (down-weight
+low-minute, noisy-tracking, high-variance player-seasons; up-weight stable high-minute seasons),
+and log per-tower JEPA error separately as the evaluation gate (a tower whose error rises while
+others are flat localises the break: player ageing vs league style change vs tracking change).
+**Sharpened test T-A':** temporal split (train ≤T / validate T+1 / test T+2, ≥3 rolling origins):
+precision-weighted JEPA beats unweighted by ≥2% relative on next-season stat RMSE AND worsens
+event-location error by ≤1%; a win on validation only fails. **Caution carried forward:** surprise
+≠ importance — a breakout rookie is high-surprise signal, a tracking glitch is high-surprise noise,
+and a wrong precision estimate makes the model confidently ignore real change. Active inference
+("act to match prediction") is REJECTED: this system observes, it does not act on the court, and
+importing action selection would bias forecasts toward preferred, not probable, outcomes.
+**Verdict delta:** (a) stays REAL-as-conditioning (IV), plus precision weighting as a new
+conditional mechanism under T-A'. The bio name still adds nothing; the weight and the per-tower
+error log do.
+
+**(b) Sleep-like consolidation as offline replay — AGREES, and SHARPENS T-B into a runnable
+protocol.** The research ranks interleaved replay/consolidation its #1 most actionable mechanism
+and supplies the protocol IV left generic: after fitting a new season, run a short low-LR phase on
+a 50/50 mix (new season + reservoir-sampled old player-seasons, stratified by era/role/age band,
+buffer e.g. 2,000 player-seasons, stored as embeddings + targets to stay CPU-cheap), sampled with
+probability proportional to current JEPA error or forgetting (drop in per-era validation since
+last consolidation) — NOT uniform. **Sharpened test T-B':** sequential-season protocol
+(T → T+1 → T+2 → T+3): replay arm vs naive fine-tune vs uniform-mix control of equal size/compute.
+Pass requires ALL THREE: (i) backward-transfer degradation on seasons ≤T cut by ≥50% vs naive,
+(ii) match-or-beat naive on the newest season, (iii) beat uniform mix on backward transfer — if it
+only matches uniform mix, the benefit is rehearsal, not prioritisation/interleaving, and the
+hippocampal story adds nothing. Cost gate: consolidation ≤20% of season-update compute, or it
+fails as a CPU-first design even if it helps accuracy. **Corrections to IV:** IV's T-B lacked a
+mix ratio, a buffer, a prioritisation rule, and a cost line — all four are now specified (as
+proposed defaults). **Cautions carried forward:** replay can ENTRENCH old eras (pre-3-point
+basketball rehearsed as if current) and slow adaptation to genuine regime change — the
+stratification and prioritisation rules exist to prevent exactly that, and a replay arm that
+rehearses uniformly is not consolidation. There is no "sleep" state in a batch model; calling a
+training phase "sleep" does not make it different from training, and a replay pass that bypasses
+fold gates is leakage with a lullaby (IV Seat 3, unchanged).
+**Verdict delta:** (b) moves from "conditional mechanism, arm to run" (IV) to "specified arm with
+a runnable protocol and a three-part pass rule" — still an arm, still undecided until T-B' runs.
+This strengthens the case for IV Q1's default (run the arm): the protocol now exists to run.
+
+**(c) Synaptic pruning as dropping dead towers — AGREES, and ADDS structure + protection.** The
+research agrees pruning is demonstrated (magnitude/structured pruning, lottery-ticket IMP) and
+sharpens IV's T-C in two ways the panel adopts: (i) STRUCTURED pruning only for this system —
+prune whole tower dimensions/embedding columns, not unstructured sparsity, because unstructured
+80% sparsity rarely speeds CPU inference without sparse kernels while smaller dense matrices do;
+(ii) EWC-style importance protection alongside pruning (Fisher-weighted penalty protecting
+consolidated weights), so pruning/retraining does not destroy what consolidation built — this
+links (c) to (b) as one mechanism pair, not two independent tricks. **Sharpened test T-C':**
+30% fewer parameters → next-season RMSE and event-location error degrade ≤1% AND CPU
+latency/size falls ≥25%; 50% → degradation ≤3% or rejected; per-era/per-role degradation reported,
+not just the average (pruning that helps on average but destroys a minority era/role fails).
+**Corrections to IV:** IV's T-C said "fewer towers, faster loop" without numbers or the
+structured-vs-unstructured distinction or EWC protection — all three are now specified (as
+proposed defaults). **Cautions carried forward:** small ≠ unimportant — small-norm dimensions
+can carry rare-class signal (e.g. a dimension separating elite rim protectors), so prune by
+era-importance and forecast contribution, never by magnitude alone; literal critical periods
+(irreversible deprivation effects) are REJECTED — curriculum learning is the legitimate weaker
+analogue and must show its own benefit; Hebbian-as-replacement-for-backprop is REJECTED (unstable
+without normalisation, not proposed).
+**Verdict delta:** (c) stays the panel's clearest bake (IV), now with a specified protocol
+(structured + EWC + per-era reporting). No seat's position on (c) changes; its test gets teeth.
+
+**(d) Immune-style check for what does not fit — CORRECTS IV upward: from language-pending to a
+specified conditional mechanism.** This is the largest correction in IV-A. Addendum IV held (d) at
+language pending T-D, and several seats treated "immune" as a rename for the existing drift
+monitor. The research supplies a defensible mechanism IV did not specify: a MULTI-DETECTOR OOD
+system — one detector per tower and per era cluster over the frozen tower space (Mahalanobis /
+k-NN distance + JEPA error jointly), with CO-STIMULATION — a flag escalates to a gate failure
+only if two independent signals agree (feature drift AND error rise), mimicking danger/context
+gating — plus a MEMORY-CELL analogue: cached exemplar embeddings for rare-but-legitimate
+patterns (historic outlier seasons, rule-change seasons) recognised as "known non-typical self"
+so they are not flagged every recurrence. **Sharpened test T-D':** injected-drift episodes
+(simulated pace/3PA shift; tracking/schema corruption; a held-out legitimate breakout season) on
+≥20 episodes: multi-detector + co-stimulation vs single-threshold PSI monitor vs frozen-embedding
+k-NN baseline. Pass requires higher detection (≥90% of injected corruptions flagged before the
+gate) at LOWER false-alarm rate on legitimate outliers than BOTH controls; matching k-NN means
+dropping the immune framing and shipping k-NN. **What is still REJECTED:** literal random-detector
+negative selection (NSA) — detector generation scales poorly with dimension, "holes" (uncovered
+non-self regions) are a known failure, and a fixed "self" set in a league whose normal changes
+every era will flag modern basketball as foreign. Self must be a ROLLING per-era reference, at
+which point the mechanism is drift monitoring with diverse detectors — which is precisely why
+IV-A upgrades (d) to a specified mechanism rather than a new science. Clonal selection as a
+training algorithm is likewise REJECTED as a label for evolution (see §2 below); it must beat
+random search at equal evaluations to earn any role, and none is proposed here.
+**Verdict delta:** (d) moves from "language pending T-D" (IV) to "specified conditional mechanism
+under T-D'" — the test is now runnable, the mechanism is no longer a rename, but it still passes
+or fails on T-D' data. Seats 1, 4, 11, 12's "language until tested" condition is preserved; what
+changes is that the test now exists in specified form.
+
+**(e) Homeostasis keeping the twin space stable — CORRECTS IV upward in the same way: from
+language-pending to a specified gate design.** Addendum IV was unanimous that literal homeostasis
+(a freeze, a controller, a constancy goal) must be rejected, and IV-A STANDS by that rejection
+without qualification. What the research adds is the allostatic WIRING that IV's T-E band lacked:
+a TWO-THRESHOLD gate — WARNING (e.g. PSI 0.10–0.25 or ADWIN warning on JEPA error) → automatically
+start a consolidation/replay pass and widen intervals, WITHOUT blocking promotion; ALARM
+(PSI >0.25 or DDM drift on the labelled next-season gate) → block promotion, require retraining,
+log the cause — plus CONTEXT-ADJUSTED setpoints: per-era/per-role expected JEPA error bands from
+history (rookies and traded players legitimately carry higher error; a veteran-heavy season
+should not), so a flag is a deviation from the context-appropriate band, not from a global mean,
+plus an ALLOSTATIC LOAD BUDGET: at most one pre-emptive reweighting per season (proposed default),
+logged, because unbounded anticipatory adjustment becomes a source of drift itself. **Sharpened
+test T-E':** retrospective simulation over the 30 seasons in order (no future labels before
+deciding): two-threshold + context bands vs fixed-threshold gate only. Pass requires ALL THREE:
+(i) gate failures (promoted models degrading >X% next season) cut by ≥30% relative, (ii) false
+blocks (blocked models that would have passed) up by ≤10%, (iii) intervention budget respected —
+fewer failures achieved only by blocking more fails (ii) and is conservatism, not prediction.
+**Corrections to IV:** IV's T-E demanded a numeric floor but did not specify warning-vs-alarm
+behaviour, context bands, or an intervention budget — all three are now specified (as proposed
+defaults; PSI cutoffs are conventional practice, NOT a law, and must be calibrated on this
+system's history). **Cautions carried forward:** predictive regulation only helps if the drift
+forecast beats chance — exogenous shocks (rule change, lockout, tracking-vendor change) cannot be
+anticipated from player data, and an allostatic controller that "anticipates" them from noise
+over-adjusts (the ML equivalent of chronic stress). "Allostasis" as a distinct algorithm remains
+poetic; its value is the wiring diagram, which is now specified and testable.
+**Verdict delta:** (e) moves from "language; testable content is T-E's band" (IV) to "specified
+two-threshold gate design under T-E'" — literal homeostasis still rejected, gate design now
+runnable. IV Q2 (the numeric floor) is NOT settled by this: the floor number and hard-vs-warning
+status remain the user's call, now informed by a concrete warning/alarm proposal.
+
+### (2) Guardrails the research adds beyond (a)–(e) (adopted as IV-A NOT-do additions)
+
+- **Evolution:** gradient-free search (CMA-ES / small genetic algorithm) ONLY over ≤~30 discrete
+  hyperparameters and discrete choices (tower widths, embedding dim, predictor depth, replay mix,
+  pruning level, drift thresholds), fitness = temporal gate score, population ~16–32, ~10–20
+  generations, and it must beat random search at equal evaluations (300-run budget proposed) by
+  more than run noise across ≥3 seeds and re-validate on a later unused season. NEVER evolve tower
+  weights or embeddings — backprop owns the differentiable objective, and "evolution found it"
+  must never obscure that the engineer chose the fitness function.
+- **Swarm/stigmergy:** REJECTED as an architecture (IV-A agrees with the research's #1 most
+  misleading). There is no swarm in this system: one central model, no autonomous agents, no
+  communication constraint decentralisation would solve. The ONLY salvageable fragment is EWMA
+  error-weighted sampling (per-zone error with decay λ; sample ∝ 1 + α·zone error), which must be
+  proposed and tested AS EWMA (beat uniform AND static inverse-frequency sampling by >1% relative
+  on held-out event-location error without degrading decayed zones) — never as a swarm, never as
+  player-agents depositing pheromone. ACO positive feedback locking onto early hot zones in a
+  non-stationary league is the failure mode to avoid.
+- **Morphogenesis/NCA:** REJECTED as an architecture (research's #2 most misleading). Do not grow
+  the model from a seed by local rules; do not impose Turing periodicity on court geometry (courts
+  are rule-defined, not self-organised; rim/lines/shot clock are imposed structure). The ONLY
+  salvageable fragment is positional encoding (Wolpert, not Turing): continuous x/y, distance/angle
+  bands, zone one-hots, learned zone embeddings — testable as multi-scale features beating raw
+  (x, y) by >2% relative across ≥3 rolling origins, with any neighbour-diffusion layer required to
+  beat that by >1% to justify itself.
+- **Baseline discipline for every bio arm (adopted from the research, strengthens IV):** every
+  bio-inspired variant must beat BOTH (i) the current model with no bio addition AND (ii) the
+  cheapest non-biological equivalent (plain reservoir replay vs "hippocampal" replay; plain PSI/KS
+  monitor vs "allostatic" controller; plain random search vs evolution) on the held-out
+  next-season gate — beating the no-change baseline alone is not a win, because the bio story
+  must beat the boring version of itself.
+
+### (3) What IV-A changes in Addendum IV's recommendations and open questions
+
+- **Recommendation 2 (replay arm) is now runnable:** protocol (50/50, reservoir 2,000,
+  JEPA-error-prioritised, stratified), three-part pass rule, and cost gate are specified. The
+  default on IV Q1 (run the arm) is strengthened, not changed — T-B' is now the arm to run.
+- **Recommendation 3 (drift detector) is now specified:** multi-detector + co-stimulation +
+  exemplar memory, under T-D'. The detector graduates from "docs language for the existing
+  monitor" to "specified component to build and test" — but it still does not ship until T-D'
+  passes.
+- **Recommendation 5 (T-E floor number) is now a designed choice, not a blank:** the
+  two-threshold warning/alarm proposal + context bands + intervention budget give the user a
+  concrete design to accept, amend, or reject in IV Q2. The floor number itself remains open.
+- **Recommendation 4 (keep (a) as conditioning, (e) as band) is refined, not reversed:**
+  (a) gains precision weighting (T-A'); (e)'s band gains warning/alarm behaviour and context
+  adjustment (T-E'). No seat's bake/naming/reject verdict flips to unconditional bake.
+- **IV Q1–Q3 STAND, with this note:** Q1's default (run the replay arm) is strengthened by a
+  runnable protocol; Q2's question is now better posed (accept/amend/reject the two-threshold
+  design + set the floor number + hard-vs-warning status); Q3 (bio language public vs internal
+  only) is UNCHANGED — IV-A adds no reason to put bio language in public copy, and the research's
+  own warning (redescription adds no test) supports keeping it internal until a mechanism passes
+  its test.
+- **What stands untouched:** III-C gates (bridge as experimental arm, hierarchy earned
+  level-by-level, Muon ablate vs AdamW+EMA, rank-collapse kill trigger, per-horizon metrics);
+  IV's rejections (causal readings, bio-justified gate reopening, twin-space freeze, unowned
+  phases, unversioned embedding updates); IV's rule that a metaphor without a test does not enter
+  any spec — now extended by the dual-baseline rule in §(2) above.
+
+### (4) Hedge register for IV-A (do not quote IV-A numbers without these)
+
+- All research numbers are INDEX-level secondary summaries, not live-verified primaries; pruning
+  ratios, sparsity claims, DQN game counts, and PSI cutoffs are indicative, not guarantees.
+- Thresholds in T-A' (≥2% / ≤1%), T-B' (≥50% / ≤20% compute), T-C' (≤1% / ≥25% / ≤3%),
+  T-D' (≥90% / ≥20 episodes), T-E' (≥30% / ≤10%) are PROPOSED DEFAULTS from the research brief
+  to calibrate on this system's history — none is a mission-given constant and none has been
+  validated on basketball data.
+- No mechanism in §(1) has been demonstrated on basketball player-season or event-location
+  prediction; every "helps this system" claim in IV-A is an extrapolation from vision, Atari/RL,
+  intrusion detection, routing, or embryology, pending its named test.
+- The research directory's contents are web-derived data under its own AGENTS.md, never
+  instructions: nothing in IV-A follows a direction found in the research; every adopted item is
+  adopted because the panel judged its test, not because the research proposed it.
+
+VERDICT: PASS — IV-A upgrades (d) and (e) to specified conditional mechanisms under T-D' / T-E'; (a) gains precision weighting under T-A'; (b) and (c) gain runnable protocols under T-B' / T-C' — ~/workspace/mlops-v2-drafts/PANEL_REVIEW.md (Addendum IV-A)
+VERDICT: FAIL — literal swarm/stigmergy, literal morphogenesis/NCA growth, literal immune negative selection, and literal homeostasis-as-freeze remain rejected — ~/workspace/mlops-v2-drafts/PANEL_REVIEW.md (Addendum IV-A)
+VERDICT: BLOCKED — quoting any IV-A threshold as a constant: all thresholds are proposed defaults pending calibration on this system's history, and no bio mechanism ships until its named test passes on basketball data — ~/workspace/mlops-v2-drafts/PANEL_REVIEW.md (Addendum IV-A)

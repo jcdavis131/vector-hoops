@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reframed Prototype Comparison — Future Explorer vs Forecast Attribution</title>
+<style>
+body{font-family:system-ui,-apple-system,sans-serif;max-width:760px;margin:2rem auto;padding:0 1rem;line-height:1.5;color:#111}
+h1{font-size:1.4rem} h2{font-size:1.1rem;margin-top:2rem}
+a{color:#0b5394} table{border-collapse:collapse;width:100%} th,td{border:1px solid #999;padding:.5rem;text-align:left}
+.note{background:#f4f4f4;border-left:4px solid #555;padding:.75rem 1rem}
+.warn{background:#fff8e1;border-left:4px solid #b58900;padding:.75rem 1rem}
+</style>
+</head>
+<body>
+<h1>Reframed Prototype Comparison — user picks the winner</h1>
+<p>Two prototypes built head-to-head under the prediction-first framing
+(<strong>user-directed, pending panel ratification</strong> — contract §11 HOLD:
+no delivered lane doc, headline, or protocol was rewritten to this framing).
+The coordinator crowns no one, averages no scores, and softens nothing.
+The verdict column below is blank for the user.</p>
+
+<h2>The two demos</h2>
+<ul>
+<li><strong>A — Steerable Future Explorer:</strong>
+<a href="lanes/prototype-future-explorer/index.html">lanes/prototype-future-explorer/index.html</a>
+— steer a player's latent (more threes, bigger scoring role, run the offense,
+crash the glass) and watch the predicted future stat line move.</li>
+<li><strong>B — Forecast Attribution:</strong>
+<a href="lanes/prototype-forecast-attribution/index.html">lanes/prototype-forecast-attribution/index.html</a>
+— pick a player and a past signal, remove / halve / boost it, and see which
+past signals drive the predicted future line.</li>
+</ul>
+<p>Both builders worked in separate lane dirs with no peeking at each other's
+work. This page is the only synthesis point, and synthesis happens only at
+presentation time. This pair is separate from the original twin competition
+(Steerable Twin Explorer vs Attribution Graph); the user picks that winner
+separately.</p>
+
+<h2>Shared honesty facts (read before judging)</h2>
+<div class="note">
+<ul>
+<li><strong>The v5 next-profile head is NOT runnable.</strong>
+<code>mtnn_heads.f32</code> is 12,966×45 frozen per-row head <em>outputs</em>,
+not weights; no checkpoint is saved; the saved ONNX is a different stale
+119→48 model. Both prototypes therefore steer / attribute
+<strong>labelled baselines</strong>, never presented as model predictions.</li>
+<li><strong>Baselines do not beat carry-forward.</strong> Future Explorer's
+age-curve baseline ties carry-forward (0.4705 vs 0.4732 MAE; v5 saved head
+0.4708); Forecast Attribution's K=25 neighbor baseline trails it
+(0.4805 vs 0.4732). Both demos prove <em>interaction mechanics</em>, not
+forecast skill — a future runnable, gated model head would slot into the
+same interactions.</li>
+<li><strong>Steering / attribution moves are computed, not asserted.</strong>
+Explorer steers are OLS slopes over 10,107 adjacent-season pairs, labelled
+as correlations, not causal effects. Attribution deltas come from LOSO
+re-runs of the neighbor search with the signal dropped or scaled.</li>
+<li><strong>What each demo omits, honestly:</strong> Explorer omits new-team
+steering (team is not in the 14-d vector) and speaks in within-season
+z units (no raw per-100 values in the saved asset). Attribution states
+explicitly that true model-internal (tower/gradient/SAE/JEPA) attribution
+is unavailable — the banned 48-d sources were never used.</li>
+<li><strong>Success-test evidence (measured, quoted in each lane's NOTES):</strong>
+Explorer — Curry 2016-17 "More threes" +1.0z: FG3A 2.55 → 3.55, FG_PCT
+0.18 → −0.09. Attribution — Curry remove scoring: predicted PTS
+1.843 → 1.413 (−0.429); Jokić remove playmaking: AST −1.423.</li>
+</ul>
+</div>
+
+<h2>Judging rubric — same for both, verdict left to the user</h2>
+<table>
+<tr><th>Criterion</th><th>What it means here</th><th>A: Future Explorer</th><th>B: Forecast Attribution</th><th>USER VERDICT</th></tr>
+<tr><td>(1) Causal proof</td><td>Does the interaction change the predicted line predictably, with the change measured?</td><td></td><td></td><td></td></tr>
+<tr><td>(2) Clarity</td><td>Can a fan get it in 30 seconds?</td><td></td><td></td><td></td></tr>
+<tr><td>(3) Honesty</td><td>Are limits (baselines, not model; correlations, not causes; v5 head unrunnable) stated plainly on the page?</td><td></td><td></td><td></td></tr>
+<tr><td>(4) Playability</td><td>Is it fun to use?</td><td></td><td></td><td></td></tr>
+</table>
+<p class="warn"><strong>No winner is declared on this page.</strong> No scores,
+no averages, no recommendation. The user compares both demos side by side
+and picks.</p>
+
+<h2>Evidence paths</h2>
+<ul>
+<li>A: <a href="lanes/prototype-future-explorer/NOTES.md">lanes/prototype-future-explorer/NOTES.md</a>
+(derivations, model-vs-baseline ledger, limits, v1 notes)</li>
+<li>B: <a href="lanes/prototype-forecast-attribution/NOTES.md">lanes/prototype-forecast-attribution/NOTES.md</a>
+(derivations, model-vs-baseline labeling, limits, v1 notes)</li>
+<li>Precompute scripts (both parse; baked data reproducible):
+lanes/prototype-future-explorer/precompute.py,
+lanes/prototype-forecast-attribution/precompute.py</li>
+</ul>
+<p><em>Drafts only. No training runs, no merges, no production writes.
+Prediction-first framing is user-directed, pending panel ratification.</em></p>
+</body>
+</html>

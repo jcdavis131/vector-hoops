@@ -723,3 +723,161 @@ One verdict line per acceptance criterion, in this exact form:
 
 Plus: file list written, top blockers in order, and any contract conflict
 found. Scorecard missing = deliverable missing.
+
+## 14. BIO-INSPIRED DESIGN LENS (user 2026-10-26 22:49 CDT — DESIGN INPUT ONLY, NOT A REWRITE ORDER, NOT A NEW MODEL)
+
+Status: this section records a design lens for examining lane designs
+through biological processes and frameworks. It does NOT rewrite any
+delivered lane doc, contract headline, eval protocol, or prototype brief
+(HOLD §11 intact), and it does NOT authorize a new model, a training run,
+a merge, or a production write. A deep-research run on bio-inspired
+adaptive frameworks is underway; its findings feed into lane designs when
+they land. Until then, only the candidate table below stands — as
+candidates to evaluate, never as adoptions.
+
+Binding rule (user's words, enforced by the coordinator): each mechanism
+must EARN its place by ablation, not by metaphor. Any bio-inspired
+mechanism that cannot state a falsifiable test DOES NOT enter a spec.
+Metaphorical resemblance is never evidence. Every test below runs on the
+embargoed expanding-window folds, against the stated control, on held-out
+data — the same gate discipline as every other lane.
+
+Candidate mappings (evaluate, do not adopt on faith):
+
+1. Predictive coding / free-energy → JEPA predictor + surprise-driven
+   learning. Falsifiable test sketch: surprise-weighted training (high
+   prediction-error seasons/events up-weighted) beats uniform weighting on
+   held-out forecast MAE/R², or it does not. Touches: Lane 8 / Lane 11.
+2. Sleep + hippocampal replay → offline consolidation phases: replay past
+   seasons and play-by-play during idle cycles to consolidate the world
+   model without new data. Test sketch: a replay phase improves held-out
+   forecast vs a no-replay control at equal compute, or it does not;
+   replay uses train-fold data only — replaying val/test data is leakage
+   and fails loud. Touches: Lane 8 / Lane 11.
+3. Synaptic pruning → tower/feature pruning: drop towers that do not earn
+   forecast lift. Test sketch: per-tower forecast-lift ablation; a tower
+   is pruned only if its lift is ≤ 0 within the bootstrap interval, and
+   the pruned model must not regress held-out MAE beyond the stated
+   tolerance. Touches: Lane 4 / Lane 5 / Lane 11.
+4. Immune self/non-self → drift and anomaly detection (in-distribution
+   vs regime shift), with detectors amplified when they catch real drift.
+   Test sketch: the detector flags held-out regime-shift seasons at a
+   stated precision/recall; the amplification rule fires only on
+   confirmed drift, never on noise. Touches: Lane 6 drift monitor.
+5. Homeostasis / allostasis → recalibration that adjusts predictively
+   BEFORE drift breaches a gate. Test sketch: predictive recalibration
+   reduces band-breach rate vs reactive recalibration on rolling
+   seasons, without masking real drift (masked drift = failure, not a
+   win). Touches: Lane 6 recalibration checklist.
+6. Evolution (variation-selection-inheritance) → the hill-climb variant
+   loop under held-out gates. Test sketch: a variant survives only on a
+   held-out win under the existing gate; the loop's selection rule is
+   stated in advance; no variant is promoted on validation folds alone.
+   Touches: Lane 4 / Lane 5 / program governance.
+7. Critical periods → curriculum: coarse/invariant structure first, fine
+   detail only after the timescale diagnostic passes. Test sketch: a
+   curriculum-trained model beats a simultaneous-training control on
+   held-out folds, or it does not; the fine-detail stage is gated on the
+   III-C timescale diagnostic, never on a schedule. Touches: Lane 11 /
+   SPEC-2 / SPEC-3.
+8. Swarm / stigmergy → the existing tiered agent lanes coordinated
+   through shared timeline signals. Note: this one is about the AGENT
+   SYSTEM, not the model — it does not enter any model spec. Test sketch
+   (process metric only): timeline-signal coordination reduces duplicate
+   work and cross-lane conflicts vs uncoordinated execution. Touches:
+   coordinator governance only.
+
+Gates unchanged: real data only; no training, merges, or production
+writes without the user's separate word; research moves priors, gates
+decide; preprint status (where applicable) is flagged, never upgraded.
+
+### 14.1 Bio research LANDED (2026-10-27 — design input, rankings recorded, nothing adopted)
+
+Source (read in full, evidence flagged): research_notes/
+bio-inspired-adaptive-systems-20261027-0349/report.md. Per its own
+reading note and its AGENTS.md: sources are INDEX-level (not
+live-verified), no mechanism was tested on basketball data, and all
+"helps this system" claims are hypotheses until the tests below run.
+Thresholds in the report are PROPOSED DEFAULTS to calibrate, not
+constants (PSI cutoffs are conventional practice, not law; pruning and
+replay percentages are proposed, not mission-given). Quantitative
+transfer numbers quoted from secondary summaries were not re-verified
+against primary papers. Treat every ranking below as a prior for the
+tests, never as a result.
+
+Ranked most actionable (report §9), each with its falsifiable test —
+a mechanism enters a spec ONLY by passing its test, and only by beating
+BOTH the no-change baseline AND the cheapest non-biological equivalent
+on the held-out next-season gate:
+1. Offline interleaved replay / consolidation (§2): between seasons,
+   low-LR pass on 50% new + 50% reservoir old (stratified by era /
+   position / age; buffer holds embeddings + targets, not raw tracking),
+   prioritised by JEPA error / forgetting. Test: sequential-season
+   protocol vs naive fine-tune (Arm 1) and uniform-mix control (Arm 3).
+   Pass: backward-transfer loss down ≥50% vs Arm 1, newest season
+   matched or beaten, Arm 3 beaten on backward transfer; consolidation
+   cost ≤20% of season-update compute or it fails as CPU-first.
+2. Precision-weighted predictive error (§1, §5): inverse-variance JEPA
+   weights estimated from training seasons only, plus per-tower error
+   as the evaluation gate (which tower broke: player ageing vs league
+   style vs tracking change). Test: temporal split, ≥3 rolling origins.
+   Pass: ≥2% relative next-season stat RMSE improvement AND
+   event-location error worsened by ≤1%, on the held-out TEST season —
+   validation-only improvement fails.
+3. Structured pruning + importance protection (§3, EWC from §2): prune
+   WHOLE tower dimensions / heads / embedding columns (never unstructured
+   sparsity — it does not speed CPU inference without sparse kernels),
+   then short replay fine-tune. Test: 30% reduction → ≤1% degradation
+   AND ≥25% latency/size cut; 50% → ≤3% or rejected; per-era
+   degradation reported (average win + minority-era destruction = fail).
+Close 4th — two-threshold homeostatic gate (§5): WARNING (PSI 0.10–0.25
+or ADWIN warning) → consolidate + widen intervals, no block; ALARM
+(PSI >0.25 or DDM drift) → block promotion, retrain, log cause; setpoints
+context-adjusted per era/role; intervention budget capped (e.g. at most
+one pre-emptive reweighting per season). Test (retrospective, 30 seasons,
+no future labels before deciding): gate failures down ≥30% AND false
+blocks up ≤10% AND within budget — fewer failures by blocking more is
+conservatism, not prediction, and fails.
+
+Most misleading if literal (do NOT implement literally; salvageable
+fragments only, each with its own test): (1) swarm / stigmergy —
+salvage EWMA zone-error sampling ONLY (must beat uniform AND static
+inverse-frequency sampling by >1% relative on held-out event-location
+error without degrading decayed zones; no player-agent pheromone
+simulation); (2) morphogenesis / NCA — salvage positional encoding ONLY
+(multi-scale court coordinates, distance/angle bands, zone embeddings;
+B must beat raw-(x,y) by >2%, and any neighbour-diffusion layer C must
+beat B by >1% to justify itself; no developmental architecture growth,
+no Turing periodicity prior on a rule-defined court). Runner-up:
+literal immune negative selection — fixed "self" in a league whose
+normal changes every era flags modern basketball as foreign, and random
+detectors scale poorly in embedding space. CORRECTION to the earlier
+chat take (recorded here so it is not repeated): immune and homeostasis
+are NOT just naming — the report defends multi-detector + co-stimulation
+OOD detection (flag only if two independent signals agree; ≥90% of
+injected corruptions flagged before the gate at lower false-alarm than
+a single-threshold PSI monitor and a k-NN baseline, ≥20 episodes) and
+the two-threshold gate above as testable mechanisms. What stays poetry:
+"the brain minimises free energy, therefore…", literal NSA, literal
+swarm, literal morphogenesis, Hebbian-as-backprop-replacement, and any
+proposal that cannot be written as a loss, a weight, or a gate.
+Evolution is confined to its gradient-free niche (CMA-ES / genetic
+search over ≤~30 hyperparameters and discrete choices, population
+16–32, generations 10–20, fitness = temporal gate score): it must beat
+random search at equal budget by >1 standard error across ≥3 seeds and
+re-validate on a later season; weights are NEVER evolved (backprop owns
+the differentiable objective); >5× a single run for <1% gain fails as
+CPU-first. Do NOT replace backprop with a predictive-coding network on
+CPU (iterative inference per sample multiplies cost for at best
+backprop-equivalent gradients; energy-efficiency claim UNVERIFIED).
+Do NOT import active inference (act to match prediction) — this system
+observes, it does not act on the court; preferred outcomes must never
+bias forecasts.
+
+Panel Round 3 (Addendum IV, spawned 2026-10-26 22:50 CDT) judges these
+mappings as mechanism vs language vs poetry, with a falsifiable test
+per endorsement and a bake / keep-as-naming / reject verdict per
+mapping. This section records the research; it does NOT pre-judge Round
+3, and no mechanism is baked into any spec by this section. The
+findings were fed to Round 3 separately; this coordinator's routing is
+to the lane designs only (BIO_LENS appendix + eval patch brief E5).
