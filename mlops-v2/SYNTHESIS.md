@@ -146,3 +146,101 @@ them. **The user picks the winner.**
    PBP text+stats) and the text-embedding/SVD proposal (SVD as
    baseline only; EmbeddingGemma Matryoshka Stage 1; text as one
    tower with on/off ablation).
+
+## 7. Wave-2 synthesis (2026-10-27 ~03:47 CDT; coordinator-verified, not naive-merged)
+
+Scope landed since wave 1 (commit aaf003be): Scope A data gathering
+(lanes/10-data-gathering/), Scope B text design (TEXT_EMBEDDING_DESIGN.md,
+TEXT_TOWER_SPEC.md), Lane 8 stories addendum (STORIES_ADDENDUM.md, DESIGN
+INPUT ONLY, HOLD intact), standing-panel text review
+(panel-reviews/TEXT_PANEL_REVIEW.md), moonshot eval harness
+(lanes/12-moonshot-eval/), reframed prototype pair
+(lanes/prototype-future-explorer/, lanes/prototype-forecast-attribution/),
+contract §10–§13, panel brief §9, panel review through Addendum III-C.
+Coordinator verified on disk: all wave-2 Python drafts parse (py_compile);
+both reframed demos' baked data spot-checked (explorer data.json structure
++ age-curve-baseline labeling on the page; attribution data.json contains
+Curry 2016-17 and the quoted 1.843 baseline value, all 4 players present);
+eval harness new-player slice present (20 mentions); stories header carries
+the DESIGN-INPUT-ONLY + HOLD labels. Isolated failed tool calls inside two
+agent handoffs did not affect deliverables.
+
+Text review verdicts (modelled lenses, not the real people):
+NEEDS-REVISION (Howard), NEEDS-REVISION (Ilya), BLOCKED (Karpathy).
+Synthesis-ready only after M1–M7 (panel-reviews/TEXT_PANEL_REVIEW.md
+§"Must change before synthesis") are recorded here as CONDITIONS, not
+silent edits to the design docs: M1 Scope A inventory as hard precondition;
+M2 masked-ablation treatment defined field-by-field + new-player masked
+condition (> 0 with interval excluding 0; 50% ratio bar only when unmasked
+lift clears 2% with interval excluding 0); M3 bootstrap intervals +
+per-stat/per-fold pass/fail tables + seed-spread rule + multiplicity note;
+M4 rollup composition clarified (assist-role events, floor counting,
+n_events input-vs-audit, mask AFTER LayerNorm); M5 slice mapping + join-rate
+section; M6 tightened pilot gate (weights availability, measured
+templates/sec + peak memory, stated half-day consequence, 100-template
+audit); M7 first claim simplified (width 32 only, floor 100 only, one head,
+768-d only). Design docs stay exactly as delivered.
+
+Reframed prototypes (user picks the winner; coordinator crowns no one):
+Future Explorer — steer a latent, predicted future line moves; v5
+next-profile head NOT runnable (mtnn_heads.f32 = 12,966×45 frozen OUTPUTS,
+no weights/checkpoint saved; saved ONNX is stale 119→48), so the steered
+line is the LABELLED age-curve baseline; new-team steering omitted (team
+not in the 14-d vector); success test: Curry 2016-17 "More threes" +1.0z
+FG3A 2.55 → 3.55, FG_PCT 0.18 → −0.09 (real history slope −0.268, shown not
+smoothed). Forecast Attribution — K=25 neighbor baseline, LOSO
+(remove/half/boost over 6 signals); v5 head likewise NOT runnable, baselines
+labelled; success test: Curry remove scoring → predicted PTS 1.843 → 1.413
+(−0.429); Jokic remove playmaking → AST −1.423. Honest caveat on both pages
+and in both NOTES: the neighbor/age-curve baselines do NOT beat
+carry-forward (attribution global MAE 0.4805 vs 0.4732; explorer three-way
+tie carry-forward 0.4732 / age-curve 0.4705 / v5 saved head 0.4708) — the
+prototypes prove interaction mechanics, not forecast skill. Both builders
+confirm: sibling lane never opened, original twin competition untouched.
+
+Eval harness (lanes/12-moonshot-eval/): eval_forecast.py (656 lines, stdlib
+only; per-stat MAE/R², per-fold + frozen test, separate new-player slice,
+single code path, fail-loud exit 2); BASELINES.md (carry-forward, age-curve,
+stats-MLP, no invented numbers; frozen-test margin ≥0.01 PROPOSED);
+RUNG1_DEMO_SPEC.md (next-shot, error in feet, three baselines, paired
+bootstrap, kill rule on failing carry-forward, DATA-GATED); FLOOR_CONSTRAINT.md
+(twin floor: retention ≥0.90, spread ≤1.10×, agreement ≥0.05, spot ≥17/20 —
+all PROPOSED; miss = research-only for twin purposes; clear still needs the
+user's word). Contract conflicts C1–C4 reported by the lane (984-fold figure,
+pre-embargo vs embargoed folds, Lane 3 vs Lane 5 new-player definitions,
+§2d replacement gate vs retention floor) — recorded, not silently resolved.
+
+Research routing (deep-research report 2026-10-27 + panel Addendum III-C;
+conditional-go STANDS, sharper): split-head CoJEPA blueprint; bridge /
+predictive positives DEMOTED to experimental arm (no demo beats parallel
+heads); hierarchy earned level-by-level behind a timescale diagnostic +
+shared-latent arm; anti-collapse regularizer ablated (0/0.5/1/2×) + latent
+rank monitoring, rank collapse = NEW kill trigger; conflict protocol
+diagnose → UW/FAMO → CAGrad-if-persistent (FairGrad excluded from Muon
+arms); Muon control = AdamW+EMA, MAE-led adoption, wall-clock on our rows;
+location metrics by horizon; coach single-step only. Model-code lane
+follow-up SUBMITTED (pending application). Eval-harness follow-up COULD NOT
+be delivered (builder completed first) — so the eval-side deltas are recorded
+here as PATCH CONDITIONS E1–E4, to be applied at synthesis before the eval
+lane is called research-compliant: E1 forecast error by horizon AND
+similarity separately; E2 location metrics by horizon + coach single-step
+rule in RUNG1_DEMO_SPEC.md; E3 rank-collapse kill trigger + regularizer/rank
+arm reporting + conflict diagnostic in arm reporting; E4 AdamW+EMA as the
+Muon-arm control reference (MAE-led, on-our-rows wall-clock) wherever the
+eval docs touch the optimizer arm. Nearly all 2025–2026 research items are
+arXiv preprints, not peer-reviewed — cited with flags, never as settled
+results; research moves priors, gates decide.
+
+NOT in this commit (pending, explicitly excluded): lanes/11-moonshot-model/
+— the model-code builder is still running and its research follow-up is
+outstanding; its files will land in a wave-2b commit after completion +
+verification. data-deep-dive/ belongs to the separate deep-dive coordinator
+(11 investigators; synthesis DATA_COLLECTION_DEEP_DIVE.md pending) and is
+not committed here; on landing it folds into the collection plan.
+
+Gates restated: NO training runs, NO merges, NO production writes without
+the user's separate word. Spec finalization BLOCKED until the user rules on
+III-A Q1–Q3 + III-B Q1 and on the prediction-first reframe. HOLD (§11)
+intact: no delivered lane doc, contract headline, eval protocol, or
+prototype brief was rewritten to the prediction-first framing; new scope
+work carries the "user-directed, pending panel ratification" label only.

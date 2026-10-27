@@ -504,6 +504,217 @@ synthesis — recorded here so it is not lost, NOT acted on):
   season-boundary + name-masked leakage guards. Awaits explicit
   tasking before any lane adopts it.
 
+## 10. User correction + new scopes (2026-10-26 22:29–22:32 CDT)
+
+USER CORRECTION 22:32 CDT — TAKES PRECEDENCE over the twin-centric
+framing used in §§2–9: "you're over-indexing on the twin nature of
+this — we just want to be predicting players' overall stats in the
+future." PRIMARY objective, from this point on, is NEXT-SEASON OVERALL
+STAT PREDICTION: the 14-d game-vector forecast, scored by MAE/R²
+under expanding-window CV + the new-player slice. Consequences,
+recorded here and to be applied to designs (not silently rewritten
+into already-delivered docs):
+- Twins are demoted to product surface + secondary validation. They
+  remain the games' surface (Daily Court, Twenty Questions, Twin
+  Explainer) but are no longer the model's primary objective.
+- The JEPA predictor head becomes PRIMARY; the contrastive twin head
+  becomes AUXILIARY. The unified loss (§8) is rebalanced
+  prediction-first; "future twins" is demoted to diagnostic. Lane 9's
+  delivered design is therefore a PRE-CORRECTION draft: a
+  prediction-first rebalance amendment is a follow-up design pass,
+  not something this section pretends already happened.
+- Any text tower (Scope B below) is judged by FORECAST LIFT vs the
+  stats-only baseline — not by twin-agreement retention. Twin
+  agreement and future twins are diagnostics for it, not gates.
+
+SCOPE A — GATHER ALL DATA (user's words 22:29 CDT; DESIGN + COLLECTION
+ONLY, no training, no prod writes, no merge):
+- Game logs for all seasons, later-season game logs PRIORITIZED
+  because they carry actual shot coordinates — the shot-position
+  tower depends on them.
+- Play-by-play logs for all seasons — statistical events AND event
+  text (the model trains on text as well as statistics).
+- Machine-aware collection: this Hatch VM is a known-bad collector
+  for stats.nba.com ShotChartDetail (stalls, zero bytes) and
+  cdn.nba.com (instant 403) per the 2026-10-11 shot-source verdict.
+  Collection routes stats-API and CDN fetches through the Alienware
+  box or the user's Mac, or through alternate real sources. NEVER
+  synthesize or proxy-fill missing data.
+- FIRST deliverable, before any bulk fetch: inventory + gap report
+  quantifying per-season coverage for game logs, shot coordinates,
+  and PBP against 30 seasons. Measured starting point
+  (coordinator-verified 2026-10-26): `cdn_pbp/` holds 5 games
+  (0022600001–3, 0022600085–6, all 2026-27 opening games, ~593
+  actions each, WITH x/y coordinate fields and description text on
+  actions); `assets/replays/` holds 6 entries (5 game JSONs +
+  index); NO gamelog files exist on disk (only fetcher scripts
+  `pipeline/fetch_gamelogs.py` using nba_api playergamelogs and
+  `fetch_playoff_gamelogs.py`); LOC_X appears NOWHERE in the cache
+  (0 hits) — coordinates in hand use PBP x/y naming, not
+  ShotChartDetail LOC_X/LOC_Y.
+- Outputs follow the overhaul lane: versioned cache + validation
+  gates that fail loud. The 143-column full-context chain stays
+  BLOCKED until this lands; the 73-column verified base is the
+  fallback, not the destination.
+
+SCOPE B — TEXT EMBEDDING DESIGN (user proposal 22:30 CDT + research
+review; DESIGN ONLY, training authorization still separate):
+- User proposal: convert all text to embeddings, then truncated SVD
+  to a manageable size. Design doc treats SVD as the BASELINE TO
+  BEAT, not the final answer. Doc location (per task):
+  `lanes/01-data-collection/TEXT_EMBEDDING_DESIGN.md`, tower spec in
+  `lanes/04-training/` (new files only; existing lane files are not
+  edited).
+- (a) Text units: official PBP event text ONLY, no generated
+  commentary. Template deduplication FIRST: PBP text is highly
+  templated — embed unique templates once, compose with player/event
+  context — because raw per-event embedding volume across 30
+  seasons is infeasible on CPU.
+- (b) Stage 1 embedder: EmbeddingGemma-300M (already evaluated in
+  this workspace: 768-d vs 128-d Matryoshka twin hit@10 0.0739 vs
+  0.0732 — truncation loses almost nothing) as the first cut,
+  mean-pooled per player-season.
+- (c) Stage 2 task-aligned reduction: a learned projection /
+  contrastive alignment of text rollups to the stat space, evaluated
+  by FORECAST LIFT (per the 22:32 correction — the task's original
+  twin-agreement/future-twins evaluation is SUPERSEDED for gating;
+  twin agreement and future twins remain diagnostics only) — NOT by
+  variance explained.
+- (d) Text as ONE TOWER among the 17 stat towers, with an on/off
+  ablation under expanding-window CV, promoted only on a held-out
+  win — where "win" means forecast lift vs the stats-only baseline
+  on the 14-d next-season prediction (MAE/R²), new-player slice
+  reported separately.
+- (e) Leakage guards: season-boundary masking (no future-season PBP
+  text into JEPA inputs), and a name-masked ablation proving text
+  adds playing style, not just player identity.
+- The design goes past the standing MLOps review panel (Howard /
+  Ilya / Karpathy lenses) BEFORE coordinator synthesis. Panel
+  dissent is kept, not averaged away.
+
+PENDING — FULL PROGRAM RETHINK (user 2026-10-26 22:33 CDT, brief
+submitted, application UNCONFIRMED — not yet tasked): "we need to
+rethink everything with that lens, right?" Per-lane rethink as
+briefed: O1 audit → forecast audit (vs carry-forward / age-curve /
+stats-MLP baselines); O3 splits → program backbone; O4 training
+primary head = next-season 14-d forecast; O5 eval headline = per-stat
+MAE/R²; O6 context columns judged by forecast lift; competition
+reframed (A = steerable future explorer, B = forecast attribution,
+user still picks); promotion gate replaced (beat carry-forward +
+stats baselines on held-out folds; twin quality = floor constraint).
+Proposed defaults flagged for the user's confirmation (NOT adopted):
+1-season horizon primary; all-14 stats equal weight with scoring
+highlighted. Twin work preserved as product surface + secondary
+validation, NOT deleted. This rethink is RECORDED here only: it does
+not rewrite the delivered lanes, the comparison page, or the gate
+until an explicit rethink task arrives.
+
+## 11. GOVERNANCE HOLD (user ruling 2026-10-26 22:33 CDT — SUPERSEDES the rewrite instructions in the 22:32 correction task and the 22:33 full-rethink brief)
+
+Sequence, for the record: (1) a 22:32 correction task directed the
+coordinator to reframe the objective prediction-first and to update
+§8, the text-embedding design doc, and the eval protocol, leaving no
+twin-centric headlines standing; (2) a 22:33 full-rethink brief
+directed a lane-by-lane rewrite (forecast audit, forecast training
+head, per-stat MAE/R² eval headline, forecast-lift context columns,
+reframed prototypes, replaced promotion gate) plus a rewritten board
+and contract headlines; (3) a 22:33 GOVERNANCE ruling from the user
+overrides both: the prediction-first rethink is NOT the
+orchestrator's call. It goes to a 12-seat review panel first
+(standing 4: Howard / Ilya / Karpathy / Straubel as channelled lenses
++ 8 role-based seats; brief at `PANEL_BRIEF.md`).
+
+THEREFORE, UNTIL THE PANEL SYNTHESIS LANDS AND THE USER RULES ON IT:
+- Do NOT rewrite the board, contract headlines (§§2, 5, 8), eval
+  protocol, or prototype briefs to the prediction-first framing.
+  The 22:32 correction task and the 22:33 rethink brief are INPUT TO
+  THE PANEL, not instructions to rewrite yet. §10 above stands as a
+  RECORD of the correction and the pending rethink — it is not a
+  headline rewrite, and §§2/5/8 headlines are left exactly as
+  delivered.
+- The panel brief's §4 is PROPOSED, not decided. Drafts must stay
+  consistent with its stated facts (verified vs proposed kept
+  distinct); panel reviews are modelled perspectives, not messages
+  from the real people named.
+- What CONTINUES UNCHANGED: lane drafting, data-gathering inventory
+  + gap report (game logs + PBP), the offline-rebuild verification
+  line, and the two new-scope specialists (Scope A inventory/plan;
+  Scope B text design, whose forecast-lift gating is labeled in its
+  doc as "user-directed, pending panel ratification" with
+  twin-agreement/future-twins diagnostics kept fully specified, so
+  the doc survives either ruling).
+- The standing MLOps panel review (Howard / Ilya / Karpathy) of the
+  Scope B text design still runs before coordinator synthesis of
+  that design. It is a design review, not a reframe rewrite, and is
+  distinct from the 12-seat rethink panel.
+
+## 12. USER VISION NOTE (2026-10-26 22:35 CDT — FOR THE RECORD AND FOR LANE 8 DRAFTING, NOT A REWRITE ORDER)
+
+The user names HIERARCHICAL JEPA world models as "the main thing,"
+predicting future stats AND player locations, with the ambition to do
+as much as possible with advanced models on Vector Hoops and "bring
+the NBA to life with neural networks." Recorded here so Lane 8
+drafting carries it; the HOLD (§11) still stands in full — this note
+does NOT rewrite the board, contract headlines, eval protocol, or
+prototype briefs, and any reframe rewrite still awaits panel
+synthesis + user ruling. This note has also been sent to the panel
+as a brief addendum; THE PANEL JUDGES H-JEPA CENTRALITY. Until the
+panel rules, H-JEPA centrality is a USER VISION UNDER REVIEW, not
+ratified architecture — drafts must label it that way, never as
+decided.
+
+LANE 8 DRAFTING DIRECTION (addendum, not a rewrite of Lane 8's
+delivered files): the H-JEPA design carries TWO prediction surfaces —
+COARSE → future season stats (season-timescale prediction, the
+forecast objective), and FINE → in-game player locations from REAL
+tracking / shot / PBP data (game-timescale prediction, the
+bring-it-to-life surface). RENDER DIRECTION, stated explicitly in
+the addendum: predicted locations render THROUGH Pixel sprites;
+sprite positions NEVER train the model (rendering output, not
+measurement — the same hard line as §7). Training inputs for the
+fine surface are real measured positions only (tracking aggregates,
+shot coordinates when collected, PBP x/y); where such data does not
+yet exist on this VM, the addendum marks the surface DATA-GATED,
+never faked.
+
+## 13. MOONSHOT BUILD TRACK (user 2026-10-26 22:40 CDT — "let's build it")
+
+"Build it" authorizes EVERYTHING UP TO the hard gates, NOT through
+them. The moonshot = the joint contrastive + JEPA model trained
+together under one loss, in the H-JEPA living-basketball-mind vision
+(future stats + player locations + stories past and present).
+Build track, full pace, IN PARALLEL with the panel's moonshot
+verdict. Sequence: brief → panel weighs in → specs → execute end
+to end — with the panel's verdict feeding spec FINALIZATION.
+
+WHAT "BUILD IT" AUTHORIZES (pre-gate work, all in flight):
+- Specs DRAFTED (skeletons + full drafts — NOT finalized; spec
+  finalization waits for the panel synthesis).
+- Model code drafted (joint architecture: shared tower stem,
+  Matryoshka SupCon head, JEPA predictor heads, bridge, loss,
+  Muon-vs-AdamW ablation DESIGN).
+- Data-gathering inventory (Scope A — DELIVERED; the critical path
+  for the location level).
+- Eval harness drafted (expanding-window folds, carry-forward
+  baselines, rung-1 next-shot demo spec).
+- Prototype reframing drafted as NEW prototypes (future explorer +
+  forecast attribution) in NEW directories. The existing twin
+  competition (Builder A/B + comparison page) is UNTOUCHED — the
+  user still picks its winner separately; the reframed pair is a
+  separate comparison with its verdict likewise blank, and the
+  coordinator crowns no one in either.
+- Muon optimizer UNDER EVALUATION (user confirmed: Muon, MomentUm
+  Orthogonalized by Newton-Schulz). The deliverable is a
+  Muon-vs-AdamW ABLATION DESIGN, not an adoption decision. No claim
+  that Muon is better may appear in any draft.
+
+HARD GATES, UNCHANGED, STATED IN EVERY SYNTHESIS: NO training runs,
+NO merges, NO production writes — each still requires the user's
+separate word. "Execute end to end" does NOT authorize training.
+Model code is verified by parsing (and, where stated in a lane
+brief, by synthetic-tensor shape checks with NO parameter updates
+and NO real data loaded) — never by a training run on real data.
+
 ## 4. Delivery format (every lane's final message ends with this)
 
 One verdict line per acceptance criterion, in this exact form:

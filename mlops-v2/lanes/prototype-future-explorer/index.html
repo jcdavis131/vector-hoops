@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Steerable Future Explorer — Vector Hoops prototype</title>
+<style>
+  body{font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;max-width:900px;margin:0 auto;padding:16px;color:#1c1c1c;line-height:1.45}
+  h1{font-size:1.6rem;margin-bottom:4px} h2{font-size:1.15rem;margin-top:28px}
+  .banner{background:#fff7d6;border:1px solid #d9b800;padding:12px;border-radius:8px}
+  .honest{background:#eef6ff;border:1px solid #7aa7d9;padding:12px;border-radius:8px}
+  .playerbtn,.preset{padding:10px 14px;margin:4px;border-radius:8px;border:1px solid #888;background:#fff;cursor:pointer;font-size:1rem}
+  .playerbtn.on{background:#1c1c1c;color:#fff}
+  .sliderbox{border:1px solid #ccc;border-radius:8px;padding:12px;margin:10px 0}
+  .sliderbox label{font-weight:600} .sliderbox input{width:100%}
+  .deriv{font-size:.85rem;color:#444}
+  table{border-collapse:collapse;width:100%;margin-top:8px}
+  th,td{border-bottom:1px solid #ddd;padding:6px 8px;text-align:right}
+  th:first-child,td:first-child{text-align:left}
+  .up{color:#0a7a2f;font-weight:600} .down{color:#b00020;font-weight:600} .flat{color:#666}
+  .bar{height:8px;background:#dbe4f0;border-radius:4px;overflow:hidden}
+  .bar i{display:block;height:100%;background:#2a6cb6}
+  #sentence{font-size:1.1rem;background:#f2f2f2;padding:12px;border-radius:8px}
+  .small{font-size:.85rem;color:#444} code{background:#f2f2f2;padding:1px 4px;border-radius:4px}
+  .ref td{color:#444}
+</style>
+</head>
+<body>
+<h1>🏀 Steerable Future Explorer</h1>
+<p><strong>Steer a player's future — and watch the predicted stat line move.</strong>
+Pick a player, drag a slider, and the <em>predicted next-season stat line</em> changes in front of you.</p>
+
+<div class="banner"><strong>Prediction-first draft — user-directed, pending panel ratification.</strong>
+The headline here is the predicted <em>future</em> stat line, not twins. (Contract §11 HOLD:
+the panel has not ratified this framing yet, so it is labelled as a draft, not a decision.)
+Twins stay a product surface and a secondary check — they are not the headline of this page.</div>
+
+<div class="honest">
+<h2 style="margin-top:0">Read this first: what is a model prediction here, and what is not</h2>
+<p><strong>Nothing on this page is a live model prediction.</strong> The v5 champion's
+next-season head <em>cannot be re-run</em> from what is saved: the saved file holds frozen
+per-row head <em>outputs</em>, not weights, and no v5 checkpoint is saved in the repo.
+So the forecast you steer is a <strong>labelled baseline</strong>, computed from real history
+in the open (see “How every number was computed” below) — never presented as a model prediction.
+The v5 saved head is shown only as a frozen reference line, and it <strong>does not move</strong>
+when you steer, because there is no model to steer through. Steering moves are correlations
+from real year-to-year changes, not causal proof: players who shot more threes <em>tended</em>
+to change this way. <strong>New-team steering is omitted on purpose</strong> — team is not in
+the 14-stat line and no team-change effect was estimated, so showing one would be invented.</p>
+<p class="small" id="units"></p>
+</div>
+
+<h2>1 · Pick a player</h2>
+<div id="players"></div>
+<p id="playerinfo" class="small"></p>
+
+<h2>2 · Steer his future</h2>
+<p class="small">Each slider moves one thing by up to ±1.0 in z units (slider +100 = +1.0).
+The other stats move by their real historical slopes — including the surprising ones.</p>
+<div id="steers"></div>
+<button class="preset" id="presetThrees">Try it: crank “More threes” to +100</button>
+<button class="preset" id="reset">Reset all sliders</button>
+
+<h2>3 · The predicted future stat line</h2>
+<p id="sentence"></p>
+<table>
+<thead><tr><th>Stat (plain words)</th><th>This season</th><th>Baseline forecast</th><th>Steered forecast</th><th>Change</th></tr></thead>
+<tbody id="maintable"></tbody>
+</table>
+<p class="small">Bars show the steered forecast on a −4 to +4 z scale. Baseline forecast = age-curve
+baseline (this season + the average change of players the same age). Change = steered − baseline.</p>
+
+<h2>4 · Check it: reference lines that do NOT move when you steer</h2>
+<table class="ref">
+<thead><tr><th>Line</th><th>What it is</th><th>FG3A</th><th>PTS</th><th>Full line</th></tr></thead>
+<tbody id="reftable"></tbody>
+</table>
+<p class="small">“Actual next season” is shown only because that season already happened — it is a
+check on the forecast, never a prediction. For Curry 2016-17 the age-curve baseline's
+average error across all 14 stats is shown in the notes; the v5 saved head and both
+baselines score almost identically overall (see below), which is itself an honest result.</p>
+
+<h2>How every number was computed</h2>
+<ul>
+<li><strong>Current line:</strong> the player's real 14-stat line for the chosen season, from
+<code>assets/vectors.json</code> (12,966 player-seasons, per-100 stats z-scored within season).</li>
+<li><strong>Baseline forecast (age-curve):</strong> current line + the average year-to-year change
+of players in the same age bin, computed from all 10,107 adjacent-season pairs
+(same <code>person_id</code>, season N → N+1) in <code>vectors.json</code>.</li>
+<li><strong>Carry-forward:</strong> next season = this season, unchanged. The simplest baseline there is.</li>
+<li><strong>v5 saved head:</strong> columns 31:45 of <code>mtnn_heads.f32</code>
+(layout <code>[arch 8 | skills 18 | position 5 | next-profile 14]</code> per
+<code>pipeline/export_mtnn_viz.py</code>), the frozen next-profile outputs v5's export saved per row.
+No weights are saved, so it cannot be re-run or steered.</li>
+<li><strong>Steering:</strong> steered = baseline + Σ (slider ÷ 100 × slope vector).
+Each slope vector is the least-squares slope of each stat's year-to-year change on the
+driver's year-to-year change, over all 10,107 adjacent pairs. Derivation is printed under
+each slider. This is a correlation, not a causal effect and not a model run.</li>
+<li><strong>What was omitted, and why:</strong> new-team steering (no team variable, no estimated
+effect); SAE steering, JEPA predictions and trained-model forecasts (v1 notes only, never faked).</li>
+</ul>
+<h2>Validation (all adjacent pairs, z units — lower is better)</h2>
+<p id="validation" class="small"></p>
+<h2>v1 notes (not built, not faked)</h2>
+<ul>
+<li>SAE steering: steer along learned latent features instead of raw stat slopes, once an SAE
+exists for a served model — design note only today.</li>
+<li>JEPA / trained-model forecasts: replace the age-curve baseline with a trained next-season
+predictor head and re-score it against carry-forward on held-out folds — needs a training
+decision that has not been made.</li>
+<li>Team-change steering: estimate it only from a real team-change sample with confounds
+stated, or keep omitting it.</li>
+</ul>
+<p class="small">Prototype only. No training runs, no GPU, no package installs, no production writes,
+no merge. Rebuild the baked data with <code>python3 precompute.py</code> (stdlib only; reads the
+saved assets, writes <code>data.json</code> + <code>data.js</code> in this directory).</p>
+
+<script src="data.js"></script>
+<script>
+var D = window.FUTURE_EXPLORER_DATA;
+document.getElementById('units').textContent = D.units;
+var cur = 0;           // selected player index
+var sliders = {};      // steer id -> -100..100
+D.steers.forEach(function(s){ sliders[s.id] = 0; });
+
+function fmt(x){ return (x>=0?'+':'') + x.toFixed(2); }
+function fmtPlain(x){ return x.toFixed(2); }
+
+function renderPlayers(){
+  var el = document.getElementById('players'); el.innerHTML = '';
+  D.players.forEach(function(p, i){
+    var b = document.createElement('button');
+    b.className = 'playerbtn' + (i===cur ? ' on' : '');
+    b.textContent = p.name + ' ' + p.season;
+    b.onclick = function(){ cur = i; renderAll(); };
+    el.appendChild(b);
+  });
+  var p = D.players[cur];
+  document.getElementById('playerinfo').textContent =
+    p.name + ' · ' + p.season + ' · ' + p.role + ' · age ' + p.age +
+    ' (age bin: ' + p.age_bin + ') · next season on record: ' + p.actual_next_season;
+}
+function renderSteers(){
+  var el = document.getElementById('steers'); el.innerHTML = '';
+  D.steers.forEach(function(s){
+    var box = document.createElement('div'); box.className = 'sliderbox';
+    var lab = document.createElement('label');
+    lab.textContent = s.label + ' — ' + s.plain + '  (' + sliders[s.id] + ')';
+    var inp = document.createElement('input');
+    inp.type = 'range'; inp.min = -100; inp.max = 100; inp.step = 5; inp.value = sliders[s.id];
+    inp.oninput = function(){ sliders[s.id] = parseInt(inp.value, 10); renderAll(); };
+    var der = document.createElement('div'); der.className = 'deriv';
+    der.textContent = 'Derivation: ' + s.derivation + ' Driver: ' + s.driver + '.';
+    box.appendChild(lab); box.appendChild(inp); box.appendChild(der);
+    el.appendChild(box);
+  });
+}
+function steeredLine(){
+  var p = D.players[cur], out = p.baseline_age_curve.slice();
+  D.steers.forEach(function(s){
+    var z = sliders[s.id] / 100;
+    for (var j = 0; j < 14; j++) out[j] += z * s.slopes[j];
+  });
+  return out;
+}
+function renderTable(){
+  var p = D.players[cur], st = steeredLine(), tb = document.getElementById('maintable');
+  tb.innerHTML = '';
+  D.stats.forEach(function(name, j){
+    var d = st[j] - p.baseline_age_curve[j];
+    var cls = Math.abs(d) < 0.005 ? 'flat' : (d > 0 ? 'up' : 'down');
+    var tr = document.createElement('tr');
+    tr.innerHTML = '<td>' + name + ' <span class="small">(' + D.plain[name] + ')</span></td>' +
+      '<td>' + fmtPlain(p.current[j]) + '</td>' +
+      '<td>' + fmtPlain(p.baseline_age_curve[j]) + '</td>' +
+      '<td><strong>' + fmtPlain(st[j]) + '</strong><div class="bar"><i style="width:' +
+      Math.max(0, Math.min(100, (st[j] + 4) / 8 * 100)) + '%"></i></div></td>' +
+      '<td class="' + cls + '">' + fmt(d) + '</td>';
+    tb.appendChild(tr);
+  });
+  // Plain-words sentence: biggest movers, driver first.
+  var active = D.steers.filter(function(s){ return sliders[s.id] !== 0; });
+  var sent;
+  if (!active.length){
+    sent = 'No steering yet. Drag a slider: the baseline forecast for ' + p.name + '\'s next season is ' +
+      'simply this season plus the average change of players his age. Try “More threes” to see what moves — and what moves the wrong way.';
+  } else {
+    var parts = active.map(function(s){
+      var dir = sliders[s.id] > 0 ? 'more' : 'less';
+      var j = D.stats.indexOf(s.driver === 'OREB+DREB' ? 'DREB' : s.driver);
+      var moved = D.stats.map(function(n, k){
+        return {n: n, d: sliders[s.id] / 100 * s.slopes[k]};
+      }).sort(function(a, b){ return Math.abs(b.d) - Math.abs(a.d); });
+      var top = moved.slice(0, 3).map(function(m){
+        return m.n + ' ' + fmt(m.d);
+      }).join(', ');
+      return '“' + s.label + '” at ' + sliders[s.id] + ' (' + dir + ' ' + s.plain.toLowerCase() + ') moves: ' + top;
+    });
+    sent = parts.join(' ') + ' — all in z units (0 = average, +1 = one standard deviation above average). ' +
+      'The other stats move too, honestly, even when the move is small or surprising: check the Change column.';
+  }
+  document.getElementById('sentence').textContent = sent;
+  // Reference table (never moves).
+  var rt = document.getElementById('reftable'); rt.innerHTML = '';
+  var rows = [
+    ['Carry-forward', 'Next season = this season, unchanged.', p.carry_forward],
+    ['v5 saved head (frozen)', 'v5 export\'s saved next-profile output. Display only — cannot be re-run or steered.', p.v5_saved_head],
+    ['Actual next season (' + p.actual_next_season + ')', 'What really happened. A check, not a prediction.', p.actual_next]
+  ];
+  rows.forEach(function(r){
+    var tr = document.createElement('tr');
+    tr.innerHTML = '<td><strong>' + r[0] + '</strong></td><td style="text-align:left">' + r[1] + '</td>' +
+      '<td>' + fmtPlain(r[2][7]) + '</td><td>' + fmtPlain(r[2][0]) + '</td>' +
+      '<td class="small">' + r[2].map(fmtPlain).join(', ') + '</td>';
+    rt.appendChild(tr);
+  });
+  document.getElementById('validation').textContent =
+    'Over all ' + D.validation.n_adjacent_pairs + ' adjacent-season pairs: carry-forward MAE ' +
+    D.validation.mae_carry_forward_z + ' · age-curve MAE ' + D.validation.mae_age_curve_z +
+    ' · v5 saved-head MAE ' + D.validation.mae_v5_saved_head_z + ' (z units). ' +
+    'The three lines are nearly tied overall — the age-curve baseline is not claimed to beat the model; ' +
+    'it is the open formula that steering can honestly move. v5-head correlation with the actual next ' +
+    'season ranges from ' + Math.min.apply(null, Object.values(D.validation.v5_head_corr_vs_actual_next)) +
+    ' (PLUS_MINUS) to ' + Math.max.apply(null, Object.values(D.validation.v5_head_corr_vs_actual_next)) + ' (OREB).';
+}
+function renderAll(){ renderPlayers(); renderSteers(); renderTable(); }
+document.getElementById('presetThrees').onclick = function(){ sliders.threes = 100; renderAll(); };
+document.getElementById('reset').onclick = function(){
+  D.steers.forEach(function(s){ sliders[s.id] = 0; }); renderAll();
+};
+renderAll();
+</script>
+</body>
+</html>

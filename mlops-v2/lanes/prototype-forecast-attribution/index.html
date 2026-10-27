@@ -1,0 +1,4877 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Forecast Attribution — Why is the predicted line what it is?</title>
+<style>
+  body{font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;max-width:980px;margin:0 auto;padding:20px;line-height:1.5;color:#1a1a1a;background:#faf9f6}
+  h1{font-size:1.6em;margin-bottom:.2em} h2{font-size:1.15em;margin-top:1.6em}
+  .banner{border:2px solid #b7791f;background:#fff8e1;padding:12px 16px;border-radius:8px}
+  .box{border:1px solid #ccc;background:#fff;padding:12px 16px;border-radius:8px;margin:12px 0}
+  .tabs button,.signals button,.variants button{margin:3px;padding:8px 12px;border-radius:20px;border:1px solid #888;background:#fff;cursor:pointer;font-size:1em}
+  .tabs button.on,.signals button.on,.variants button.on{background:#1a1a1a;color:#fff}
+  table{border-collapse:collapse;width:100%;background:#fff}
+  th,td{border-bottom:1px solid #e5e5e5;padding:5px 8px;text-align:left;font-size:.95em}
+  td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+  .bar{display:inline-block;height:10px;background:#2a7fff;border-radius:5px;vertical-align:middle}
+  .bar.neg{background:#d64545}
+  .delta-neg{color:#b00020}.delta-pos{color:#0a6e32}
+  .sentence{font-size:1.15em;font-weight:600;background:#eef6ff;border-left:4px solid #2a7fff;padding:10px 14px}
+  .small{font-size:.88em;color:#444} .mono{font-family:ui-monospace,Menlo,monospace;font-size:.88em}
+  select{font-size:1em;padding:6px}
+</style>
+</head>
+<body>
+<h1>🏀 Forecast Attribution</h1>
+<p><b>Question:</b> for one player's predicted next-season line, <b>which past signals drive it?</b>
+Click a signal below and watch the predicted line move. Every number on this page was computed by
+<code>precompute.py</code> from the real 12,966-row dataset — nothing here is hand-written.</p>
+
+<div class="banner">
+<b>Read this first — what this is, and is not.</b>
+<ul>
+<li><b>Prediction-first framing:</b> user-directed, <b>pending panel ratification</b> (CONTRACT §11 HOLD). This prototype drafts the idea; it does not finalize the spec.</li>
+<li><b>These are labeled BASELINES, not model predictions.</b> The forecast is a neighbor baseline (K = 25 similar past player-seasons; their actual next seasons, averaged). It is <b>not</b> the v5 model talking.</li>
+<li><b>The v5 next-profile head is NOT runnable from saved assets.</b> <code>mtnn_heads.f32</code> holds only saved per-row outputs (12,966 × 45), no weights, no documented column layout, no checkpoint file in <code>assets/</code>. Its last 14 columns are a shrunk copy of the <i>current</i> season, not a usable forecast (MAE vs actual next season 0.4708 vs carry-forward 0.4732). So no model-internal attribution is shown — see <i>Gaps</i> below.</li>
+<li><b>Units:</b> every stat is a season-relative <b>z-score</b> (+1.0 = one standard deviation above that season's average). The dataset stores z-scores, not raw per-100 values, so no raw line is invented.</li>
+<li><b>Honest headline:</b> across 9,787 past cases the neighbor baseline (MAE <span id="maeNb"></span>) does <b>not</b> beat carry-forward (MAE <span id="maeCf"></span>). This demo proves the <i>attribution mechanics</i> — remove a signal, the line moves by a measured amount — not forecast skill.</li>
+</ul>
+</div>
+
+<h2>1 · Pick a player</h2>
+<div class="tabs" id="tabs"></div>
+<p id="playerMeta" class="small"></p>
+<p class="small">Forecast for <b id="predSeason"></b>. The "actual next season" line is what really happened afterwards — shown so you can see the error. It was <i>not</i> known at forecast time.</p>
+
+<h2>2 · The predicted line</h2>
+<p class="small">Show:
+<select id="lineSel">
+<option value="forecast">Neighbor-baseline forecast (headline)</option>
+<option value="carry_forward">Carry-forward baseline (last season = next season)</option>
+<option value="age_curve">Age-curve baseline (last season + typical change at this age)</option>
+<option value="actual_next_line">Actual next season (hindsight check)</option>
+</select>
+&nbsp; Forecast error (MAE vs actual): <b id="maeLine"></b></p>
+<table><thead><tr><th>Stat</th><th class="num">Last season</th><th class="num" id="shownHead">Forecast</th><th class="num">Actual next</th><th>Bar (shown line)</th></tr></thead><tbody id="lineBody"></tbody></table>
+
+<h2>3 · Click a signal — see what it drives</h2>
+<p class="small">A signal is a group of past inputs. <b>Remove</b> = find new neighbors ignoring that group entirely.
+<b>Half / 1.5×</b> = shrink or boost that signal in the player, then re-find neighbors. All variants are precomputed by <code>precompute.py</code>.</p>
+<div class="signals" id="signals"></div>
+<div class="variants" id="variants">
+<button data-v="remove" class="on">Remove it</button>
+<button data-v="scale_0.5">Half it (0.5×)</button>
+<button data-v="scale_1.5">Boost it (1.5×)</button>
+</div>
+<div class="box">
+<p class="sentence" id="sentence"></p>
+<p id="variantMeta" class="small"></p>
+<table><thead><tr><th>Stat</th><th class="num">Full forecast</th><th class="num">With this change</th><th class="num">Change (Δ)</th></tr></thead><tbody id="deltaBody"></tbody></table>
+<p class="small" id="nbrNote"></p>
+</div>
+
+<h2>4 · Why the full forecast looks like this</h2>
+<p id="nbrFull" class="small"></p>
+<p class="small">The forecast is the average of the actual next-season lines of the 25 most similar <i>earlier</i> player-seasons (same person excluded, keyed by person_id). Change the inputs, the neighbors change, the forecast changes — that is the whole causal chain, and it is measurable above.</p>
+
+<div class="box">
+<h2 style="margin-top:0">Gaps — stated plainly</h2>
+<ul>
+<li><b>No tower-level or gradient-level model attribution.</b> True served-v5 tower ablation is unavailable in this pass (120/130/143-feature input matrix not on disk; saved <code>mtnn.onnx</code> is a stale 119→48 export, and <code>mtnn_attr_pop.json</code> / <code>mtnn_jacobian.json</code> are 48-d pre-v5 exports marked <code>not_from_served_net</code>). None of those are used here.</li>
+<li><b>SAE / JEPA attributions are v1 notes only</b> — no such attribution is faked as working anywhere on this page.</li>
+<li><b>Team context is a proxy.</b> No separate team field is used; FTA + PLUS_MINUS is the closest stored proxy, and it is labeled as such.</li>
+<li><b>Stored workload fields</b> (games, total minutes) are used as stored in <code>vectors.json</code>; they are not re-derived into real minutes per game.</li>
+</ul>
+<p class="small">Method detail: distance = Euclidean over 17 standardized dims, equal weight (14 game-vector z-scores + age_z + gp_z + total_min_z). Candidates: earlier seasons only, own next season known, same person_id excluded. Reproduce everything with <code>python3 precompute.py</code> in this directory (inputs read-only; only <code>data.json</code> is written).</p>
+</div>
+
+<script type="application/json" id="DATA">{
+ "generated_by": "precompute.py (this directory); inputs read-only from vector-hoops-mlops-v2/assets/vectors.json",
+ "features": [
+  "PTS",
+  "AST",
+  "OREB",
+  "DREB",
+  "STL",
+  "BLK",
+  "TOV",
+  "FG3A",
+  "FGA",
+  "FTA",
+  "FG3_PCT",
+  "FG_PCT",
+  "FT_PCT",
+  "PLUS_MINUS"
+ ],
+ "method": {
+  "name": "Neighbor baseline (K=25) \u2014 a labeled baseline, NOT a model prediction",
+  "k": 25,
+  "distance": "Euclidean over 17 standardized dims, equal weight: 14 game-vector z-scores + age_z + gp_z + total_min_z (global mean/std below)",
+  "candidate_rule": "Earlier seasons only, own next season known, same person_id excluded",
+  "forecast": "Mean of the 25 neighbors' ACTUAL next-season lines",
+  "standardization": {
+   "age": [
+    27.039256517044578,
+    4.354818813039484
+   ],
+   "gp": [
+    56.12016041955884,
+    20.63301931855293
+   ],
+   "total_min": [
+    2798.704303563165,
+    1057.5001317429815
+   ]
+  }
+ },
+ "signals": [
+  {
+   "id": "scoring",
+   "label": "Last-season scoring",
+   "gloss": "How much he scored and shot (PTS, shot attempts, threes attempted).",
+   "dims": [
+    0,
+    8,
+    7
+   ],
+   "stats": [
+    "PTS",
+    "FGA",
+    "FG3A"
+   ]
+  },
+  {
+   "id": "playmaking",
+   "label": "Playmaking & ball security",
+   "gloss": "Setting teammates up, and giving it away (AST, TOV).",
+   "dims": [
+    1,
+    6
+   ],
+   "stats": [
+    "AST",
+    "TOV"
+   ]
+  },
+  {
+   "id": "glass-defense",
+   "label": "Glass & defense",
+   "gloss": "Rebounding and defensive plays (OREB, DREB, STL, BLK).",
+   "dims": [
+    2,
+    3,
+    4,
+    5
+   ],
+   "stats": [
+    "OREB",
+    "DREB",
+    "STL",
+    "BLK"
+   ]
+  },
+  {
+   "id": "efficiency",
+   "label": "Shooting efficiency",
+   "gloss": "How well he shot, not how much (FG3_PCT, FG_PCT, FT_PCT).",
+   "dims": [
+    10,
+    11,
+    12
+   ],
+   "stats": [
+    "FG3_PCT",
+    "FG_PCT",
+    "FT_PCT"
+   ]
+  },
+  {
+   "id": "line-impact",
+   "label": "Free throws & on-court impact",
+   "gloss": "Getting to the line and the score while he was on court (FTA, PLUS_MINUS) \u2014 the closest stored proxy for team context.",
+   "dims": [
+    9,
+    13
+   ],
+   "stats": [
+    "FTA",
+    "PLUS_MINUS"
+   ]
+  },
+  {
+   "id": "age-workload",
+   "label": "Age & workload",
+   "gloss": "How old he was and how much he played (age, games, stored minutes).",
+   "dims": [
+    14,
+    15,
+    16
+   ],
+   "stats": []
+  }
+ ],
+ "v5_head_check": {
+  "runnable": false,
+  "evidence": "mtnn_heads.f32 is 583,470 float32 = 12,966 rows x 45 outputs; no weight file and no documented column layout is saved, and no checkpoint file exists in assets/. Its last 14 columns (row-major) are a shrunk copy of the CURRENT season (slope 0.30-0.81 per stat, MAE vs actual next season 0.4708 vs carry-forward 0.4732 over 10,107 adjacent pairs) \u2014 so it cannot be run on new inputs and cannot be ablated. Baselines are therefore used and labeled."
+ },
+ "full_eval": {
+  "n_adjacent_pairs": 10107,
+  "n_evaluated": 9787,
+  "mae_neighbor_baseline": 0.4805,
+  "mae_carry_forward": 0.4732
+ },
+ "players": [
+  {
+   "person_id": "stephen-curry",
+   "name": "Stephen Curry",
+   "season": "2016-17",
+   "role_note": "Guard, prime superstar",
+   "age": 29,
+   "gp": 79,
+   "total_min_stored": 3666,
+   "predict_season": "2017-18",
+   "base_line": [
+    2.439,
+    1.833,
+    -0.61,
+    -0.588,
+    1.6,
+    -0.803,
+    1.521,
+    2.562,
+    1.996,
+    0.903,
+    1.808,
+    0.296,
+    1.717,
+    2.795
+   ],
+   "actual_next_line": [
+    2.964,
+    1.677,
+    -0.645,
+    -0.118,
+    1.096,
+    -0.903,
+    1.594,
+    2.468,
+    1.778,
+    2.033,
+    1.902,
+    0.645,
+    2.345,
+    2.209
+   ],
+   "forecast": [
+    1.843,
+    1.424,
+    -0.788,
+    -0.455,
+    0.682,
+    -0.57,
+    0.941,
+    1.539,
+    1.502,
+    1.078,
+    1.043,
+    0.072,
+    1.225,
+    1.246
+   ],
+   "carry_forward": [
+    2.439,
+    1.833,
+    -0.61,
+    -0.588,
+    1.6,
+    -0.803,
+    1.521,
+    2.562,
+    1.996,
+    0.903,
+    1.808,
+    0.296,
+    1.717,
+    2.795
+   ],
+   "age_curve": [
+    2.339,
+    1.827,
+    -0.629,
+    -0.599,
+    1.593,
+    -0.829,
+    1.498,
+    2.565,
+    1.933,
+    0.835,
+    1.819,
+    0.174,
+    1.716,
+    2.744
+   ],
+   "age_curve_n": 677,
+   "age_curve_widen": 0,
+   "mae_forecast_vs_actual": 0.6378,
+   "mae_carry_vs_actual": 0.3544,
+   "mae_agecurve_vs_actual": 0.3647,
+   "neighbors_top5": [
+    {
+     "name": "Manu Ginobili",
+     "season": "2006-07",
+     "person_id": "manu-ginobili"
+    },
+    {
+     "name": "Manu Ginobili",
+     "season": "2007-08",
+     "person_id": "manu-ginobili"
+    },
+    {
+     "name": "Manu Ginobili",
+     "season": "2009-10",
+     "person_id": "manu-ginobili"
+    },
+    {
+     "name": "Manu Ginobili",
+     "season": "2010-11",
+     "person_id": "manu-ginobili"
+    },
+    {
+     "name": "Kyle Lowry",
+     "season": "2015-16",
+     "person_id": "kyle-lowry"
+    }
+   ],
+   "n_candidates": 6717,
+   "ablations": {
+    "scoring": {
+     "remove": {
+      "forecast": [
+       1.413,
+       1.871,
+       -0.794,
+       -0.491,
+       0.862,
+       -0.589,
+       0.929,
+       1.088,
+       1.059,
+       1.062,
+       0.778,
+       0.02,
+       1.147,
+       1.338
+      ],
+      "delta": [
+       -0.429,
+       0.447,
+       -0.006,
+       -0.037,
+       0.18,
+       -0.018,
+       -0.011,
+       -0.451,
+       -0.443,
+       -0.016,
+       -0.266,
+       -0.051,
+       -0.078,
+       0.092
+      ],
+      "neighbors_top5": [
+       {
+        "name": "Manu Ginobili",
+        "season": "2006-07"
+       },
+       {
+        "name": "Manu Ginobili",
+        "season": "2009-10"
+       },
+       {
+        "name": "Manu Ginobili",
+        "season": "2007-08"
+       },
+       {
+        "name": "Paul Pierce",
+        "season": "2007-08"
+       },
+       {
+        "name": "Chauncey Billups",
+        "season": "2007-08"
+       }
+      ]
+     },
+     "scale_0.5": {
+      "forecast": [
+       1.354,
+       1.856,
+       -0.783,
+       -0.484,
+       0.812,
+       -0.595,
+       0.939,
+       1.165,
+       0.955,
+       1.083,
+       0.906,
+       -0.025,
+       1.163,
+       1.284
+      ],
+      "delta": [
+       -0.488,
+       0.432,
+       0.005,
+       -0.029,
+       0.13,
+       -0.025,
+       -0.002,
+       -0.375,
+       -0.548,
+       0.005,
+       -0.137,
+       -0.097,
+       -0.062,
+       0.039
+      ],
+      "neighbors_top5": [
+       {
+        "name": "Manu Ginobili",
+        "season": "2009-10"
+       },
+       {
+        "name": "Manu Ginobili",
+        "season": "2006-07"
+       },
+       {
+        "name": "Paul Pierce",
+        "season": "2007-08"
+       },
+       {
+        "name": "Chauncey Billups",
+        "season": "2007-08"
+       },
+       {
+        "name": "Manu Ginobili",
+        "season": "2004-05"
+       }
+      ]
+     },
+     "scale_1.5": {
+      "forecast": [
+       2.154,
+       1.187,
+       -0.793,
+       -0.444,
+       0.61,
+       -0.61,
+       0.888,
+       1.706,
+       1.929,
+       1.209,
+       0.947,
+       0.025,
+       1.235,
+       1.02
+      ],
+      "delta": [
+       0.311,
+       -0.237,
+       -0.004,
+       0.011,
+       -0.072,
+       -0.04,
+       -0.053,
+       0.167,
+       0.427,
+       0.131,
+       -0.096,
+       -0.047,
+       0.01,
+       -0.225
+      ],
+      "neighbors_top5": [
+       {
+        "name": "Ray Allen",
+        "season": "2002-03"
+       },
+       {
+        "name": "Manu Ginobili",
+        "season": "2007-08"
+       },
+       {
+        "name": "Manu Ginobili",
+        "season": "2006-07"
+       },
+       {
+        "name": "Ray Allen",
+        "season": "2003-04"
+       },
+       {
+        "name": "Gilbert Arenas",
+        "season": "2006-07"
+       }
+      ]
+     }
+    },
+    "playmaking": {
+     "remove": {
+      "forecast": [
+       1.594,
+       1.243,
+       -0.821,
+       -0.561,
+       0.647,
+       -0.631,
+       0.555,
+       1.621,
+       1.263,
+       0.738,
+       1.185,
+       0.068,
+       1.249,
+       1.259
+      ],
+      "delta": [
+       -0.248,
+       -0.181,
+       -0.033,
+       -0.107,
+       -0.035,
+       -0.061,
+       -0.386,
+       0.082,
+       -0.239,
+       -0.34,
+       0.142,
+       -0.003,
+       0.024,
+       0.013
+      ],
+      "neighbors_top5": [
+       {
+        "name": "Manu Ginobili",
+        "season": "2006-07"
+       },
+       {
+        "name": "Manu Ginobili",
+        "season": "2007-08"
+       },
+       {
+        "name": "Manu Ginobili",
+        "season": "2009-10"
+       },
+       {
+        "name": "Klay Thompson",
+        "season": "2014-15"
+       },
+       {
+        "name": "Manu Ginobili",
+        "season": "2010-11"
+       }
+      ]
+     },
+     "scale_0.5": {
+      "forecast": [
+       1.851,
+       0.881,
+       -0.77,
+       -0.541,
+       0.583,
+       -0.558,
+       0.672,
+       1.683,
+       1.544,
+       0.899,
+       1.186,
+       0.108,
+       1.322,
+       1.121
+      ],
+      "delta": [
+       0.009,
+       -0.543,
+       0.018,
+       -0.087,
+       -0.099,
+       0.013,
+       -0.269,
+       0.144,
+       0.041,
+       -0.179,
+       0.142,
+       0.036,
+       0.097,
+       -0.125
+      ],
+      "neighbors_top5": [
+       {
+        "name": "Manu Ginobili",
+        "season": "2006-07"
+       },
+       {
+        "name": "Manu Ginobili",
+        "season": "2009-10"
+       },
+       {
+        "name": "Manu Ginobili",
+        "season": "2007-08"
+       },
+       {
+        "name": "Ray Allen",
+        "season": "2002-03"
+       },
+       {
+        "name": "Manu Ginobili",
+        "season": "2010-11"
+       }
+      ]
+     },
+     "scale_1.5": {
+      "forecast": [
+       1.681,
+       1.926,
+       -0.808,
+       -0.505,
+       0.888,
+       -0.626,
+       1.104,
+       1.357,
+       1.348,
+       1.094,
+       0.804,
+       0.056,
+       1.295,
+       1.23
+      ],
+      "delta": [
+       -0.162,
+       0.502,
+       -0.02,
+       -0.051,
+       0.205,
+       -0.056,
+       0.163,
+       -0.182,
+       -0.155,
+       0.016,
+       -0.239,
+       -0.015,
+       0.07,
+       -0.015
+      ],
+      "neighbors_top5": [
+       {
+        "name": "Manu Ginobili",
+        "season": "2007-08"
+       },
+       {
+        "name": "Manu Ginobili",
+        "season": "2009-10"
+       },
+       {
+        "name": "Jason Kidd",
+        "season": "2002-03"
+       },
+       {
+        "name": "Manu Ginobili",
+        "season": "2006-07"
+       },
+       {
+        "name": "Kyle Lowry",
+        "season": "2015-16"
+       }
+      ]
+     }
+    },
+    "glass-defense": {
+     "remove": {
+      "forecast": [
+       1.701,
+       1.33,
+       -0.854,
+       -0.466,
+       0.305,
+       -0.539,
+       0.847,
+       1.533,
+       1.323,
+       0.999,
+       1.19,
+       0.052,
+       1.366,
+       1.12
+      ],
+      "delta": [
+       -0.141,
+       -0.094,
+       -0.066,
+       -0.011,
+       -0.377,
+       0.032,
+       -0.094,
+       -0.006,
+       -0.18,
+       -0.079,
+       0.147,
+       -0.02,
+       0.141,
+       -0.126
+      ],
+      "neighbors_top5": [
+       {
+        "name": "Manu Ginobili",
+        "season": "2006-07"
+       },
+       {
+        "name": "Manu Ginobili",
+        "season": "2007-08"
+       },
+       {
+        "name": "Manu Ginobili",
+        "season": "2009-10"
+       },
+       {
+        "name": "Kevin Durant",
+        "season": "2015-16"
+       },
+       {
+        "name": "Manu Ginobili",
+        "season": "2010-11"
+       }
+      ]
+     },
+     "scale_0.5": {
+      "forecast": [
+       1.791,
+       1.329,
+       -0.817,
+       -0.486,
+       0.396,
+       -0.597,
+       0.898,
+       1.501,
+       1.476,
+       0.989,
+       1.133,
+       0.044,
+       1.335,
+       1.148
+      ],
+      "delta": [
+       -0.052,
+       -0.095,
+       -0.029,
+       -0.032,
+       -0.286,
+       -0.026,
+       -0.043,
+       -0.038,
+       -0.026,
+       -0.089,
+       0.09,
+       -0.027,
+       0.11,
+       -0.098
+      ],
+      "neighbors_top5": [
+       {
+        "name": "Manu Ginobili",
+        "season": "2006-07"
+       },
+       {
+        "name": "Manu Ginobili",
+        "season": "2007-08"
+       },
+       {
+        "name": "Manu Ginobili",
+        "season": "2009-10"
+       },
+       {
+        "name": "Ray Allen",
+        "season": "2002-03"
+       },
+       {
+        "name": "Paul Pierce",
+        "season": "2007-08"
+       }
+      ]
+     },
+     "scale_1.5": {
+      "forecast": [
+       1.665,
+       1.524,
+       -0.765,
+       -0.357,
+       1.148,
+       -0.574,
+       1.099,
+       1.458,
+       1.32,
+       1.096,
+       0.888,
+       0.025,
+       1.204,
+       1.206
+      ],
+      "delta": [
+       -0.178,
+       0.1,
+       0.024,
+       0.097,
+       0.466,
+       -0.003,
+       0.158,
+       -0.081,
+       -0.182,
+       0.018,
+       -0.155,
+       -0.047,
+       -0.021,
+       -0.04
+      ],
+      "neighbors_top5": [
+       {
+        "name": "Manu Ginobili",
+        "season": "2006-07"
+       },
+       {
+        "name": "Manu Ginobili",
+        "season": "2009-10"
+       },
+       {
+        "name": "Manu Ginobili",
+        "season": "2007-08"
+       },
+       {
+        "name": "Kyle Lowry",
+        "season": "2015-16"
+       },
+       {
+        "name": "Manu Ginobili",
+        "season": "2010-11"
+       }
+      ]
+     }
+    },
+    "efficiency": {
+     "remove": {
+      "forecast": [
+       1.708,
+       1.694,
+       -0.798,
+       -0.339,
+       0.908,
+       -0.531,
+       1.038,
+       1.452,
+       1.497,
+       1.055,
+       0.773,
+       -0.043,
+       0.915,
+       1.156
+      ],
+      "delta": [
+       -0.135,
+       0.27,
+       -0.009,
+       0.115,
+       0.226,
+       0.039,
+       0.098,
+       -0.088,
+       -0.005,
+       -0.023,
+       -0.27,
+       -0.115,
+       -0.31,
+       -0.09
+      ],
+      "neighbors_top5": [
+       {
+        "name": "Manu Ginobili",
+        "season": "2006-07"
+       },
+       {
+        "name": "Manu Ginobili",
+        "season": "2009-10"
+       },
+       {
+        "name": "Tim Hardaway Sr.",
+        "season": "1996-97"
+       },
+       {
+        "name": "Manu Ginobili",
+        "season": "2010-11"
+       },
+       {
+        "name": "Manu Ginobili",
+        "season": "2007-08"
+       }
+      ]
+     },
+     "scale_0.5": {
+      "forecast": [
+       1.779,
+       1.719,
+       -0.786,
+       -0.257,
+       1.014,
+       -0.475,
+       1.089,
+       1.353,
+       1.635,
+       1.19,
+       0.605,
+       -0.084,
+       0.811,
+       1.218
+      ],
+      "delta": [
+       -0.064,
+       0.295,
+       0.003,
+       0.198,
+       0.332,
+       0.096,
+       0.148,
+       -0.186,
+       0.133,
+       0.112,
+       -0.438,
+       -0.156,
+       -0.414,
+       -0.027
+      ],
+      "neighbors_top5": [
+       {
+        "name": "Manu Ginobili",
+        "season": "2006-07"
+       },
+       {
+        "name": "Manu Ginobili",
+        "season": "2009-10"
+       },
+       {
+        "name": "Tim Hardaway Sr.",
+        "season": "1996-97"
+       },
+       {
+        "name": "Manu Ginobili",
+        "season": "2010-11"
+       },
+       {
+        "name": "Manu Ginobili",
+        "season": "2007-08"
+       }
+      ]
+     },
+     "scale_1.5": {
+      "forecast": [
+       1.668,
+       1.389,
+       -0.851,
+       -0.583,
+       0.415,
+       -0.628,
+       0.778,
+       1.627,
+       1.281,
+       0.914,
+       1.329,
+       0.016,
+       1.456,
+       1.111
+      ],
+      "delta": [
+       -0.175,
+       -0.035,
+       -0.063,
+       -0.129,
+       -0.267,
+       -0.057,
+       -0.163,
+       0.088,
+       -0.221,
+       -0.165,
+       0.286,
+       -0.056,
+       0.231,
+       -0.134
+      ],
+      "neighbors_top5": [
+       {
+        "name": "Manu Ginobili",
+        "season": "2006-07"
+       },
+       {
+        "name": "Manu Ginobili",
+        "season": "2007-08"
+       },
+       {
+        "name": "Manu Ginobili",
+        "season": "2009-10"
+       },
+       {
+        "name": "Ray Allen",
+        "season": "2000-01"
+       },
+       {
+        "name": "Ray Allen",
+        "season": "2002-03"
+       }
+      ]
+     }
+    },
+    "line-impact": {
+     "remove": {
+      "forecast": [
+       2.174,
+       1.398,
+       -0.773,
+       -0.474,
+       0.8,
+       -0.611,
+       1.317,
+       1.689,
+       1.691,
+       1.714,
+       0.971,
+       0.003,
+       1.444,
+       0.941
+      ],
+      "delta": [
+       0.332,
+       -0.026,
+       0.015,
+       -0.019,
+       0.118,
+       -0.041,
+       0.376,
+       0.15,
+       0.189,
+       0.636,
+       -0.073,
+       -0.068,
+       0.219,
+       -0.305
+      ],
+      "neighbors_top5": [
+       {
+        "name": "Manu Ginobili",
+        "season": "2007-08"
+       },
+       {
+        "name": "Kyle Lowry",
+        "season": "2015-16"
+       },
+       {
+        "name": "Gilbert Arenas",
+        "season": "2006-07"
+       },
+       {
+        "name": "Gilbert Arenas",
+        "season": "2005-06"
+       },
+       {
+        "name": "Manu Ginobili",
+        "season": "2006-07"
+       }
+      ]
+     },
+     "scale_0.5": {
+      "forecast": [
+       1.738,
+       1.394,
+       -0.751,
+       -0.533,
+       0.635,
+       -0.645,
+       0.813,
+       1.691,
+       1.572,
+       0.704,
+       1.014,
+       -0.011,
+       1.213,
+       0.871
+      ],
+      "delta": [
+       -0.104,
+       -0.03,
+       0.038,
+       -0.079,
+       -0.048,
+       -0.074,
+       -0.128,
+       0.152,
+       0.07,
+       -0.374,
+       -0.029,
+       -0.082,
+       -0.012,
+       -0.374
+      ],
+      "neighbors_top5": [
+       {
+        "name": "Ray Allen",
+        "season": "2002-03"
+       },
+       {
+        "name": "Manu Ginobili",
+        "season": "2009-10"
+       },
+       {
+        "name": "Manu Ginobili",
+        "season": "2007-08"
+       },
+       {
+        "name": "Kyle Lowry",
+        "season": "2015-16"
+       },
+       {
+        "name": "Ray Allen",
+        "season": "2003-04"
+       }
+      ]
+     },
+     "scale_1.5": {
+      "forecast": [
+       1.791,
+       1.565,
+       -0.767,
+       -0.373,
+       0.853,
+       -0.552,
+       0.98,
+       1.385,
+       1.449,
+       1.114,
+       0.927,
+       0.114,
+       1.161,
+       1.405
+      ],
+      "delta": [
+       -0.052,
+       0.141,
+       0.021,
+       0.082,
+       0.171,
+       0.019,
+       0.039,
+       -0.154,
+       -0.054,
+       0.036,
+       -0.116,
+       0.042,
+       -0.064,
+       0.16
+      ],
+      "neighbors_top5": [
+       {
+        "name": "Manu Ginobili",
+        "season": "2006-07"
+       },
+       {
+        "name": "Manu Ginobili",
+        "season": "2007-08"
+       },
+       {
+        "name": "Manu Ginobili",
+        "season": "2009-10"
+       },
+       {
+        "name": "Manu Ginobili",
+        "season": "2004-05"
+       },
+       {
+        "name": "Manu Ginobili",
+        "season": "2010-11"
+       }
+      ]
+     }
+    },
+    "age-workload": {
+     "remove": {
+      "forecast": [
+       1.668,
+       1.446,
+       -0.833,
+       -0.518,
+       0.675,
+       -0.596,
+       0.926,
+       1.595,
+       1.351,
+       0.927,
+       1.085,
+       -0.008,
+       1.128,
+       1.236
+      ],
+      "delta": [
+       -0.174,
+       0.022,
+       -0.044,
+       -0.063,
+       -0.007,
+       -0.025,
+       -0.014,
+       0.056,
+       -0.151,
+       -0.151,
+       0.042,
+       -0.08,
+       -0.097,
+       -0.009
+      ],
+      "neighbors_top5": [
+       {
+        "name": "Manu Ginobili",
+        "season": "2006-07"
+       },
+       {
+        "name": "Manu Ginobili",
+        "season": "2009-10"
+       },
+       {
+        "name": "Manu Ginobili",
+        "season": "2007-08"
+       },
+       {
+        "name": "Manu Ginobili",
+        "season": "2010-11"
+       },
+       {
+        "name": "Kyle Lowry",
+        "season": "2015-16"
+       }
+      ]
+     },
+     "scale_0.5": {
+      "forecast": [
+       1.801,
+       1.446,
+       -0.808,
+       -0.454,
+       0.723,
+       -0.591,
+       1.049,
+       1.526,
+       1.478,
+       1.152,
+       0.938,
+       -0.016,
+       1.166,
+       1.255
+      ],
+      "delta": [
+       -0.042,
+       0.022,
+       -0.02,
+       0.0,
+       0.041,
+       -0.021,
+       0.108,
+       -0.013,
+       -0.024,
+       0.074,
+       -0.105,
+       -0.088,
+       -0.059,
+       0.01
+      ],
+      "neighbors_top5": [
+       {
+        "name": "Manu Ginobili",
+        "season": "2006-07"
+       },
+       {
+        "name": "Manu Ginobili",
+        "season": "2007-08"
+       },
+       {
+        "name": "Manu Ginobili",
+        "season": "2009-10"
+       },
+       {
+        "name": "Kyle Lowry",
+        "season": "2015-16"
+       },
+       {
+        "name": "Manu Ginobili",
+        "season": "2010-11"
+       }
+      ]
+     },
+     "scale_1.5": {
+      "forecast": [
+       1.83,
+       1.525,
+       -0.806,
+       -0.485,
+       0.615,
+       -0.544,
+       0.877,
+       1.435,
+       1.552,
+       0.972,
+       0.928,
+       0.124,
+       1.19,
+       1.161
+      ],
+      "delta": [
+       -0.013,
+       0.101,
+       -0.018,
+       -0.03,
+       -0.067,
+       0.026,
+       -0.063,
+       -0.104,
+       0.049,
+       -0.106,
+       -0.115,
+       0.052,
+       -0.035,
+       -0.084
+      ],
+      "neighbors_top5": [
+       {
+        "name": "Manu Ginobili",
+        "season": "2006-07"
+       },
+       {
+        "name": "Manu Ginobili",
+        "season": "2009-10"
+       },
+       {
+        "name": "Manu Ginobili",
+        "season": "2007-08"
+       },
+       {
+        "name": "Manu Ginobili",
+        "season": "2010-11"
+       },
+       {
+        "name": "Kyle Lowry",
+        "season": "2015-16"
+       }
+      ]
+     }
+    }
+   }
+  },
+  {
+   "person_id": "nikola-jokic",
+   "name": "Nikola Jokic",
+   "season": "2022-23",
+   "role_note": "Big man, MVP-level center",
+   "age": 28,
+   "gp": 69,
+   "total_min_stored": 3291,
+   "predict_season": "2023-24",
+   "base_line": [
+    2.041,
+    3.53,
+    0.71,
+    2.741,
+    0.626,
+    0.044,
+    2.34,
+    -0.912,
+    0.996,
+    1.692,
+    0.332,
+    2.232,
+    0.847,
+    2.185
+   ],
+   "actual_next_line": [
+    2.49,
+    3.01,
+    1.029,
+    2.7,
+    0.652,
+    0.201,
+    1.847,
+    -0.679,
+    1.849,
+    1.681,
+    0.096,
+    1.712,
+    0.788,
+    1.734
+   ],
+   "forecast": [
+    2.192,
+    1.647,
+    0.174,
+    1.796,
+    0.433,
+    0.047,
+    1.687,
+    -0.252,
+    1.762,
+    1.985,
+    -0.127,
+    1.074,
+    -0.045,
+    1.097
+   ],
+   "carry_forward": [
+    2.041,
+    3.53,
+    0.71,
+    2.741,
+    0.626,
+    0.044,
+    2.34,
+    -0.912,
+    0.996,
+    1.692,
+    0.332,
+    2.232,
+    0.847,
+    2.185
+   ],
+   "age_curve": [
+    1.937,
+    3.505,
+    0.689,
+    2.715,
+    0.638,
+    0.015,
+    2.318,
+    -0.904,
+    0.924,
+    1.64,
+    0.31,
+    2.121,
+    0.811,
+    2.097
+   ],
+   "age_curve_n": 728,
+   "age_curve_widen": 0,
+   "mae_forecast_vs_actual": 0.5072,
+   "mae_carry_vs_actual": 0.312,
+   "mae_agecurve_vs_actual": 0.3052,
+   "neighbors_top5": [
+    {
+     "name": "LeBron James",
+     "season": "2016-17",
+     "person_id": "lebron-james"
+    },
+    {
+     "name": "LeBron James",
+     "season": "2012-13",
+     "person_id": "lebron-james"
+    },
+    {
+     "name": "Grant Hill",
+     "season": "1996-97",
+     "person_id": "grant-hill"
+    },
+    {
+     "name": "LeBron James",
+     "season": "2017-18",
+     "person_id": "lebron-james"
+    },
+    {
+     "name": "Kevin Garnett",
+     "season": "2002-03",
+     "person_id": "kevin-garnett"
+    }
+   ],
+   "n_candidates": 8927,
+   "ablations": {
+    "scoring": {
+     "remove": {
+      "forecast": [
+       2.252,
+       1.836,
+       -0.026,
+       1.515,
+       0.673,
+       0.047,
+       1.764,
+       -0.054,
+       1.742,
+       2.084,
+       -0.057,
+       1.031,
+       0.045,
+       1.212
+      ],
+      "delta": [
+       0.06,
+       0.189,
+       -0.199,
+       -0.281,
+       0.24,
+       -0.0,
+       0.078,
+       0.199,
+       -0.02,
+       0.099,
+       0.07,
+       -0.042,
+       0.089,
+       0.115
+      ],
+      "neighbors_top5": [
+       {
+        "name": "LeBron James",
+        "season": "2012-13"
+       },
+       {
+        "name": "LeBron James",
+        "season": "2016-17"
+       },
+       {
+        "name": "LeBron James",
+        "season": "2015-16"
+       },
+       {
+        "name": "LeBron James",
+        "season": "2017-18"
+       },
+       {
+        "name": "Draymond Green",
+        "season": "2015-16"
+       }
+      ]
+     },
+     "scale_0.5": {
+      "forecast": [
+       1.725,
+       1.4,
+       0.232,
+       1.659,
+       0.317,
+       0.096,
+       1.464,
+       -0.456,
+       1.252,
+       1.736,
+       -0.174,
+       1.025,
+       0.208,
+       0.904
+      ],
+      "delta": [
+       -0.467,
+       -0.247,
+       0.059,
+       -0.137,
+       -0.116,
+       0.049,
+       -0.223,
+       -0.203,
+       -0.51,
+       -0.248,
+       -0.048,
+       -0.049,
+       0.253,
+       -0.192
+      ],
+      "neighbors_top5": [
+       {
+        "name": "Domantas Sabonis",
+        "season": "2020-21"
+       },
+       {
+        "name": "LeBron James",
+        "season": "2016-17"
+       },
+       {
+        "name": "Draymond Green",
+        "season": "2015-16"
+       },
+       {
+        "name": "Domantas Sabonis",
+        "season": "2021-22"
+       },
+       {
+        "name": "Grant Hill",
+        "season": "1996-97"
+       }
+      ]
+     },
+     "scale_1.5": {
+      "forecast": [
+       2.506,
+       1.602,
+       0.112,
+       1.828,
+       0.449,
+       0.142,
+       1.718,
+       -0.247,
+       2.0,
+       2.245,
+       -0.22,
+       1.132,
+       -0.103,
+       1.21
+      ],
+      "delta": [
+       0.313,
+       -0.046,
+       -0.061,
+       0.032,
+       0.016,
+       0.094,
+       0.031,
+       0.005,
+       0.238,
+       0.26,
+       -0.094,
+       0.058,
+       -0.058,
+       0.113
+      ],
+      "neighbors_top5": [
+       {
+        "name": "LeBron James",
+        "season": "2012-13"
+       },
+       {
+        "name": "LeBron James",
+        "season": "2016-17"
+       },
+       {
+        "name": "Grant Hill",
+        "season": "1996-97"
+       },
+       {
+        "name": "LeBron James",
+        "season": "2011-12"
+       },
+       {
+        "name": "LeBron James",
+        "season": "2015-16"
+       }
+      ]
+     }
+    },
+    "playmaking": {
+     "remove": {
+      "forecast": [
+       1.496,
+       0.224,
+       0.697,
+       2.138,
+       -0.012,
+       0.448,
+       0.705,
+       -0.92,
+       1.294,
+       1.021,
+       -0.5,
+       1.086,
+       0.315,
+       0.827
+      ],
+      "delta": [
+       -0.696,
+       -1.423,
+       0.523,
+       0.342,
+       -0.445,
+       0.4,
+       -0.982,
+       -0.668,
+       -0.467,
+       -0.963,
+       -0.374,
+       0.012,
+       0.36,
+       -0.27
+      ],
+      "neighbors_top5": [
+       {
+        "name": "Carlos Boozer",
+        "season": "2009-10"
+       },
+       {
+        "name": "Carlos Boozer",
+        "season": "2007-08"
+       },
+       {
+        "name": "Kevin Garnett",
+        "season": "2007-08"
+       },
+       {
+        "name": "Kevin Garnett",
+        "season": "2002-03"
+       },
+       {
+        "name": "Arvydas Sabonis",
+        "season": "1996-97"
+       }
+      ]
+     },
+     "scale_0.5": {
+      "forecast": [
+       1.742,
+       0.773,
+       0.431,
+       2.067,
+       0.194,
+       0.189,
+       0.853,
+       -0.729,
+       1.469,
+       1.304,
+       -0.293,
+       1.112,
+       0.246,
+       1.02
+      ],
+      "delta": [
+       -0.451,
+       -0.874,
+       0.257,
+       0.271,
+       -0.24,
+       0.142,
+       -0.834,
+       -0.476,
+       -0.293,
+       -0.68,
+       -0.166,
+       0.038,
+       0.291,
+       -0.077
+      ],
+      "neighbors_top5": [
+       {
+        "name": "Carlos Boozer",
+        "season": "2009-10"
+       },
+       {
+        "name": "Kevin Garnett",
+        "season": "2002-03"
+       },
+       {
+        "name": "Kevin Garnett",
+        "season": "2004-05"
+       },
+       {
+        "name": "Kevin Garnett",
+        "season": "2007-08"
+       },
+       {
+        "name": "Carlos Boozer",
+        "season": "2007-08"
+       }
+      ]
+     },
+     "scale_1.5": {
+      "forecast": [
+       2.199,
+       2.309,
+       -0.373,
+       0.844,
+       0.626,
+       -0.233,
+       2.213,
+       0.263,
+       1.824,
+       2.099,
+       0.05,
+       0.634,
+       0.087,
+       0.937
+      ],
+      "delta": [
+       0.007,
+       0.662,
+       -0.546,
+       -0.951,
+       0.193,
+       -0.28,
+       0.526,
+       0.516,
+       0.063,
+       0.115,
+       0.177,
+       -0.44,
+       0.131,
+       -0.16
+      ],
+      "neighbors_top5": [
+       {
+        "name": "Russell Westbrook",
+        "season": "2017-18"
+       },
+       {
+        "name": "LeBron James",
+        "season": "2016-17"
+       },
+       {
+        "name": "Russell Westbrook",
+        "season": "2015-16"
+       },
+       {
+        "name": "LeBron James",
+        "season": "2017-18"
+       },
+       {
+        "name": "LeBron James",
+        "season": "2019-20"
+       }
+      ]
+     }
+    },
+    "glass-defense": {
+     "remove": {
+      "forecast": [
+       1.765,
+       2.646,
+       -0.861,
+       -0.4,
+       0.55,
+       -0.596,
+       1.488,
+       -0.018,
+       1.384,
+       1.316,
+       0.249,
+       0.818,
+       0.661,
+       1.233
+      ],
+      "delta": [
+       -0.427,
+       0.998,
+       -1.035,
+       -2.196,
+       0.116,
+       -0.644,
+       -0.199,
+       0.234,
+       -0.378,
+       -0.669,
+       0.375,
+       -0.256,
+       0.706,
+       0.136
+      ],
+      "neighbors_top5": [
+       {
+        "name": "Tony Parker",
+        "season": "2012-13"
+       },
+       {
+        "name": "Chris Paul",
+        "season": "2008-09"
+       },
+       {
+        "name": "Tony Parker",
+        "season": "2011-12"
+       },
+       {
+        "name": "Deron Williams",
+        "season": "2007-08"
+       },
+       {
+        "name": "Tony Parker",
+        "season": "2005-06"
+       }
+      ]
+     },
+     "scale_0.5": {
+      "forecast": [
+       2.116,
+       1.924,
+       -0.363,
+       0.674,
+       0.328,
+       -0.345,
+       1.697,
+       -0.075,
+       1.764,
+       1.885,
+       -0.049,
+       0.839,
+       0.059,
+       1.066
+      ],
+      "delta": [
+       -0.076,
+       0.277,
+       -0.537,
+       -1.122,
+       -0.105,
+       -0.392,
+       0.01,
+       0.177,
+       0.002,
+       -0.099,
+       0.077,
+       -0.235,
+       0.104,
+       -0.031
+      ],
+      "neighbors_top5": [
+       {
+        "name": "LeBron James",
+        "season": "2016-17"
+       },
+       {
+        "name": "LeBron James",
+        "season": "2012-13"
+       },
+       {
+        "name": "LeBron James",
+        "season": "2015-16"
+       },
+       {
+        "name": "LeBron James",
+        "season": "2017-18"
+       },
+       {
+        "name": "LeBron James",
+        "season": "2013-14"
+       }
+      ]
+     },
+     "scale_1.5": {
+      "forecast": [
+       1.93,
+       1.209,
+       0.428,
+       2.225,
+       0.299,
+       0.238,
+       1.384,
+       -0.61,
+       1.483,
+       1.779,
+       -0.361,
+       1.167,
+       -0.038,
+       0.986
+      ],
+      "delta": [
+       -0.263,
+       -0.439,
+       0.254,
+       0.429,
+       -0.134,
+       0.19,
+       -0.303,
+       -0.358,
+       -0.279,
+       -0.205,
+       -0.234,
+       0.093,
+       0.007,
+       -0.111
+      ],
+      "neighbors_top5": [
+       {
+        "name": "Kevin Garnett",
+        "season": "2004-05"
+       },
+       {
+        "name": "Kevin Garnett",
+        "season": "2002-03"
+       },
+       {
+        "name": "Grant Hill",
+        "season": "1996-97"
+       },
+       {
+        "name": "Kevin Garnett",
+        "season": "2003-04"
+       },
+       {
+        "name": "Carlos Boozer",
+        "season": "2009-10"
+       }
+      ]
+     }
+    },
+    "efficiency": {
+     "remove": {
+      "forecast": [
+       2.023,
+       1.918,
+       0.053,
+       1.529,
+       0.485,
+       -0.041,
+       1.933,
+       -0.268,
+       1.641,
+       2.037,
+       -0.261,
+       0.886,
+       -0.174,
+       0.861
+      ],
+      "delta": [
+       -0.17,
+       0.27,
+       -0.12,
+       -0.267,
+       0.052,
+       -0.088,
+       0.246,
+       -0.016,
+       -0.121,
+       0.052,
+       -0.134,
+       -0.188,
+       -0.129,
+       -0.235
+      ],
+      "neighbors_top5": [
+       {
+        "name": "Russell Westbrook",
+        "season": "2018-19"
+       },
+       {
+        "name": "LeBron James",
+        "season": "2016-17"
+       },
+       {
+        "name": "Russell Westbrook",
+        "season": "2020-21"
+       },
+       {
+        "name": "Grant Hill",
+        "season": "1996-97"
+       },
+       {
+        "name": "Russell Westbrook",
+        "season": "2017-18"
+       }
+      ]
+     },
+     "scale_0.5": {
+      "forecast": [
+       2.064,
+       1.662,
+       0.065,
+       1.499,
+       0.38,
+       -0.1,
+       1.751,
+       -0.236,
+       1.722,
+       1.925,
+       -0.19,
+       0.887,
+       0.066,
+       0.873
+      ],
+      "delta": [
+       -0.128,
+       0.015,
+       -0.109,
+       -0.296,
+       -0.054,
+       -0.147,
+       0.064,
+       0.017,
+       -0.04,
+       -0.06,
+       -0.063,
+       -0.187,
+       0.111,
+       -0.224
+      ],
+      "neighbors_top5": [
+       {
+        "name": "Grant Hill",
+        "season": "1996-97"
+       },
+       {
+        "name": "LeBron James",
+        "season": "2016-17"
+       },
+       {
+        "name": "Russell Westbrook",
+        "season": "2017-18"
+       },
+       {
+        "name": "Domantas Sabonis",
+        "season": "2020-21"
+       },
+       {
+        "name": "LeBron James",
+        "season": "2017-18"
+       }
+      ]
+     },
+     "scale_1.5": {
+      "forecast": [
+       2.02,
+       1.213,
+       0.294,
+       1.893,
+       0.386,
+       0.182,
+       1.323,
+       -0.564,
+       1.579,
+       1.727,
+       -0.195,
+       1.223,
+       0.041,
+       1.071
+      ],
+      "delta": [
+       -0.172,
+       -0.434,
+       0.121,
+       0.098,
+       -0.048,
+       0.135,
+       -0.364,
+       -0.311,
+       -0.183,
+       -0.258,
+       -0.068,
+       0.149,
+       0.085,
+       -0.026
+      ],
+      "neighbors_top5": [
+       {
+        "name": "LeBron James",
+        "season": "2012-13"
+       },
+       {
+        "name": "LeBron James",
+        "season": "2016-17"
+       },
+       {
+        "name": "LeBron James",
+        "season": "2011-12"
+       },
+       {
+        "name": "Grant Hill",
+        "season": "1996-97"
+       },
+       {
+        "name": "LeBron James",
+        "season": "2017-18"
+       }
+      ]
+     }
+    },
+    "line-impact": {
+     "remove": {
+      "forecast": [
+       2.217,
+       1.525,
+       0.149,
+       1.795,
+       0.425,
+       0.159,
+       1.678,
+       -0.359,
+       1.702,
+       2.115,
+       -0.255,
+       1.137,
+       -0.143,
+       1.08
+      ],
+      "delta": [
+       0.025,
+       -0.123,
+       -0.025,
+       -0.001,
+       -0.009,
+       0.112,
+       -0.008,
+       -0.107,
+       -0.06,
+       0.13,
+       -0.128,
+       0.063,
+       -0.099,
+       -0.017
+      ],
+      "neighbors_top5": [
+       {
+        "name": "Domantas Sabonis",
+        "season": "2020-21"
+       },
+       {
+        "name": "LeBron James",
+        "season": "2017-18"
+       },
+       {
+        "name": "Grant Hill",
+        "season": "1996-97"
+       },
+       {
+        "name": "LeBron James",
+        "season": "2016-17"
+       },
+       {
+        "name": "Domantas Sabonis",
+        "season": "2021-22"
+       }
+      ]
+     },
+     "scale_0.5": {
+      "forecast": [
+       1.813,
+       1.252,
+       0.271,
+       1.719,
+       0.234,
+       0.044,
+       1.26,
+       -0.422,
+       1.48,
+       1.534,
+       -0.149,
+       0.992,
+       0.125,
+       0.788
+      ],
+      "delta": [
+       -0.379,
+       -0.395,
+       0.097,
+       -0.077,
+       -0.199,
+       -0.004,
+       -0.427,
+       -0.169,
+       -0.282,
+       -0.451,
+       -0.022,
+       -0.082,
+       0.17,
+       -0.309
+      ],
+      "neighbors_top5": [
+       {
+        "name": "Domantas Sabonis",
+        "season": "2020-21"
+       },
+       {
+        "name": "Kevin Garnett",
+        "season": "2004-05"
+       },
+       {
+        "name": "LeBron James",
+        "season": "2017-18"
+       },
+       {
+        "name": "Domantas Sabonis",
+        "season": "2021-22"
+       },
+       {
+        "name": "Kevin Garnett",
+        "season": "2002-03"
+       }
+      ]
+     },
+     "scale_1.5": {
+      "forecast": [
+       2.53,
+       1.611,
+       -0.024,
+       1.631,
+       0.47,
+       0.125,
+       1.699,
+       -0.174,
+       2.046,
+       2.266,
+       -0.195,
+       1.064,
+       -0.034,
+       1.287
+      ],
+      "delta": [
+       0.338,
+       -0.036,
+       -0.197,
+       -0.165,
+       0.036,
+       0.077,
+       0.012,
+       0.078,
+       0.284,
+       0.281,
+       -0.068,
+       -0.009,
+       0.011,
+       0.19
+      ],
+      "neighbors_top5": [
+       {
+        "name": "LeBron James",
+        "season": "2012-13"
+       },
+       {
+        "name": "LeBron James",
+        "season": "2016-17"
+       },
+       {
+        "name": "Grant Hill",
+        "season": "1996-97"
+       },
+       {
+        "name": "Giannis Antetokounmpo",
+        "season": "2018-19"
+       },
+       {
+        "name": "LeBron James",
+        "season": "2011-12"
+       }
+      ]
+     }
+    },
+    "age-workload": {
+     "remove": {
+      "forecast": [
+       2.189,
+       1.589,
+       0.101,
+       1.682,
+       0.394,
+       0.078,
+       1.68,
+       -0.273,
+       1.698,
+       2.004,
+       -0.121,
+       1.122,
+       -0.048,
+       1.102
+      ],
+      "delta": [
+       -0.003,
+       -0.058,
+       -0.073,
+       -0.114,
+       -0.04,
+       0.031,
+       -0.006,
+       -0.021,
+       -0.064,
+       0.019,
+       0.006,
+       0.048,
+       -0.004,
+       0.005
+      ],
+      "neighbors_top5": [
+       {
+        "name": "Grant Hill",
+        "season": "1996-97"
+       },
+       {
+        "name": "LeBron James",
+        "season": "2016-17"
+       },
+       {
+        "name": "LeBron James",
+        "season": "2017-18"
+       },
+       {
+        "name": "LeBron James",
+        "season": "2012-13"
+       },
+       {
+        "name": "Kevin Garnett",
+        "season": "2004-05"
+       }
+      ]
+     },
+     "scale_0.5": {
+      "forecast": [
+       2.149,
+       1.529,
+       0.157,
+       1.721,
+       0.406,
+       0.099,
+       1.643,
+       -0.34,
+       1.675,
+       1.982,
+       -0.141,
+       1.132,
+       -0.135,
+       1.084
+      ],
+      "delta": [
+       -0.043,
+       -0.118,
+       -0.017,
+       -0.075,
+       -0.027,
+       0.052,
+       -0.044,
+       -0.088,
+       -0.087,
+       -0.003,
+       -0.014,
+       0.058,
+       -0.091,
+       -0.013
+      ],
+      "neighbors_top5": [
+       {
+        "name": "LeBron James",
+        "season": "2016-17"
+       },
+       {
+        "name": "LeBron James",
+        "season": "2012-13"
+       },
+       {
+        "name": "Grant Hill",
+        "season": "1996-97"
+       },
+       {
+        "name": "Domantas Sabonis",
+        "season": "2020-21"
+       },
+       {
+        "name": "LeBron James",
+        "season": "2011-12"
+       }
+      ]
+     },
+     "scale_1.5": {
+      "forecast": [
+       2.202,
+       1.594,
+       0.127,
+       1.844,
+       0.459,
+       0.121,
+       1.622,
+       -0.235,
+       1.758,
+       1.954,
+       -0.133,
+       1.08,
+       0.1,
+       1.112
+      ],
+      "delta": [
+       0.009,
+       -0.053,
+       -0.046,
+       0.049,
+       0.025,
+       0.074,
+       -0.065,
+       0.017,
+       -0.004,
+       -0.031,
+       -0.006,
+       0.007,
+       0.145,
+       0.015
+      ],
+      "neighbors_top5": [
+       {
+        "name": "LeBron James",
+        "season": "2016-17"
+       },
+       {
+        "name": "LeBron James",
+        "season": "2012-13"
+       },
+       {
+        "name": "Grant Hill",
+        "season": "1996-97"
+       },
+       {
+        "name": "LeBron James",
+        "season": "2017-18"
+       },
+       {
+        "name": "Kevin Garnett",
+        "season": "2002-03"
+       }
+      ]
+     }
+    }
+   }
+  },
+  {
+   "person_id": "luka-doncic",
+   "name": "Luka Doncic",
+   "season": "2018-19",
+   "role_note": "Young player, rookie season",
+   "age": 20,
+   "gp": 72,
+   "total_min_stored": 3413,
+   "predict_season": "2019-20",
+   "base_line": [
+    1.847,
+    1.687,
+    -0.159,
+    1.124,
+    0.266,
+    -0.537,
+    2.476,
+    1.382,
+    1.805,
+    2.506,
+    -0.173,
+    -0.366,
+    -0.528,
+    -0.136
+   ],
+   "actual_next_line": [
+    3.193,
+    3.135,
+    -0.227,
+    1.769,
+    -0.134,
+    -0.786,
+    3.233,
+    1.852,
+    2.762,
+    3.8,
+    -0.426,
+    0.056,
+    0.141,
+    1.057
+   ],
+   "forecast": [
+    1.919,
+    1.239,
+    -0.493,
+    0.166,
+    0.793,
+    -0.25,
+    1.586,
+    0.794,
+    1.85,
+    1.648,
+    0.164,
+    0.038,
+    0.226,
+    0.367
+   ],
+   "carry_forward": [
+    1.847,
+    1.687,
+    -0.159,
+    1.124,
+    0.266,
+    -0.537,
+    2.476,
+    1.382,
+    1.805,
+    2.506,
+    -0.173,
+    -0.366,
+    -0.528,
+    -0.136
+   ],
+   "age_curve": [
+    2.063,
+    1.787,
+    -0.132,
+    1.176,
+    0.35,
+    -0.513,
+    2.476,
+    1.402,
+    1.938,
+    2.677,
+    -0.101,
+    -0.209,
+    -0.386,
+    0.088
+   ],
+   "age_curve_n": 298,
+   "age_curve_widen": 0,
+   "mae_forecast_vs_actual": 0.9752,
+   "mae_carry_vs_actual": 0.7265,
+   "mae_agecurve_vs_actual": 0.6544,
+   "neighbors_top5": [
+    {
+     "name": "Steve Francis",
+     "season": "2001-02",
+     "person_id": "steve-francis"
+    },
+    {
+     "name": "Paul Pierce",
+     "season": "2003-04",
+     "person_id": "paul-pierce"
+    },
+    {
+     "name": "LeBron James",
+     "season": "2003-04",
+     "person_id": "lebron-james"
+    },
+    {
+     "name": "Antoine Walker",
+     "season": "1999-00",
+     "person_id": "antoine-walker"
+    },
+    {
+     "name": "LeBron James",
+     "season": "2006-07",
+     "person_id": "lebron-james"
+    }
+   ],
+   "n_candidates": 7433,
+   "ablations": {
+    "scoring": {
+     "remove": {
+      "forecast": [
+       1.707,
+       1.28,
+       -0.34,
+       0.297,
+       0.866,
+       -0.074,
+       1.643,
+       0.296,
+       1.604,
+       1.66,
+       -0.161,
+       0.14,
+       0.229,
+       0.297
+      ],
+      "delta": [
+       -0.212,
+       0.041,
+       0.153,
+       0.131,
+       0.073,
+       0.176,
+       0.057,
+       -0.498,
+       -0.246,
+       0.011,
+       -0.325,
+       0.102,
+       0.003,
+       -0.07
+      ],
+      "neighbors_top5": [
+       {
+        "name": "Steve Francis",
+        "season": "2001-02"
+       },
+       {
+        "name": "LeBron James",
+        "season": "2007-08"
+       },
+       {
+        "name": "LeBron James",
+        "season": "2003-04"
+       },
+       {
+        "name": "Grant Hill",
+        "season": "1997-98"
+       },
+       {
+        "name": "Tyreke Evans",
+        "season": "2013-14"
+       }
+      ]
+     },
+     "scale_0.5": {
+      "forecast": [
+       1.163,
+       1.457,
+       -0.534,
+       -0.011,
+       0.956,
+       -0.201,
+       1.729,
+       0.29,
+       1.115,
+       1.115,
+       -0.115,
+       0.018,
+       0.222,
+       0.068
+      ],
+      "delta": [
+       -0.756,
+       0.219,
+       -0.042,
+       -0.178,
+       0.164,
+       0.049,
+       0.143,
+       -0.504,
+       -0.735,
+       -0.533,
+       -0.279,
+       -0.019,
+       -0.005,
+       -0.299
+      ],
+      "neighbors_top5": [
+       {
+        "name": "Steve Francis",
+        "season": "2001-02"
+       },
+       {
+        "name": "Lamar Odom",
+        "season": "2000-01"
+       },
+       {
+        "name": "Michael Carter-Williams",
+        "season": "2013-14"
+       },
+       {
+        "name": "Lamar Odom",
+        "season": "1999-00"
+       },
+       {
+        "name": "Lamar Odom",
+        "season": "2003-04"
+       }
+      ]
+     },
+     "scale_1.5": {
+      "forecast": [
+       2.513,
+       1.262,
+       -0.484,
+       0.407,
+       0.766,
+       -0.194,
+       1.422,
+       1.194,
+       2.381,
+       2.118,
+       0.445,
+       0.055,
+       0.415,
+       0.7
+      ],
+      "delta": [
+       0.594,
+       0.024,
+       0.008,
+       0.241,
+       -0.026,
+       0.056,
+       -0.164,
+       0.4,
+       0.53,
+       0.47,
+       0.281,
+       0.017,
+       0.189,
+       0.332
+      ],
+      "neighbors_top5": [
+       {
+        "name": "LeBron James",
+        "season": "2007-08"
+       },
+       {
+        "name": "LeBron James",
+        "season": "2005-06"
+       },
+       {
+        "name": "Kobe Bryant",
+        "season": "2004-05"
+       },
+       {
+        "name": "Paul Pierce",
+        "season": "2002-03"
+       },
+       {
+        "name": "LeBron James",
+        "season": "2006-07"
+       }
+      ]
+     }
+    },
+    "playmaking": {
+     "remove": {
+      "forecast": [
+       1.716,
+       0.574,
+       -0.39,
+       0.182,
+       0.464,
+       -0.27,
+       0.909,
+       0.631,
+       1.515,
+       1.658,
+       0.055,
+       0.101,
+       0.332,
+       0.256
+      ],
+      "delta": [
+       -0.203,
+       -0.664,
+       0.103,
+       0.016,
+       -0.328,
+       -0.02,
+       -0.677,
+       -0.163,
+       -0.336,
+       0.01,
+       -0.109,
+       0.063,
+       0.106,
+       -0.111
+      ],
+      "neighbors_top5": [
+       {
+        "name": "Antoine Walker",
+        "season": "1999-00"
+       },
+       {
+        "name": "Steve Francis",
+        "season": "2001-02"
+       },
+       {
+        "name": "Derrick Williams",
+        "season": "2012-13"
+       },
+       {
+        "name": "Jason Richardson",
+        "season": "2003-04"
+       },
+       {
+        "name": "Aaron Gordon",
+        "season": "2017-18"
+       }
+      ]
+     },
+     "scale_0.5": {
+      "forecast": [
+       1.911,
+       0.727,
+       -0.384,
+       0.301,
+       0.428,
+       -0.198,
+       1.139,
+       0.762,
+       1.716,
+       1.739,
+       0.233,
+       0.12,
+       0.381,
+       0.372
+      ],
+      "delta": [
+       -0.008,
+       -0.512,
+       0.109,
+       0.135,
+       -0.364,
+       0.052,
+       -0.447,
+       -0.032,
+       -0.134,
+       0.09,
+       0.069,
+       0.082,
+       0.155,
+       0.005
+      ],
+      "neighbors_top5": [
+       {
+        "name": "Antoine Walker",
+        "season": "1999-00"
+       },
+       {
+        "name": "Steve Francis",
+        "season": "2001-02"
+       },
+       {
+        "name": "LeBron James",
+        "season": "2006-07"
+       },
+       {
+        "name": "Antoine Walker",
+        "season": "1997-98"
+       },
+       {
+        "name": "Jason Richardson",
+        "season": "2003-04"
+       }
+      ]
+     },
+     "scale_1.5": {
+      "forecast": [
+       1.674,
+       1.85,
+       -0.521,
+       -0.058,
+       1.025,
+       -0.336,
+       1.996,
+       0.669,
+       1.603,
+       1.511,
+       0.101,
+       0.014,
+       0.324,
+       0.446
+      ],
+      "delta": [
+       -0.245,
+       0.611,
+       -0.029,
+       -0.224,
+       0.232,
+       -0.086,
+       0.41,
+       -0.125,
+       -0.248,
+       -0.137,
+       -0.063,
+       -0.024,
+       0.098,
+       0.079
+      ],
+      "neighbors_top5": [
+       {
+        "name": "Steve Francis",
+        "season": "2001-02"
+       },
+       {
+        "name": "D'Angelo Russell",
+        "season": "2017-18"
+       },
+       {
+        "name": "Allen Iverson",
+        "season": "1996-97"
+       },
+       {
+        "name": "Paul Pierce",
+        "season": "2003-04"
+       },
+       {
+        "name": "Kobe Bryant",
+        "season": "2004-05"
+       }
+      ]
+     }
+    },
+    "glass-defense": {
+     "remove": {
+      "forecast": [
+       1.833,
+       1.453,
+       -0.664,
+       -0.344,
+       0.923,
+       -0.401,
+       1.504,
+       0.886,
+       1.709,
+       1.606,
+       0.198,
+       -0.029,
+       0.471,
+       0.233
+      ],
+      "delta": [
+       -0.086,
+       0.215,
+       -0.171,
+       -0.51,
+       0.13,
+       -0.151,
+       -0.082,
+       0.092,
+       -0.142,
+       -0.042,
+       0.034,
+       -0.067,
+       0.245,
+       -0.134
+      ],
+      "neighbors_top5": [
+       {
+        "name": "Allen Iverson",
+        "season": "1996-97"
+       },
+       {
+        "name": "Steve Francis",
+        "season": "2001-02"
+       },
+       {
+        "name": "LeBron James",
+        "season": "2003-04"
+       },
+       {
+        "name": "Lou Williams",
+        "season": "2008-09"
+       },
+       {
+        "name": "Lamar Odom",
+        "season": "2000-01"
+       }
+      ]
+     },
+     "scale_0.5": {
+      "forecast": [
+       1.876,
+       1.322,
+       -0.514,
+       -0.088,
+       0.866,
+       -0.342,
+       1.645,
+       0.798,
+       1.801,
+       1.601,
+       0.154,
+       0.006,
+       0.409,
+       0.388
+      ],
+      "delta": [
+       -0.042,
+       0.084,
+       -0.022,
+       -0.254,
+       0.074,
+       -0.092,
+       0.059,
+       0.004,
+       -0.05,
+       -0.048,
+       -0.01,
+       -0.032,
+       0.183,
+       0.021
+      ],
+      "neighbors_top5": [
+       {
+        "name": "Steve Francis",
+        "season": "2001-02"
+       },
+       {
+        "name": "LeBron James",
+        "season": "2003-04"
+       },
+       {
+        "name": "Allen Iverson",
+        "season": "1996-97"
+       },
+       {
+        "name": "Paul Pierce",
+        "season": "2003-04"
+       },
+       {
+        "name": "Kobe Bryant",
+        "season": "2004-05"
+       }
+      ]
+     },
+     "scale_1.5": {
+      "forecast": [
+       1.991,
+       1.249,
+       -0.488,
+       0.243,
+       0.777,
+       -0.244,
+       1.574,
+       0.756,
+       1.88,
+       1.721,
+       0.135,
+       0.09,
+       0.295,
+       0.426
+      ],
+      "delta": [
+       0.072,
+       0.011,
+       0.005,
+       0.076,
+       -0.015,
+       0.007,
+       -0.012,
+       -0.038,
+       0.029,
+       0.073,
+       -0.028,
+       0.052,
+       0.069,
+       0.058
+      ],
+      "neighbors_top5": [
+       {
+        "name": "Steve Francis",
+        "season": "2001-02"
+       },
+       {
+        "name": "Paul Pierce",
+        "season": "2003-04"
+       },
+       {
+        "name": "Antoine Walker",
+        "season": "1999-00"
+       },
+       {
+        "name": "LeBron James",
+        "season": "2006-07"
+       },
+       {
+        "name": "LeBron James",
+        "season": "2003-04"
+       }
+      ]
+     }
+    },
+    "efficiency": {
+     "remove": {
+      "forecast": [
+       2.253,
+       1.235,
+       -0.634,
+       0.007,
+       0.799,
+       -0.291,
+       1.633,
+       0.965,
+       1.903,
+       2.181,
+       0.271,
+       0.073,
+       0.928,
+       0.467
+      ],
+      "delta": [
+       0.334,
+       -0.003,
+       -0.141,
+       -0.159,
+       0.007,
+       -0.041,
+       0.047,
+       0.171,
+       0.053,
+       0.533,
+       0.107,
+       0.036,
+       0.701,
+       0.1
+      ],
+      "neighbors_top5": [
+       {
+        "name": "Steve Francis",
+        "season": "2001-02"
+       },
+       {
+        "name": "Paul Pierce",
+        "season": "2003-04"
+       },
+       {
+        "name": "Kobe Bryant",
+        "season": "2004-05"
+       },
+       {
+        "name": "Eric Bledsoe",
+        "season": "2016-17"
+       },
+       {
+        "name": "Gilbert Arenas",
+        "season": "2002-03"
+       }
+      ]
+     },
+     "scale_0.5": {
+      "forecast": [
+       1.958,
+       1.218,
+       -0.458,
+       0.179,
+       0.766,
+       -0.261,
+       1.517,
+       0.86,
+       1.827,
+       1.681,
+       0.261,
+       0.075,
+       0.35,
+       0.457
+      ],
+      "delta": [
+       0.04,
+       -0.02,
+       0.035,
+       0.013,
+       -0.026,
+       -0.011,
+       -0.069,
+       0.066,
+       -0.023,
+       0.033,
+       0.097,
+       0.037,
+       0.124,
+       0.09
+      ],
+      "neighbors_top5": [
+       {
+        "name": "Steve Francis",
+        "season": "2001-02"
+       },
+       {
+        "name": "Paul Pierce",
+        "season": "2003-04"
+       },
+       {
+        "name": "LeBron James",
+        "season": "2003-04"
+       },
+       {
+        "name": "Kobe Bryant",
+        "season": "2004-05"
+       },
+       {
+        "name": "LeBron James",
+        "season": "2006-07"
+       }
+      ]
+     },
+     "scale_1.5": {
+      "forecast": [
+       1.902,
+       1.269,
+       -0.481,
+       0.22,
+       0.769,
+       -0.188,
+       1.637,
+       0.793,
+       1.836,
+       1.621,
+       0.15,
+       0.067,
+       0.169,
+       0.347
+      ],
+      "delta": [
+       -0.017,
+       0.03,
+       0.012,
+       0.053,
+       -0.023,
+       0.062,
+       0.051,
+       -0.001,
+       -0.014,
+       -0.027,
+       -0.014,
+       0.03,
+       -0.057,
+       -0.021
+      ],
+      "neighbors_top5": [
+       {
+        "name": "Steve Francis",
+        "season": "2001-02"
+       },
+       {
+        "name": "LeBron James",
+        "season": "2003-04"
+       },
+       {
+        "name": "Paul Pierce",
+        "season": "2003-04"
+       },
+       {
+        "name": "Antoine Walker",
+        "season": "1999-00"
+       },
+       {
+        "name": "Allen Iverson",
+        "season": "1996-97"
+       }
+      ]
+     }
+    },
+    "line-impact": {
+     "remove": {
+      "forecast": [
+       1.64,
+       1.355,
+       -0.415,
+       0.171,
+       0.733,
+       -0.255,
+       1.696,
+       0.881,
+       1.695,
+       1.169,
+       0.178,
+       -0.041,
+       0.106,
+       0.282
+      ],
+      "delta": [
+       -0.278,
+       0.117,
+       0.078,
+       0.005,
+       -0.059,
+       -0.005,
+       0.11,
+       0.086,
+       -0.155,
+       -0.479,
+       0.014,
+       -0.079,
+       -0.12,
+       -0.085
+      ],
+      "neighbors_top5": [
+       {
+        "name": "Dennis Smith Jr.",
+        "season": "2017-18"
+       },
+       {
+        "name": "Steve Francis",
+        "season": "2001-02"
+       },
+       {
+        "name": "D'Angelo Russell",
+        "season": "2017-18"
+       },
+       {
+        "name": "Antoine Walker",
+        "season": "1999-00"
+       },
+       {
+        "name": "LeBron James",
+        "season": "2003-04"
+       }
+      ]
+     },
+     "scale_0.5": {
+      "forecast": [
+       1.438,
+       1.372,
+       -0.457,
+       0.077,
+       0.637,
+       -0.31,
+       1.688,
+       0.806,
+       1.501,
+       1.012,
+       0.224,
+       -0.058,
+       0.151,
+       0.071
+      ],
+      "delta": [
+       -0.481,
+       0.133,
+       0.036,
+       -0.09,
+       -0.156,
+       -0.06,
+       0.102,
+       0.012,
+       -0.35,
+       -0.636,
+       0.06,
+       -0.095,
+       -0.076,
+       -0.296
+      ],
+      "neighbors_top5": [
+       {
+        "name": "Steve Francis",
+        "season": "2001-02"
+       },
+       {
+        "name": "Antoine Walker",
+        "season": "1999-00"
+       },
+       {
+        "name": "LeBron James",
+        "season": "2003-04"
+       },
+       {
+        "name": "Lamar Odom",
+        "season": "2000-01"
+       },
+       {
+        "name": "Dennis Smith Jr.",
+        "season": "2017-18"
+       }
+      ]
+     },
+     "scale_1.5": {
+      "forecast": [
+       2.265,
+       1.164,
+       -0.461,
+       0.373,
+       0.825,
+       -0.162,
+       1.751,
+       0.91,
+       1.889,
+       2.321,
+       0.322,
+       0.133,
+       0.627,
+       0.628
+      ],
+      "delta": [
+       0.346,
+       -0.075,
+       0.032,
+       0.207,
+       0.032,
+       0.088,
+       0.165,
+       0.116,
+       0.039,
+       0.673,
+       0.158,
+       0.096,
+       0.4,
+       0.261
+      ],
+      "neighbors_top5": [
+       {
+        "name": "Steve Francis",
+        "season": "2001-02"
+       },
+       {
+        "name": "Paul Pierce",
+        "season": "2003-04"
+       },
+       {
+        "name": "Paul Pierce",
+        "season": "2002-03"
+       },
+       {
+        "name": "LeBron James",
+        "season": "2007-08"
+       },
+       {
+        "name": "Kobe Bryant",
+        "season": "2004-05"
+       }
+      ]
+     }
+    },
+    "age-workload": {
+     "remove": {
+      "forecast": [
+       1.735,
+       1.056,
+       -0.554,
+       0.118,
+       0.604,
+       -0.352,
+       1.459,
+       0.92,
+       1.613,
+       1.525,
+       0.282,
+       0.004,
+       0.414,
+       0.365
+      ],
+      "delta": [
+       -0.184,
+       -0.182,
+       -0.061,
+       -0.048,
+       -0.189,
+       -0.102,
+       -0.127,
+       0.126,
+       -0.237,
+       -0.123,
+       0.118,
+       -0.034,
+       0.188,
+       -0.002
+      ],
+      "neighbors_top5": [
+       {
+        "name": "Steve Francis",
+        "season": "2001-02"
+       },
+       {
+        "name": "Blake Griffin",
+        "season": "2017-18"
+       },
+       {
+        "name": "Paul Pierce",
+        "season": "2003-04"
+       },
+       {
+        "name": "Gilbert Arenas",
+        "season": "2009-10"
+       },
+       {
+        "name": "Paul Pierce",
+        "season": "2012-13"
+       }
+      ]
+     },
+     "scale_0.5": {
+      "forecast": [
+       1.854,
+       1.249,
+       -0.534,
+       0.073,
+       0.776,
+       -0.297,
+       1.589,
+       0.817,
+       1.792,
+       1.625,
+       0.173,
+       -0.045,
+       0.386,
+       0.413
+      ],
+      "delta": [
+       -0.065,
+       0.01,
+       -0.041,
+       -0.094,
+       -0.017,
+       -0.047,
+       0.003,
+       0.023,
+       -0.058,
+       -0.023,
+       0.009,
+       -0.082,
+       0.16,
+       0.045
+      ],
+      "neighbors_top5": [
+       {
+        "name": "Steve Francis",
+        "season": "2001-02"
+       },
+       {
+        "name": "Blake Griffin",
+        "season": "2017-18"
+       },
+       {
+        "name": "Paul Pierce",
+        "season": "2003-04"
+       },
+       {
+        "name": "Kobe Bryant",
+        "season": "2004-05"
+       },
+       {
+        "name": "Eric Bledsoe",
+        "season": "2016-17"
+       }
+      ]
+     },
+     "scale_1.5": {
+      "forecast": [
+       1.852,
+       1.153,
+       -0.456,
+       0.207,
+       0.787,
+       -0.18,
+       1.548,
+       0.74,
+       1.746,
+       1.604,
+       0.174,
+       0.068,
+       0.26,
+       0.385
+      ],
+      "delta": [
+       -0.067,
+       -0.086,
+       0.037,
+       0.041,
+       -0.005,
+       0.07,
+       -0.038,
+       -0.054,
+       -0.104,
+       -0.045,
+       0.01,
+       0.031,
+       0.034,
+       0.018
+      ],
+      "neighbors_top5": [
+       {
+        "name": "LeBron James",
+        "season": "2003-04"
+       },
+       {
+        "name": "Steve Francis",
+        "season": "2001-02"
+       },
+       {
+        "name": "Lamar Odom",
+        "season": "2000-01"
+       },
+       {
+        "name": "LeBron James",
+        "season": "2006-07"
+       },
+       {
+        "name": "Antoine Walker",
+        "season": "1999-00"
+       }
+      ]
+     }
+    }
+   }
+  },
+  {
+   "person_id": "victor-wembanyama",
+   "name": "Victor Wembanyama",
+   "season": "2023-24",
+   "role_note": "Young player, rookie big man",
+   "age": 20,
+   "gp": 71,
+   "total_min_stored": 3294,
+   "predict_season": "2024-25",
+   "base_line": [
+    1.947,
+    0.469,
+    0.733,
+    2.584,
+    0.652,
+    4.0,
+    3.38,
+    0.573,
+    2.033,
+    1.807,
+    -0.335,
+    -0.032,
+    0.525,
+    -0.201
+   ],
+   "actual_next_line": [
+    2.122,
+    0.177,
+    0.067,
+    2.582,
+    -0.072,
+    4.0,
+    1.871,
+    1.498,
+    2.147,
+    0.894,
+    0.255,
+    0.238,
+    0.925,
+    0.597
+   ],
+   "forecast": [
+    1.73,
+    0.188,
+    0.559,
+    1.548,
+    0.37,
+    1.811,
+    1.491,
+    -0.247,
+    1.455,
+    2.214,
+    -0.384,
+    0.365,
+    0.143,
+    0.556
+   ],
+   "carry_forward": [
+    1.947,
+    0.469,
+    0.733,
+    2.584,
+    0.652,
+    4.0,
+    3.38,
+    0.573,
+    2.033,
+    1.807,
+    -0.335,
+    -0.032,
+    0.525,
+    -0.201
+   ],
+   "age_curve": [
+    2.163,
+    0.569,
+    0.76,
+    2.636,
+    0.736,
+    4.024,
+    3.38,
+    0.593,
+    2.166,
+    1.978,
+    -0.263,
+    0.125,
+    0.667,
+    0.023
+   ],
+   "age_curve_n": 298,
+   "age_curve_widen": 0,
+   "mae_forecast_vs_actual": 0.7348,
+   "mae_carry_vs_actual": 0.527,
+   "mae_agecurve_vs_actual": 0.4993,
+   "neighbors_top5": [
+    {
+     "name": "Josh Smith",
+     "season": "2006-07",
+     "person_id": "josh-smith"
+    },
+    {
+     "name": "Josh Smith",
+     "season": "2007-08",
+     "person_id": "josh-smith"
+    },
+    {
+     "name": "Jermaine O'Neal",
+     "season": "2006-07",
+     "person_id": "jermaine-oneal"
+    },
+    {
+     "name": "Joel Embiid",
+     "season": "2017-18",
+     "person_id": "joel-embiid"
+    },
+    {
+     "name": "DeMarcus Cousins",
+     "season": "2014-15",
+     "person_id": "demarcus-cousins"
+    }
+   ],
+   "n_candidates": 9317,
+   "ablations": {
+    "scoring": {
+     "remove": {
+      "forecast": [
+       1.37,
+       0.068,
+       0.879,
+       1.523,
+       0.421,
+       1.798,
+       1.499,
+       -0.658,
+       1.151,
+       1.879,
+       -0.471,
+       0.445,
+       -0.01,
+       0.29
+      ],
+      "delta": [
+       -0.36,
+       -0.12,
+       0.32,
+       -0.025,
+       0.051,
+       -0.013,
+       0.008,
+       -0.412,
+       -0.304,
+       -0.336,
+       -0.087,
+       0.08,
+       -0.153,
+       -0.266
+      ],
+      "neighbors_top5": [
+       {
+        "name": "Josh Smith",
+        "season": "2006-07"
+       },
+       {
+        "name": "Josh Smith",
+        "season": "2007-08"
+       },
+       {
+        "name": "Andrei Kirilenko",
+        "season": "2005-06"
+       },
+       {
+        "name": "DeMarcus Cousins",
+        "season": "2014-15"
+       },
+       {
+        "name": "Jermaine O'Neal",
+        "season": "2006-07"
+       }
+      ]
+     },
+     "scale_0.5": {
+      "forecast": [
+       1.06,
+       0.048,
+       0.794,
+       1.262,
+       0.225,
+       1.752,
+       1.113,
+       -0.604,
+       0.916,
+       1.38,
+       -0.532,
+       0.452,
+       -0.063,
+       0.122
+      ],
+      "delta": [
+       -0.67,
+       -0.14,
+       0.234,
+       -0.286,
+       -0.144,
+       -0.059,
+       -0.378,
+       -0.357,
+       -0.539,
+       -0.834,
+       -0.148,
+       0.087,
+       -0.206,
+       -0.434
+      ],
+      "neighbors_top5": [
+       {
+        "name": "Josh Smith",
+        "season": "2006-07"
+       },
+       {
+        "name": "Josh Smith",
+        "season": "2007-08"
+       },
+       {
+        "name": "Andrei Kirilenko",
+        "season": "2005-06"
+       },
+       {
+        "name": "Jermaine O'Neal",
+        "season": "2006-07"
+       },
+       {
+        "name": "Andrei Kirilenko",
+        "season": "2003-04"
+       }
+      ]
+     },
+     "scale_1.5": {
+      "forecast": [
+       2.363,
+       0.27,
+       0.607,
+       1.923,
+       0.226,
+       1.697,
+       1.735,
+       -0.359,
+       1.904,
+       2.878,
+       -0.315,
+       0.591,
+       0.359,
+       0.835
+      ],
+      "delta": [
+       0.633,
+       0.082,
+       0.048,
+       0.376,
+       -0.144,
+       -0.114,
+       0.244,
+       -0.113,
+       0.449,
+       0.663,
+       0.07,
+       0.226,
+       0.216,
+       0.279
+      ],
+      "neighbors_top5": [
+       {
+        "name": "Joel Embiid",
+        "season": "2017-18"
+       },
+       {
+        "name": "DeMarcus Cousins",
+        "season": "2016-17"
+       },
+       {
+        "name": "Joel Embiid",
+        "season": "2016-17"
+       },
+       {
+        "name": "DeMarcus Cousins",
+        "season": "2014-15"
+       },
+       {
+        "name": "Karl-Anthony Towns",
+        "season": "2018-19"
+       }
+      ]
+     }
+    },
+    "playmaking": {
+     "remove": {
+      "forecast": [
+       1.698,
+       -0.371,
+       0.445,
+       1.181,
+       0.069,
+       2.294,
+       0.445,
+       -0.389,
+       1.45,
+       1.811,
+       -0.244,
+       0.537,
+       0.421,
+       0.412
+      ],
+      "delta": [
+       -0.031,
+       -0.559,
+       -0.114,
+       -0.367,
+       -0.301,
+       0.483,
+       -1.047,
+       -0.143,
+       -0.005,
+       -0.403,
+       0.14,
+       0.172,
+       0.278,
+       -0.144
+      ],
+      "neighbors_top5": [
+       {
+        "name": "Anthony Davis",
+        "season": "2013-14"
+       },
+       {
+        "name": "Josh Smith",
+        "season": "2006-07"
+       },
+       {
+        "name": "Jaren Jackson Jr.",
+        "season": "2022-23"
+       },
+       {
+        "name": "Anthony Davis",
+        "season": "2016-17"
+       },
+       {
+        "name": "Anthony Davis",
+        "season": "2015-16"
+       }
+      ]
+     },
+     "scale_0.5": {
+      "forecast": [
+       1.72,
+       -0.14,
+       0.431,
+       1.176,
+       0.201,
+       2.092,
+       0.692,
+       -0.335,
+       1.456,
+       1.891,
+       -0.272,
+       0.536,
+       0.29,
+       0.482
+      ],
+      "delta": [
+       -0.01,
+       -0.328,
+       -0.128,
+       -0.372,
+       -0.169,
+       0.281,
+       -0.799,
+       -0.088,
+       0.001,
+       -0.323,
+       0.112,
+       0.171,
+       0.147,
+       -0.074
+      ],
+      "neighbors_top5": [
+       {
+        "name": "Josh Smith",
+        "season": "2006-07"
+       },
+       {
+        "name": "Josh Smith",
+        "season": "2007-08"
+       },
+       {
+        "name": "Jermaine O'Neal",
+        "season": "2006-07"
+       },
+       {
+        "name": "Anthony Davis",
+        "season": "2016-17"
+       },
+       {
+        "name": "Kristaps Porzingis",
+        "season": "2015-16"
+       }
+      ]
+     },
+     "scale_1.5": {
+      "forecast": [
+       1.783,
+       0.283,
+       0.609,
+       1.688,
+       0.403,
+       1.48,
+       1.776,
+       -0.328,
+       1.487,
+       2.309,
+       -0.375,
+       0.362,
+       0.126,
+       0.535
+      ],
+      "delta": [
+       0.054,
+       0.095,
+       0.049,
+       0.14,
+       0.033,
+       -0.331,
+       0.285,
+       -0.081,
+       0.032,
+       0.095,
+       0.009,
+       -0.003,
+       -0.017,
+       -0.021
+      ],
+      "neighbors_top5": [
+       {
+        "name": "DeMarcus Cousins",
+        "season": "2017-18"
+       },
+       {
+        "name": "Joel Embiid",
+        "season": "2016-17"
+       },
+       {
+        "name": "DeMarcus Cousins",
+        "season": "2014-15"
+       },
+       {
+        "name": "Joel Embiid",
+        "season": "2017-18"
+       },
+       {
+        "name": "Josh Smith",
+        "season": "2007-08"
+       }
+      ]
+     }
+    },
+    "glass-defense": {
+     "remove": {
+      "forecast": [
+       2.104,
+       0.972,
+       -0.373,
+       0.17,
+       0.299,
+       -0.361,
+       1.649,
+       0.59,
+       2.011,
+       1.909,
+       0.084,
+       0.054,
+       0.775,
+       0.315
+      ],
+      "delta": [
+       0.374,
+       0.784,
+       -0.932,
+       -1.378,
+       -0.071,
+       -2.172,
+       0.158,
+       0.836,
+       0.556,
+       -0.305,
+       0.468,
+       -0.31,
+       0.632,
+       -0.241
+      ],
+      "neighbors_top5": [
+       {
+        "name": "Zach LaVine",
+        "season": "2018-19"
+       },
+       {
+        "name": "Luka Doncic",
+        "season": "2018-19"
+       },
+       {
+        "name": "LeBron James",
+        "season": "2003-04"
+       },
+       {
+        "name": "Steve Francis",
+        "season": "2001-02"
+       },
+       {
+        "name": "Devin Booker",
+        "season": "2016-17"
+       }
+      ]
+     },
+     "scale_0.5": {
+      "forecast": [
+       1.807,
+       0.596,
+       0.31,
+       1.36,
+       0.189,
+       0.649,
+       1.637,
+       0.044,
+       1.564,
+       1.983,
+       -0.292,
+       0.431,
+       0.18,
+       0.377
+      ],
+      "delta": [
+       0.077,
+       0.408,
+       -0.249,
+       -0.188,
+       -0.181,
+       -1.162,
+       0.145,
+       0.291,
+       0.109,
+       -0.231,
+       0.092,
+       0.067,
+       0.037,
+       -0.179
+      ],
+      "neighbors_top5": [
+       {
+        "name": "Lamar Odom",
+        "season": "2000-01"
+       },
+       {
+        "name": "Josh Smith",
+        "season": "2007-08"
+       },
+       {
+        "name": "DeMarcus Cousins",
+        "season": "2010-11"
+       },
+       {
+        "name": "Josh Smith",
+        "season": "2006-07"
+       },
+       {
+        "name": "Giannis Antetokounmpo",
+        "season": "2016-17"
+       }
+      ]
+     },
+     "scale_1.5": {
+      "forecast": [
+       1.733,
+       -0.04,
+       0.654,
+       1.49,
+       0.248,
+       2.063,
+       1.169,
+       -0.462,
+       1.351,
+       2.202,
+       -0.369,
+       0.658,
+       0.107,
+       0.61
+      ],
+      "delta": [
+       0.003,
+       -0.228,
+       0.094,
+       -0.057,
+       -0.121,
+       0.253,
+       -0.323,
+       -0.215,
+       -0.104,
+       -0.013,
+       0.015,
+       0.293,
+       -0.036,
+       0.054
+      ],
+      "neighbors_top5": [
+       {
+        "name": "Joel Embiid",
+        "season": "2016-17"
+       },
+       {
+        "name": "Josh Smith",
+        "season": "2006-07"
+       },
+       {
+        "name": "Josh Smith",
+        "season": "2007-08"
+       },
+       {
+        "name": "Jermaine O'Neal",
+        "season": "2006-07"
+       },
+       {
+        "name": "Joel Embiid",
+        "season": "2017-18"
+       }
+      ]
+     }
+    },
+    "efficiency": {
+     "remove": {
+      "forecast": [
+       1.62,
+       0.206,
+       0.632,
+       1.612,
+       0.239,
+       1.749,
+       1.549,
+       -0.436,
+       1.347,
+       2.088,
+       -0.525,
+       0.489,
+       -0.107,
+       0.699
+      ],
+      "delta": [
+       -0.109,
+       0.018,
+       0.073,
+       0.065,
+       -0.131,
+       -0.062,
+       0.058,
+       -0.19,
+       -0.108,
+       -0.126,
+       -0.141,
+       0.124,
+       -0.25,
+       0.143
+      ],
+      "neighbors_top5": [
+       {
+        "name": "Josh Smith",
+        "season": "2006-07"
+       },
+       {
+        "name": "Josh Smith",
+        "season": "2007-08"
+       },
+       {
+        "name": "Karl-Anthony Towns",
+        "season": "2018-19"
+       },
+       {
+        "name": "Giannis Antetokounmpo",
+        "season": "2016-17"
+       },
+       {
+        "name": "Jermaine O'Neal",
+        "season": "2006-07"
+       }
+      ]
+     },
+     "scale_0.5": {
+      "forecast": [
+       1.719,
+       0.251,
+       0.638,
+       1.596,
+       0.369,
+       1.718,
+       1.538,
+       -0.32,
+       1.444,
+       2.235,
+       -0.438,
+       0.379,
+       0.143,
+       0.562
+      ],
+      "delta": [
+       -0.011,
+       0.063,
+       0.079,
+       0.048,
+       -0.0,
+       -0.093,
+       0.047,
+       -0.073,
+       -0.011,
+       0.021,
+       -0.053,
+       0.014,
+       0.001,
+       0.006
+      ],
+      "neighbors_top5": [
+       {
+        "name": "Josh Smith",
+        "season": "2006-07"
+       },
+       {
+        "name": "Josh Smith",
+        "season": "2007-08"
+       },
+       {
+        "name": "Jermaine O'Neal",
+        "season": "2006-07"
+       },
+       {
+        "name": "DeMarcus Cousins",
+        "season": "2017-18"
+       },
+       {
+        "name": "Joel Embiid",
+        "season": "2017-18"
+       }
+      ]
+     },
+     "scale_1.5": {
+      "forecast": [
+       1.688,
+       0.167,
+       0.466,
+       1.473,
+       0.306,
+       1.87,
+       1.378,
+       -0.237,
+       1.401,
+       2.137,
+       -0.383,
+       0.391,
+       0.181,
+       0.617
+      ],
+      "delta": [
+       -0.042,
+       -0.021,
+       -0.094,
+       -0.075,
+       -0.064,
+       0.059,
+       -0.113,
+       0.009,
+       -0.054,
+       -0.077,
+       0.001,
+       0.027,
+       0.039,
+       0.061
+      ],
+      "neighbors_top5": [
+       {
+        "name": "Josh Smith",
+        "season": "2006-07"
+       },
+       {
+        "name": "Josh Smith",
+        "season": "2007-08"
+       },
+       {
+        "name": "Jermaine O'Neal",
+        "season": "2006-07"
+       },
+       {
+        "name": "Joel Embiid",
+        "season": "2017-18"
+       },
+       {
+        "name": "DeMarcus Cousins",
+        "season": "2014-15"
+       }
+      ]
+     }
+    },
+    "line-impact": {
+     "remove": {
+      "forecast": [
+       2.228,
+       0.242,
+       0.565,
+       1.844,
+       0.203,
+       1.624,
+       1.785,
+       -0.319,
+       1.811,
+       2.743,
+       -0.376,
+       0.561,
+       0.118,
+       0.841
+      ],
+      "delta": [
+       0.498,
+       0.054,
+       0.005,
+       0.297,
+       -0.167,
+       -0.187,
+       0.294,
+       -0.073,
+       0.356,
+       0.529,
+       0.008,
+       0.197,
+       -0.025,
+       0.285
+      ],
+      "neighbors_top5": [
+       {
+        "name": "Joel Embiid",
+        "season": "2017-18"
+       },
+       {
+        "name": "Joel Embiid",
+        "season": "2016-17"
+       },
+       {
+        "name": "Josh Smith",
+        "season": "2006-07"
+       },
+       {
+        "name": "DeMarcus Cousins",
+        "season": "2014-15"
+       },
+       {
+        "name": "Joel Embiid",
+        "season": "2018-19"
+       }
+      ]
+     },
+     "scale_0.5": {
+      "forecast": [
+       1.501,
+       0.14,
+       0.591,
+       1.379,
+       0.23,
+       1.809,
+       1.164,
+       -0.354,
+       1.304,
+       1.802,
+       -0.474,
+       0.422,
+       0.095,
+       0.589
+      ],
+      "delta": [
+       -0.229,
+       -0.048,
+       0.031,
+       -0.168,
+       -0.14,
+       -0.002,
+       -0.327,
+       -0.108,
+       -0.151,
+       -0.412,
+       -0.089,
+       0.057,
+       -0.047,
+       0.033
+      ],
+      "neighbors_top5": [
+       {
+        "name": "Josh Smith",
+        "season": "2006-07"
+       },
+       {
+        "name": "Josh Smith",
+        "season": "2007-08"
+       },
+       {
+        "name": "Jermaine O'Neal",
+        "season": "2006-07"
+       },
+       {
+        "name": "Karl-Anthony Towns",
+        "season": "2018-19"
+       },
+       {
+        "name": "Josh Smith",
+        "season": "2010-11"
+       }
+      ]
+     },
+     "scale_1.5": {
+      "forecast": [
+       2.005,
+       0.268,
+       0.596,
+       1.705,
+       0.419,
+       1.787,
+       1.557,
+       -0.324,
+       1.567,
+       2.59,
+       -0.334,
+       0.522,
+       0.318,
+       0.703
+      ],
+      "delta": [
+       0.275,
+       0.08,
+       0.036,
+       0.157,
+       0.049,
+       -0.024,
+       0.066,
+       -0.077,
+       0.112,
+       0.376,
+       0.05,
+       0.157,
+       0.176,
+       0.147
+      ],
+      "neighbors_top5": [
+       {
+        "name": "DeMarcus Cousins",
+        "season": "2014-15"
+       },
+       {
+        "name": "Joel Embiid",
+        "season": "2016-17"
+       },
+       {
+        "name": "Joel Embiid",
+        "season": "2017-18"
+       },
+       {
+        "name": "Josh Smith",
+        "season": "2007-08"
+       },
+       {
+        "name": "Josh Smith",
+        "season": "2006-07"
+       }
+      ]
+     }
+    },
+    "age-workload": {
+     "remove": {
+      "forecast": [
+       1.388,
+       0.107,
+       0.493,
+       1.65,
+       0.334,
+       1.768,
+       1.319,
+       -0.502,
+       1.163,
+       1.748,
+       -0.413,
+       0.462,
+       -0.052,
+       0.553
+      ],
+      "delta": [
+       -0.342,
+       -0.081,
+       -0.066,
+       0.102,
+       -0.036,
+       -0.043,
+       -0.173,
+       -0.256,
+       -0.292,
+       -0.466,
+       -0.029,
+       0.097,
+       -0.195,
+       -0.003
+      ],
+      "neighbors_top5": [
+       {
+        "name": "Joel Embiid",
+        "season": "2016-17"
+       },
+       {
+        "name": "DeMarcus Cousins",
+        "season": "2017-18"
+       },
+       {
+        "name": "Josh Smith",
+        "season": "2007-08"
+       },
+       {
+        "name": "Josh Smith",
+        "season": "2006-07"
+       },
+       {
+        "name": "Jermaine O'Neal",
+        "season": "2006-07"
+       }
+      ]
+     },
+     "scale_0.5": {
+      "forecast": [
+       1.93,
+       0.226,
+       0.556,
+       1.639,
+       0.368,
+       1.713,
+       1.54,
+       -0.282,
+       1.544,
+       2.452,
+       -0.255,
+       0.457,
+       0.295,
+       0.664
+      ],
+      "delta": [
+       0.2,
+       0.038,
+       -0.004,
+       0.091,
+       -0.001,
+       -0.098,
+       0.049,
+       -0.035,
+       0.089,
+       0.237,
+       0.129,
+       0.092,
+       0.152,
+       0.108
+      ],
+      "neighbors_top5": [
+       {
+        "name": "Josh Smith",
+        "season": "2006-07"
+       },
+       {
+        "name": "DeMarcus Cousins",
+        "season": "2017-18"
+       },
+       {
+        "name": "Jermaine O'Neal",
+        "season": "2006-07"
+       },
+       {
+        "name": "Josh Smith",
+        "season": "2007-08"
+       },
+       {
+        "name": "Joel Embiid",
+        "season": "2016-17"
+       }
+      ]
+     },
+     "scale_1.5": {
+      "forecast": [
+       1.611,
+       0.156,
+       0.584,
+       1.549,
+       0.333,
+       1.778,
+       1.392,
+       -0.328,
+       1.362,
+       2.019,
+       -0.415,
+       0.423,
+       0.059,
+       0.507
+      ],
+      "delta": [
+       -0.119,
+       -0.032,
+       0.025,
+       0.002,
+       -0.036,
+       -0.033,
+       -0.099,
+       -0.081,
+       -0.093,
+       -0.195,
+       -0.031,
+       0.058,
+       -0.083,
+       -0.049
+      ],
+      "neighbors_top5": [
+       {
+        "name": "Josh Smith",
+        "season": "2006-07"
+       },
+       {
+        "name": "Josh Smith",
+        "season": "2007-08"
+       },
+       {
+        "name": "Giannis Antetokounmpo",
+        "season": "2016-17"
+       },
+       {
+        "name": "Karl-Anthony Towns",
+        "season": "2018-19"
+       },
+       {
+        "name": "Joel Embiid",
+        "season": "2017-18"
+       }
+      ]
+     }
+    }
+   }
+  }
+ ]
+}</script>
+<script>
+const D = JSON.parse(document.getElementById('DATA').textContent);
+const FEATS = D.features;
+let pi = 0, si = 0, variant = 'remove';
+const $ = id => document.getElementById(id);
+document.getElementById('maeNb').textContent = D.full_eval.mae_neighbor_baseline;
+document.getElementById('maeCf').textContent = D.full_eval.mae_carry_forward;
+
+D.players.forEach((p, i) => {
+  const b = document.createElement('button');
+  b.textContent = p.name + ' ' + p.season; b.onclick = () => { pi = i; render(); };
+  $('tabs').appendChild(b);
+});
+D.signals.forEach((s, i) => {
+  const b = document.createElement('button');
+  b.textContent = s.label; b.title = s.gloss; b.onclick = () => { si = i; render(); };
+  $('signals').appendChild(b);
+});
+document.querySelectorAll('#variants button').forEach(b => {
+  b.onclick = () => { variant = b.dataset.v; render(); };
+});
+$('lineSel').onchange = render;
+
+function bar(v) {
+  const w = Math.min(120, Math.abs(v) * 40);
+  return '<span class="bar' + (v < 0 ? ' neg' : '') + '" style="width:' + w + 'px"></span> ' + v.toFixed(2);
+}
+function fmt(v, sign) { return (sign && v > 0 ? '+' : '') + v.toFixed(3); }
+
+function render() {
+  const p = D.players[pi], sig = D.signals[si];
+  [...$('tabs').children].forEach((b, i) => b.classList.toggle('on', i === pi));
+  [...$('signals').children].forEach((b, i) => b.classList.toggle('on', i === si));
+  [...$('variants').children].forEach(b => b.classList.toggle('on', b.dataset.v === variant));
+  $('playerMeta').textContent = p.name + ' · ' + p.season + ' · ' + p.role_note + ' · age ' + p.age +
+    ' · ' + p.gp + ' games (stored) · ' + p.n_candidates.toLocaleString() + ' earlier-season candidates.';
+  $('predSeason').textContent = p.predict_season;
+  const shownKey = $('lineSel').value;
+  $('shownHead').textContent = $('lineSel').selectedOptions[0].textContent.split(' (')[0];
+  $('maeLine').textContent = shownKey === 'forecast' ? p.mae_forecast_vs_actual
+    : shownKey === 'carry_forward' ? p.mae_carry_vs_actual
+    : shownKey === 'age_curve' ? p.mae_agecurve_vs_actual : '0 (it IS the actual)';
+  $('lineBody').innerHTML = FEATS.map((f, j) =>
+    '<tr><td>' + f + '</td><td class="num">' + p.base_line[j].toFixed(3) +
+    '</td><td class="num"><b>' + p[shownKey][j].toFixed(3) +
+    '</b></td><td class="num">' + p.actual_next_line[j].toFixed(3) +
+    '</td><td>' + bar(p[shownKey][j]) + '</td></tr>').join('');
+  const ab = p.ablations[sig.id][variant];
+  const order = FEATS.map((f, j) => j).sort((a, b) => Math.abs(ab.delta[b]) - Math.abs(ab.delta[a]));
+  const top = order[0], topDelta = ab.delta[top];
+  const verb = variant === 'remove' ? 'Without ' : variant === 'scale_0.5' ? 'Halving ' : 'Boosting ';
+  const dir = topDelta < 0 ? 'falls' : 'rises';
+  $('sentence').textContent = verb + sig.label.toLowerCase() + ', predicted ' + FEATS[top] + ' ' + dir +
+    ' by ' + Math.abs(topDelta).toFixed(3) + ' (from ' + p.forecast[top].toFixed(3) + ' to ' +
+    ab.forecast[top].toFixed(3) + ') — ' + sig.gloss;
+  $('variantMeta').textContent = 'Signal: ' + sig.label + ' (' + (sig.stats.length ? sig.stats.join(', ') : 'age, games, stored minutes') + '). ' +
+    'Variant: ' + (variant === 'remove' ? 'removed from the neighbor search' : variant === 'scale_0.5' ? "player's signal scaled to 0.5×, neighbors re-found" : "player's signal scaled to 1.5×, neighbors re-found") + '.';
+  $('deltaBody').innerHTML = order.map(j =>
+    '<tr><td>' + FEATS[j] + '</td><td class="num">' + p.forecast[j].toFixed(3) +
+    '</td><td class="num">' + ab.forecast[j].toFixed(3) +
+    '</td><td class="num ' + (ab.delta[j] < 0 ? 'delta-neg' : ab.delta[j] > 0 ? 'delta-pos' : '') + '">' +
+    fmt(ab.delta[j], true) + '</td></tr>').join('');
+  $('nbrNote').textContent = 'New closest neighbors under this change: ' +
+    ab.neighbors_top5.map(n => n.name + ' ' + n.season).join(', ') + '.';
+  $('nbrFull').textContent = 'Closest neighbors for the full forecast: ' +
+    p.neighbors_top5.map(n => n.name + ' ' + n.season).join(', ') + '.';
+}
+render();
+</script>
+</body>
+</html>
