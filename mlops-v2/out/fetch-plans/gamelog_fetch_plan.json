@@ -1,0 +1,61 @@
+{
+ "stage": "gamelog-fetch-plan",
+ "files": 11,
+ "seasons": [
+  "2015-16",
+  "2016-17",
+  "2017-18",
+  "2018-19",
+  "2019-20",
+  "2020-21",
+  "2021-22",
+  "2022-23",
+  "2023-24",
+  "2024-25",
+  "2025-26"
+ ],
+ "producer": "pipeline/fetch_gamelogs.py (nba_api PlayerGameLogs, stats.nba.com) \u2014 operator machine only",
+ "keep_schema_18": [
+  "PLAYER_ID",
+  "PLAYER_NAME",
+  "TEAM_ID",
+  "TEAM_ABBREVIATION",
+  "GAME_ID",
+  "GAME_DATE",
+  "MIN",
+  "PTS",
+  "AST",
+  "OREB",
+  "DREB",
+  "STL",
+  "BLK",
+  "TOV",
+  "FGA",
+  "FG3A",
+  "FTA",
+  "PLUS_MINUS"
+ ],
+ "estimated_total": "~160-270 MB for 11 files (~780,000 rows)",
+ "game_type_rule": "keep ALL game types in file; consumers filter to regular season (GAME_ID prefix 002) EXCEPT roster (no filter \u2014 known skew, ruling owed)",
+ "pre_2015_rule": "no file by design; pre-2015 rows stay masked",
+ "existing_producer_present": true,
+ "columns_unblocked_by_this_fetch": {
+  "form": 5,
+  "roster": 5,
+  "career_gamelog": 3,
+  "competition": 4,
+  "injury": 4,
+  "team": 5,
+  "system": 6,
+  "total": 32
+ },
+ "host_rule": "Hatch stalls / CDN 403s on NBA shot data. Live fetch requires --live + --i-am-on-operator-machine. No evasion of blocks, captchas, or rate limits, ever.",
+ "provenance": {
+  "source": "stats.nba.com PlayerGameLogs (NBA-origin)",
+  "license": "NEEDS PERMISSION (league-operator express prior consent)",
+  "fetch_date": "2026-10-27",
+  "method": "plan only in default mode; live fetch via fetch_gamelogs.py",
+  "transform_version": "mlops-v2-pipeline-1",
+  "note": ""
+ }
+}

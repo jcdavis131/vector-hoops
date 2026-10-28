@@ -1,0 +1,61 @@
+{
+ "stage": "qa",
+ "checks": [
+  {
+   "stage": "ingest",
+   "report": "cache_audit.json",
+   "present": true,
+   "summary": "{'stage': 'ingest/cache-audit', 'cache_files': 788, 'cache_bytes': 107972905, 'families': {'game base (NBA leaguedash)': {'files': 30, 'seasons': ['1996-97', '1997-98', '1998-99', '1999-00', '2000-01'"
+  },
+  {
+   "stage": "features73",
+   "report": "features73_report.json",
+   "present": true,
+   "summary": "{'stage': 'features73', 'checks': {'rows': 12966, 'rows_expected': 12966, 'rows_ok': True, 'wide_features': 73, 'manifest_features': 73, 'base73_missing': [], 'base73_ok': True, 'mask_mean': 0.789, 'm"
+  },
+  {
+   "stage": "towers",
+   "report": "towers_report.json",
+   "present": true,
+   "summary": "{'stage': 'towers', 'shotmix': {'columns': ['PCT_AST_2PM', 'PCT_AST_3PM', 'PCT_AST_FGM', 'PCT_PTS_2PT', 'PCT_PTS_2PT_MR', 'PCT_PTS_3PT', 'PCT_PTS_FB', 'PCT_PTS_FT', 'PCT_PTS_OFF_TOV', 'PCT_PTS_PAINT',"
+  },
+  {
+   "stage": "splits",
+   "report": "splits_report.json",
+   "present": true,
+   "summary": "{'stage': 'splits', 'source': 'assets/vectors.json (12,966 rows, 30 seasons)', 'game_features': ['PTS', 'AST', 'OREB', 'DREB', 'STL', 'BLK', 'TOV', 'FG3A', 'FGA', 'FTA', 'FG3_PCT', 'FG_PCT', 'FT_PCT',"
+  },
+  {
+   "stage": "fetch-plans",
+   "report": "gamelog_fetch_plan.json",
+   "present": true,
+   "summary": "{'stage': 'gamelog-fetch-plan', 'files': 11, 'seasons': ['2015-16', '2016-17', '2017-18', '2018-19', '2019-20', '2020-21', '2021-22', '2022-23', '2023-24', '2024-25', '2025-26'], 'producer': 'pipeline"
+  },
+  {
+   "stage": "fetch-plans",
+   "report": "pbp_transport_plan.json",
+   "present": true,
+   "summary": "{'stage': 'pbp-transport-plan', 'status': 'PLAN ONLY \u2014 no bulk download started, no transport chosen', 'scale_estimate': '~17.5 GB, ~36,900 regular-season games', 'cached_today': {'games': 5, 'bytes_n"
+  },
+  {
+   "check": "width arithmetic 73 + context = 143",
+   "base": 73,
+   "context": 70,
+   "total": 143,
+   "ok": true
+  },
+  {
+   "check": "honors 5 quarantined (count in NO scenario)",
+   "honors_columns": [
+    "HON_ALL_NBA_TEAM_LAG",
+    "HON_ALL_NBA_VOTE_LAG",
+    "HON_ASG_LAG",
+    "HON_ASG_CUM",
+    "HON_VOTE_RECOG"
+   ],
+   "ok": true
+  }
+ ],
+ "overall": "PASS",
+ "failed": []
+}

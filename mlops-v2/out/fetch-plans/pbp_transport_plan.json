@@ -1,0 +1,36 @@
+{
+ "stage": "pbp-transport-plan",
+ "status": "PLAN ONLY \u2014 no bulk download started, no transport chosen",
+ "scale_estimate": "~17.5 GB, ~36,900 regular-season games",
+ "cached_today": {
+  "games": 5,
+  "bytes_note": "2.2 MB (pipeline/cache/cdn_pbp/)",
+  "files": [
+   "playbyplay_0022600001.json",
+   "playbyplay_0022600002.json",
+   "playbyplay_0022600003.json",
+   "playbyplay_0022600085.json",
+   "playbyplay_0022600086.json"
+  ]
+ },
+ "forbidden": [
+  "git / git-lfs as the bulk pipe",
+  "unmanifested bulk pull",
+  "bulk download without a transport decision"
+ ],
+ "options": {
+  "a_object_storage_operator_machine": "RECOMMENDED: direct download on the operator machine + checksums + versioned manifest; pipeline reads from the manifest path, not git.",
+  "b_forge_alienware_host": "PBP host = Alienware via Forge queue; needs a Forge job (not queued by this task).",
+  "c_incremental_per_season": "Resume-safe per-season pulls; same storage question as (a)."
+ },
+ "decision_owed": "user picks a transport option; then a fetcher with resume + checksums is built against it",
+ "license_note": "PBP is NBA-origin (NEEDS PERMISSION) and \u00a79(vi) also touches archived play-by-play product surfaces. Permission posture must land before bulk fetch.",
+ "provenance": {
+  "source": "NBA PBP feeds (cdn.nba.com / api.nba.com / data.nba.com)",
+  "license": "NEEDS PERMISSION",
+  "fetch_date": "2026-10-27",
+  "method": "plan only; no download",
+  "transform_version": "mlops-v2-pipeline-1",
+  "note": ""
+ }
+}

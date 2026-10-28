@@ -1,0 +1,23 @@
+fold2 train pairs (pid-keyed): 8933 (splits file: 8934 incl. 1 pid-mismatch)
+internal val pairs: 378; gradient pairs: 8555
+forward set: 397
+full_seed0: params=19902 fwdMAE=0.4557 fwdR2=0.601 lat=0.0185s/1k
+full_seed1: params=19902 fwdMAE=0.4564 fwdR2=0.598 lat=0.0165s/1k
+LOGO -shotmix: valMAE=0.4246 contrib=+0.0002
+LOGO -tracking: valMAE=0.4263 contrib=+0.0019
+LOGO -playmaking: valMAE=0.4256 contrib=+0.0012
+LOGO -efficiency: valMAE=0.4265 contrib=+0.0021
+LOGO -defense: valMAE=0.4382 contrib=+0.0138
+LOGO -volume: valMAE=0.4277 contrib=+0.0033
+LOGO -rebounding: valMAE=0.4268 contrib=+0.0024
+LOGO -bio: valMAE=0.4244 contrib=-0.0000
+LOGO -market: valMAE=0.4234 contrib=-0.0010
+ranking (least useful first): ['market', 'bio', 'shotmix', 'playmaking', 'tracking', 'efficiency', 'rebounding', 'volume', 'defense']
+pruned30 dropped ['market', 'bio', 'shotmix'] out_dims {} reduction=0.300 params=13934
+pruned50 dropped ['market', 'bio', 'shotmix', 'playmaking'] out_dims {'tracking': 4} reduction=0.477 params=10418
+pruned30_seed0: params=13934 fwdMAE=0.4556 fwdR2=0.602 lat=0.0126s/1k
+pruned30_seed1: params=13934 fwdMAE=0.4542 fwdR2=0.601 lat=0.0118s/1k
+pruned50_seed0: params=10418 fwdMAE=0.4615 fwdR2=0.591 lat=0.0096s/1k
+random30 dropped ['playmaking', 'efficiency'] reduction=0.288
+random30_seed0: params=14162 fwdMAE=0.4684 fwdR2=0.577 lat=0.0154s/1k
+wrote /home/hatch/workspace/vector-hoops-mlops-v2/mlops-v2/out/arm1/results.json

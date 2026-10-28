@@ -1,0 +1,140 @@
+{
+ "stage": "splits",
+ "source": "assets/vectors.json (12,966 rows, 30 seasons)",
+ "game_features": [
+  "PTS",
+  "AST",
+  "OREB",
+  "DREB",
+  "STL",
+  "BLK",
+  "TOV",
+  "FG3A",
+  "FGA",
+  "FTA",
+  "FG3_PCT",
+  "FG_PCT",
+  "FT_PCT",
+  "PLUS_MINUS"
+ ],
+ "primary_objective": "next-season 14-d game-vector forecast; twins secondary only",
+ "contract_conflict": "Contract \u00a72a Fold 2 val '984' NOT implemented: unreachable without leakage. Fold 2 val = 2024-25 = 500. See FOLDS.md \u00a70.",
+ "variants": {
+  "embargoed": {
+   "fold1": {
+    "train": 10539,
+    "embargo": 488,
+    "val": 948,
+    "test": 491,
+    "unused": 500,
+    "partition_sum_ok": true,
+    "adjacent_training_pairs": 8166,
+    "val_new_player_rows": 310,
+    "test_new_player_rows": 0,
+    "forecast": {
+     "train_rows_with_next_season_target": 8556,
+     "val_rows_with_next_season_target": 776,
+     "test_rows_with_next_season_target": 0,
+     "target": "next-season 14-d game vector (GAME14), same person_id, consecutive season"
+    }
+   },
+   "fold2": {
+    "train": 11491,
+    "embargo": 484,
+    "val": 500,
+    "test": 491,
+    "unused": 0,
+    "partition_sum_ok": true,
+    "adjacent_training_pairs": 8934,
+    "val_new_player_rows": 142,
+    "test_new_player_rows": 0,
+    "forecast": {
+     "train_rows_with_next_season_target": 9317,
+     "val_rows_with_next_season_target": 397,
+     "test_rows_with_next_season_target": 0,
+     "target": "next-season 14-d game vector (GAME14), same person_id, consecutive season"
+    }
+   },
+   "final": {
+    "train": 11975,
+    "embargo": 500,
+    "val": 0,
+    "test": 491,
+    "unused": 0,
+    "partition_sum_ok": true,
+    "adjacent_training_pairs": 9317,
+    "val_new_player_rows": 0,
+    "test_new_player_rows": 147,
+    "forecast": {
+     "train_rows_with_next_season_target": 9710,
+     "val_rows_with_next_season_target": 0,
+     "test_rows_with_next_season_target": 0,
+     "target": "next-season 14-d game vector (GAME14), same person_id, consecutive season"
+    }
+   }
+  },
+  "purge_only": {
+   "fold1": {
+    "train": 11027,
+    "embargo": 0,
+    "val": 948,
+    "test": 491,
+    "unused": 500,
+    "partition_sum_ok": true,
+    "adjacent_training_pairs": 8556,
+    "val_new_player_rows": 199,
+    "test_new_player_rows": 0,
+    "forecast": {
+     "train_rows_with_next_season_target": 8934,
+     "val_rows_with_next_season_target": 776,
+     "test_rows_with_next_season_target": 0,
+     "target": "next-season 14-d game vector (GAME14), same person_id, consecutive season"
+    }
+   },
+   "fold2": {
+    "train": 11975,
+    "embargo": 0,
+    "val": 500,
+    "test": 491,
+    "unused": 0,
+    "partition_sum_ok": true,
+    "adjacent_training_pairs": 9317,
+    "val_new_player_rows": 83,
+    "test_new_player_rows": 0,
+    "forecast": {
+     "train_rows_with_next_season_target": 9710,
+     "val_rows_with_next_season_target": 397,
+     "test_rows_with_next_season_target": 0,
+     "target": "next-season 14-d game vector (GAME14), same person_id, consecutive season"
+    }
+   },
+   "final": {
+    "train": 12475,
+    "embargo": 0,
+    "val": 0,
+    "test": 491,
+    "unused": 0,
+    "partition_sum_ok": true,
+    "adjacent_training_pairs": 9710,
+    "val_new_player_rows": 0,
+    "test_new_player_rows": 83,
+    "forecast": {
+     "train_rows_with_next_season_target": 10107,
+     "val_rows_with_next_season_target": 0,
+     "test_rows_with_next_season_target": 0,
+     "target": "next-season 14-d game vector (GAME14), same person_id, consecutive season"
+    }
+   }
+  }
+ },
+ "frozen_test_rule": "2025-26 (491 rows) never in any train/val set, never used for tuning, in any fold.",
+ "frozen_test_forecast_note": "Test rows show 0 next-season targets because 2025-26 is the last season in the data \u2014 that is correct, not a gap. For the forecast objective, the frozen test is evaluated the other way round: 2024-25 rows (the final fold's embargo season, never trained on) have next-season targets that ARE the 2025-26 test rows. Embargoed final fold: 397 embargo rows carry a next-season target into the test season; purge-only final fold: 397 likewise from 2024-25 (see val_rows_with_next_season_target on fold2, whose val season is 2024-25).",
+ "provenance": {
+  "source": "assets/vectors.json (worktree copy of the served game file)",
+  "license": "NBA-origin (NEEDS PERMISSION)",
+  "fetch_date": "2026-10-27",
+  "method": "stdlib split builder; assertions on every count",
+  "transform_version": "mlops-v2-pipeline-1",
+  "note": "New-player slice: embargoed test slice (147) is stricter than purge-only (83): it also counts players who debuted in the embargo season. Label the variant wherever the number is quoted."
+ }
+}

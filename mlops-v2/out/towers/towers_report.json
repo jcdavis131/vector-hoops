@@ -1,0 +1,97 @@
+{
+ "stage": "towers",
+ "shotmix": {
+  "columns": [
+   "PCT_AST_2PM",
+   "PCT_AST_3PM",
+   "PCT_AST_FGM",
+   "PCT_PTS_2PT",
+   "PCT_PTS_2PT_MR",
+   "PCT_PTS_3PT",
+   "PCT_PTS_FB",
+   "PCT_PTS_FT",
+   "PCT_PTS_OFF_TOV",
+   "PCT_PTS_PAINT",
+   "PCT_UAST_2PM",
+   "PCT_UAST_3PM",
+   "PCT_UAST_FGM"
+  ],
+  "status": "REAL (today): shot TYPE shares from the 73-col base. NOT location. Never present as location."
+ },
+ "shot_position": {
+  "status": "BLOCKED: no multi-season LOC_X/LOC_Y source cleared. HF has no NBA shot-coordinate set (varied searches returned none). ShotChartDetail needs NBA permission and an operator-machine fetch.",
+  "rule": "Real coordinates ONLY. Never invented, interpolated, or proxied from shot-type shares."
+ },
+ "text": {
+  "cached_games": 5,
+  "actions": 3152,
+  "distinct_templates_measured": 198,
+  "dedup_factor": 15.92,
+  "prior_measurement": {
+   "actions": 3152,
+   "templates": 203,
+   "dedup": 15.5
+  },
+  "granularity_note": "Measured 198 vs prior 203: masking-granularity difference (descriptor/qualifier handling), not a data change. Either way ~16x dedup: embed templates once + structured slots, never per-action text.",
+  "actions_with_xy_coords": 897,
+  "coord_note": "x/y exist on cached PBP actions but cover 5 games only \u2014 a probe, not a shot-position tower.",
+  "leakage_guards": [
+   "season-boundary: template vocabulary from train seasons only",
+   "name-masked: no player name, team, or personId in template keys",
+   "raw PBP text never redistributed"
+  ],
+  "status": "STAGED: tower spec + measured dedup; full-corpus text tower needs PBP permission + transport (see pbp_plan)."
+ },
+ "salary_market": {
+  "status": "BLOCKED (bulk): SALARY_LOG rides in the base but bulk salary has NO SOURCE; market expansion 3 (SALARY_CAP_PCT, SALARY_TEAM_PCT, SALARY_RANK_POS) stay blocked. Options: drop, seek permission, or paid licensed feed \u2014 user decision."
+ },
+ "trajectories": {
+  "status": "NO SOURCE at scale. Only public source: frozen 2015-16 SportVU mirrors (~600 games), license unverified, partner data. Second Spectrum partner-only. Fine level stays EVENT-location."
+ },
+ "hf_staged": {
+  "raptor": {
+   "rows": 19159,
+   "seasons": "1977..2022",
+   "columns": [
+    "player_name",
+    "player_id",
+    "season",
+    "poss",
+    "mp",
+    "raptor_offense",
+    "raptor_defense",
+    "raptor_total",
+    "war_total",
+    "war_reg_season",
+    "war_playoffs",
+    "predator_offense",
+    "predator_defense",
+    "predator_total",
+    "pace_impact"
+   ],
+   "license": "CC BY 4.0 (upstream FiveThirtyEight repo LICENSE; attribution required)",
+   "join_note": "player_id is a Basketball-Reference ID; join to vectors.json rows is by (name, season) and must be validated, never assumed \u2014 same-name distinct players exist.",
+   "status": "STAGED: auxiliary feature only, never a base replacement."
+  },
+  "draft_pathways": {
+   "rows": 653,
+   "prior_org_type": {
+    "ncaa": 529,
+    "international_club": 103,
+    "high_school_or_prep": 5,
+    "g_league": 14,
+    "alternative_academy": 2
+   },
+   "license": "CC BY 4.0 (dataset card)",
+   "status": "STAGED: prior-league/college PATHWAY labels (2016-2026 draftees), not player stats. Complements pedigree 7; does not fill any 143 column by itself."
+  }
+ },
+ "provenance": {
+  "source": "pipeline/cache/cdn_pbp + mlops-v2/out/hf (staged downloads)",
+  "license": "PBP: NBA-origin (NEEDS PERMISSION); RAPTOR/pathways: CC BY 4.0",
+  "fetch_date": "2026-10-27",
+  "method": "measured dedup on cached games; staged specs for blocked towers",
+  "transform_version": "mlops-v2-pipeline-1",
+  "note": ""
+ }
+}

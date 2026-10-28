@@ -1,0 +1,46 @@
+== stage: features73 ==
+scratch copy ready; running build_vectors.py --offline ...
+ min>=450)
+2002-03: 394 qualified (gp>=12, min>=450)
+2003-04: 394 qualified (gp>=12, min>=450)
+2004-05: 415 qualified (gp>=12, min>=450)
+2005-06: 428 qualified (gp>=12, min>=450)
+2006-07: 418 qualified (gp>=12, min>=450)
+2007-08: 412 qualified (gp>=12, min>=450)
+2008-09: 407 qualified (gp>=12, min>=450)
+2009-10: 413 qualified (gp>=12, min>=450)
+2010-11: 420 qualified (gp>=12, min>=450)
+2011-12: 435 qualified (gp>=10, min>=450)
+2012-13: 430 qualified (gp>=12, min>=450)
+2013-14: 434 qualified (gp>=12, min>=450)
+2014-15: 450 qualified (gp>=12, min>=450)
+2015-16: 437 qualified (gp>=12, min>=450)
+2016-17: 441 qualified (gp>=12, min>=450)
+2017-18: 460 qualified (gp>=12, min>=450)
+2018-19: 457 qualified (gp>=12, min>=450)
+2019-20: 448 qualified (gp>=11, min>=450)
+2020-21: 484 qualified (gp>=11, min>=450)
+2021-22: 488 qualified (gp>=12, min>=450)
+2022-23: 464 qualified (gp>=12, min>=450)
+2023-24: 484 qualified (gp>=12, min>=450)
+2024-25: 500 qualified (gp>=12, min>=450)
+2025-26: 491 qualified (gp>=12, min>=450)
+percentages with no attempt behind them are missing (rate 0.0 rows; shares and C&S 3P% with no make):
+  FG3_PCT: proven by the percentage 34, undecided (rate 0.0, no count) 1615
+  FT_PCT: undecided (rate 0.0, no count) 56
+  FG_PCT: 
+  PCT_AST_3PM/PCT_UAST_3PM: no make 2736
+  PCT_AST_2PM/PCT_UAST_2PM: no make 7
+  PCT_AST_FGM/PCT_UAST_FGM: no make 1
+  CATCH_SHOOT_FG3_PCT: no three-point attempt 56
+wrote vectors.json: 12966 player-seasons, 8 archetypes, 73 wide features, salary coverage 11504
+  cluster 0: Rim Protection + Offensive Glass (1690 players)
+  cluster 1: Three-Point Volume (Low Finishing) (1532 players)
+  cluster 2: Playmaking + Steals (1735 players)
+  cluster 3: Offensive Glass + Defensive Glass (2091 players)
+  cluster 4: Three-Point Volume + Shot Volume (1914 players)
+  cluster 5: Three-Point Volume + Three-Point Accuracy (2035 players)
+  cluster 6: Scoring Volume + Shot Volume (1004 players)
+  cluster 7: Rim Pressure (Fts) + Defensive Glass (965 players)
+
+VERIFIED: 12966 rows x 73 wide features; base73 all present; mask mean 0.7890; salary coverage 11504
