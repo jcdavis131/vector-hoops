@@ -8,6 +8,7 @@
   var lastRenderedName = null;
   function update(){
     var slot = document.getElementById('pp-forecast-slot');
+    var zoneSlot = document.getElementById('pp-shotzone-slot');
     if(!slot || !window.ArcProjections) return;
     var name = currentName();
     /* The observer below watches the whole #skills-profile subtree — which
@@ -19,8 +20,10 @@
        the mutation our own render causes then settles instead of looping. */
     if(name === lastRenderedName) return;
     lastRenderedName = name;
-    if(!name || name.length < 2){ slot.innerHTML=''; return; }
+    if(!name || name.length < 2){ slot.innerHTML=''; if(zoneSlot) zoneSlot.innerHTML=''; return; }
     window.ArcProjections.renderInto(slot, name);
+    /* 2026-27 shot-zone map (arm1 v5a); same render guard, its own slot */
+    if(zoneSlot && window.ShotZones) window.ShotZones.renderInto(zoneSlot, name);
   }
   function wire(){
     var profile = document.getElementById('skills-profile');
