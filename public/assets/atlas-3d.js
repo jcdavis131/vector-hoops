@@ -35,6 +35,17 @@
   var mountEl = document.querySelector('.embed3d-mount');
   if (!mountEl) return;
 
+  /* landing-map-viz C3/C10: deep-link view schema ?proj=<pca|tsne|umap>&id=<n>.
+     The projection is read once at load; the engine boots with it (mount
+     option). Story steps and chips use VHAtlas.applyView, which writes the
+     same schema back to the URL so every view stays shareable as a link. */
+  var startProj = (function () {
+    try {
+      var p = new URL(location.href).searchParams.get('proj');
+      return (p === 'pca' || p === 'tsne' || p === 'umap') ? p : null;
+    } catch (e) { return null; }
+  })();
+
   /* ---------- state ---------- */
   var handle = null;            // Embed3D handle
   var booted = false;
@@ -127,7 +138,7 @@
     handle = window.Embed3D.mount(mountEl, {
       variant: 'home',
       greyscale: true,
-      projection: 'pca',
+      projection: startProj || 'pca',
       loadingText: false, /* the plate meta states the count (#atlas-count) */
       onSelect: function (id) { select(id); }
     });
@@ -144,6 +155,16 @@
       }
     } catch (e) { /* fall through */ }
     boot();
+  }
+
+  /* Run fn(handle) once the engine's data is loaded. handle.ready is the
+     engine's own Promise (embed-3d.js); this is landing-side queuing only —
+     the engine file is never edited. Safe to call before boot: it boots. */
+  function whenReady(fn) {
+    if (!handle) boot();
+    if (handle && handle.ready && typeof handle.ready.then === 'function') {
+      handle.ready.then(function (h) { try { fn(h); } catch (e) {} });
+    }
   }
 
   /* ---------- selection ---------- */
@@ -170,6 +191,7 @@
       try {
         var u = new URL(location.href);
         if (selected >= 0) u.searchParams.set('id', String(selected)); else u.searchParams.delete('id');
+        if (opts.proj) u.searchParams.set('proj', opts.proj); /* C3/C10: keep the view link canonical */
         history.replaceState(null, '', u);
       } catch (e) {}
     }
@@ -356,11 +378,29 @@
   window.VHAtlas = {
     selectedPlayer: function () { return selected >= 0 ? { n: NAMES[selected], s: SEASONS[selected] } : null; },
     size: function () { return N; },
-    select: function (i) { ensureIndex(function () { select(i); }); },
+    select: function (i, opts) { ensureIndex(function () { select(i, opts); }); },
     onSelect: function (cb) { selectWaiters.push(cb); },
     onReady: function (cb) {
       if (indexReady) { try { cb(); } catch (e) {} return; }
       readyWaiters.push(cb);
+    },
+    /* landing-map-viz C3/C10: drive the existing Embed3D handle API from the
+       landing side. Projection and highlight queue until the engine's data
+       is loaded; applyView writes the canonical ?proj=&id= URL. */
+    setProjection: function (p) {
+      if (p !== 'pca' && p !== 'tsne' && p !== 'umap') return;
+      whenReady(function (h) { h.setProjection(p); });
+    },
+    setHighlight: function (ids) {
+      whenReady(function (h) { h.setHighlight(ids); });
+    },
+    applyView: function (proj, id, opts) {
+      opts = opts || {};
+      if (proj === 'pca' || proj === 'tsne' || proj === 'umap') {
+        opts.proj = proj;
+        window.VHAtlas.setProjection(proj);
+      }
+      window.VHAtlas.select(id, opts);
     },
     exportImage: exportImage
   };
