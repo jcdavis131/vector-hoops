@@ -176,7 +176,8 @@
   }
   function select(i, opts) {
     opts = opts || {};
-    selected = (i == null || i < 0 || i >= N) ? -1 : i;
+    i = (typeof i === 'number' && isFinite(i)) ? Math.floor(i) : -1;
+    selected = (i < 0 || i >= N) ? -1 : i;
     computeTwins();
     if (handle) {
       try {
@@ -396,11 +397,13 @@
     },
     applyView: function (proj, id, opts) {
       opts = opts || {};
-      if (proj === 'pca' || proj === 'tsne' || proj === 'umap') {
-        opts.proj = proj;
-        window.VHAtlas.setProjection(proj);
-      }
-      window.VHAtlas.select(id, opts);
+      /* Invalid ids fall back to the unselected pca base view; invalid
+         projections fall back to pca (same rule as the ?proj= deep link). */
+      var p = (proj === 'pca' || proj === 'tsne' || proj === 'umap') ? proj : 'pca';
+      var ok = (typeof id === 'number' && isFinite(id) && id >= 0 && id < N);
+      opts.proj = p;
+      window.VHAtlas.setProjection(p);
+      window.VHAtlas.select(ok ? Math.floor(id) : -1, opts);
     },
     exportImage: exportImage
   };

@@ -4,7 +4,8 @@
  *  - chips are real anchor links carrying the view state (?proj=<pca|tsne|umap>&id=<n>),
  *    so with JS disabled they still load the same view (the deep link applies on load);
  *  - the full story text lives in the HTML, so stories read with JS disabled;
- *    the "Show this view" buttons are the enhancement, not the content.
+ *    the story step links are real anchors (same deep-link schema as the
+ *    chips), so they work as plain links without JS.
  * With JS, a click applies the view in place through window.VHAtlas.applyView
  * (the existing Embed3D handle API: setProjection/setSelected/setHighlight) —
  * the engine file is never touched — and the URL is kept canonical so every
