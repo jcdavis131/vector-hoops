@@ -2,8 +2,8 @@
 const SB='https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard';
 const SUM=id=>`https://site.api.espn.com/apis/site/v2/sports/basketball/nba/summary?event=${id}`;
 let games=[], cur=null, timer=null, lastUpd=null, lastOkAt=null;
-// ---- Feed poll rules (feedPoll block). 1: the response sets the next step. 2: a hidden tab
-// sets no timer. 3: Refresh sends at most one request. 4: a new game or day stops the poll.
+// feedPoll rules: 1 a response sets the next step. 2 a hidden tab sets no timer.
+// 3 Refresh sends at most one request. 4 a new game or day stops the poll.
 
 // ---- Day navigation (ESPN days run on America/New_York) ----
 let sbDay=null, sbExplicit=false; // sbDay: 'YYYYMMDD' being viewed; null = today
@@ -11,7 +11,7 @@ function etToday(){return new Intl.DateTimeFormat('en-CA',{timeZone:'America/New
 function shiftDay(yyyymmdd,n){const t=new Date(Date.UTC(+yyyymmdd.slice(0,4),+yyyymmdd.slice(4,6)-1,+yyyymmdd.slice(6,8))+n*864e5);return String(t.getUTCFullYear())+String(t.getUTCMonth()+1).padStart(2,'0')+String(t.getUTCDate()).padStart(2,'0');}
 function dayLabel(yyyymmdd){const t=new Date(Date.UTC(+yyyymmdd.slice(0,4),+yyyymmdd.slice(4,6)-1,+yyyymmdd.slice(6,8)));const s=t.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric',timeZone:'UTC'});return (yyyymmdd===etToday()?'Today — ':'')+s;}
 function renderDayNav(){const cur2=sbDay||etToday();const lbl=$('dayLbl');if(lbl)lbl.textContent=dayLabel(cur2);const b=$('dayToday');if(b)b.hidden=cur2===etToday();}
-function resetView(){cur=null;clearInterval(timer);fpNew();btStop();const m=$('main');if(m)m.hidden=false;const og=$('offgame');if(og)og.hidden=true;const ln=$('live-loading');if(ln)ln.hidden=false;}
+function resetView(){cur=null;clearInterval(timer);fpNew();const m=$('main');if(m)m.hidden=false;const og=$('offgame');if(og)og.hidden=true;const ln=$('live-loading');if(ln)ln.hidden=false;}
 function gotoDay(n){sbExplicit=true;resetView();loadGames(shiftDay(sbDay||etToday(),n));}
 
 const $=id=>document.getElementById(id);
@@ -48,7 +48,7 @@ function gamePhase(t){
 /* gamePhase:end */
 /* feedPoll:begin (tests/live_poll_rules.test.mjs evaluates this block) */
 const POLL={live:3e4,preNear:6e4,preFar:3e5,failBase:3e4,failMax:3e5,timeout:1e4,refreshMin:6e4,near:3e5};
-const pollR=(action,reason,waitMs,failStreak)=>({action,reason,waitMs,failStreak});
+const pollR=(a,r,w,f)=>({action:a,reason:r,waitMs:w,failStreak:f});
 function pollBackoff(k,r){return Math.min(POLL.failMax,POLL.failBase*2**(k-1))*(0.8+0.4*r);}
 function pollCadence(phase,tipMs,nowMs){
   const w=tipMs-POLL.near;
@@ -76,10 +76,10 @@ async function jget(u){
     if(!r.ok)throw E('HTTP '+r.status,r.status);
     return await r.json().catch(()=>{throw E('not JSON',200,false);});}finally{clearTimeout(t);}
 }
-let FP,lgBusy=false;
-function fpNew(gameId=null,state='stopped',reason='user'){if(FP)clearTimeout(FP.timer);hideFeedCard();FP={gameId,state,reason,hidden:document.hidden,failStreak:0};}
-fpNew();
+let FP,lgBusy;
 const BT={fail:0};
+function fpNew(gameId=null,state='stopped',reason='user'){if(FP)clearTimeout(FP.timer);hideFeedCard();btStop();FP={gameId,state,reason,hidden:document.hidden,failStreak:0};}
+fpNew();
 function btStop(){BT.on=BT.fail=0;clearTimeout(BT.timer);}
 function btArm(ms){clearTimeout(BT.timer);BT.next=Date.now()+ms;if(!FP.hidden)BT.timer=setTimeout(()=>lgBusy||loadGames(sbDay),ms);}
 
@@ -108,7 +108,7 @@ async function resolveGameInfo(id){
 async function loadGames(day){
   sbDay=day||null;
   renderDayNav();
-  lgBusy=true;
+  lgBusy=true;FP.lastReqAtMs=Date.now();
   try{
     const d=await jget(sbDay?SB+'?dates='+sbDay:SB);
     games=window.Scoreboard?window.Scoreboard.parseEvents(d):(d.events||[]).map(e=>{
@@ -141,7 +141,7 @@ async function loadGames(day){
     else offGame();
   }catch(e){
     const m='Could not load scoreboard: '+e.message;showErr(m);
-    if(e.status===429||e.status===403){btStop();showFeedCard('paused','',e.status);}
+    if(e.status===429||e.status===403){btStop();FP.reason='source';showFeedCard('paused','',e.status);}
     else{if(BT.on)Date.now()<boardTimerEnd(games)?btArm(pollBackoff(++BT.fail,Math.random())):btStop();showFeedCard('unreachable',m);}
   }finally{lgBusy=false;}
 }
@@ -195,7 +195,7 @@ function resetTabs(){try{window.dispatchEvent(new CustomEvent('gamecenter:tab',{
 function offGame(){
   cur=null;clearInterval(timer);fpNew();
   const now=Date.now(),s=boardTimerStart(games,now);
-  if((sbDay||etToday())===etToday()&&s!=null&&now<boardTimerEnd(games)){BT.on=true;BT.fail=0;btArm(s>now?s-now:POLL.preNear);}else btStop();
+  if((sbDay||etToday())===etToday()&&s!=null&&now<boardTimerEnd(games)){BT.on=true;btArm(s>now?s-now:POLL.preNear);}
   const m=$('main');if(m)m.hidden=true;
   const ln=$('live-loading');if(ln)ln.hidden=true;
   setPhase('');
@@ -220,7 +220,7 @@ function syncAtlas(d,g){
   window.LiveAtlas.onGame(d,g,f&&JAM?f.name:null);
 }
 function selectGame(id){
-  cur=id;clearInterval(timer);btStop();fpNew(id,'running','');renderGames();
+  cur=id;clearInterval(timer);fpNew(id,'running','');renderGames();
   const m=$('main');if(m)m.hidden=false;
   const og=$('offgame');if(og)og.hidden=true;
   resetTabs();
@@ -294,7 +294,7 @@ async function loadGame(){
   if(myId==null||P.inFlight)return;
   clearTimeout(P.timer);P.inFlight=true;P.lastReqAtMs=Date.now();
   hideErr();
-  let status=200,parsed=true,rendered=false,phase='',tipMs,er;
+  let status=200,parsed=true,rendered,phase,tipMs,er;
   try{
     const d=await jget(SUM(myId));
     if(P!==FP)return;
@@ -317,7 +317,7 @@ async function loadGame(){
   if(P!==FP)return;
   const nx=pollNext({...P,status,parsed,rendered,phase,tipMs,nowMs:Date.now(),r:Math.random()});
   P.failStreak=nx.failStreak;
-  if(nx.action==='stop'){P.state='stopped';P.reason=nx.reason;if(nx.reason==='source')showFeedCard('paused','',status);return;}
+  if(nx.action==='stop'){P.state='stopped';if((P.reason=nx.reason)==='source')showFeedCard('paused','',status);return;}
   P.state='running';P.nextTryAtMs=Date.now()+nx.waitMs;
   if(!P.hidden)P.timer=setTimeout(loadGame,nx.waitMs);
   if(er)showFeedCard('unreachable','Refresh failed: '+er.message);
@@ -1029,7 +1029,7 @@ function showFeedCard(kind,msg,status){
   }
   const asof=lastOkAt?(' as of '+lastOkAt.toLocaleTimeString()+'.'):'';
   const nt=cur!=null?FP.nextTryAtMs:BT.on&&BT.next,p=kind==='paused';
-  el.innerHTML='<b>FEED '+(p?'PAUSED':'UNREACHABLE')+'.</b> <span>'+esc(p?'ESPN refused the request (HTTP '+status+').':msg+'.')+'</span> <span class="fc-score">'+scoreLine+asof+'</span> <span class="fc-retry">'+(p?'Use Refresh to try again, at most once a minute.':nt?'Next try at '+new Date(nt).toLocaleTimeString()+'.':'')+'</span>';
+  el.innerHTML='<b>FEED '+(p?'PAUSED':'UNREACHABLE')+'.</b> <span>'+esc(p?'ESPN refused the request (HTTP '+status+').':msg+'.')+'</span> <span class="fc-score">'+scoreLine+asof+'</span> <span class="fc-retry">'+(p?$('main').hidden?'Reload the page later to try again.':'Use Refresh to try again, at most once a minute.':nt?'Next try at '+new Date(nt).toLocaleTimeString()+'.':'')+'</span>';
 }
 function hideFeedCard(){const el=$('feedcard');if(el)el.hidden=true;}
 
@@ -1183,10 +1183,7 @@ fetch('assets/live_opening.json?v=cc7d0ec4').then(r=>{if(!r.ok)throw new Error('
 
 // The style map (plate 12) is assets/live-atlas.js: Embed3D's live variant, coloured by team.
 
-$('refreshBtn').onclick=()=>{
-  if(cur==null)lgBusy||loadGames(sbDay);
-  else if(pollRefreshAllowed({...FP,nowMs:Date.now()}))loadGame();
-};
+$('refreshBtn').onclick=()=>{const b=cur==null;pollRefreshAllowed({...FP,inFlight:b?lgBusy:FP.inFlight,nowMs:Date.now()})&&(b?loadGames(sbDay):loadGame());};
 document.addEventListener('visibilitychange',()=>{
   if(FP.hidden=document.hidden){clearTimeout(FP.timer);clearTimeout(BT.timer);}
   else if(cur!=null)pollOnVisible(FP.state)==='request'&&loadGame();

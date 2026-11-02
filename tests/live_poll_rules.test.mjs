@@ -129,6 +129,18 @@ test('pollRefreshAllowed is true in the other cases', () => {
   assert.equal(P.pollRefreshAllowed({ state: 'running', reason: '', inFlight: false, nowMs: TIP, lastReqAtMs: null }), true);
 });
 
+test('AM-2: with no selected game, the board input follows Rule 3', () => {
+  // The Refresh handler passes the stopped no-game poll, the board in-flight flag, and the last board request time.
+  const board = { state: 'stopped', reason: 'user', inFlight: false, lastReqAtMs: TIP };
+  assert.equal(P.pollRefreshAllowed({ ...board, inFlight: true, nowMs: TIP + 10 * MIN }), false);
+  assert.equal(P.pollRefreshAllowed({ ...board, nowMs: TIP + 1000 }), true);
+  const refused = { ...board, reason: 'source' }; // a board 429 or 403, and no board success since
+  assert.equal(P.pollRefreshAllowed({ ...refused, nowMs: TIP + 10000 }), false);
+  assert.equal(P.pollRefreshAllowed({ ...refused, nowMs: TIP + 59999 }), false);
+  assert.equal(P.pollRefreshAllowed({ ...refused, nowMs: TIP + 61000 }), true);
+  assert.equal(P.pollRefreshAllowed({ ...refused, inFlight: true, nowMs: TIP + 61000 }), false);
+});
+
 test('defect 6: pollOnVisible gives request for running and none for stopped', () => {
   assert.equal(P.pollOnVisible('running'), 'request');
   assert.equal(P.pollOnVisible('stopped'), 'none');
