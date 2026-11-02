@@ -1,22 +1,9 @@
 
 const SB='https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard';
 const SUM=id=>`https://site.api.espn.com/apis/site/v2/sports/basketball/nba/summary?event=${id}`;
-let games=[], cur=null, timer=null, lastUpd=null;
-// ---- Respectful polling: 30s while a game is live, 5m when idle,
-// exponential backoff on consecutive failures (30s -> 60s -> 120s -> 300s cap).
-// Never hammer ESPN: at most one in-flight request, no retries on 429.
-let pollTimer=null, failStreak=0, lastOkAt=null;
-const POLL_LIVE=30000, POLL_IDLE=300000, POLL_MAX=300000;
-function pollDelayMs(){
-  if(failStreak>0) return Math.min(POLL_MAX, POLL_LIVE*Math.pow(2,Math.min(failStreak,3)));
-  return games.some(g=>g.state==='in')?POLL_LIVE:POLL_IDLE;
-}
-function schedulePoll(){
-  clearTimeout(pollTimer);
-  const g=cur?games.find(x=>x.id===String(cur))||games.find(x=>x.id===cur):null;
-  if(g&&g.state==='post')return; // final: no polling, no live chrome (C2.6)
-  pollTimer=setTimeout(loadGame,pollDelayMs());
-}
+let games=[], cur=null, timer=null, lastUpd=null, lastOkAt=null;
+// feedPoll rules: 1 a response sets the next step. 2 a hidden tab sets no timer.
+// 3 Refresh sends at most one request. 4 a new game or day stops the poll.
 
 // ---- Day navigation (ESPN days run on America/New_York) ----
 let sbDay=null, sbExplicit=false; // sbDay: 'YYYYMMDD' being viewed; null = today
@@ -24,7 +11,7 @@ function etToday(){return new Intl.DateTimeFormat('en-CA',{timeZone:'America/New
 function shiftDay(yyyymmdd,n){const t=new Date(Date.UTC(+yyyymmdd.slice(0,4),+yyyymmdd.slice(4,6)-1,+yyyymmdd.slice(6,8))+n*864e5);return String(t.getUTCFullYear())+String(t.getUTCMonth()+1).padStart(2,'0')+String(t.getUTCDate()).padStart(2,'0');}
 function dayLabel(yyyymmdd){const t=new Date(Date.UTC(+yyyymmdd.slice(0,4),+yyyymmdd.slice(4,6)-1,+yyyymmdd.slice(6,8)));const s=t.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric',timeZone:'UTC'});return (yyyymmdd===etToday()?'Today — ':'')+s;}
 function renderDayNav(){const cur2=sbDay||etToday();const lbl=$('dayLbl');if(lbl)lbl.textContent=dayLabel(cur2);const b=$('dayToday');if(b)b.hidden=cur2===etToday();}
-function resetView(){cur=null;clearInterval(timer);const m=$('main');if(m)m.hidden=false;const og=$('offgame');if(og)og.hidden=true;const ln=$('live-loading');if(ln)ln.hidden=false;}
+function resetView(){cur=null;clearInterval(timer);fpNew();const m=$('main');if(m)m.hidden=false;const og=$('offgame');if(og)og.hidden=true;const ln=$('live-loading');if(ln)ln.hidden=false;}
 function gotoDay(n){sbExplicit=true;resetView();loadGames(shiftDay(sbDay||etToday(),n));}
 
 const $=id=>document.getElementById(id);
@@ -59,8 +46,42 @@ function gamePhase(t){
   return {phase:'off',label:String(t.description||t.shortDetail||'Not played')};
 }
 /* gamePhase:end */
+/* feedPoll:begin (tests/live_poll_rules.test.mjs evaluates this block) */
+const POLL={live:3e4,preNear:6e4,preFar:3e5,failBase:3e4,failMax:3e5,timeout:1e4,refreshMin:6e4,near:3e5};
+const pollR=(a,r,w,f)=>({action:a,reason:r,waitMs:w,failStreak:f});
+function pollBackoff(k,r){return Math.min(POLL.failMax,POLL.failBase*2**(k-1))*(0.8+0.4*r);}
+function pollCadence(phase,tipMs,nowMs){
+  const w=tipMs-POLL.near;
+  return phase==='in'?POLL.live:phase!=='pre'||!Number.isFinite(tipMs)?POLL.preFar:nowMs>=w?POLL.preNear:Math.max(1e3,Math.min(POLL.preFar,w-nowMs));
+}
+function pollNext(o){
+  const s=o.status,k=o.failStreak+1;
+  return s===429||s===403?pollR('stop','source',0,o.failStreak):!(s>=200&&s<300&&o.parsed&&o.rendered)?pollR('wait','failure',pollBackoff(k,o.r),k)
+    :o.phase==='post'||o.phase==='off'?pollR('stop','final',0,0):pollR('wait','success',pollCadence(o.phase,o.tipMs,o.nowMs),0);
+}
+function pollRefreshAllowed(o){return !o.inFlight&&!(o.state==='stopped'&&o.reason==='source'&&o.nowMs-o.lastReqAtMs<POLL.refreshMin);}
+function pollOnVisible(state){return state==='running'?'request':'none';}
+function tlAfter(TL,n){
+  const d=n-TL.n;
+  return {n,view:d<0?Math.min(TL.view,Math.max(0,n-1)):d&&TL.live?n-1:TL.view,newCount:d<0?0:TL.newCount+(TL.live?0:d)};
+}
+function preTips(g){return g.filter(x=>x&&x.state==='pre').map(x=>Date.parse(x.date)).filter(isFinite);}
+function boardTimerStart(games,nowMs){const t=preTips(games);return t.length?Math.min(...t)-12e4:null;}
+function boardTimerEnd(games){const t=preTips(games);return t.length?Math.max(...t)+108e5:null;}
+/* feedPoll:end */
 function phaseOf(d){try{return gamePhase(d.header.competitions[0].status.type);}catch(e){return {phase:'',label:''};}}
-async function jget(u){const r=await fetch(u);if(!r.ok)throw new Error('HTTP '+r.status);return r.json();}
+async function jget(u){
+  const ac=new AbortController(),t=setTimeout(()=>ac.abort(),POLL.timeout),E=(m,status,parsed=true)=>Object.assign(Error(m),{status,parsed});
+  try{const r=await fetch(u,{signal:ac.signal}).catch(e=>{throw E(ac.signal.aborted?'timeout':e.message,0);});
+    if(!r.ok)throw E('HTTP '+r.status,r.status);
+    return await r.json().catch(()=>{throw E('not JSON',200,false);});}finally{clearTimeout(t);}
+}
+let FP,lgBusy;
+const BT={fail:0};
+function fpNew(gameId=null,state='stopped',reason='user'){if(FP)clearTimeout(FP.timer);hideFeedCard();btStop();FP={gameId,state,reason,hidden:document.hidden,failStreak:0};}
+fpNew();
+function btStop(){BT.on=BT.fail=0;clearTimeout(BT.timer);}
+function btArm(ms){clearTimeout(BT.timer);BT.next=Date.now()+ms;if(!FP.hidden)BT.timer=setTimeout(()=>lgBusy||loadGames(sbDay),ms);}
 
 /* C2.1: estimated final-whistle ms for the 24h guard. Callers only ever know
    tip time, so final ~= tip + 2.5h; GameRoute's estimation margin absorbs it. */
@@ -87,6 +108,7 @@ async function resolveGameInfo(id){
 async function loadGames(day){
   sbDay=day||null;
   renderDayNav();
+  lgBusy=true;FP.lastReqAtMs=Date.now();
   try{
     const d=await jget(sbDay?SB+'?dates='+sbDay:SB);
     games=window.Scoreboard?window.Scoreboard.parseEvents(d):(d.events||[]).map(e=>{
@@ -117,7 +139,11 @@ async function loadGames(day){
     if(qmatch) selectGame(qmatch.id);
     else if(live) selectGame(live.id);
     else offGame();
-  }catch(e){showErr('Could not load scoreboard: '+e.message);showFeedCard('Could not load scoreboard: '+e.message);}
+  }catch(e){
+    const m='Could not load scoreboard: '+e.message;showErr(m);
+    if(e.status===429||e.status===403){btStop();FP.reason='source';showFeedCard('paused','',e.status);}
+    else{if(BT.on)Date.now()<boardTimerEnd(games)?btArm(pollBackoff(++BT.fail,Math.random())):btStop();showFeedCard('unreachable',m);}
+  }finally{lgBusy=false;}
 }
 
 /* C2.6/T2.4: graduation marking — a recent final shows when it moves to Replay. */
@@ -167,7 +193,9 @@ function resetTabs(){try{window.dispatchEvent(new CustomEvent('gamecenter:tab',{
 // G2/T2.3: no live game -> schedule strip + last-game replay + day arrows.
 // The 13 plates never render; ESPN fetch-driven init is skipped.
 function offGame(){
-  cur=null;clearInterval(timer);clearTimeout(pollTimer);
+  cur=null;clearInterval(timer);fpNew();
+  const now=Date.now(),s=boardTimerStart(games,now);
+  if((sbDay||etToday())===etToday()&&s!=null&&now<boardTimerEnd(games)){BT.on=true;btArm(s>now?s-now:POLL.preNear);}
   const m=$('main');if(m)m.hidden=true;
   const ln=$('live-loading');if(ln)ln.hidden=true;
   setPhase('');
@@ -192,7 +220,7 @@ function syncAtlas(d,g){
   window.LiveAtlas.onGame(d,g,f&&JAM?f.name:null);
 }
 function selectGame(id){
-  cur=id;clearInterval(timer);clearTimeout(pollTimer);renderGames();
+  cur=id;clearInterval(timer);fpNew(id,'running','');renderGames();
   const m=$('main');if(m)m.hidden=false;
   const og=$('offgame');if(og)og.hidden=true;
   resetTabs();
@@ -204,7 +232,7 @@ function selectGame(id){
 }
 /* C2.6: the morning-after card — FINAL badge header via plates, an anchor to the
    embedded replay viewer (V5: NO cross-surface CTA within 24h), and the
-   graduation notice. Refresh timers are already off for finals (schedulePoll). */
+   graduation notice. Refresh timers are already off for finals (pollNext). */
 function renderMorning(d,g,isPost){
   const mo=$('morning');if(!mo)return;
   if(!isPost){mo.hidden=true;return;}
@@ -229,10 +257,10 @@ function setPhase(ph,label){
     ?'This game is over: every plate below is the final record, and the timeline rewinds it.'
     :ph==='off'?'ESPN lists this game as '+PHASE_LABEL.toLowerCase()+'. The plates show whatever was played.'
     :'The second screen for NBA games: no video, just the numbers.';
-  const no=$('liveNote');if(no)no.textContent=ph==='post'
-    ?'Final: the feed is no longer polled for this game. Use the day arrows for other days and the timeline to rewind.'
+  const no=$('liveNote'),tail=' Use the day arrows for other days and the timeline to rewind.';if(no)no.textContent=ph==='post'
+    ?'Final: the feed is no longer polled for this game.'+tail
     :ph==='off'?'This game is not in progress, so the feed is not polled for it. Use the day arrows for other days.'
-    :'Scores and plays refresh every 30 s while a game is live and every 5 minutes otherwise; if the feed stalls you see the last-known score with its time. Use the day arrows for other days and the timeline to rewind.';
+    :'Plays appear as the ESPN feed publishes them. While a game is live, the page checks the feed every '+POLL.live/1e3+' s. In the '+POLL.near/6e4+' minutes before tip-off, it checks every '+POLL.preNear/1e3+' s, and before that every '+POLL.preFar/6e4+' minutes. After an error, it waits longer. If the feed stops, you see the last-known score with its time.'+tail;
 }
 /* Empty-plate copy by phase: a final never says 'yet' or 'waiting'. */
 function emptyMsg(live,fin){return '<p class="caption">'+(PHASE==='post'?fin:PHASE==='off'?'Nothing here: ESPN lists this game as '+esc(PHASE_LABEL.toLowerCase())+'.':live)+'</p>';}
@@ -262,33 +290,37 @@ function renderAll(d,g){
   try{window.dispatchEvent(new CustomEvent('courtside:render',{detail:{d:d,g:g,idx:idx,live:TL.live}}));}catch(e){}
 }
 async function loadGame(){
-  const myId=cur;
+  const P=FP,myId=P.gameId;
+  if(myId==null||P.inFlight)return;
+  clearTimeout(P.timer);P.inFlight=true;P.lastReqAtMs=Date.now();
   hideErr();
+  let status=200,parsed=true,rendered,phase,tipMs,er;
   try{
     const d=await jget(SUM(myId));
-    if(myId!==cur)return;
+    if(P!==FP)return;
     const g=games.find(x=>x.id===String(cur))||games.find(x=>x.id===cur);
     const n=(d.plays||[]).length;
     const first=TL.gameId!==String(cur);
     if(first){
       TL.gameId=String(cur);TL.n=n;TL.view=Math.max(0,n-1);TL.live=true;TL.newCount=0;
-    }else if(n>TL.n){
-      if(TL.live)TL.view=n-1;else TL.newCount+=n-TL.n;
-      TL.n=n;
-    }
+    }else Object.assign(TL,tlAfter(TL,n));
     renderAll(d,g);
     if(panelOpen('insights')) syncAtlas(d,g);
     window._lastD=d;window._lastG=g;
-    lastUpd=new Date();lastOkAt=lastUpd;failStreak=0;
+    lastUpd=new Date();lastOkAt=lastUpd;
     hideFeedCard();
     renderPregame(d,g);
     $('upd').textContent='updated '+lastUpd.toLocaleTimeString();
-    schedulePoll();
-  }catch(e){
-    failStreak++;
-    showFeedCard('Refresh failed: '+e.message);
-    schedulePoll();
-  }
+    phase=phaseOf(d).phase;tipMs=Date.parse(d.header.competitions[0].date);rendered=true;
+  }catch(e){er=e;if(e.status!=null)({status,parsed}=e);}
+  P.inFlight=false;
+  if(P!==FP)return;
+  const nx=pollNext({...P,status,parsed,rendered,phase,tipMs,nowMs:Date.now(),r:Math.random()});
+  P.failStreak=nx.failStreak;
+  if(nx.action==='stop'){P.state='stopped';if((P.reason=nx.reason)==='source')showFeedCard('paused','',status);return;}
+  P.state='running';P.nextTryAtMs=Date.now()+nx.waitMs;
+  if(!P.hidden)P.timer=setTimeout(loadGame,nx.waitMs);
+  if(er)showFeedCard('unreachable','Refresh failed: '+er.message);
 }
 function updateTlUI(d){
   const bar=$('tlbar'),n=TL.n,show=n>1;
@@ -986,7 +1018,7 @@ function shareMoment(btn,seq){
 }
 
 // ---- Feed-down 503 card: last-known score + as-of + retry, never invented numbers ----
-function showFeedCard(msg){
+function showFeedCard(kind,msg,status){
   const el=$('feedcard');if(!el)return;
   el.hidden=false;
   let scoreLine='No score on record yet.';
@@ -996,8 +1028,8 @@ function showFeedCard(msg){
     if(last)scoreLine='Last known: '+g.a.abbr+' '+(+last.awayScore)+' \u2013 '+(+last.homeScore)+' '+g.h.abbr;
   }
   const asof=lastOkAt?(' as of '+lastOkAt.toLocaleTimeString()+'.'):'';
-  const retry=' Retrying in ~'+Math.round(pollDelayMs()/1000)+'s \u2014 resumes automatically.';
-  el.innerHTML='<b>FEED UNREACHABLE</b><span>'+esc(msg)+'</span><span class="fc-score">'+scoreLine+asof+'</span><span class="fc-retry">'+retry+'</span>';
+  const nt=cur!=null?FP.nextTryAtMs:BT.on&&BT.next,p=kind==='paused';
+  el.innerHTML='<b>FEED '+(p?'PAUSED':'UNREACHABLE')+'.</b> <span>'+esc(p?'ESPN refused the request (HTTP '+status+').':msg+'.')+'</span> <span class="fc-score">'+scoreLine+asof+'</span> <span class="fc-retry">'+(p?$('main').hidden?'Reload the page later to try again.':'Use Refresh to try again, at most once a minute.':nt?'Next try at '+new Date(nt).toLocaleTimeString()+'.':'')+'</span>';
 }
 function hideFeedCard(){const el=$('feedcard');if(el)el.hidden=true;}
 
@@ -1151,7 +1183,12 @@ fetch('assets/live_opening.json?v=cc7d0ec4').then(r=>{if(!r.ok)throw new Error('
 
 // The style map (plate 12) is assets/live-atlas.js: Embed3D's live variant, coloured by team.
 
-$('refreshBtn').onclick=loadGame;
+$('refreshBtn').onclick=()=>{const b=cur==null;pollRefreshAllowed({...FP,inFlight:b?lgBusy:FP.inFlight,nowMs:Date.now()})&&(b?loadGames(sbDay):loadGame());};
+document.addEventListener('visibilitychange',()=>{
+  if(FP.hidden=document.hidden){clearTimeout(FP.timer);clearTimeout(BT.timer);}
+  else if(cur!=null)pollOnVisible(FP.state)==='request'&&loadGame();
+  else BT.on&&!lgBusy&&loadGames(sbDay);
+});
 $('dayPrev').onclick=()=>gotoDay(-1);
 $('dayNext').onclick=()=>gotoDay(1);
 $('dayToday').onclick=()=>{sbExplicit=true;resetView();loadGames(null);};

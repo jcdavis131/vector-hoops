@@ -54,7 +54,7 @@
   </div>
   <div id="games" class="games"><p class="caption">Loading tonight&rsquo;s games&hellip;</p></div>
 </section>
-<div id="feedcard" class="state state--error feedcard" hidden role="alert"></div>
+<div id="feedcard" class="state state--error feedcard" hidden role="status" aria-live="polite"></div>
 <div class="card" id="offgame" hidden>
   <div class="plate"><span class="pno">OFF DAY</span><h2>NO LIVE GAME</h2><span class="prule"></span><span class="pmeta" id="offgame-meta">the plates wake up at tip</span></div>
   <p class="caption">Nothing is live right now. The full plate set loads when a game tips. Use the day arrows for other days, or rewatch the last one in pixels.</p>
@@ -196,7 +196,7 @@
   </div>
 
 
-<p class="caption live-note" id="liveNote">Scores and plays refresh every 30 s while a game is live and every 5 minutes otherwise; if the feed stalls you see the last-known score with its time. Use the day arrows for other days and the timeline to rewind.</p>
+<p class="caption live-note" id="liveNote">Plays appear as the ESPN feed publishes them. While a game is live, the page checks the feed every 30 s. In the 5 minutes before tip-off, it checks every 60 s, and before that every 5 minutes. After an error, it waits longer. If the feed stops, you see the last-known score with its time. Use the day arrows for other days and the timeline to rewind.</p>
   <div class="state state--error err" id="err" role="alert" hidden></div>
 </main>
 
@@ -247,7 +247,7 @@
 <script src="assets/scoreboard.js?v=c6a50523" defer></script>
 <script src="assets/embed-3d.js?v=06cc9778" defer></script>
 <script src="assets/game-center.js?v=14822b22" defer></script>
-<script src="assets/live.js?v=fbc38b51" defer></script>
+<script src="assets/live.js?v=67792344" defer></script>
 <script src="assets/live-atlas.js?v=b7584fc7" defer></script>
 <script src="assets/engagement.js?v=b09bf206" defer></script>
 </body>

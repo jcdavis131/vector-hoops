@@ -53,6 +53,52 @@ pre-launch review findings.
 5. **Close the loop:** resolve the `/status` incident entry, write the what/why/fix/prevents
    note, and link it from the incident history.
 
+## Live feed (`/live`)
+
+The `/live` page reads the ESPN feed from the browser of each viewer. Each viewer has a
+separate feed. The page uses these rules:
+
+- While a game is live, the page reads the game summary each 30 s.
+- In the 5 minutes before tip-off, the page reads the summary each 60 s. Before that, it
+  waits up to 5 minutes between two reads.
+- When ESPN marks the game final or postponed, the page stops the feed for that game.
+- A hidden tab sends no request. When the tab is visible again, it sends one request.
+- When no game is live and a game on today's board has not started, the page reads the
+  board each 60 s. It starts 2 minutes before the first tip-off and stops 3 hours after the
+  last tip-off.
+
+The page shows one of two cards when a request does not give a good answer:
+
+| Card | Cause | What the page does |
+| :-- | :-- | :-- |
+| `FEED UNREACHABLE.` | A request failed: a network error, no answer in 10 s, a status that is not 2xx, 429, or 403, or a body that is not JSON. | It tries again after 30 s, 60 s, 120 s, 240 s, and then each 300 s. Each wait changes by up to 20%. The card gives the time of the next try. |
+| `FEED PAUSED.` | ESPN refused the request of that viewer with a 429 or a 403. | It sends no more automatic requests. The last sentence of the card tells the viewer what to do. |
+
+The `FEED PAUSED.` card has one of two last sentences:
+
+| Last sentence | When | What the viewer can do |
+| :-- | :-- | :-- |
+| "Use Refresh to try again, at most once a minute." | The Refresh button is on the screen. | Push Refresh. Refresh sends one request. It sends no request within 60 s of the last request. If the viewer did not select a game, Refresh reads the board. The same 60 s limit applies. |
+| "Reload the page later to try again." | ESPN refused a board request, and the Refresh button is not on the screen. This occurs in the view with no live game. | Reload the page later. The page sends no more board requests until the viewer reloads the page or changes the day. |
+
+Both cards show the last-known score and the time of that score. The page does not show a
+score that it did not get from ESPN.
+
+**First checks:**
+
+1. Open `/live` for a live game.
+2. Read the card. Record the card text and the time.
+3. Open `/live` from a second network, for example a phone on mobile data.
+4. If the second network shows new plays, the refusal applies to the first network only.
+   Do not change the poll rules to send more requests.
+5. If the second network also shows a card, report the card texts and the times to Cameron.
+
+**Rollback:**
+
+1. Get the approval of Cameron.
+2. Do a Vercel instant rollback to the last good deployment.
+3. Open a revert PR for the change. Merge the revert PR only with the approval of Cameron.
+
 ## Known sharp edges (documented, not resolved here)
 
 - **Served-model lineage is a forced adoption.** `check_served_model.py` passes, but with
