@@ -114,6 +114,21 @@
 .map-read{ margin-top: var(--s-4); }
 .map-read .map-note{ margin: 0; }
 
+/* ---------- landing-map-viz: honesty strip, guided chips, stories ---------- */
+.atlas-honesty{ margin-top: var(--s-4); padding: var(--s-3) var(--s-4); border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface-2); }
+.atlas-honesty p{ margin: 0; max-width: 68ch; }
+.atlas-honesty p + p{ margin-top: 8px; }
+.chip-row{ display: flex; flex-wrap: wrap; gap: 10px; margin-top: var(--s-4); }
+.chip-row .btn{ text-decoration: none; }
+.chip-row .chip-note{ flex-basis: 100%; margin: 0; font-size: var(--t-sm); color: var(--fg-3); }
+.stories{ width: 100%; max-width: var(--content); margin: var(--s-6) auto 0; }
+.story{ margin-top: var(--s-4); padding: clamp(18px, 2.4vw, 28px); }
+.story__title{ margin: 0 0 4px; font-family: var(--font-display); font-size: var(--t-xl); font-weight: 700; letter-spacing: -.02em; line-height: 1.1; text-wrap: balance; }
+.story__steps{ list-style: none; margin: var(--s-3) 0 0; padding: 0; display: grid; gap: var(--s-3); }
+.story__step{ border-top: 1px solid var(--line); padding-top: var(--s-3); }
+.story__step p{ margin: 0 0 var(--s-2); max-width: 66ch; }
+.story__step .btn{ min-height: 44px; }
+
 /* ---------- three play doors (kit .card--door) ---------- */
 .play, .lab{ width: 100%; max-width: var(--content); margin: var(--s-6) auto 0; }
 .doors{ display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s-3); }
@@ -141,7 +156,7 @@
 <main id="main" class="main">
   <header class="title-card hero">
     <div class="title-card__eyebrow reveal">An atlas of NBA player-seasons</div>
-    <h1 class="hero__title"><span>Who plays</span><span>like <em>this?</em></span></h1>
+    <h1 class="hero__title">A 3-D sketch of 12,966 player-seasons: near on the map means similar style, but <em>the model&rsquo;s twin list is the verdict.</em></h1>
     <p class="title-card__lede hero__lede reveal reveal-1">Type any player. A neural embedding finds the three seasons since <span data-fact="season_first">1996-97</span> that play most alike &mdash; across eras, teams and positions.</p>
     <div class="hero-search reveal reveal-2">
       <div class="atlas-search" role="search">
@@ -184,6 +199,19 @@
       <p class="share-bar__status" id="atlas-share-status" role="status" aria-live="polite"></p>
     </div>
 
+    <div class="atlas-honesty vh-truth" role="note" aria-label="How to read this map">
+      <p><b>A sketch, not the model.</b></p>
+      <p><b>Peers come from the model, not the picture.</b></p>
+      <p class="caption">What this picture does not mean: a ranking, or the model&rsquo;s verdict. It shows 3 of the model&rsquo;s 64 dimensions, so two dots can look far apart while the model calls them twins.</p>
+    </div>
+
+    <nav class="chip-row" aria-label="Guided views of the atlas">
+      <a class="btn" data-view data-proj="pca" data-id="672" href="?proj=pca&amp;id=672">Jordan 1997&ndash;98 &mdash; see who the model puts closest</a>
+      <a class="btn" data-view data-proj="pca" data-id="5041" href="?proj=pca&amp;id=5041">Kobe 2008&ndash;09 &mdash; his #1 twin sits 448 dots away on the sketch</a>
+      <a class="btn" data-view data-proj="tsne" data-id="8197" href="?proj=tsne&amp;id=8197">Curry 2015&ndash;16 &mdash; the same map drawn to keep neighbors close</a>
+      <p class="chip-note caption">Each chip opens one view you can check: the link carries the projection and the selected season, so the view is shareable. Jordan and Kobe use the PCA projection; Curry&rsquo;s chip uses t-SNE.</p>
+    </nav>
+
     <div class="card readout">
       <div id="atlas-selected"><p class="readout__empty caption">Select any point on the atlas, or search a name above.</p></div>
       <div>
@@ -195,7 +223,7 @@
           <thead><tr><th class="r" scope="col">#</th><th scope="col">Player</th><th scope="col">Season</th><th scope="col" class="hide-s">Archetype</th><th class="r" scope="col">Similarity</th></tr></thead>
           <tbody id="atlas-peers-body"></tbody>
         </table>
-        <p class="peers__foot caption vh-truth">Peers are the seasons the model itself places closest in style. The map is a 3-D sketch of 14 era-normalized per-100 stats, so a peer can sit some distance away on it.</p>
+        <p class="peers__foot caption vh-truth">Peers are the seasons the model itself places closest in style. The map is a 3-D sketch of the 64-d embedding, so a peer can sit some distance away on it.</p>
       </div>
     </div>
     <p class="visually-hidden" id="atlas-live" aria-live="polite"></p>
@@ -205,7 +233,7 @@
       <div class="disclosure__body">
         <figure class="map-note">
           <ul>
-            <li><b>A sketch, not the model.</b> This view shows three PCA dimensions at once; the map is a sketch of the 14 era-normalized stats, not the model itself.</li>
+            <li><b>A sketch, not the model.</b> This view shows three PCA dimensions at once; the map is a sketch of the 64-d embedding, not the model itself.</li>
             <li><b>Peers come from the model, not the picture.</b> &ldquo;Plays most alike&rdquo; is cosine similarity in the full 64-d embedding — nearby dots mislead more often than not, so trust the peer list, not the picture.</li>
             <li><b>Eras are normalized away.</b> Stats are z-scored within each season, so cross-era closeness is about style, not who would win.</li>
             <li><b>Switch projections and the shape changes.</b> PCA, t-SNE and UMAP each keep different things; retrain the model and the numbers wobble.</li>
@@ -213,6 +241,77 @@
         </figure>
       </div>
     </details>
+  </section>
+
+  <section class="stories" aria-labelledby="stories-title">
+    <div class="plate">
+      <span class="plate__no">Stories</span>
+      <h2 id="stories-title">Three short stories the map tells</h2>
+      <span class="plate__rule"></span>
+      <span class="plate__meta">Every claim checks out against the data</span>
+    </div>
+
+    <article class="card story" aria-labelledby="story1-title">
+      <h3 class="story__title" id="story1-title">The model&rsquo;s twins cross eras &mdash; it matches style, not time.</h3>
+      <ol class="story__steps">
+        <li class="story__step">
+          <p><b>1.</b> Michael Jordan 1997&ndash;98&rsquo;s closest model twin is Kobe Bryant 2011&ndash;12 &mdash; fourteen seasons later &mdash; at cosine similarity 0.8330.</p>
+          <a class="btn" data-view data-proj="pca" data-id="672" href="?proj=pca&amp;id=672">See Jordan&rsquo;s #1 twin</a>
+        </li>
+        <li class="story__step">
+          <p><b>2.</b> Jordan&rsquo;s top five twins are all Kobe Bryant seasons &mdash; 2011&ndash;12, 2012&ndash;13, 2009&ndash;10, 2010&ndash;11, 2008&ndash;09 &mdash; similarities 0.8330 down to 0.8074.</p>
+          <a class="btn" data-view data-proj="pca" data-id="672" href="?proj=pca&amp;id=672">See Jordan&rsquo;s five Kobe twins</a>
+        </li>
+        <li class="story__step">
+          <p><b>3.</b> Both seasons carry the same archetype: &ldquo;Scoring Volume + Free-Throw Shooting.&rdquo;</p>
+          <a class="btn" data-view data-proj="pca" data-id="672" href="?proj=pca&amp;id=672">See their shared archetype</a>
+        </li>
+        <li class="story__step">
+          <p><b>4.</b> On the PCA sketch, Kobe 2011&ndash;12 is the 32nd-nearest dot to Jordan among 12,966 &mdash; near on the sketch, and #1 in the model.</p>
+          <a class="btn" data-view data-proj="pca" data-id="672" href="?proj=pca&amp;id=672">See Kobe 32nd-nearest on the sketch</a>
+        </li>
+      </ol>
+    </article>
+
+    <article class="card story" aria-labelledby="story2-title">
+      <h3 class="story__title" id="story2-title">The sketch is not the model &mdash; a peer can sit 448 dots away.</h3>
+      <ol class="story__steps">
+        <li class="story__step">
+          <p><b>1.</b> The model&rsquo;s closest season to Kobe Bryant 2008&ndash;09 is Dirk Nowitzki 2007&ndash;08, cosine similarity 0.8530.</p>
+          <a class="btn" data-view data-proj="pca" data-id="5041" href="?proj=pca&amp;id=5041">See Kobe&rsquo;s #1 twin: Dirk</a>
+        </li>
+        <li class="story__step">
+          <p><b>2.</b> On the PCA sketch, Dirk 2007&ndash;08 is the 448th-nearest dot to Kobe &mdash; 447 seasons sit closer on the picture than the model&rsquo;s #1 twin.</p>
+          <a class="btn" data-view data-proj="pca" data-id="5041" href="?proj=pca&amp;id=5041">See Dirk 448th on the sketch</a>
+        </li>
+        <li class="story__step">
+          <p><b>3.</b> Switch the projection to UMAP and the same pair ranks 10th-nearest &mdash; the projection choice alone moves them from 448th to 10th.</p>
+          <a class="btn" data-view data-proj="umap" data-id="5041" href="?proj=umap&amp;id=5041">See the pair in UMAP</a>
+        </li>
+        <li class="story__step">
+          <p><b>4.</b> The peer table under the map still lists Dirk 2007&ndash;08 as #1 for Kobe 2008&ndash;09, whichever projection is showing &mdash; &ldquo;plays most alike&rdquo; comes from the full 64-d embedding, not the picture.</p>
+          <a class="btn" data-view data-proj="umap" data-id="5041" href="?proj=umap&amp;id=5041">See the peer table hold #1</a>
+        </li>
+      </ol>
+    </article>
+
+    <article class="card story" aria-labelledby="story3-title">
+      <h3 class="story__title" id="story3-title">Sometimes the sketch agrees with the model.</h3>
+      <ol class="story__steps">
+        <li class="story__step">
+          <p><b>1.</b> The model&rsquo;s #1 twin for Stephen Curry 2015&ndash;16 is James Harden 2017&ndash;18, similarity 0.8557.</p>
+          <a class="btn" data-view data-proj="pca" data-id="8197" href="?proj=pca&amp;id=8197">See Curry&rsquo;s #1 twin</a>
+        </li>
+        <li class="story__step">
+          <p><b>2.</b> On the PCA sketch, Harden 2017&ndash;18 is the 2nd-nearest dot to Curry among 12,966 &mdash; this time the picture and the model agree.</p>
+          <a class="btn" data-view data-proj="pca" data-id="8197" href="?proj=pca&amp;id=8197">See Harden 2nd-nearest on the sketch</a>
+        </li>
+        <li class="story__step">
+          <p><b>3.</b> Both seasons share the archetype &ldquo;Scoring Volume + Free-Throw Shooting.&rdquo;</p>
+          <a class="btn" data-view data-proj="pca" data-id="8197" href="?proj=pca&amp;id=8197">See their shared archetype</a>
+        </li>
+      </ol>
+    </article>
   </section>
 
   <section class="play" aria-labelledby="play-title">
@@ -300,7 +399,8 @@
 <script defer src="/assets/served-constants.js?v=8ba12340"></script>
 <script defer src="/assets/twin-bands.js?v=0a191313"></script>
 <script defer src="/assets/embed-3d.js?v=06cc9778"></script>
-<script defer src="/assets/atlas-3d.js?v=996735df"></script>
+<script defer src="/assets/atlas-3d.js?v=54e7504e"></script>
+<script defer src="/assets/landing-stories.js?v=8225b771"></script>
 <script src="assets/site-facts.js?v=f8edaf37" defer></script>
 <script defer src="/assets/engagement.js?v=b09bf206"></script>
 <script defer src="/assets/home-tonight.js?v=881d28f9"></script>
