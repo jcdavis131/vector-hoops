@@ -25,7 +25,18 @@
      }
      handle = { setProjection(name), setHighlight(ids), setSelected(id),
                 setDim(ids), overlay(rings), setGroups(groups), find(q),
-                info(i), snapshot(), destroy(), ready }
+                info(i), snapshot(), destroy(), ready,
+                setValueColors(values, palette), setArrow(vec),
+                setHomeNote(text) }
+     setValueColors(values, palette): continuous per-point colors (the
+       concept overlay). values = Array(n) of numbers; palette = array of
+       CSS color strings, low→high; values clip to [-2.5, 2.5] and bin
+       across the palette. null clears. Groups still win over value
+       colors; depth alpha and selection dimming still apply.
+     setArrow(vec): a direction arrow through the cloud center, vec =
+       {x, y, z} in the current projection's 3D coordinates; it rotates
+       with the ball. null clears. Home only in practice (atlas-3d.js).
+     setHomeNote(text): replaces the home note; null restores the default.
      handle.ready is a Promise that resolves with the handle once the data
      has loaded (after a retry, if the first fetch failed). It never rejects;
      a handle destroyed before loading leaves it pending.
@@ -231,6 +242,9 @@
       yaw: 0.6, pitch: 0.45, dist: 3.2,
       proj: projection, highlight: new Set(), selectedId: null,
       dim: null, rings: [], groups: [], groupOf: null,
+      valueColors: null, /* {bins: Uint8Array, palette: [css]} */
+      arrow: null, /* {x, y, z} unit vector in projection coords */
+      homeNote: null, /* string | null: home note override */
       autoRotate: !reduceMotion, idleTimer: 0, raf: 0,
       now: 0, selT0: 0, /* frame clock; when the selection ring began to draw */
       sx: null, sy: null, sz: null, /* screen coords of last frame */
@@ -429,7 +443,11 @@
       var text;
       if (variant === 'home') {
         /* Panel S10: plain words, with the number. #165 greyscale wording. The
-           switcher names the projection; the note says what it keeps. */
+           switcher names the projection; the note says what it keeps. A home
+           note override (concept mode) replaces the whole line: the default
+           "Color appears only on your selection and its twins" is false
+           while the dots carry concept colors. */
+        if (state.homeNote != null) { note.textContent = state.homeNote; return; }
         note.textContent = (PROJ_NOTES[state.proj] || '') +
           ' Points are shaded by depth — nearer dots are brighter. Color appears only on your selection and its twins.' +
           ' Each dot is one player-season. Axes are arbitrary units.';
@@ -531,8 +549,7 @@
 
     /* Colour groups: [{label, color, ids}]; [] clears. A point in two groups
        takes the first. Up to 254 groups. */
-    function setGroups(groups) {
-      state.groups = (groups || []).slice(0, 254).map(function (g, gi) {
+    function setGroups(groups) {      state.groups = (groups || []).slice(0, 254).map(function (g, gi) {
         var fallback = [COL.css.mark, COL.css.terra, COL.css.voidInk2, COL.css.voidInk][gi % 4];
         return {
           label: String(g && g.label != null ? g.label : 'Group ' + (gi + 1)),
@@ -554,6 +571,42 @@
         });
       }
       state.groupOf = state.groups.length ? go : null;
+    }
+
+    /* Continuous per-point colors (concept overlay). values = Array(n) of
+       numbers (predicted z-scores); palette = CSS colors, low→high. Values
+       clip to [-2.5, 2.5] and bin across the palette; bins are precomputed
+       once here, so the frame loop stays a lookup. null clears. Groups
+       still win over value colors (live teams); depth alpha and selection
+       dimming still apply. */
+    function setValueColors(values, palette) {
+      if (values == null || palette == null || !palette.length) { state.valueColors = null; return; }
+      var n = state.n || values.length;
+      var bins = new Uint8Array(n), nb = palette.length;
+      for (var i = 0; i < n; i++) {
+        var v = +values[i];
+        if (v !== v) v = 0; /* NaN -> mid */
+        if (v < -2.5) v = -2.5; if (v > 2.5) v = 2.5;
+        bins[i] = Math.round((v + 2.5) / 5 * (nb - 1));
+      }
+      state.valueColors = { bins: bins, palette: palette.slice() };
+    }
+
+    /* Direction arrow through the cloud center, in the current projection's
+       3D coordinates. The caller passes a unit-ish vector; it is normalized
+       here. null clears. */
+    function setArrow(vec) {
+      if (vec == null) { state.arrow = null; return; }
+      var x = +vec.x || 0, y = +vec.y || 0, z = +vec.z || 0;
+      var m = Math.sqrt(x * x + y * y + z * z);
+      if (!(m > 0)) { state.arrow = null; return; }
+      state.arrow = { x: x / m, y: y / m, z: z / m };
+    }
+
+    /* Home note override (concept mode); null restores the default. */
+    function setHomeNote(text) {
+      state.homeNote = text == null ? null : String(text);
+      renderNote();
     }
 
     /* Ids matching {team, season} (season as '2024-25' or its start year). */
@@ -742,6 +795,49 @@
       return Math.max(0.02, 1 - Math.pow(1 - k, 3));
     }
 
+    function project3(x, y, z) {
+      /* Same rotate + perspective as projectAll, for one arbitrary point. */
+      var cy = Math.cos(state.yaw), sy = Math.sin(state.yaw);
+      var cp = Math.cos(state.pitch), sp = Math.sin(state.pitch);
+      var w = canvas.width / dpr, h = canvas.height / dpr;
+      var scale = Math.min(w, h) * 0.42;
+      var ox = w / 2, oy = h / 2, d = state.dist;
+      var x1 = x * cy - z * sy, z1 = x * sy + z * cy;
+      var y1 = y * cp - z1 * sp, z2 = y * sp + z1 * cp;
+      var persp = d / (d + z2 + 1.6);
+      return [ox + x1 * scale * persp, oy - y1 * scale * persp];
+    }
+
+    function drawArrow() {
+      var a = state.arrow;
+      if (!a) return;
+      /* Through the cloud center, near the edge both ways; the cloud is
+         unit-max-radius normalized, so 0.9 reaches the rim. */
+      var p0 = project3(-a.x * 0.9, -a.y * 0.9, -a.z * 0.9);
+      var p1 = project3(a.x * 0.9, a.y * 0.9, a.z * 0.9);
+      var dx = p1[0] - p0[0], dy = p1[1] - p0[1];
+      var len = Math.hypot(dx, dy);
+      if (len < 14) return; /* edge-on to the viewer: a dot would mislead */
+      var ux = dx / len, uy = dy / len;
+      ctx.strokeStyle = COL.css.mark;
+      ctx.fillStyle = COL.css.mark;
+      ctx.lineWidth = 2;
+      ctx.globalAlpha = 0.9;
+      ctx.beginPath();
+      ctx.moveTo(p0[0], p0[1]);
+      ctx.lineTo(p1[0], p1[1]);
+      ctx.stroke();
+      /* arrowhead at the + end */
+      var hs = 10, ang = Math.atan2(uy, ux);
+      ctx.beginPath();
+      ctx.moveTo(p1[0], p1[1]);
+      ctx.lineTo(p1[0] - hs * Math.cos(ang - 0.42), p1[1] - hs * Math.sin(ang - 0.42));
+      ctx.lineTo(p1[0] - hs * Math.cos(ang + 0.42), p1[1] - hs * Math.sin(ang + 0.42));
+      ctx.closePath();
+      ctx.fill();
+      ctx.globalAlpha = 1;
+    }
+
     /* ---- frame loop: one depth-sorted pass, fillStyle batched by bucket ---- */
     var lastT = 0;
     function frame(t) {
@@ -760,6 +856,7 @@
       ctx.clearRect(0, 0, canvas.width / dpr, canvas.height / dpr);
       var sx = state.sx, syy = state.sy, sz = state.sz, n = state.n;
       var ramp = COL.ramp, groupOf = state.groupOf, groups = state.groups, dim = state.dim;
+      var vc = state.valueColors;
       /* Panel S7: single back-to-front pass — perceived density is real depth.
          sz is perspective scale: smaller = farther, so ascending = far first. */
       var order = state.order;
@@ -777,11 +874,14 @@
           keyId = 100 + g;
           size += 0.8;
           alpha = Math.min(1, alpha + 0.2);
+        } else if (vc) {
+          keyId = 200 + vc.bins[i];
         } else {
           keyId = depth > 1 ? 15 : (depth * 16) | 0;
         }
         if (keyId !== lastKey) {
-          ctx.fillStyle = g !== 255 ? groups[g].css : ramp[keyId];
+          ctx.fillStyle = g !== 255 ? groups[g].css
+            : (vc && keyId >= 200 ? vc.palette[keyId - 200] : ramp[keyId]);
           lastKey = keyId;
         }
         if (greyscale && selActive && i !== state.selectedId && !state.highlight.has(i)) alpha *= 0.35;
@@ -829,6 +929,8 @@
           if (r.kind === 'exact') { ctx.fillStyle = c; dot(sx[j], syy[j], 3 + sz[j] * 2.5, false); }
         });
       }
+      /* concept direction arrow (rotates with the ball; skipped edge-on) */
+      drawArrow();
     }
 
     function destroy() {
@@ -860,6 +962,9 @@
         dim: state.dim ? Array.from(state.dim) : null,
         rings: state.rings.map(function (r) { return { id: r.id, kind: r.kind, r: r.r, color: ringColor(r) }; }),
         groups: state.groups.map(function (g) { return { label: g.label, color: g.css, n: g.ids.length }; }),
+        valueColors: state.valueColors ? { bins: state.valueColors.palette.length } : null,
+        arrow: state.arrow ? { x: state.arrow.x, y: state.arrow.y, z: state.arrow.z } : null,
+        homeNote: state.homeNote,
         colors: { mark: COL.css.mark, void: COL.css.void, voidInk: COL.css.voidInk, voidInk2: COL.css.voidInk2,
           accent: COL.css.accent, fg3: COL.css.fg3, terra: COL.css.terra, ramp: COL.ramp.slice() }
       };
@@ -868,7 +973,8 @@
     var handle = {
       setProjection: setProjection, setHighlight: setHighlight, setSelected: setSelected,
       setDim: setDim, overlay: overlay, setGroups: setGroups, find: find,
-      info: info, snapshot: snapshot, destroy: destroy, ready: ready
+      info: info, snapshot: snapshot, destroy: destroy, ready: ready,
+      setValueColors: setValueColors, setArrow: setArrow, setHomeNote: setHomeNote
     };
     host.__embed3d = handle;
     load();

@@ -131,6 +131,14 @@
       loadingText: false, /* the plate meta states the count (#atlas-count) */
       onSelect: function (id) { select(id); }
     });
+    /* Click-to-select needs NAMES/N, which only ensureIndex fills — and
+       until now nothing called it on the boot path (only search focus/input
+       did), so a tap before touching search silently selected nothing
+       (select() guards i >= N with N = 0). Boot loads the index too: it is
+       the engine's own fetch URL, same cache entry, zero extra bytes. */
+    ensureIndex();
+    /* A concept picked before the data lands still applies once it does. */
+    if (handle && handle.ready) handle.ready.then(function () { applyConcept(); });
   }
   function bootWhenNear() {
     var sec = $('atlas');
@@ -365,10 +373,163 @@
     exportImage: exportImage
   };
 
+  /* ---------- concept overlay: color the map by the model's read ---------- */
+  /* Predictions: ridge probes on the frozen v5 embedding (PyC program P2),
+     assets/concept_predictions.json — predicted z-scores per player-season,
+     lazy-fetched on first use so the initial page weight is unchanged.
+     The URL is a literal so scripts/stamp_assets.py can pin its ?v= token
+     (a const would be invisible to the stamper). */
+  var CONCEPTS = [
+    ['PTS', 'scoring volume'], ['AST', 'playmaking'],
+    ['OREB', 'offensive glass'], ['DREB', 'defensive glass'],
+    ['STL', 'steals'], ['BLK', 'rim protection'], ['TOV', 'turnovers'],
+    ['FG3A', 'three-point volume'], ['FGA', 'shot volume'],
+    ['FTA', 'rim pressure (FTs)'], ['FG3_PCT', 'three-point accuracy'],
+    ['FG_PCT', 'finishing'], ['FT_PCT', 'free-throw touch'],
+    ['PLUS_MINUS', 'on-court impact']
+  ];
+  /* 11-step diverging scale, low→high; reads on the dark void in both
+     themes (the canvas is the void on both). */
+  var CONCEPT_PALETTE = ['#2F6FD0', '#4E86E0', '#7AA5EA', '#A9BFEF', '#D3D9E2',
+    '#8E949E', '#E8B48C', '#F0924F', '#FF7A33', '#F25C19', '#E04A0C'];
+  var ARROW_R2_MIN = 0.05; /* below this the direction is noise: no arrow */
+  var conceptData = null, conceptLoading = false, conceptFailed = false;
+  var conceptActive = null; /* concept code, or null for Off */
+
+  function conceptPlain(code) {
+    for (var i = 0; i < CONCEPTS.length; i++) if (CONCEPTS[i][0] === code) return CONCEPTS[i][1];
+    return code;
+  }
+  function conceptIndex(code) {
+    if (!conceptData) return -1;
+    return conceptData.meta.concepts.indexOf(code);
+  }
+  function currentProjection() {
+    try { return handle ? handle.snapshot().projection : 'pca'; } catch (e) { return 'pca'; }
+  }
+  function arrowShown(code) {
+    if (!conceptData || !code) return false;
+    var a = conceptData.arrows[code];
+    return !!a && a.r2 >= ARROW_R2_MIN && currentProjection() === 'pca';
+  }
+  function applyConcept() {
+    if (!handle || !conceptData || !conceptActive) return;
+    var ci = conceptIndex(conceptActive);
+    if (ci < 0) return;
+    var n = conceptData.pred.length, vals = new Float32Array(n);
+    for (var i = 0; i < n; i++) vals[i] = conceptData.pred[i][ci];
+    handle.setValueColors(vals, CONCEPT_PALETTE);
+    var a = conceptData.arrows[conceptActive];
+    if (arrowShown(conceptActive)) handle.setArrow({ x: a.dx, y: a.dy, z: 0 });
+    else handle.setArrow(null);
+    var plain = conceptPlain(conceptActive);
+    var note = 'Dots are colored by the model\u2019s read of ' + plain +
+      ' — blue is low, orange is high. Your selection and its twins still highlight.';
+    if (arrowShown(conceptActive)) note += ' The arrow points toward more ' + plain + ' (PCA view).';
+    handle.setHomeNote(note);
+  }
+  function renderConceptMeta() {
+    var meta = $('concept-meta');
+    if (!meta) return;
+    if (!conceptActive) { meta.hidden = true; meta.innerHTML = ''; return; }
+    var plain = conceptPlain(conceptActive);
+    if (!conceptData) {
+      meta.hidden = false;
+      meta.textContent = conceptFailed
+        ? 'The concept colors did not arrive. The map still works — check your connection and try again.'
+        : 'Loading the model\u2019s read of ' + plain + '…';
+      return;
+    }
+    var r2 = conceptData.meta.r2_heldout[conceptActive];
+    var a = conceptData.arrows[conceptActive];
+    var html = '<b>' + esc(plain) + '</b> · model reads this at R² ' +
+      (typeof r2 === 'number' ? r2.toFixed(2) : '—') + ' on unseen players';
+    if (a && a.r2 >= ARROW_R2_MIN) {
+      html += currentProjection() === 'pca'
+        ? ' · arrow points toward more ' + esc(plain)
+        : ' · arrow shows in the PCA view';
+    } else {
+      html += ' · no clear direction on this map — it spreads evenly';
+    }
+    html += '<span class="concept-scale" style="background: linear-gradient(90deg, ' +
+      CONCEPT_PALETTE.join(', ') + ');"></span>' +
+      '<span class="caption">Low ← → high (model\u2019s read, not the stat)</span>';
+    meta.innerHTML = html;
+    meta.hidden = false;
+  }
+  function syncConceptChips() {
+    var host = $('concept-chips');
+    if (!host) return;
+    host.querySelectorAll('[data-concept]').forEach(function (b) {
+      var c = b.getAttribute('data-concept');
+      b.setAttribute('aria-pressed', String((c === '' && !conceptActive) || c === conceptActive));
+      b.disabled = conceptLoading && c !== '' && c !== conceptActive;
+    });
+  }
+  function setConcept(code) {
+    conceptActive = code || null;
+    syncConceptChips();
+    if (!conceptActive) {
+      if (handle) {
+        try {
+          handle.setValueColors(null);
+          handle.setArrow(null);
+          handle.setHomeNote(null);
+        } catch (e) {}
+      }
+      renderConceptMeta();
+      return;
+    }
+    boot(); /* selecting a concept boots the map so the effect is visible */
+    renderConceptMeta();
+    if (conceptData) { applyConcept(); renderConceptMeta(); return; }
+    if (conceptLoading) return;
+    conceptLoading = true;
+    syncConceptChips();
+    fetch('assets/concept_predictions.json?v=e96a5193', { cache: 'force-cache' })
+      .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+      .then(function (j) {
+        conceptData = j; conceptLoading = false; conceptFailed = false;
+        syncConceptChips();
+        applyConcept(); renderConceptMeta();
+      })
+      .catch(function () {
+        conceptLoading = false; conceptFailed = true;
+        syncConceptChips(); renderConceptMeta();
+      });
+  }
+  function initConceptPicker() {
+    var host = $('concept-chips');
+    if (!host) return;
+    var html = '<button type="button" data-concept="" aria-pressed="true">Off</button>';
+    CONCEPTS.forEach(function (c) {
+      html += '<button type="button" data-concept="' + c[0] + '" aria-pressed="false">' + esc(c[1]) + '</button>';
+    });
+    host.innerHTML = html;
+    host.addEventListener('click', function (e) {
+      var b = e.target.closest('[data-concept]');
+      if (!b) return;
+      setConcept(b.getAttribute('data-concept') || null);
+    });
+    /* Projection switch hides the arrow (it is defined in PCA space only);
+       colors stay — they are per-point values, projection-independent. */
+    if (mountEl) mountEl.addEventListener('click', function (e) {
+      if (!e.target.closest || !e.target.closest('.embed3d__bar')) return;
+      setTimeout(function () {
+        if (!conceptActive || !handle) return;
+        var a = conceptData && conceptData.arrows[conceptActive];
+        if (a && a.r2 >= ARROW_R2_MIN && currentProjection() === 'pca') handle.setArrow({ x: a.dx, y: a.dy, z: 0 });
+        else handle.setArrow(null);
+        renderConceptMeta();
+      }, 0);
+    });
+  }
+
   /* ---------- go ---------- */
   ensurePeers(function () { if (selected >= 0) { computeTwins(); renderReadout(); } });
   ensureArch(function () { if (selected >= 0) renderReadout(); });
   initSearch();
+  initConceptPicker();
   bootWhenNear();
   // Deep link: ?id=<row>
   try {
