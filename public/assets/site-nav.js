@@ -140,8 +140,12 @@
     function open() {
       drawer.hidden = false;
       btn.setAttribute('aria-expanded', 'true');
-      var first = drawer.querySelector('.explore-item');
-      if (first) first.focus();
+      // T15: Close is the drawer's first Tab stop — opening used to focus the
+      // first item, so forward Tab could never reach Close (it sits before
+      // the list in DOM order). Focus Close first; Tab then walks
+      // Close -> Atlas ... -> Guide -> next stop. Escape still closes.
+      if (closeBtn) closeBtn.focus();
+      else { var first = drawer.querySelector('.explore-item'); if (first) first.focus(); }
     }
 
     function close(returnFocus) {
@@ -174,7 +178,8 @@
 
   /* Live-dot: pulse the drawer Live link (and the Explore slot) while any
    * NBA game is in progress. One ESPN scoreboard fetch per 90s per tab,
-   * cached in sessionStorage. */
+   * cached in sessionStorage. A failed fetch is remembered for the tab
+   * session (T13) so a down feed is not retried on every navigation. */
   function markLive(nav) {
     var link = nav.querySelector('.explore-item[href="/live"]');
     var btn = nav.querySelector('.site-nav__explore');
@@ -183,6 +188,10 @@
       if (btn) btn.classList.toggle('is-live', !!on);
     }
     try {
+      // T13: stop after the first failure — the 90 s cache below is only
+      // written on success, so while the feed was down every page load
+      // retried the scoreboard and filled the console.
+      if (sessionStorage.getItem('vh_nav_live_failed') === '1') { set(false); return; }
       var c = sessionStorage.getItem('vh_nav_live');
       if (c) { var o = JSON.parse(c); if (Date.now() - o.t < 90000) { set(o.on); return; } }
     } catch (e) {}
@@ -193,7 +202,7 @@
         set(on);
         try { sessionStorage.setItem('vh_nav_live', JSON.stringify({ on: on, t: Date.now() })); } catch (e) {}
       })
-      .catch(function () {});
+      .catch(function () { try { sessionStorage.setItem('vh_nav_live_failed', '1'); } catch (e) {} });
   }
 
   // sound.js loads once per page, only when sound is on; the AudioContext is made inside a gesture (Safari)

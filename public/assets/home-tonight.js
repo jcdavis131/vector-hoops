@@ -125,12 +125,20 @@
 
   function loadTonight() {
     if (!document.getElementById('tonight') || !window.fetch) return;
+    // T13: one attempt per tab session. While ESPN is unreachable the strip
+    // degrades to its static copy — but loadTonight ran on every boot, so
+    // every navigation retried the scoreboard and filled the console.
+    // A failed fetch (HTTP, abort, DNS) now sets a session flag; later
+    // boots skip the fetch entirely.
+    try { if (sessionStorage.getItem('vh.tonightFailed') === '1') return; } catch (e) {}
     var ctl = null;
     try { ctl = new AbortController(); setTimeout(function () { ctl.abort(); }, 8000); } catch (e) { ctl = null; }
     fetch(SB, ctl ? { signal: ctl.signal } : undefined)
       .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
       .then(function (d) { render(parse(d)); })
-      .catch(function () { /* feed down: the static strip stands */ });
+      .catch(function () { /* feed down: the static strip stands */
+        try { sessionStorage.setItem('vh.tonightFailed', '1'); } catch (e) {}
+      });
   }
 
   // The hero's one action pays off below it: after a pick, bring the map and
