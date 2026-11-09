@@ -237,10 +237,40 @@
     }).join('');
   }
 
+  /* ---------- scroll the payoff into view (Wave A cluster A2: T2, T3) ----------
+     The readout card holds the selected season + the peers table. Scrolling
+     the card (not just the map canvas) into view is what shows the visitor
+     the payoff of a pick. No-op when the card is already fully in view, so a
+     pick made while looking at the readout never jerks the page. Respects
+     prefers-reduced-motion; scroll-padding-top (atlas.css) keeps the card
+     clear of the sticky nav. */
+  function scrollSelectionIntoView() {
+    var sel = $('atlas-selected');
+    var card = sel && sel.closest ? sel.closest('.card') : null;
+    if (!card || !card.scrollIntoView) return;
+    var r = card.getBoundingClientRect();
+    if (r.top >= 0 && r.bottom <= window.innerHeight) return;
+    var still = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    card.scrollIntoView({ behavior: still ? 'auto' : 'smooth', block: 'start' });
+  }
+
   /* ---------- search (V4: searching boots the atlas) ---------- */
   function initSearch() {
     var input = $('atlas-search'), list = $('atlas-results');
     if (!input || !list) return;
+    var SEARCH_KEY = 'vh.searchText';
+    /* T12: the typed text is what produced the selection. Keep it in
+       sessionStorage (per-tab) so browser back restores it after a reload;
+       the URL already carries the selection, never the typed text. */
+    function saveSearchText() { try { sessionStorage.setItem(SEARCH_KEY, input.value); } catch (e) {} }
+    function restoreSearchText() {
+      try {
+        var saved = sessionStorage.getItem(SEARCH_KEY);
+        if (saved && !input.value) input.value = saved;
+      } catch (e) {}
+    }
+    window.addEventListener('pageshow', restoreSearchText);
+    restoreSearchText();
     var results = [], active = -1;
     function close() { list.hidden = true; input.setAttribute('aria-expanded', 'false'); active = -1; input.removeAttribute('aria-activedescendant'); }
     function render() {
@@ -273,6 +303,7 @@
     }
     function onInput() {
       var q = input.value.trim().toLowerCase();
+      saveSearchText();
       if (q.length < 2) { close(); return; }
       boot(); // V4: search forces the atlas boot
       list.innerHTML = '<li class="atlas-results__empty" role="presentation">Loading the atlas…</li>';
@@ -297,11 +328,24 @@
     function pick(i) {
       select(i);
       input.value = NAMES[i] + ' ' + fmtSeason(SEASONS[i]);
+      saveSearchText();
       close();
     }
   }
 
   /* ---------- peers table: bidirectional sync ---------- */
+  /* T2 (cold path): a chip/story link clicked before the season index is
+     ready is a plain navigation — landing-stories only intercepts once the
+     index is warm. Leave a per-tab flag so the deep-link boot below scrolls
+     the payoff into view after the selection lands. Warm clicks set no flag:
+     they are applied in place and scrolled by applyView. */
+  var CHIP_SCROLL_KEY = 'vh.scrollToSelection';
+  document.addEventListener('click', function (e) {
+    if (indexReady) return;
+    var a = e.target && e.target.closest ? e.target.closest('a[data-view]') : null;
+    if (!a) return;
+    try { sessionStorage.setItem(CHIP_SCROLL_KEY, '1'); } catch (err) {}
+  });
   document.addEventListener('click', function (e) {
     var tr = e.target.closest && e.target.closest('#atlas-peers-body tr[data-id]');
     if (tr) select(+tr.getAttribute('data-id'));
@@ -404,7 +448,11 @@
       opts.proj = p;
       window.VHAtlas.setProjection(p);
       window.VHAtlas.select(ok ? Math.floor(id) : -1, opts);
+      /* T2 (warm path): the click was applied in place, so the page never
+         moved — bring the payoff into view, same as a search pick. */
+      setTimeout(scrollSelectionIntoView, 30);
     },
+    scrollToSelection: scrollSelectionIntoView,
     exportImage: exportImage
   };
 
@@ -418,7 +466,16 @@
     var id = new URL(location.href).searchParams.get('id');
     if (id != null && /^\d+$/.test(id)) {
       boot();
-      ensureIndex(function () { select(+id, { noUrl: true }); });
+      ensureIndex(function () {
+        select(+id, { noUrl: true });
+        /* T2 (cold path): a chip click navigated here, so the page loaded at
+           the top and the payoff sits ~2,200 px below. Scroll it into view
+           once the selection has rendered. The flag is consumed on read, so
+           a shared deep link opened directly never scrolls. */
+        var scroll = false;
+        try { scroll = sessionStorage.getItem(CHIP_SCROLL_KEY) === '1'; sessionStorage.removeItem(CHIP_SCROLL_KEY); } catch (e) {}
+        if (scroll) setTimeout(scrollSelectionIntoView, 30);
+      });
     }
   } catch (e) {}
 })();

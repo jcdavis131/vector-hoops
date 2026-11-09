@@ -145,8 +145,10 @@
   }
 
   function wireSurprise() {
-    // Only a pick the viewer just made in the hero scrolls; the atlas's own
-    // opening selection (and URL ?id=) never moves the page.
+    // A pick the viewer just made in the hero scrolls the payoff into view;
+    // the atlas's own opening selection (and a direct URL ?id=) never moves
+    // the page — the chip-navigation scroll lives in atlas-3d.js (T2), where
+    // the deep link is applied.
     var hero = document.querySelector('.hero-search'), intent = 0;
     function mark(e) { if (e.type === 'mousedown' || e.key === 'Enter') intent = Date.now(); }
     if (hero) { hero.addEventListener('mousedown', mark, true); hero.addEventListener('keydown', mark, true); }
@@ -166,7 +168,17 @@
     try {
       if (window.VHAtlas && window.VHAtlas.onSelect) window.VHAtlas.onSelect(function (p) {
         if (b && b.disabled && ready()) b.disabled = false;
-        if (p && Date.now() - intent < 800) { intent = 0; setTimeout(showMap, 30); }
+        if (p && Date.now() - intent < 800) {
+          intent = 0;
+          /* T3: a search pick used to scroll only to the map canvas, leaving
+             the readout + peers table below the fold. Scroll the readout card
+             (selected season + peers) into view instead; fall back to the map
+             when the atlas wiring is absent. */
+          setTimeout(function () {
+            if (window.VHAtlas && window.VHAtlas.scrollToSelection) window.VHAtlas.scrollToSelection();
+            else showMap();
+          }, 30);
+        }
       });
     } catch (e) {}
     if (!b) return;
