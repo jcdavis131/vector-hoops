@@ -2,6 +2,11 @@
 
 Branch: `scout/phase2-A2-scroll` off `origin/scout/landing-map-viz` @ `010b1c27`
 (verified via `git ls-remote`, 2026-11-08 ~20:00 CST).
+Commit: `0281a482ac30723e5a524fe902ac2fa4651bbaea` (via GitHub API — local git
+cannot write objects/refs in this sandbox). Draft PR #199:
+https://github.com/jcdavis131/vector-hoops/pull/199 (base
+`scout/landing-map-viz`). CI at creation: Vercel pass, Vercel Preview
+Comments pass.
 Worktree: `~/workspace/_worktrees/phase2-A2-scroll`.
 Serve: `docs/phase2-A2/serve.mjs` (port 8474; port 8473 belongs to the A4
 worker's server — left alone). Applies `vercel.json` rewrites; `/api/espn/scoreboard`

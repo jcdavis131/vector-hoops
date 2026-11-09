@@ -34,7 +34,8 @@ Scope: landing page only (`index.html`, `assets/atlas-3d.js`, `assets/home-tonig
 - [x] Asset tokens re-stamped (`ff235a3a`, `11f7b4cc`) — Gate 3 caught the stale tokens, fixed by hand (stamp script writes via python, blocked by the EPERM sandbox)
 
 ### P5 — Ship the branch
-- [ ] Commit + push `scout/phase2-A2-scroll`; open DRAFT PR; report CI checks status — IN PROGRESS via GitHub API (`gh api`): local git cannot write objects/refs (EPERM sandbox, fleet-wide since ~20:08 CST Nov 8; recovery needs a runtime/VM restart)
+- [x] Commit + push `scout/phase2-A2-scroll` — DONE via GitHub API (commit `0281a482ac30723e5a524fe902ac2fa4651bbaea`, parent `010b1c27`); local git cannot write objects/refs (EPERM sandbox, fleet-wide since ~20:08 CST Nov 8; recovery needs a runtime/VM restart)
+- [x] Draft PR #199 — https://github.com/jcdavis131/vector-hoops/pull/199 (base `scout/landing-map-viz`, draft, OPEN); CI at creation: Vercel pass, Vercel Preview Comments pass
 - [x] Repro notes + screenshots in `docs/phase2-A2/` on the branch (before-screenshots committed; after-screenshots pending the Chromium recovery)
 - [ ] Report back: branch + head sha, draft PR + CI, before/after numbers, verdicts, scorecard
 
