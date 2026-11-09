@@ -47,6 +47,8 @@
 .hero-search{ position: relative; z-index: 40; width: 100%; max-width: 600px; margin: var(--s-2) auto 0; }
 .hero-search .atlas-search input{ height: 58px; padding-left: 48px; font-size: var(--t-md); border-radius: 999px; border-width: 1.5px; border-color: var(--line-2); }
 .hero-search .atlas-search input:focus{ border-color: var(--accent); outline: none; box-shadow: 0 0 0 4px var(--accent-wash); }
+/* T16: the :focus rule above kills the outline, leaving only the pale halo — give the search input the same 2px red :focus-visible outline the other controls get (atlas.css :focus-visible). Same specificity as :focus, later in source, so it wins for outline; the halo box-shadow stays. */
+.hero-search .atlas-search input:focus-visible{ outline: 2px solid var(--accent); outline-offset: 3px; }
 .hero-search .atlas-search svg{ left: 19px; width: 18px; height: 18px; }
 .hero-search .atlas-results{ text-align: left; }
 .hero__try{ display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: var(--s-2) var(--s-3); margin-top: var(--s-3); font-size: var(--t-sm); color: var(--fg-3); }
@@ -393,7 +395,7 @@
 </footer>
 <!-- /footer:stamped -->
 
-<script defer src="/assets/site-nav.js?v=a16120da"></script>
+<script defer src="/assets/site-nav.js?v=3facdff2"></script>
 <script defer src="/assets/vh-analytics.js?v=d838a3e1"></script>
 <script defer src="/assets/vh-peers.js?v=860629b9"></script>
 <script defer src="/assets/served-constants.js?v=8ba12340"></script>
@@ -403,7 +405,7 @@
 <script defer src="/assets/landing-stories.js?v=8225b771"></script>
 <script src="assets/site-facts.js?v=f8edaf37" defer></script>
 <script defer src="/assets/engagement.js?v=b09bf206"></script>
-<script defer src="/assets/home-tonight.js?v=881d28f9"></script>
+<script defer src="/assets/home-tonight.js?v=bdcf572a"></script>
 <script defer src="/assets/inline-index.js?v=2ad73c39"></script>
 </body>
 </html>
