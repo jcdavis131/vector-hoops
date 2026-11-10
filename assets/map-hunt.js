@@ -321,7 +321,7 @@
     if (el) {
       el.hidden = false;
       var why = err instanceof NoPuzzle
-        ? '<p>There is no puzzle for ' + esc(err.day) + ': that date is outside the puzzle window. <a href="/map-guess">Play today&rsquo;s</a></p>'
+        ? '<p>There is no puzzle for ' + esc(err.day) + ': that date is outside the puzzle window.' + (err.day === todayKey() ? '' : ' <a href="/map-guess">Play today&rsquo;s</a>') + '</p>'
         : '<p>' + esc(err && err.message || 'The puzzle failed to load.') + '</p>';
       el.innerHTML = '<p><b>Map Hunt is taking the night off.</b></p>' + why + '<p><a href="/play">Play the classic Daily Court instead</a></p>';
     }
@@ -336,7 +336,7 @@
     state.mode = p.mode === 'th' ? 'th' : 'mh';
     state.replay = !!p.day && p.day !== todayKey();
 
-    jsonOf(fetch('assets/map-hunt/index.json?v=764b5a7f', { cache: 'force-cache' }), 'index.json').then(function (idx) {
+    jsonOf(fetch('assets/map-hunt/index.json?v=d433e363', { cache: 'force-cache' }), 'index.json').then(function (idx) {
       var dayInfo = idx.days && idx.days[state.day];
       if (!dayInfo) throw new NoPuzzle(state.day);
       state.mhPool = +idx.mh_pool || null; state.thPool = +idx.th_pool || null;
