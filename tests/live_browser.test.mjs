@@ -2,7 +2,9 @@
 // (live-feed-freshness Stage A1): the fetch timeout, the late-response drop, the hidden
 // tab, the Refresh limit, a 429 on the board, and the feed card. tests/live_poll_rules.test.mjs
 // covers only the pure block (assets/live.js between "feedPoll:begin" and "feedPoll:end");
-// the wiring around it is here.
+// the wiring around it is here. It also holds the game-switch cases (a failed load of game B
+// shows nothing of game A) and the score-tick cases, which pass `raf: true` to `open()` so the
+// fake clock drives real animation frames; every other case stubs requestAnimationFrame.
 //
 // Transport. live.html is served from a loopback http.server started and stopped inside
 // this file. site.api.espn.com is answered by route handlers; every other host is aborted.
@@ -98,7 +100,7 @@ const LAST = n => fx.plays[n - 1];
 
 // ---- one page per scenario ----
 const ESPN = 'site.api.espn.com';
-async function open(t, { boardReply, summaryReply, startMs = TIP + 30 * MIN }) {
+async function open(t, { boardReply, summaryReply, startMs = TIP + 30 * MIN, raf = false }) {
   const ctx = await browser.newContext({ serviceWorkers: 'block', viewport: { width: 1280, height: 900 } });
   const page = await ctx.newPage();
   const held = [];                 // routes the scenario chose never to answer yet
@@ -115,6 +117,7 @@ async function open(t, { boardReply, summaryReply, startMs = TIP + 30 * MIN }) {
       reqs.push(rec);
       const reply = sum ? summaryReply : boardReply;
       const r = reply ? await reply(rec, route) : { status: 200, body: {} };
+      if (r === 'aborted') return;        // the reply aborted the request itself: the page's own fetch counter ends it
       if (r === 'hold') { held.push({ rec, route }); return; }
       if (DELAY) await new Promise(res => setTimeout(res, DELAY));
       return route.fulfill({ status: r.status, contentType: 'application/json', body: JSON.stringify(r.body ?? {}) }).catch(() => {});
@@ -132,14 +135,14 @@ async function open(t, { boardReply, summaryReply, startMs = TIP + 30 * MIN }) {
   // Counters: fetches the page has started and not yet finished (headers), and body reads
   // (Response.json) not yet finished. They tell S.settle() when the page has nothing left to
   // receive, so the fake clock is never moved while a reply is on its way.
-  await page.addInitScript(() => {
-    window.requestAnimationFrame = () => 0;
+  await page.addInitScript(RAF => {
+    if (!RAF) window.requestAnimationFrame = () => 0;
     window.__net = { fetching: 0, json: 0 };
     const f = window.fetch;
     window.fetch = (...a) => { window.__net.fetching++; return f.apply(window, a).finally(() => { window.__net.fetching--; }); };
     const j = Response.prototype.json;
     Response.prototype.json = function () { window.__net.json++; return j.call(this).finally(() => { window.__net.json--; }); };
-  });
+  }, raf);
   await page.goto(base + '/live.html', { waitUntil: 'load' });
   const S = {
     page, reqs, held, errors,
@@ -491,5 +494,113 @@ T('#feedcard is a polite status region', async t => {
   const S = await open(t, { boardReply: ok('board'), summaryReply: ok('summary', 60) });
   assert.equal(await S.page.getAttribute('#feedcard', 'role'), 'status');
   assert.equal(await S.page.getAttribute('#feedcard', 'aria-live'), 'polite');
+  S.done();
+});
+
+const txtOf = (S, id) => S.page.$eval(id, e => e.textContent);
+// The scorebug, clock, phase, header, update stamp and tab title hold nothing of game A.
+async function assertNoGameA(S, away, home) {
+  assert.equal(await txtOf(S, '#aAbbr'), '–', 'away abbreviation');
+  assert.equal(await txtOf(S, '#hAbbr'), '–', 'home abbreviation');
+  assert.equal(await txtOf(S, '#aScore'), '–');
+  assert.equal(await txtOf(S, '#hScore'), '–');
+  assert.equal(await txtOf(S, '#clock'), '–', 'A\'s clock is gone');
+  assert.notEqual(await txtOf(S, '#liveState'), 'Final', 'A\'s phase is gone');
+  assert.equal(await txtOf(S, '#upd'), '', 'A\'s update stamp is gone');
+  const gh = await txtOf(S, '#ghMount');
+  assert.ok(!gh.includes(away) && !gh.includes(home), 'A\'s game header is gone: ' + gh);
+  assert.ok(!(await S.page.title()).includes(`${away} @ ${home}`), await S.page.title());
+}
+
+T('picking game B after game A, with B\'s summary aborted, shows none of A\'s score, clock or title', async t => {
+  const S = await open(t, {
+    boardReply: async () => ({ status: 200, body: board(event(ID_A, 'post'), event(ID_B, 'pre', true)) }),
+    summaryReply: async (rec, route) => rec.id === ID_A ? { status: 200, body: summary(132, false) } : (await route.abort(), 'aborted'),
+  });
+  await S.page.click('.gbtn >> nth=0');           // pick A: it paints
+  await S.settle();
+  const away = side('away'), home = side('home');
+  assert.notEqual(await txtOf(S, '#aScore'), '–', 'A painted a score');
+  assert.notEqual(await txtOf(S, '#clock'), '–', 'A painted a clock');
+  await S.page.click('.gbtn >> nth=1');           // pick B: its summary is aborted
+  await S.settle();
+  const c = await S.card();
+  assert.equal(c.hidden, false);
+  assert.ok(!c.text.includes(away) && !c.text.includes(home), 'the card names neither of A\'s teams: ' + c.text);
+  assert.ok(!/Last known/.test(c.text), c.text);
+  assert.match(c.text, /No score on record yet\./);
+  assert.ok(!/ as of \d/.test(c.text), 'no as-of time from game A: ' + c.text);
+  await assertNoGameA(S, away, home);
+  S.done();
+});
+
+T('changing the day with the board failing leaves none of A\'s score on the scorebug or card', async t => {
+  let boards = 0;
+  const S = await open(t, {
+    boardReply: async () => ++boards === 1 ? { status: 200, body: board(event(ID_A, 'post'), event(ID_B, 'pre', true)) } : { status: 500, body: {} },
+    summaryReply: async () => ({ status: 200, body: summary(132, false) }),
+  });
+  await S.page.click('.gbtn >> nth=0');
+  await S.settle();
+  const away = side('away'), home = side('home');
+  assert.notEqual(await txtOf(S, '#aScore'), '–', 'A painted a score');
+  await S.page.click('#dayPrev');
+  await S.settle();
+  const c = await S.card();
+  assert.ok(!/Last known/.test(c.text), c.text);
+  assert.ok(!c.text.includes(away) && !c.text.includes(home), c.text);
+  await assertNoGameA(S, away, home);
+  S.done();
+});
+
+T('picking the game already shown, with its summary failing, keeps its last-known score', async t => {
+  let n = 0;
+  const S = await open(t, {
+    boardReply: async () => ({ status: 200, body: board(event(ID_A, 'post'), event(ID_B, 'pre', true)) }),
+    summaryReply: async () => ++n === 1 ? { status: 200, body: summary(132, false) } : { status: 500 },
+  });
+  await S.page.click('.gbtn >> nth=0');           // pick A, then A again
+  await S.settle();
+  const aScore = await txtOf(S, '#aScore'), hScore = await txtOf(S, '#hScore');
+  assert.notEqual(aScore, '–');
+  await S.page.click('.gbtn >> nth=0');
+  await S.settle();
+  const c = await S.card();
+  assert.ok(c.text.includes(`Last known: ${side('away')} ${aScore} – ${hScore} ${side('home')}`), c.text);
+  assert.equal(await txtOf(S, '#aScore'), aScore);
+  S.done();
+});
+
+T('picking game B inside a score tick on A leaves B\'s score, not A\'s tick, on the scorebug', async t => {
+  const S = await open(t, {
+    raf: true,                                    // the fake clock drives the animation frames
+    boardReply: async () => ({ status: 200, body: board(event(ID_A, 'in'), event(ID_B, 'in', true)) }),
+    summaryReply: async rec => ({ status: 200, body: summary(rec.id === ID_B ? 90 : 40) }),
+  });
+  await S.run(2 * SEC);
+  // drag A's timeline back: the scorebug ticks toward an earlier score for 650 ms
+  await S.page.$eval('#scrub', e => { e.value = 10; e.dispatchEvent(new Event('input', { bubbles: true })); });
+  await S.page.clock.runFor(100);
+  await S.page.click('.gbtn >> nth=1');           // pick B inside the tick
+  await S.settle();
+  await S.run(2 * SEC);
+  const want = summary(90).plays.at(-1);
+  assert.equal(await txtOf(S, '#aScore'), String(want.awayScore), 'B\'s away score');
+  assert.equal(await txtOf(S, '#hScore'), String(want.homeScore), 'B\'s home score');
+  S.done();
+});
+
+T('dragging the timeline of a shown live game lands the scorebug on that play\'s score', async t => {
+  const S = await open(t, {
+    raf: true,                                    // real animation frames: the tick runs and must finish
+    boardReply: async () => ({ status: 200, body: board(event(ID_A, 'in', true)) }),
+    summaryReply: async () => ({ status: 200, body: summary(60) }),
+  });
+  await S.run(2 * SEC);
+  await S.page.$eval('#scrub', e => { e.value = 10; e.dispatchEvent(new Event('input', { bubbles: true })); });
+  await S.page.clock.runFor(1000);                // past the 650 ms tick
+  const want = summary(60).plays[10];
+  assert.equal(await txtOf(S, '#aScore'), String(want.awayScore), 'away score of play 10');
+  assert.equal(await txtOf(S, '#hScore'), String(want.homeScore), 'home score of play 10');
   S.done();
 });
