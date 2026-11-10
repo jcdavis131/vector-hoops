@@ -16,7 +16,6 @@ Run:  python -m pytest tests/test_recipes.py
 from __future__ import annotations
 
 import argparse
-import importlib
 import json
 import sys
 from pathlib import Path
@@ -175,7 +174,7 @@ def test_legacy_refits_are_unmeasured_final_refits():
 
 @pytest.fixture(scope="module")
 def tm():
-    return importlib.import_module("train_mtnn")
+    return pytest.importorskip("train_mtnn", reason="train_mtnn imports torch, which is not installed")
 
 
 @pytest.mark.parametrize("name", NAMES)

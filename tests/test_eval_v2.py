@@ -34,9 +34,7 @@ FAMILIES |= {"TOUCHES": "tracking", "TM_NET_RTG": "team"}
 
 @pytest.fixture(scope="module")
 def tm():
-    import importlib
-
-    return importlib.import_module("train_mtnn")
+    return pytest.importorskip("train_mtnn", reason="train_mtnn imports torch, which is not installed")
 
 
 def matrix(n_players: int = 24):
