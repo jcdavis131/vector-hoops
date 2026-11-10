@@ -131,6 +131,9 @@
       loadingText: false, /* the plate meta states the count (#atlas-count) */
       onSelect: function (id) { select(id); }
     });
+    /* Concept overlay (per-point colors, direction arrow, home note) lives
+       in assets/embed-3d-overlay.js, loaded by index.html alone. */
+    if (handle && handle.attachOverlay && window.Embed3DOverlay) handle.attachOverlay(window.Embed3DOverlay);
     /* Click-to-select needs NAMES/N, which only ensureIndex fills — and
        until now nothing called it on the boot path (only search focus/input
        did), so a tap before touching search silently selected nothing

@@ -24,19 +24,19 @@
                                        point (default "Selected")
      }
      handle = { setProjection(name), setHighlight(ids), setSelected(id),
-                setDim(ids), overlay(rings), setGroups(groups), find(q),
+                setDim(ids), setGroups(groups), find(q),
                 info(i), snapshot(), destroy(), ready,
-                setValueColors(values, palette), setArrow(vec),
-                setHomeNote(text) }
-     setValueColors(values, palette): continuous per-point colors (the
-       concept overlay). values = Array(n) of numbers; palette = array of
-       CSS color strings, low→high; values clip to [-2.5, 2.5] and bin
-       across the palette. null clears. Groups still win over value
-       colors; depth alpha and selection dimming still apply.
-     setArrow(vec): a direction arrow through the cloud center, vec =
-       {x, y, z} in the current projection's 3D coordinates; it rotates
-       with the ball. null clears. Home only in practice (atlas-3d.js).
-     setHomeNote(text): replaces the home note; null restores the default.
+                attachOverlay(plugin), renderNote(),
+                attachRings(plugin), renderLegend() }
+     attachOverlay(plugin): home only — the concept overlay (assets /
+       embed-3d-overlay.js, index.html alone) adds setValueColors /
+       setArrow / setHomeNote to the handle. renderNote() re-renders
+       the note; the overlay calls it on a home-note change.
+     attachRings(plugin): game only — the guess-rings plugin (assets /
+       embed-3d-rings.js, map-guess.html alone) adds overlay(rings) to
+       the handle. renderLegend() re-renders the legend; the plugin
+       calls it when the rings change. A mount-time overlay option is
+       applied by the plugin on attach.
      handle.ready is a Promise that resolves with the handle once the data
      has loaded (after a retry, if the first fetch failed). It never rejects;
      a handle destroyed before loading leaves it pending.
@@ -241,18 +241,17 @@
       names: null, seasons: null, teams: null, clusters: null, idToIdx: null,
       yaw: 0.6, pitch: 0.45, dist: 3.2,
       proj: projection, highlight: new Set(), selectedId: null,
-      dim: null, rings: [], groups: [], groupOf: null,
-      valueColors: null, /* {bins: Uint8Array, palette: [css]} */
-      arrow: null, /* {x, y, z} unit vector in projection coords */
-      homeNote: null, /* string | null: home note override */
+      dim: null, groups: [], groupOf: null,
       autoRotate: !reduceMotion, idleTimer: 0, raf: 0,
       now: 0, selT0: 0, /* frame clock; when the selection ring began to draw */
       sx: null, sy: null, sz: null, /* screen coords of last frame */
       error: null, destroyed: false
     };
+    var ov = null; /* concept overlay plugin; null unless attached */
+    var rg = null; /* guess-rings plugin; null unless attached */
     setHighlight(opts.highlightIds || opts.highlight);
     if (opts.dim) setDim(opts.dim);
-    if (opts.overlay) overlay(opts.overlay);
+    var pendingOverlay = opts.overlay || null; /* the rings plugin applies it on attach */
     if (opts.groups) setGroups(opts.groups);
     renderNote();
     renderLegend();
@@ -443,11 +442,9 @@
       var text;
       if (variant === 'home') {
         /* Panel S10: plain words, with the number. #165 greyscale wording. The
-           switcher names the projection; the note says what it keeps. A home
-           note override (concept mode) replaces the whole line: the default
-           "Color appears only on your selection and its twins" is false
-           while the dots carry concept colors. */
-        if (state.homeNote != null) { note.textContent = state.homeNote; return; }
+           switcher names the projection; the note says what it keeps. */
+        var hn = ov ? ov.note() : null;
+        if (hn != null) { note.textContent = hn; return; }
         note.textContent = (PROJ_NOTES[state.proj] || '') +
           ' Points are shaded by depth — nearer dots are brighter. Color appears only on your selection and its twins.' +
           ' Each dot is one player-season. Axes are arbitrary units.';
@@ -488,7 +485,7 @@
       if (variant === 'game') {
         if (state.selectedId != null) keys.push(key(selectedLabel, null, 'sel'));
         var kinds = {};
-        state.rings.forEach(function (r) { kinds[r.kind] = true; });
+        (rg ? rg.rings() : []).forEach(function (r) { kinds[r.kind] = true; });
         RING_KEYS.forEach(function (rk) {
           if (kinds[rk[0]]) keys.push(key(rk[1], null, 'ring embed3d__swatch--' + rk[0]));
         });
@@ -530,23 +527,6 @@
       state.dim = ids == null ? null : new Set(ids);
     }
 
-    /* Guess rings: [{id, kind:'warm'|'cold'|'exact'|'guess', r:px, color}]; [] clears.
-       'guess' is the neutral ring (a first guess, or one at the same distance):
-       a dashed --void-ink ring. An unknown kind is drawn as 'guess', never as
-       a warmer/colder claim. */
-    function overlay(rings) {
-      state.rings = (rings || []).filter(function (r) { return r && r.id != null; }).map(function (r) {
-        var kind = r.kind === 'warm' || r.kind === 'cold' || r.kind === 'exact' || r.kind === 'guess' ? r.kind : 'guess';
-        return { id: r.id, kind: kind, r: +r.r > 0 ? +r.r : 10, color: r.color || null };
-      });
-      renderLegend();
-    }
-    function ringColor(r) {
-      if (r.color) return resolveColor(r.color, COL.css.mark);
-      return r.kind === 'exact' ? COL.css.mark : r.kind === 'cold' ? COL.css.voidInk2
-        : r.kind === 'guess' ? COL.css.voidInk : COL.css.terra;
-    }
-
     /* Colour groups: [{label, color, ids}]; [] clears. A point in two groups
        takes the first. Up to 254 groups. */
     function setGroups(groups) {      state.groups = (groups || []).slice(0, 254).map(function (g, gi) {
@@ -571,42 +551,6 @@
         });
       }
       state.groupOf = state.groups.length ? go : null;
-    }
-
-    /* Continuous per-point colors (concept overlay). values = Array(n) of
-       numbers (predicted z-scores); palette = CSS colors, low→high. Values
-       clip to [-2.5, 2.5] and bin across the palette; bins are precomputed
-       once here, so the frame loop stays a lookup. null clears. Groups
-       still win over value colors (live teams); depth alpha and selection
-       dimming still apply. */
-    function setValueColors(values, palette) {
-      if (values == null || palette == null || !palette.length) { state.valueColors = null; return; }
-      var n = state.n || values.length;
-      var bins = new Uint8Array(n), nb = palette.length;
-      for (var i = 0; i < n; i++) {
-        var v = +values[i];
-        if (v !== v) v = 0; /* NaN -> mid */
-        if (v < -2.5) v = -2.5; if (v > 2.5) v = 2.5;
-        bins[i] = Math.round((v + 2.5) / 5 * (nb - 1));
-      }
-      state.valueColors = { bins: bins, palette: palette.slice() };
-    }
-
-    /* Direction arrow through the cloud center, in the current projection's
-       3D coordinates. The caller passes a unit-ish vector; it is normalized
-       here. null clears. */
-    function setArrow(vec) {
-      if (vec == null) { state.arrow = null; return; }
-      var x = +vec.x || 0, y = +vec.y || 0, z = +vec.z || 0;
-      var m = Math.sqrt(x * x + y * y + z * z);
-      if (!(m > 0)) { state.arrow = null; return; }
-      state.arrow = { x: x / m, y: y / m, z: z / m };
-    }
-
-    /* Home note override (concept mode); null restores the default. */
-    function setHomeNote(text) {
-      state.homeNote = text == null ? null : String(text);
-      renderNote();
     }
 
     /* Ids matching {team, season} (season as '2024-25' or its start year). */
@@ -808,36 +752,6 @@
       return [ox + x1 * scale * persp, oy - y1 * scale * persp];
     }
 
-    function drawArrow() {
-      var a = state.arrow;
-      if (!a) return;
-      /* Through the cloud center, near the edge both ways; the cloud is
-         unit-max-radius normalized, so 0.9 reaches the rim. */
-      var p0 = project3(-a.x * 0.9, -a.y * 0.9, -a.z * 0.9);
-      var p1 = project3(a.x * 0.9, a.y * 0.9, a.z * 0.9);
-      var dx = p1[0] - p0[0], dy = p1[1] - p0[1];
-      var len = Math.hypot(dx, dy);
-      if (len < 14) return; /* edge-on to the viewer: a dot would mislead */
-      var ux = dx / len, uy = dy / len;
-      ctx.strokeStyle = COL.css.mark;
-      ctx.fillStyle = COL.css.mark;
-      ctx.lineWidth = 2;
-      ctx.globalAlpha = 0.9;
-      ctx.beginPath();
-      ctx.moveTo(p0[0], p0[1]);
-      ctx.lineTo(p1[0], p1[1]);
-      ctx.stroke();
-      /* arrowhead at the + end */
-      var hs = 10, ang = Math.atan2(uy, ux);
-      ctx.beginPath();
-      ctx.moveTo(p1[0], p1[1]);
-      ctx.lineTo(p1[0] - hs * Math.cos(ang - 0.42), p1[1] - hs * Math.sin(ang - 0.42));
-      ctx.lineTo(p1[0] - hs * Math.cos(ang + 0.42), p1[1] - hs * Math.sin(ang + 0.42));
-      ctx.closePath();
-      ctx.fill();
-      ctx.globalAlpha = 1;
-    }
-
     /* ---- frame loop: one depth-sorted pass, fillStyle batched by bucket ---- */
     var lastT = 0;
     function frame(t) {
@@ -856,7 +770,7 @@
       ctx.clearRect(0, 0, canvas.width / dpr, canvas.height / dpr);
       var sx = state.sx, syy = state.sy, sz = state.sz, n = state.n;
       var ramp = COL.ramp, groupOf = state.groupOf, groups = state.groups, dim = state.dim;
-      var vc = state.valueColors;
+      var vc = ov ? ov.valueColors() : null;
       /* Panel S7: single back-to-front pass — perceived density is real depth.
          sz is perspective scale: smaller = farther, so ascending = far first. */
       var order = state.order;
@@ -912,25 +826,8 @@
           }
         }
       }
-      /* guess rings */
-      if (state.rings.length) {
-        ctx.lineWidth = 2;
-        state.rings.forEach(function (r) {
-          var j = state.idToIdx.get(r.id);
-          if (j === undefined) return;
-          var c = ringColor(r);
-          ctx.strokeStyle = c;
-          var dashed = r.kind === 'guess' && typeof ctx.setLineDash === 'function';
-          if (dashed) ctx.setLineDash([4, 3]);
-          ctx.beginPath();
-          ctx.arc(sx[j], syy[j], r.r * (0.6 + 0.4 * sz[j]), 0, 6.2832);
-          ctx.stroke();
-          if (dashed) ctx.setLineDash([]);
-          if (r.kind === 'exact') { ctx.fillStyle = c; dot(sx[j], syy[j], 3 + sz[j] * 2.5, false); }
-        });
-      }
-      /* concept direction arrow (rotates with the ball; skipped edge-on) */
-      drawArrow();
+      if (rg) rg.drawRings({ sx: sx, sy: syy, sz: sz, idToIdx: state.idToIdx, dot: dot, ctx: ctx, COL: COL, resolveColor: resolveColor });
+      if (ov) ov.drawArrow(project3, ctx, COL);
     }
 
     function destroy() {
@@ -960,21 +857,31 @@
         greyscale: greyscale, autoRotate: state.autoRotate, height: height,
         highlight: Array.from(state.highlight), selected: state.selectedId,
         dim: state.dim ? Array.from(state.dim) : null,
-        rings: state.rings.map(function (r) { return { id: r.id, kind: r.kind, r: r.r, color: ringColor(r) }; }),
         groups: state.groups.map(function (g) { return { label: g.label, color: g.css, n: g.ids.length }; }),
-        valueColors: state.valueColors ? { bins: state.valueColors.palette.length } : null,
-        arrow: state.arrow ? { x: state.arrow.x, y: state.arrow.y, z: state.arrow.z } : null,
-        homeNote: state.homeNote,
         colors: { mark: COL.css.mark, void: COL.css.void, voidInk: COL.css.voidInk, voidInk2: COL.css.voidInk2,
           accent: COL.css.accent, fg3: COL.css.fg3, terra: COL.css.terra, ramp: COL.ramp.slice() }
       };
     }
 
+    /* Concept overlay plugin (assets/embed-3d-overlay.js, home only). */
+    function attachOverlay(plugin) {
+      ov = plugin || null;
+      if (ov && ov.attach) ov.attach(handle);
+    }
+
+    /* Guess-rings plugin (assets/embed-3d-rings.js, game only). */
+    function attachRings(plugin) {
+      rg = plugin || null;
+      if (rg && rg.attach) rg.attach(handle, { getCOL: function () { return COL; }, resolveColor: resolveColor });
+      if (rg && pendingOverlay != null) handle.overlay(pendingOverlay);
+    }
+
     var handle = {
       setProjection: setProjection, setHighlight: setHighlight, setSelected: setSelected,
-      setDim: setDim, overlay: overlay, setGroups: setGroups, find: find,
+      setDim: setDim, setGroups: setGroups, find: find,
       info: info, snapshot: snapshot, destroy: destroy, ready: ready,
-      setValueColors: setValueColors, setArrow: setArrow, setHomeNote: setHomeNote
+      attachOverlay: attachOverlay, renderNote: renderNote,
+      attachRings: attachRings, renderLegend: renderLegend
     };
     host.__embed3d = handle;
     load();
