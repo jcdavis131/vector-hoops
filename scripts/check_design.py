@@ -353,7 +353,7 @@ def css_rules(
 ) -> list[Rule]:
     """Every `selector{decls}` in css. Offsets and lines are in src's coordinates when css is src[base:...].
 
-    RE_RULE is run on the block alone, never on a page-length string: `[^{}]+\{` backtracks across
+    RE_RULE is run on the block alone, never on a page-length string: `[^{}]+\\{` backtracks across
     everything after the last `}`, which made one page cost six seconds.
     """
     src = css if src is None else src
