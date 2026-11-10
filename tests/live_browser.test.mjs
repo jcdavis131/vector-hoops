@@ -490,6 +490,26 @@ T('a final sends 0 requests in 20 minutes', async t => {
   S.done();
 });
 
+T('a final about 5 h after tip says it moves to Replay in about 22h, and says nothing past 26.5 h', async t => {
+  const reply = { boardReply: ok('board'), summaryReply: async () => ({ status: 200, body: summary(132, false) }) };
+  const S = await open(t, { ...reply, startMs: TIP + 4.9 * 3600e3 });
+  assert.match(await txtOf(S, '#morning'), /Moves to Pixel Replay in about 22h/);
+  S.done();
+  const L = await open(t, { ...reply, startMs: TIP + 27 * 3600e3 });
+  assert.doesNotMatch(await txtOf(L, '#morning'), /Moves to Pixel Replay/);
+  L.done();
+});
+
+T('the strip button of a final says the same hours as the card, and plain Final past the window', async t => {
+  const reply = { boardReply: async () => ({ status: 200, body: board(event(ID_A, 'post'), event(ID_B, 'pre', true)) }), summaryReply: async () => ({ status: 200, body: summary(132, false) }) };
+  const S = await open(t, { ...reply, startMs: TIP + 4.9 * 3600e3 });
+  assert.equal(await S.page.$eval('#games .gbtn:nth-child(1) .st', e => e.textContent), 'Final \u00b7 moves to Replay in about 22h');
+  S.done();
+  const L = await open(t, { ...reply, startMs: TIP + 27 * 3600e3 });
+  assert.equal(await L.page.$eval('#games .gbtn:nth-child(1) .st', e => e.textContent), 'Final');
+  L.done();
+});
+
 T('#feedcard is a polite status region', async t => {
   const S = await open(t, { boardReply: ok('board'), summaryReply: ok('summary', 60) });
   assert.equal(await S.page.getAttribute('#feedcard', 'role'), 'status');

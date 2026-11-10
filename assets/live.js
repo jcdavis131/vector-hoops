@@ -69,6 +69,8 @@ function tlAfter(TL,n){
 function preTips(g){return g.filter(x=>x&&x.state==='pre').map(x=>Date.parse(x.date)).filter(isFinite);}
 function boardTimerStart(games,nowMs){const t=preTips(games);return t.length?Math.min(...t)-12e4:null;}
 function boardTimerEnd(games){const t=preTips(games);return t.length?Math.max(...t)+108e5:null;}
+// whole hours until a final leaves /live: est. final + the live window (GameRoute's) - now; null once past
+function replayHours(finalMs,nowMs,winMs){const h=(finalMs+winMs-nowMs)/3600e3;return finalMs==null||!isFinite(h)||h<=0?null:Math.max(1,Math.round(h));}
 /* feedPoll:end */
 function phaseOf(d){try{return gamePhase(d.header.competitions[0].status.type);}catch(e){return {phase:'',label:''};}}
 async function jget(u){
@@ -149,11 +151,9 @@ async function loadGames(day){
 
 /* C2.6/T2.4: graduation marking — a recent final shows when it moves to Replay. */
 function finalLabel(g){
-  const ms=estFinalMs(g);
-  if(ms==null)return 'Final';
-  const hrs=(ms-Date.now())/3600e3;
-  if(hrs<=0)return 'Final';
-  return 'Final · moves to Replay in '+Math.max(1,Math.round(hrs))+'h';
+  const hrs=replayHours(estFinalMs(g),Date.now(),window.GameRoute&&window.GameRoute.LIVE_WINDOW_MS);
+  if(hrs==null)return 'Final';
+  return 'Final · moves to Replay in about '+hrs+'h';
 }
 function renderGames(){
   const el=$('games');el.innerHTML='';
@@ -237,12 +237,12 @@ function renderMorning(d,g,isPost){
   if(!isPost){mo.hidden=true;return;}
   mo.hidden=false;
   const ms=estFinalMs(g);
-  const hrs=ms!=null?Math.max(1,Math.round((ms-Date.now())/3600e3)):null;
+  const hrs=replayHours(ms,Date.now(),window.GameRoute&&window.GameRoute.LIVE_WINDOW_MS);
   const head=window.Plate?window.Plate.html('FINAL','THE MORNING AFTER','final · complete')
     :'<div class="plate"><span class="pno">FINAL</span><h2>THE MORNING AFTER</h2><span class="prule"></span></div>';
   mo.innerHTML=head+
     '<div class="mg-row"><a href="#rpPlate">\u2193 Jump to the replay viewer</a>'+
-    (hrs!=null?'<span>Moves to Pixel Replay in '+hrs+'h</span>':'')+'</div>';
+    (hrs!=null?'<span>Moves to Pixel Replay in about '+hrs+'h</span>':'')+'</div>';
 }
 /* Audit #18: one phase for the page. 'in' lights the live chrome; 'post' says Final
    and switches every plate's empty copy to past tense; nothing pretends to be live. */

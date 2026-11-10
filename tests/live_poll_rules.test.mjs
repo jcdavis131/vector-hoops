@@ -3,11 +3,13 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
+import { createRequire } from 'node:module';
+const WIN = createRequire(import.meta.url)('../assets/game-route.js').LIVE_WINDOW_MS;
 
 const src = fs.readFileSync(new URL('../assets/live.js', import.meta.url), 'utf8');
 const m = src.match(/\/\* feedPoll:begin[\s\S]*?\*\/([\s\S]*?)\/\* feedPoll:end \*\//);
 assert.ok(m, 'feedPoll block markers missing in live.js');
-const P = new Function(m[1] + '\nreturn {POLL,pollNext,pollBackoff,pollCadence,pollRefreshAllowed,pollOnVisible,tlAfter,boardTimerStart,boardTimerEnd};')();
+const P = new Function(m[1] + '\nreturn {POLL,pollNext,pollBackoff,pollCadence,pollRefreshAllowed,pollOnVisible,tlAfter,boardTimerStart,boardTimerEnd,replayHours};')();
 const g = src.match(/\/\* gamePhase:begin[\s\S]*?\*\/([\s\S]*?)\/\* gamePhase:end \*\//);
 assert.ok(g, 'gamePhase block markers missing in live.js');
 const gamePhase = new Function(g[1] + '\nreturn gamePhase;')();
@@ -191,4 +193,18 @@ test('POLL holds the Component 1 constants', () => {
   assert.equal(P.POLL.timeout, 10000);
   assert.equal(P.POLL.refreshMin, 60000);
   assert.equal(P.POLL.near, 300000);
+});
+
+// LF-05: 'moves to Replay in N h' counts to est. final (tip + 2.5 h) + the 24 h live window.
+test('replayHours counts to the end of the live window, not the final whistle', () => {
+  const H = 3600e3, est = TIP + 2.5 * H;
+  assert.equal(WIN, 24 * H);
+  assert.equal(P.replayHours(est, TIP + 5 * H, WIN), 22);
+  assert.equal(P.replayHours(est, TIP + 26 * H, WIN), 1);
+  assert.equal(P.replayHours(est, TIP + 5.3 * H, WIN), 21, 'rounds to nearest, not up');
+  assert.equal(P.replayHours(est, TIP + 26.2 * H, WIN), 1, 'never says 0h');
+  assert.equal(P.replayHours(est, TIP + 26.5 * H, WIN), null);
+  assert.equal(P.replayHours(est, TIP + 40 * H, WIN), null);
+  assert.equal(P.replayHours(null, TIP, WIN), null);
+  assert.equal(P.replayHours(est, TIP, undefined), null);
 });
