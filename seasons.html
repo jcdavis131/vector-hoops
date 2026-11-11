@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+<title>Seasons — Vector Hoops</title>
+<meta name="description" content="League shape year by year from season_norms.json: player-season counts, feature means, and labelled gaps. Retrieval metrics from the held-out eval artifact."/>
+<link rel="canonical" href="https://hoops.dumbmodel.com/seasons"/>
+<meta name="color-scheme" content="light dark"/>
+<meta name="theme-color" content="#FCFBF7" media="(prefers-color-scheme: light)"/>
+<meta name="theme-color" content="#0F1114" media="(prefers-color-scheme: dark)"/>
+<meta property="og:type" content="website"/>
+<meta property="og:site_name" content="Vector Hoops"/>
+<meta property="og:url" content="https://hoops.dumbmodel.com/seasons"/>
+<meta property="og:title" content="Seasons — Vector Hoops"/>
+<meta property="og:description" content="League shape year by year from the ledger — not a forecast."/>
+<meta property="og:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png"/>
+<meta property="og:image:width" content="1200"/>
+<meta property="og:image:height" content="630"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="Seasons — Vector Hoops"/>
+<meta name="twitter:description" content="League shape year by year from the ledger — not a forecast."/>
+<meta name="twitter:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png"/>
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml"/>
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png"/>
+<link rel="manifest" href="/manifest.json"/>
+<link rel="stylesheet" href="/assets/fonts.css?v=8f376b2a"/>
+<link rel="stylesheet" href="/assets/atlas.css?v=89ee8519"/>
+<link rel="stylesheet" href="/assets/shell.css?v=0f508189"/>
+<style>
+img,svg,video,canvas{max-width:100%;height:auto;display:block}
+a{color:inherit}
+.ex-main{width:min(1180px,100%);margin:0 auto;padding:12px var(--page-gutter) calc(96px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:var(--s-5)}
+.ex-rail{display:flex;flex-wrap:wrap;gap:8px}
+.ex-rail a[aria-current="page"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.ex-table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+.ex-table th,.ex-table td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);font-size:var(--t-sm)}
+.ex-spark{width:100%;color:var(--accent)}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<nav class="site-nav" data-active="/seasons" aria-label="Vector Hoops site"><noscript class="site-nav__noscript"><a href="/">Atlas</a><a href="/play">Play</a><a href="/seasons">Seasons</a><a href="/teams">Teams</a><a href="/games">Games</a><a href="/players">Players</a><a href="/compare">Compare</a><a href="/methods">Methods</a></noscript></nav>
+<main id="main" class="ex-main">
+<header class="title-card">
+<p class="title-card__eyebrow">Explore</p>
+<h1 class="title-card__title">Seasons</h1>
+<p class="title-card__lede">Every number here is a league μ or σ from season_norms.json, or a held-out retrieval figure from eval_scoreboard.json. Missing years are gaps, not zeros.</p>
+</header>
+<div class="ex-rail" id="season-rail" role="navigation" aria-label="Seasons"></div>
+<div id="season-panel"></div>
+<div id="season-chart"></div>
+<div id="season-insight"></div>
+</main>
+<!-- footer:stamped -->
+<footer class="site-footer">
+  <nav class="site-footer__sitemap" aria-label="Sitemap">
+    <div class="site-footer__col">
+      <span class="site-footer__col-title">Play</span>
+      <a href="/play">Daily Court</a>
+      <a href="/map-guess">Map Hunt</a>
+      <a href="/twenty-questions">Twenty Questions</a>
+      <a href="/play/era-crossed">Era Crossed</a>
+      <a href="/replay">Pixel Replay</a>
+    </div>
+    <div class="site-footer__col">
+      <span class="site-footer__col-title">Explore</span>
+      <a href="/live">Live</a>
+      <a href="/schedule">Schedule</a>
+      <a href="/players">Players</a>
+      <a href="/seasons">Seasons</a>
+      <a href="/teams">Teams</a>
+      <a href="/games">Games</a>
+      <a href="/compare">Compare</a>
+      <a href="/insights">Insights</a>
+      <a href="/twin-network">Twin Networks</a>
+      <a href="/playoff-runs">Playoff Runs</a>
+      <a href="/taxonomy">Taxonomy</a>
+      <a href="/guide">Guide</a>
+    </div>
+    <div class="site-footer__col">
+      <span class="site-footer__col-title">How it works</span>
+      <a href="/methods">Methods</a>
+      <a href="/models/mtnn-v5">Models</a>
+      <a href="https://github.com/jcdavis131/vector-hoops" rel="noopener">Source on GitHub</a>
+    </div>
+  </nav>
+  <p class="site-footer__attribution">Scores and stats from stats.nba.com and ESPN · A <a href="https://dumbmodel.com">dumbmodel</a> project</p>
+</footer>
+<!-- /footer:stamped -->
+<script src="assets/error-boundary.js?v=8079215c"></script>
+<script src="assets/keyboard-a11y.js?v=56857206"></script>
+<script src="assets/site-nav.js?v=70f136d8" defer></script>
+<script src="assets/seasons.js?v=ba7e5e60" defer></script>
+</body>
+</html>
