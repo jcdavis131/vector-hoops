@@ -199,6 +199,115 @@
   }
 }
 
+/* Explicit theme from the nav toggle. OS follow remains the default
+   (no data-theme attribute). D10 still reads the @media dark :root{ above. */
+:root[data-theme="dark"]{
+  color-scheme: dark;
+  --board:        #0F1114;
+  --ink:          #ECEEF1;
+  --marker-black: #F2F2F2;
+  --marker-red:   #FF6F61;
+  --marker-blue:  #6EA8FF;
+  --pencil:       #7F8995;
+  --pencil-text:  #7F8995;
+  --grid:         #1D232C;
+  --highlight:    rgba(255,235,130,.16);
+  --data-terra:   #C17C60;
+  --data-moss:    #8A9A8B;
+  --void:         #1E2022;
+  --void-ink:     #D8DCD8;
+  --void-ink-2:   #A7B0BC;
+  --void-accent:  #FF7A5C;
+  --void-accent-line: rgba(255,122,92,.45);
+  --void-accent-wash: rgba(255,122,92,.12);
+  --void-line:    rgba(255,255,255,.14);
+  --void-line-2:  rgba(255,255,255,.28);
+  --void-surface: rgba(13,16,21,.92);
+  --bg:        var(--board);
+  --surface:   #14161A;
+  --surface-2: #1A1D22;
+  --line:      var(--grid);
+  --line-2:    #2A323D;
+  --fg:        var(--ink);
+  --fg-2:      #A7B0BC;
+  --fg-3:      var(--pencil-text);
+  --accent:    #FF7A33;
+  --accent-2:  #FF9A62;
+  --gold:      #D4AF69;
+  --on-accent: #0A0B0D;
+  --accent-wash: rgba(255,122,51,.12);
+  --accent-line: rgba(255,122,51,.45);
+  --ok:        #3DBE8B;
+  --bad:       #E5624F;
+  --warn:      #E8A33D;
+  --ok-text:   #3DBE8B;
+  --warn-text: #E8C766;
+  --bad-text:  #FF8A7A;
+  --scrim:     rgba(3,4,6,.72);
+  --blue:      #7FA7D9;
+  --pipe:        #3FB950;
+  --pipe-deep:   #35C759;
+  --coin-text:   #E8C766;
+  --brick:       #8A5F36;
+  --step:        rgba(0,0,0,.5);
+  --block:       #000000;
+  --block-line:  #454F5C;
+  --green:       #00775A;
+}
+:root[data-theme="light"]{
+  color-scheme: light;
+  --board:        #FCFBF7;
+  --ink:          #232323;
+  --marker-black: #1A1A1A;
+  --marker-red:   #E0483B;
+  --marker-blue:  #2B6CE5;
+  --pencil:       #9A9A94;
+  --pencil-text:  #6E6E66;
+  --grid:         #E7E4DA;
+  --highlight:    rgba(255,235,130,.55);
+  --data-terra:   #A05A38;
+  --data-moss:    #8A9A8B;
+  --void:         #1E2022;
+  --void-ink:     #D8DCD8;
+  --void-ink-2:   #A7B0BC;
+  --void-accent:  #FF7A5C;
+  --void-accent-line: rgba(255,122,92,.45);
+  --void-accent-wash: rgba(255,122,92,.12);
+  --void-line:    rgba(255,255,255,.14);
+  --void-line-2:  rgba(255,255,255,.28);
+  --void-surface: rgba(13,16,21,.92);
+  --bg:        var(--board);
+  --surface:   var(--board);
+  --surface-2: #F5F2E9;
+  --line:      var(--grid);
+  --line-2:    var(--pencil);
+  --fg:        var(--ink);
+  --fg-2:      #57574F;
+  --fg-3:      var(--pencil-text);
+  --accent:    var(--marker-red);
+  --accent-2:  #B93A30;
+  --gold:      var(--marker-black);
+  --on-accent: var(--board);
+  --accent-wash: var(--highlight);
+  --accent-line: rgba(224,72,59,.45);
+  --ok:        var(--data-moss);
+  --bad:       var(--marker-red);
+  --warn:      #C27A0E;
+  --ok-text:   #1C7331;
+  --warn-text: #7A5200;
+  --bad-text:  #A9342B;
+  --scrim:     rgba(35,35,35,.45);
+  --blue:      var(--marker-blue);
+  --pipe:        #1C7331;
+  --pipe-deep:   #175C2A;
+  --coin-text:   #7A5200;
+  --brick:       #C08552;
+  --step:        #EAE0CB;
+  --block:       #232323;
+  --block-line:  #232323;
+  --green:       #00775A;
+}
+
 /* ==========================================================================
    Base
    ========================================================================== */
@@ -1442,3 +1551,59 @@ details.card--collapsible > summary:focus-visible{ outline: 2px solid var(--focu
 @media (min-width: 760px){
   .map-note ul{ grid-template-columns: 1fr 1fr; }
 }
+
+/* Empty state — labelled data gap, never a mocked number. */
+.empty-state{
+  border: 1px dashed var(--line-2);
+  background: var(--surface-2);
+  padding: var(--s-5);
+  border-radius: var(--radius-lg);
+}
+.empty-state__title{
+  margin: 0 0 var(--s-2);
+  font-family: var(--font-display);
+  font-size: var(--t-lg);
+  font-weight: 700;
+  color: var(--fg);
+}
+.empty-state__body{
+  margin: 0;
+  max-width: 68ch;
+  font-size: var(--t-sm);
+  line-height: 1.6;
+  color: var(--fg-2);
+}
+
+/* Model / ledger insight: metric + n + caveat + methods link. */
+.insight-card{
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--accent);
+  background: var(--surface);
+  padding: var(--s-5);
+  border-radius: var(--radius-lg);
+}
+.insight-card__kicker{
+  margin: 0 0 var(--s-2);
+  font-family: var(--font-display);
+  font-size: var(--t-2xs);
+  font-weight: 600;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--fg-3);
+}
+.insight-card__metric{
+  margin: 0 0 var(--s-2);
+  font-family: var(--font-display);
+  font-size: var(--t-lg);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--fg);
+}
+.insight-card__note{
+  margin: 0 0 var(--s-3);
+  max-width: 68ch;
+  font-size: var(--t-sm);
+  line-height: 1.6;
+  color: var(--fg-2);
+}
+.insight-card a{ color: var(--fg); }

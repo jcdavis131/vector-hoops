@@ -21,6 +21,10 @@
     { href: '/live', label: 'Live', desc: 'Live game companion: win probability, atlas twins, shot charts', live: true },
     { href: '/schedule', label: 'Schedule', desc: 'Seven days of games — tonight on Live, last night on Replay' },
     { href: '/players', label: 'Players', desc: 'Directory, skill profiles and leaderboards' },
+    { href: '/seasons', label: 'Seasons', desc: 'League shape, year by year, from the ledger' },
+    { href: '/teams', label: 'Teams', desc: 'Rosters and the games we have on file' },
+    { href: '/games', label: 'Games', desc: 'Play-by-play, shot charts, in-game board' },
+    { href: '/compare', label: 'Compare', desc: 'Two player-seasons, skill next to skill' },
     { href: '/insights', label: 'Insights', desc: 'Findings from the model — and from the ledger' },
     { href: '/twin-network', label: 'Twin Networks', desc: 'Every player\u2019s nearest neighbors, mapped as a network' },
     { href: '/playoff-runs', label: 'Playoff Runs', desc: 'The greatest postseason runs, ranked' },
@@ -61,6 +65,18 @@
     '<path d="M2 6h3l4-3v10l-4-3H2z" fill="currentColor"/><path class="w" d="M11 5.5a3.5 3.5 0 0 1 0 5M13 3.5a6 6 0 0 1 0 9" fill="none" stroke="currentColor" stroke-width="1.4"/>' +
     '<path class="x" d="M11 6l4 4m0-4-4 4" stroke="currentColor" stroke-width="1.4"/></svg><span>Sound</span></button>';
 
+  var THEME = '<button class="site-nav__theme" type="button" aria-pressed="false" aria-label="Color theme, follow system">' +
+    '<svg viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.4">' +
+    '<circle class="sun" cx="8" cy="8" r="2.4"/>' +
+    '<path class="sun" d="M8 1.5v1.6M8 12.9v1.6M1.5 8h1.6M12.9 8h1.6M3.4 3.4l1.1 1.1M11.5 11.5l1.1 1.1M3.4 12.6l1.1-1.1M11.5 4.5l1.1-1.1"/>' +
+    '<path class="moon" d="M10 2.2A5.6 5.6 0 1 0 13.8 10 4.4 4.4 0 0 1 10 2.2z" fill="currentColor" stroke="none"/></svg>' +
+    '<span class="site-nav__theme-label">Theme</span></button>';
+
+  var JUMP = '<button class="site-nav__jump" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="vh-jump" aria-label="Jump to a page">' +
+    '<svg viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5">' +
+    '<circle cx="7" cy="7" r="4.2"/><path d="M10.2 10.2 14 14"/></svg>' +
+    '<span class="site-nav__jump-label">Jump</span></button>';
+
   function mount() {
     var nav = document.querySelector('.site-nav');
     if (!nav || nav.getAttribute('data-mounted') === '1') return;
@@ -100,7 +116,7 @@
         '<a class="site-nav__slot site-nav__link" href="' + HOW.href + '" rel="noopener" title="' + HOW.title + '">' +
           '<span>' + HOW.label + '</span>' + EXT + '</a>' +
       '</div>' +
-      '<div class="site-nav__end">' + SOUND +
+      '<div class="site-nav__end">' + JUMP + THEME + SOUND +
         (active === '/play'
           ? '<span class="site-nav__meta">1996–97 → 2025–26</span>'
           : '<span class="site-nav__meta">12,966 seasons</span>') +
@@ -118,6 +134,8 @@
     wireDrawer(nav);
     markLive(nav);
     wireSound(nav);
+    wireTheme(nav);
+    wireJump(nav);
 
     // visit — Owner Q: which inbound refs actually bring returning players?
     // data-mounted guards double-fire; vh-analytics.js is a no-op until a
@@ -140,8 +158,12 @@
     function open() {
       drawer.hidden = false;
       btn.setAttribute('aria-expanded', 'true');
-      var first = drawer.querySelector('.explore-item');
-      if (first) first.focus();
+      // T15 (#200): Close is the first Tab stop, not the first drawer link.
+      if (closeBtn) closeBtn.focus();
+      else {
+        var first = drawer.querySelector('.explore-item');
+        if (first) first.focus();
+      }
     }
 
     function close(returnFocus) {
@@ -247,6 +269,141 @@
     global.VHSiteNav.setSound = toggle;
   }
 
+  function themeCycle(cur) {
+    if (cur === 'light') return 'dark';
+    if (cur === 'dark') return '';
+    return 'light';
+  }
+
+  function applyTheme(mode) {
+    var root = document.documentElement;
+    if (mode === 'light' || mode === 'dark') root.setAttribute('data-theme', mode);
+    else root.removeAttribute('data-theme');
+  }
+
+  function themeLabel(mode) {
+    if (mode === 'light') return 'Color theme, light';
+    if (mode === 'dark') return 'Color theme, dark';
+    return 'Color theme, follow system';
+  }
+
+  function wireTheme(nav) {
+    var b = nav.querySelector('.site-nav__theme');
+    if (!b) return;
+    var mode = '';
+    try { mode = localStorage.getItem('vh.theme') || ''; } catch (e) { mode = ''; }
+    if (mode !== 'light' && mode !== 'dark') mode = '';
+    function paint() {
+      applyTheme(mode);
+      b.setAttribute('aria-pressed', mode === 'dark' ? 'true' : 'false');
+      b.setAttribute('aria-label', themeLabel(mode));
+    }
+    paint();
+    b.addEventListener('click', function () {
+      mode = themeCycle(mode);
+      try { localStorage.setItem('vh.theme', mode); } catch (e) {}
+      paint();
+    });
+  }
+
+  function destinations() {
+    var seen = {};
+    var out = [];
+    EXPLORE.concat(GAMES).forEach(function (l) {
+      if (seen[l.href]) return;
+      seen[l.href] = 1;
+      out.push(l);
+    });
+    return out;
+  }
+
+  function filterDest(list, q) {
+    q = String(q || '').trim().toLowerCase();
+    if (!q) return list.slice();
+    return list.filter(function (d) {
+      return (d.label + ' ' + (d.desc || '') + ' ' + d.href).toLowerCase().indexOf(q) !== -1;
+    });
+  }
+
+  function esc(s) {
+    return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
+  }
+
+  function wireJump(nav) {
+    var btn = nav.querySelector('.site-nav__jump');
+    if (!btn || document.getElementById('vh-jump')) return;
+    var dest = destinations();
+    var wrap = document.createElement('div');
+    wrap.className = 'site-jump';
+    wrap.id = 'vh-jump';
+    wrap.hidden = true;
+    wrap.innerHTML = '<div class="site-jump__panel" role="dialog" aria-modal="true" aria-labelledby="vh-jump-title">' +
+      '<p id="vh-jump-title" class="visually-hidden">Jump to a page</p>' +
+      '<input class="input" id="vh-jump-q" type="search" aria-label="Jump to a page" placeholder="Jump to a page, or a player name" autocomplete="off" spellcheck="false"/>' +
+      '<ul class="site-jump__list" id="vh-jump-list" role="listbox"></ul>' +
+      '<p class="site-jump__hint">Ctrl or Cmd + K. Player names open the Players directory.</p></div>';
+    document.body.appendChild(wrap);
+    var input = wrap.querySelector('#vh-jump-q');
+    var list = wrap.querySelector('#vh-jump-list');
+    var active = 0;
+    var rows = [];
+
+    function close() {
+      wrap.hidden = true;
+      btn.setAttribute('aria-expanded', 'false');
+      btn.focus();
+    }
+    function open() {
+      wrap.hidden = false;
+      btn.setAttribute('aria-expanded', 'true');
+      input.value = '';
+      render('');
+      input.focus();
+    }
+    function render(q) {
+      var hits = filterDest(dest, q);
+      rows = hits.slice();
+      var extra = '';
+      var trimmed = String(q || '').trim();
+      if (trimmed && hits.length === 0) {
+        extra = '<li><a class="site-jump__item" role="option" href="/players?q=' +
+          encodeURIComponent(trimmed) + '"><span>Search players for ' + esc(trimmed) +
+          '</span><span class="site-jump__desc">Opens the Players directory</span></a></li>';
+        rows = [{ href: '/players?q=' + encodeURIComponent(trimmed) }];
+      }
+      list.innerHTML = extra || hits.map(function (d, i) {
+        return '<li><a class="site-jump__item' + (i === 0 ? ' is-active' : '') + '" role="option" href="' + d.href + '">' +
+          '<span>' + d.label + '</span>' +
+          (d.desc ? '<span class="site-jump__desc">' + d.desc + '</span>' : '') + '</a></li>';
+      }).join('');
+      active = 0;
+    }
+    function move(delta) {
+      var items = list.querySelectorAll('.site-jump__item');
+      if (!items.length) return;
+      items[active] && items[active].classList.remove('is-active');
+      active = (active + delta + items.length) % items.length;
+      items[active].classList.add('is-active');
+      items[active].focus();
+    }
+    btn.addEventListener('click', function () { if (wrap.hidden) open(); else close(); });
+    wrap.addEventListener('click', function (e) { if (e.target === wrap) close(); });
+    input.addEventListener('input', function () { render(input.value); });
+    document.addEventListener('keydown', function (e) {
+      var k = e.key;
+      var meta = e.metaKey || e.ctrlKey;
+      if (meta && (k === 'k' || k === 'K')) { e.preventDefault(); if (wrap.hidden) open(); else close(); return; }
+      if (wrap.hidden) return;
+      if (k === 'Escape' || k === 'Esc') { e.preventDefault(); close(); return; }
+      if (k === 'ArrowDown') { e.preventDefault(); move(1); return; }
+      if (k === 'ArrowUp') { e.preventDefault(); move(-1); return; }
+      if (k === 'Enter' && document.activeElement === input) {
+        var first = list.querySelector('.site-jump__item');
+        if (first) { e.preventDefault(); first.click(); }
+      }
+    });
+  }
+
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', mount);
   } else {
@@ -255,4 +412,5 @@
 
   var api = global.VHSiteNav = global.VHSiteNav || {};
   api.mount = mount; api.explore = EXPLORE; api.games = GAMES;
+  api.themeCycle = themeCycle; api.filterDest = filterDest; api.destinations = destinations;
 })(window);

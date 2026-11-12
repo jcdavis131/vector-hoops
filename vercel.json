@@ -295,6 +295,42 @@
         }
       ],
       "source": "/feed-health"
+    },
+    {
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, s-maxage=60, stale-while-revalidate=300"
+        }
+      ],
+      "source": "/seasons"
+    },
+    {
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, s-maxage=60, stale-while-revalidate=300"
+        }
+      ],
+      "source": "/teams"
+    },
+    {
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, s-maxage=60, stale-while-revalidate=300"
+        }
+      ],
+      "source": "/games"
+    },
+    {
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, s-maxage=60, stale-while-revalidate=300"
+        }
+      ],
+      "source": "/compare"
     }
   ],
   "rewrites": [
@@ -377,6 +413,22 @@
     {
       "source": "/guide",
       "destination": "/guide.html"
+    },
+    {
+      "source": "/seasons",
+      "destination": "/seasons.html"
+    },
+    {
+      "source": "/teams",
+      "destination": "/teams.html"
+    },
+    {
+      "source": "/games",
+      "destination": "/games.html"
+    },
+    {
+      "source": "/compare",
+      "destination": "/compare.html"
     }
   ],
   "trailingSlash": false,
@@ -424,21 +476,6 @@
     {
       "source": "/everyday",
       "destination": "/play",
-      "permanent": true
-    },
-    {
-      "source": "/teams",
-      "destination": "/#atlas",
-      "permanent": true
-    },
-    {
-      "source": "/teams.html",
-      "destination": "/#atlas",
-      "permanent": true
-    },
-    {
-      "source": "/teams/:slug*",
-      "destination": "/#atlas",
       "permanent": true
     },
     {
