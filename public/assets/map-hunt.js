@@ -281,6 +281,9 @@
           loadingText: false, /* the lede states the count (data-fact) */
           selectedLabel: 'Answer' /* setSelected runs only on finish */
         });
+        /* Guess rings live in assets/embed-3d-rings.js, loaded by
+           map-guess.html alone. */
+        if (state.map && state.map.attachRings && window.Embed3DRings) state.map.attachRings(window.Embed3DRings);
         syncMap(); /* taps restored from today's progress land as rings too */
         relabelWhenLoaded();
         return;

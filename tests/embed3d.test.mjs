@@ -16,6 +16,8 @@ import { fileURLToPath } from 'node:url';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const SRC = fs.readFileSync(path.join(ROOT, 'assets', 'embed-3d.js'), 'utf8');
+const RINGS_SRC = fs.readFileSync(path.join(ROOT, 'assets', 'embed-3d-rings.js'), 'utf8');
+const OVERLAY_SRC = fs.readFileSync(path.join(ROOT, 'assets', 'embed-3d-overlay.js'), 'utf8');
 
 // ---- tiny DOM ----
 class El {
@@ -119,9 +121,11 @@ function env({ tokens = LIGHT, reduce = false, coarse = false, fetchImpl = null,
   // globals the IIFE reaches without the window. prefix
   for (const k of ['requestAnimationFrame', 'cancelAnimationFrame', 'fetch', 'setTimeout', 'clearTimeout', 'matchMedia', 'getComputedStyle']) ctx[k] = win[k].bind ? win[k].bind(win) : win[k];
   vm.runInContext(SRC, ctx, { filename: 'embed-3d.js' });
+  vm.runInContext(RINGS_SRC, ctx, { filename: 'embed-3d-rings.js' });
+  vm.runInContext(OVERLAY_SRC, ctx, { filename: 'embed-3d-overlay.js' });
   const pump = (n = 1) => { for (let i = 0; i < n; i++) { const cbs = raf.splice(0); cbs.forEach((cb) => cb(16 * (i + 1))); } };
   const settle = () => new Promise((r) => setTimeout(r, 0));
-  return { win, Embed3D: win.Embed3D, log, raf, pump, settle, mq, vars, fetches, host: new El('div') };
+  return { win, Embed3D: win.Embed3D, Embed3DRings: win.Embed3DRings, Embed3DOverlay: win.Embed3DOverlay, log, raf, pump, settle, mq, vars, fetches, host: new El('div') };
 }
 
 // values made in the vm realm: compare by structure, not prototype
@@ -336,6 +340,7 @@ test('setDim: state and drawing (non-members fade, null clears, [] fades all)', 
 test('overlay: rings by kind, legend keys for game, [] clears', async () => {
   const e = env();
   const h = e.Embed3D.mount(e.host, { variant: 'game' });
+  h.attachRings(e.Embed3DRings);
   await e.settle(); await e.settle();
   h.overlay([{ id: 0, kind: 'warm' }, { id: 1, kind: 'cold', r: 20 }, { id: 2, kind: 'exact', color: 'var(--team-a)' }, { id: null }]);
   const s = h.snapshot();
@@ -512,6 +517,7 @@ test('source: no inline chrome, colour or font literals left in embed-3d.js', ()
 test("overlay: the neutral 'guess' ring (dashed --void-ink, key \"Guess\"); unknown kinds are neutral", async () => {
   const e = env();
   const h = e.Embed3D.mount(e.host, { variant: 'game' });
+  h.attachRings(e.Embed3DRings);
   await e.settle(); await e.settle();
   h.overlay([{ id: 0, kind: 'guess' }, { id: 1, kind: 'bogus' }, { id: 2, kind: 'warm' }]);
   const s = h.snapshot();
@@ -534,9 +540,31 @@ test("overlay: the neutral 'guess' ring (dashed --void-ink, key \"Guess\"); unkn
   assert.ok(warm.every((r) => r.dash.length === 0), 'other rings stay solid');
 });
 
+test('concept overlay plugin: attach adds setValueColors/setArrow/setHomeNote; snapshot carries them', async () => {
+  const e = env();
+  const h = e.Embed3D.mount(e.host, { variant: 'home' });
+  await e.settle(); await e.settle();
+  assert.equal(h.setValueColors, undefined); // not there until the plugin attaches
+  assert.equal(h.snapshot().valueColors, undefined);
+  h.attachOverlay(e.Embed3DOverlay);
+  h.setValueColors([2.5, -2.5, 0], ['rgb(0,0,0)', 'rgb(255,255,255)']);
+  h.setArrow({ x: 1, y: 0, z: 0 });
+  h.setHomeNote('Concept mode');
+  const s = h.snapshot();
+  assert.equal(s.valueColors.bins, 2);
+  assert.deepEqual([s.arrow.x, s.arrow.y, s.arrow.z], [1, 0, 0]);
+  assert.equal(s.homeNote, 'Concept mode');
+  assert.equal(e.host.q('embed3d__note').textContent, 'Concept mode');
+  h.setHomeNote(null);
+  assert.equal(h.snapshot().homeNote, null);
+  h.setValueColors(null);
+  assert.equal(h.snapshot().valueColors, null);
+});
+
 test('game legend: a key for the selected point, labelled by selectedLabel, follows setSelected', async () => {
   const e = env();
   const h = e.Embed3D.mount(e.host, { variant: 'game', selectedLabel: 'Answer' });
+  h.attachRings(e.Embed3DRings);
   await e.settle(); await e.settle();
   const legend = e.host.q('embed3d__legend');
   assert.equal(legend.hidden, true);
