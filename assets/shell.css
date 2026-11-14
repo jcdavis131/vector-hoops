@@ -44,7 +44,7 @@
   color: var(--fg); text-decoration: none; white-space: nowrap;
 }
 .site-nav__brand:hover{ color: var(--fg); }
-.site-nav__mark{ width: 22px; height: 22px; flex: 0 0 auto; color: var(--accent); }
+.site-nav__mark{ width: 22px; height: 22px; flex: 0 0 auto; color: var(--loteria-red); }
 /* lotería reskin: numbered mini-card glyph after the wordmark — the day of the
    month is today's card number; banner colour (data-loteria) rotates red /
    marigold / green / blue deterministically, never random. CSS-only, no image.
@@ -90,7 +90,7 @@ a.site-nav__slot{ display: inline-flex; }
 }
 .site-nav__link::after{
   content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px;
-  background: var(--accent);
+  background: var(--loteria-red);
   transform: scaleX(0); transform-origin: 50% 50%;
   transition: transform var(--dur-2) var(--ease);
 }
@@ -204,7 +204,7 @@ a.site-nav__slot{ display: inline-flex; }
 }
 .explore-item:hover{ border-color: var(--line-2); }
 .explore-item:focus-visible{ outline: 2px solid var(--accent); outline-offset: 2px; }
-.explore-item.is-active{ border-color: var(--accent); box-shadow: inset 3px 0 0 var(--accent); }
+.explore-item.is-active{ border-color: var(--loteria-red); box-shadow: inset 3px 0 0 var(--loteria-red); }
 .explore-item__label{
   display: inline-flex; align-items: center; gap: 8px;
   font-family: var(--font-display); font-size: 12px; font-weight: 700; font-stretch: 112%;
@@ -228,7 +228,7 @@ a.site-nav__slot{ display: inline-flex; }
 .site-footer{
   display: flex; flex-direction: column; align-items: center; gap: var(--s-3);
   background: var(--bg); color: var(--fg-3);
-  border-top: 1px solid var(--line);
+  border-top: 3px solid var(--fg);
   padding: var(--s-7) var(--gutter) calc(var(--s-7) + env(safe-area-inset-bottom, 0));
   font-family: var(--font-text); font-size: var(--t-sm);
   text-align: center;

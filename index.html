@@ -26,8 +26,8 @@
 <meta name="twitter:description" content="An atlas of 12,966 NBA player-seasons. Pick one; the model returns the three that play most alike."/>
 <meta name="twitter:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png"/>
 <link rel="stylesheet" href="assets/fonts.css?v=8f376b2a"/>
-<link rel="stylesheet" href="/assets/atlas.css?v=b66eb74b"/>
-<link rel="stylesheet" href="/assets/shell.css?v=b462f98f"/>
+<link rel="stylesheet" href="/assets/atlas.css?v=c19812f9"/>
+<link rel="stylesheet" href="/assets/shell.css?v=1c3df1f9"/>
 <style>
 /* Home layout only: every colour, card, plate, stat, row, button and state is the kit (atlas.css). */
 .home .main{ padding-top: 0; }
@@ -48,9 +48,10 @@
 .hero__title .loteria-mark{ background: #232323; color: #FCFBF7; padding: 0 .14em; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
 .hero__lede{ max-width: 54ch; }
 .hero-search{ position: relative; z-index: 40; width: 100%; max-width: 600px; margin: var(--s-2) auto 0; }
-.hero-search .atlas-search input{ height: 58px; padding-left: 48px; font-size: var(--t-md); border-radius: 999px; border-width: 1.5px; border-color: var(--line-2); }
-.hero-search .atlas-search input:focus{ border-color: var(--accent); outline: none; box-shadow: 0 0 0 4px var(--accent-wash); }
-.hero-search .atlas-search svg{ left: 19px; width: 18px; height: 18px; }
+.hero-search .atlas-search input{ height: 58px; padding-left: 48px; font-size: var(--t-md); border-radius: 999px; background: var(--loteria-paper); color: var(--loteria-ink); border: 3px solid var(--loteria-ink); box-shadow: 4px 4px 0 var(--loteria-ink); }
+.hero-search .atlas-search input::placeholder{ color: var(--loteria-ink-2); }
+.hero-search .atlas-search input:focus{ border-color: var(--loteria-red); outline: 3px solid var(--loteria-red); outline-offset: 2px; box-shadow: 4px 4px 0 var(--loteria-ink); }
+.hero-search .atlas-search svg{ left: 19px; width: 18px; height: 18px; color: var(--loteria-ink-2); }
 .hero-search .atlas-results{ text-align: left; }
 .hero__try{ display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: var(--s-2) var(--s-3); margin-top: var(--s-3); font-size: var(--t-sm); color: var(--fg-3); }
 /* Twin of the day (engagement.js fills #totd-slot) */
@@ -69,33 +70,36 @@
 
 /* ---------- search ---------- */
 .atlas-search{ position: relative; }
-.atlas-search input{ padding-left: 40px; height: 44px; background: var(--surface); }
-.atlas-search svg{ position: absolute; left: 14px; top: 50%; width: 16px; height: 16px; transform: translateY(-50%); color: var(--fg-3); pointer-events: none; }
+.atlas-search input{ padding-left: 40px; height: 44px; background: var(--loteria-paper); color: var(--loteria-ink); }
+.atlas-search svg{ position: absolute; left: 14px; top: 50%; width: 16px; height: 16px; transform: translateY(-50%); color: var(--loteria-ink-2); pointer-events: none; }
 .atlas-results{
   position: absolute; z-index: 30; left: 0; right: 0; top: calc(100% + 6px);
   list-style: none; margin: 0; padding: 4px;
-  background: var(--surface); border: 1px solid var(--line-2); border-radius: var(--radius);
-  box-shadow: 5px 5px 0 var(--step);
+  background: var(--loteria-paper); color: var(--loteria-ink);
+  border: 2px solid var(--loteria-ink); border-radius: var(--radius);
+  box-shadow: 4px 4px 0 var(--loteria-ink);
   max-height: 340px; overflow: auto;
 }
-.atlas-results li{ display: flex; justify-content: space-between; gap: 12px; min-height: 44px; align-items: center; padding: 0 12px; border-radius: 3px; cursor: pointer; font-size: var(--t-base); color: var(--fg); }
-.atlas-results li .num{ color: var(--fg-3); }
-.atlas-results li.is-active, .atlas-results li:hover{ background: var(--surface-2); }
-.atlas-results li.is-active{ box-shadow: inset 2px 0 0 var(--accent); }
-.atlas-results li.atlas-results__empty{ color: var(--fg-3); cursor: default; }
+.atlas-results li{ display: flex; justify-content: space-between; gap: 12px; min-height: 44px; align-items: center; padding: 0 12px; border-radius: 3px; cursor: pointer; font-size: var(--t-base); color: var(--loteria-ink); }
+.atlas-results li .num{ color: var(--loteria-ink-2); }
+.atlas-results li.is-active, .atlas-results li:hover{ background: #F5F2E9; }
+.atlas-results li.is-active{ box-shadow: inset 3px 0 0 var(--loteria-red); }
+.atlas-results li.atlas-results__empty{ color: var(--loteria-ink-2); cursor: default; }
 
-/* ---------- tonight strip (ESPN's public scoreboard, quiet on failure) ---------- */
-.tonight{ display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-2) var(--s-3); width: 100%; box-sizing: border-box; max-width: var(--content); margin: 0 auto; padding: 8px clamp(14px, 2.4vw, 22px); border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface-2); }
-.tonight__k{ display: inline-flex; align-items: center; gap: 7px; font-family: var(--font-display); font-size: var(--t-2xs); font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--accent-2); }
-.tonight__dot{ width: 8px; height: 8px; border-radius: 50%; background: var(--line-2); flex: none; }
-.tonight.is-live .tonight__dot{ background: var(--accent); animation: vh-live-pulse 1.4s infinite; }
-.tonight__text{ margin: 0; font-size: var(--t-base); color: var(--fg-2); min-width: 0; }
+/* ---------- tonight strip (ESPN's public scoreboard, quiet on failure) ----------
+   Lotería paper strip (UX refresh 2, P7): paper ground, ink frame, hard shadow;
+   the live dot and the kicker read lotería red. */
+.tonight{ display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-2) var(--s-3); width: 100%; box-sizing: border-box; max-width: var(--content); margin: 0 auto; padding: 8px clamp(14px, 2.4vw, 22px); border: 2px solid var(--loteria-ink); border-radius: var(--radius-lg); background: var(--loteria-paper); color: var(--loteria-ink); box-shadow: 4px 4px 0 var(--loteria-ink); }
+.tonight__k{ display: inline-flex; align-items: center; gap: 7px; font-family: var(--font-display); font-size: var(--t-2xs); font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--loteria-red); }
+.tonight__dot{ width: 8px; height: 8px; border-radius: 50%; background: var(--loteria-ink-2); flex: none; }
+.tonight.is-live .tonight__dot{ background: var(--loteria-red); animation: vh-live-pulse 1.4s infinite; }
+.tonight__text{ margin: 0; font-size: var(--t-base); color: var(--loteria-ink-2); min-width: 0; }
 .tonight__games{ display: flex; flex-wrap: wrap; gap: 6px; list-style: none; margin: 0; padding: 0; }
-.tonight__games li{ padding: 4px 10px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); font-size: var(--t-sm); color: var(--fg-2); font-variant-numeric: tabular-nums; white-space: nowrap; }
-.tonight__games li b{ color: var(--fg); font-weight: 650; }
-.tonight__games li.is-live{ border-color: var(--accent-line); }
+.tonight__games li{ padding: 4px 10px; border: 1px solid var(--loteria-ink); border-radius: 999px; background: var(--loteria-paper); font-size: var(--t-sm); color: var(--loteria-ink-2); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.tonight__games li b{ color: var(--loteria-ink); font-weight: 650; }
+.tonight__games li.is-live{ border-color: var(--loteria-red); }
 .tonight__links{ display: flex; flex-wrap: wrap; gap: 0 var(--s-3); margin-left: auto; font-family: var(--font-display); font-size: var(--t-xs); font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
-.tonight__links a{ display: inline-flex; align-items: center; min-height: 44px; color: var(--fg); }
+.tonight__links a{ display: inline-flex; align-items: center; min-height: 44px; color: var(--loteria-ink); }
 .tonight__links a:hover{ color: var(--accent); }
 
 /* ---------- the atlas (Embed3D variant 'home' paints its own void, bar and note) ---------- */
@@ -343,9 +347,9 @@
 <script defer src="/assets/vh-peers.js?v=860629b9"></script>
 <script defer src="/assets/served-constants.js?v=8ba12340"></script>
 <script defer src="/assets/twin-bands.js?v=0a191313"></script>
-<script defer src="/assets/embed-3d.js?v=ccf00fa2"></script>
+<script defer src="/assets/embed-3d.js?v=ef5fd894"></script>
 <script defer src="/assets/embed-3d-overlay.js?v=390f8b9c"></script>
-<script defer src="/assets/atlas-3d.js?v=2999b11c"></script>
+<script defer src="/assets/atlas-3d.js?v=73f2b24d"></script>
 <script src="assets/site-facts.js?v=f8edaf37" defer></script>
 <script defer src="/assets/engagement.js?v=dfd25457"></script>
 <script defer src="/assets/home-tonight.js?v=881d28f9"></script>

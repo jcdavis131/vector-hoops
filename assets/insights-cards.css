@@ -49,28 +49,38 @@ details.vh-ins__card:not([open]) .vh-ins__title{margin:0}
 .vh-ins__statnum{font:800 clamp(44px,9vw,72px)/1 var(--font-display);color:var(--coin-text);letter-spacing:-.02em}
 .vh-ins__statlabel{font:400 14px/1.5 var(--font-sans);color:var(--fg-2);max-width:34ch}
 
-/* ---- chart panel: a .card--void host (class="card--void vh-ins__vizwrap"), dark on both themes ---- */
-.vh-ins__vizwrap{background:var(--void);color:var(--void-ink);border-radius:var(--radius-xl);padding:18px 16px;margin:0 0 16px}
+/* ---- chart panel: a paper host (UX refresh 2, P5 — same lotería exception
+   as the map: paper ground on both themes, ink text, hard shadow). The
+   .card--void class stays in the markup (insights.js:289, twin-network.html)
+   but the wrap re-pins the aliases so every SVG label reads on paper. ---- */
+.vh-ins__vizwrap{background:var(--loteria-paper);color:var(--loteria-ink);border:3px solid var(--loteria-ink);border-radius:var(--radius-xl);padding:18px 16px;margin:0 0 16px;box-shadow:4px 4px 0 var(--loteria-ink);
+  --bg: var(--loteria-paper); --surface: var(--loteria-paper); --surface-2: #F5F2E9;
+  --fg: var(--loteria-ink); --fg-2: var(--loteria-ink-2); --fg-3: var(--loteria-ink-2);
+  --line: rgba(35,35,35,.28); --line-2: rgba(35,35,35,.5);
+  --accent: var(--loteria-red); --accent-2: var(--loteria-red);
+  color-scheme: light;}
 .vh-ins__viz{width:100%;height:auto;display:block}
 .vh-ins__svglabel{font:400 13px var(--font-sans);fill:var(--fg-2)}
 .vh-ins__svgval{font:700 13px var(--font-sans);fill:var(--fg)}
 .vh-ins__svgtag{font:400 12px var(--font-sans);fill:var(--fg-3)}
 .vh-ins__svghead{text-transform:uppercase;letter-spacing:.12em;font-size:11px}
-.vh-ins__svgval--in{fill:var(--void)}
-.vh-ins__svghalo{paint-order:stroke;stroke:var(--void);stroke-width:3px}
-/* chart marks: constant on both themes, like the void they sit on */
-.vh-ins__track{fill:var(--void-ink);opacity:.06}
-.vh-ins__spine{stroke:var(--void-ink)}
-.vh-ins__mark{fill:var(--void-accent)}
-.vh-ins__mark--gold{fill:var(--coin-2)}
-.vh-ins__mark--muted{fill:var(--void-ink-2)}
-.vh-ins__mark--neg{fill:var(--void-accent);fill-opacity:.7}
-.vh-ins__mark--node{fill:var(--void-line)}
-.vh-ins__mark--empty{fill:none;stroke:var(--void-ink-2);stroke-width:1.5;stroke-dasharray:6 4}
-.vh-ins__mark--ring{fill:none;stroke:var(--void);stroke-width:2;opacity:.5}
-.vh-ins__line{fill:none;stroke:var(--void-accent)}
-.vh-ins__line--gold{fill:none;stroke:var(--coin-2)}
-.vh-ins__svgval--on-gold{fill:var(--coin-ink)}
+.vh-ins__svgval--in{fill:var(--loteria-paper)}
+.vh-ins__svghalo{paint-order:stroke;stroke:var(--loteria-paper);stroke-width:3px}
+/* chart marks: paper-safe now — red is lotería red, gold is the deep gold
+   (#7A5200, light --coin-text: 6.7:1 on paper; bright --coin-2 #F5B921 is
+   1.7:1 on paper and vanishes as a mark or a line) */
+.vh-ins__track{fill:var(--loteria-ink);opacity:.08}
+.vh-ins__spine{stroke:var(--loteria-ink)}
+.vh-ins__mark{fill:var(--loteria-red)}
+.vh-ins__mark--gold{fill:#7A5200}
+.vh-ins__mark--muted{fill:var(--loteria-ink-2)}
+.vh-ins__mark--neg{fill:var(--loteria-red);fill-opacity:.7}
+.vh-ins__mark--node{fill:var(--line)}
+.vh-ins__mark--empty{fill:none;stroke:var(--loteria-ink-2);stroke-width:1.5;stroke-dasharray:6 4}
+.vh-ins__mark--ring{fill:none;stroke:var(--loteria-paper);stroke-width:2;opacity:.5}
+.vh-ins__line{fill:none;stroke:var(--loteria-red)}
+.vh-ins__line--gold{fill:none;stroke:#7A5200}
+.vh-ins__svgval--on-gold{fill:var(--loteria-paper)}
 
 /* ---- notes, caveats, series ---- */
 .vh-ins__foot{font:400 12.5px/1.6 var(--font-sans);color:var(--fg-3);margin:0 0 18px}
@@ -86,7 +96,7 @@ details.vh-ins__card:not([open]) .vh-ins__title{margin:0}
 .vh-ins__examples span{display:block;font:700 11px/1.4 var(--font-sans);letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin:0 0 6px}
 .vh-ins__share{display:flex;gap:10px;flex-wrap:wrap}
 .vh-ins__error{padding:24px;text-align:center;color:var(--fg-2)}
-.vh-ins__vizwrap .vh-ins__error{color:var(--void-ink-2)}
+.vh-ins__vizwrap .vh-ins__error{color:var(--loteria-ink-2)}
 
 /* deep-link flash: an outline pulse, so the card keeps its hard step shadow throughout */
 .vh-ins__flash{animation:vhInsFlash 2.2s ease}

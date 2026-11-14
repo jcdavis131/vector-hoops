@@ -7,7 +7,7 @@
   'use strict';
 
   /* Chart marks are token classes (.vh-ins__mark*, insights-cards.css): the
-     panels are the void on both themes. Only the era hues stay literal —
+     panels are paper on both themes (UX refresh 2, P5). Only the era hues stay literal —
      they encode time and the kit has no data palette on the void yet. */
   var MUTED = '#8b8578';
 

@@ -46,6 +46,9 @@ primary actions, coin-gold rewards) stay; their tokens are now first-class citiz
 | `--loteria-marigold` | `#E8A317` | same | lotería banner fill only, never small text; ink text on it | 7.25:1 ink-on-marigold — AA |
 | `--loteria-green` | `#1C7331` | same | lotería banner green (= light `--pipe`, pinned — night `--pipe` is too light for cream text) | 5.72:1 cream-on-green — AA |
 | `--loteria-blue` | `#2B6CE5` | same | lotería banner blue (= light `--marker-blue`, pinned — night `--marker-blue` is too light for cream text) | 4.63:1 cream-on-blue — AA |
+| `--loteria-paper` | `#FCFBF7` | same | lotería paper ground — cards AND the atlas map, both themes | — |
+| `--loteria-ink` | `#232323` | same | lotería ink — text, borders, the map's dark dots, both themes | 13.7:1 on paper — AAA |
+| `--loteria-ink-2` | `#57574F` | same | lotería secondary ink | 7.04:1 on paper — AA |
 
 *The void family is restated in the night `:root` with the same values: the void never swaps, and the dark-coverage gate (D10) exempts only the token named `void`, not its ink. The lotería family is restated the same way, with the same values in every `:root`: the cards are paper artifacts, so their colours never swap either (D10 is satisfied by the restatement, not by an exemption).*
 
@@ -155,6 +158,25 @@ a constant (the `--loteria-*` family, or the card's own `--loteria-paper/--loter
 light ink on paper. Banner rotation is red / marigold / green / blue by card number
 ((n−1) mod 4), set with `data-loteria="0..3"`. D10 is satisfied because the lotería tokens
 are restated with identical values in the dark `:root`.
+
+## The second scoped exception: the atlas map (UX refresh 2, 2026-11-14)
+
+The Embed3D map (home, live, map-guess, play, twenty-questions) is ALSO a paper artifact on
+both themes — the canvas ground is `--loteria-paper`, the depth ramp runs paper→ink (near
+dots darker, not brighter), the selection mark is lotería red, and the chrome (bar, legend,
+note, tooltip, loading/error state, ring swatches) reads paper aliases via the `.embed3d`
+rule in `assets/atlas.css`. The `.card--void` wrap (`#map-wrap`, `.mh-map`) is re-pinned to
+paper ground by the same rule set; `.embed3d__state` was removed from the void remap.
+Archetype encoding (home only, via the engine's `setGroups`): the 8 `mtnnGlobal` archetypes
+(`assets/archetype_assignments.json`, 12,966 rows) group into 4 lotería families — Rim &
+glass (mtnnGlobal 1, 4, 6, 7) green `--loteria-green`; Shooting (0) blue `--loteria-blue`;
+Playmaking (2) marigold `--loteria-marigold`; Scoring volume (3, 5) red `--loteria-red`.
+Counts: 5,931 / 2,001 / 1,747 / 3,287. A concept pick clears the groups (groups win over
+value colors) and restores them on Off. Concept palette is paper-safe — the old void
+palette's pale mids (`#D3D9E2` 1.37:1, `#A9BFEF` 1.78:1, `#E8B48C` 1.79:1 vs paper) are
+deepened to `#9AADC9` 2.21:1, `#D89A6A` 2.32:1; every step now reads ≥2.0:1 vs paper
+(`atlas-3d.js` CONCEPT_PALETTE). Game (map-guess) stays depth-grey — no archetype
+information leak. Live keeps its stated meaning: team-color groups from ESPN team colors.
 
 ## Kit classes (wave 1, task 1.1 — DESIGN-DIRECTION §2)
 

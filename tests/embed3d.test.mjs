@@ -81,7 +81,8 @@ function fixture() {
 }
 
 const LIGHT = { '--void': '#1E2022', '--void-ink': '#D8DCD8', '--void-ink-2': '#A7B0BC', '--void-accent': '#FF7A5C',
-  '--accent': '#E0483B', '--fg-3': '#6E6E66', '--data-terra': '#A05A38', '--team-a': '#123456' };
+  '--accent': '#E0483B', '--fg-3': '#6E6E66', '--data-terra': '#A05A38', '--team-a': '#123456',
+  '--loteria-paper': '#FCFBF7', '--loteria-ink': '#232323', '--loteria-ink-2': '#57574F', '--loteria-red': '#C1272D' };
 
 function env({ tokens = LIGHT, reduce = false, coarse = false, fetchImpl = null, doc = fixture(), timeout = setTimeout, clear = clearTimeout } = {}) {
   const log = [];
@@ -261,29 +262,33 @@ test('error state: malformed data and a custom src are reported', async () => {
   assert.match(stateOf(e2.host).textContent, /HTTP 500 for x\/custom\.json/);
 });
 
-test('colour tokens: read from :root, void-accent for marks, fallback, re-read on scheme change', async () => {
+test('colour tokens: read from :root, lotería-red for marks, paper depth ramp, fallback, re-read on scheme change', async () => {
   const e = env();
   const h = e.Embed3D.mount(e.host, { variant: 'home', greyscale: true });
   let c = h.snapshot().colors;
-  assert.equal(c.mark, 'rgb(255,122,92)');      // --void-accent
+  assert.equal(c.mark, 'rgb(193,39,45)');      // --loteria-red (UX refresh 2, P1)
   assert.equal(c.accent, 'rgb(224,72,59)');     // --accent
   assert.equal(c.void, 'rgb(30,32,34)');
   assert.equal(c.voidInk, 'rgb(216,220,216)');
   assert.equal(c.voidInk2, 'rgb(167,176,188)');
+  assert.equal(c.paper, 'rgb(252,251,247)');   // --loteria-paper
+  assert.equal(c.paperInk, 'rgb(35,35,35)');   // --loteria-ink
+  assert.equal(c.paperInk2, 'rgb(87,87,79)');  // --loteria-ink-2
   assert.equal(c.fg3, 'rgb(110,110,102)');
   assert.equal(c.terra, 'rgb(160,90,56)');
   assert.equal(c.ramp.length, 16);
-  assert.equal(c.ramp[15], 'rgb(216,220,216)'); // nearest = the void's ink
+  assert.equal(c.ramp[15], 'rgb(35,35,35)'); // nearest = the paper's ink (near = dark)
+  assert.equal(c.ramp[0], 'rgb(239,238,234)'); // farthest = near the paper
 
   // the selected point is painted in the mark colour
   await e.settle(); await e.settle();
   h.setSelected(1);
   e.log.length = 0; e.pump();
-  assert.ok(e.log.some((r) => r.op === 'fill' && r.fill === 'rgb(255,122,92)'));
-  assert.ok(e.log.some((r) => r.op === 'stroke' && r.stroke === 'rgb(255,122,92)'));
+  assert.ok(e.log.some((r) => r.op === 'fill' && r.fill === 'rgb(193,39,45)'));
+  assert.ok(e.log.some((r) => r.op === 'stroke' && r.stroke === 'rgb(193,39,45)'));
 
   // scheme change: tokens re-read
-  e.vars['--void-accent'] = 'rgb(1, 2, 3)';
+  e.vars['--loteria-red'] = 'rgb(1, 2, 3)';
   e.vars['--data-terra'] = '#C17C60';
   const scheme = e.mq['(prefers-color-scheme: dark)'];
   assert.equal(scheme.listeners.length, 1);
@@ -298,9 +303,11 @@ test('colour tokens: read from :root, void-accent for marks, fallback, re-read o
   h.destroy();
   assert.equal(scheme.listeners.length, 0);
 
-  // no --void-accent: marks fall back to --accent; no tokens at all: atlas.css's numbers
-  const e2 = env({ tokens: { ...LIGHT, '--void-accent': '' } });
-  assert.equal(e2.Embed3D.mount(e2.host).snapshot().colors.mark, 'rgb(224,72,59)');
+  // no --loteria-red: marks fall back to --void-accent; neither: --accent; no tokens at all: the FALLBACK numbers
+  const e2 = env({ tokens: { ...LIGHT, '--loteria-red': '' } });
+  assert.equal(e2.Embed3D.mount(e2.host).snapshot().colors.mark, 'rgb(255,122,92)');
+  const e2b = env({ tokens: { ...LIGHT, '--loteria-red': '', '--void-accent': '' } });
+  assert.equal(e2b.Embed3D.mount(e2b.host).snapshot().colors.mark, 'rgb(224,72,59)');
   const e3 = env({ tokens: {} });
   const c3 = e3.Embed3D.mount(e3.host).snapshot().colors;
   assert.equal(c3.mark, 'rgb(224,72,59)');
@@ -346,14 +353,14 @@ test('overlay: rings by kind, legend keys for game, [] clears', async () => {
   const s = h.snapshot();
   assert.deepEqual(s.rings.map((r) => [r.id, r.kind, r.r]), [[0, 'warm', 10], [1, 'cold', 20], [2, 'exact', 10]]);
   assert.equal(s.rings[0].color, 'rgb(160,90,56)');   // warm = --data-terra
-  assert.equal(s.rings[1].color, 'rgb(167,176,188)'); // cold = --void-ink-2
+  assert.equal(s.rings[1].color, 'rgb(87,87,79)'); // cold = --loteria-ink-2
   assert.equal(s.rings[2].color, '#123456');          // var(--team-a) resolved through :root
   const legend = e.host.q('embed3d__legend');
   assert.equal(legend.hidden, false);
   assert.deepEqual(legend.qa('embed3d__key').map((k) => k.textContent), ['Found it', 'Warmer guess', 'Colder guess']);
   e.log.length = 0; e.pump();
   const strokes = e.log.filter((r) => r.op === 'stroke').map((r) => r.stroke);
-  assert.ok(strokes.includes('rgb(160,90,56)') && strokes.includes('rgb(167,176,188)') && strokes.includes('#123456'));
+  assert.ok(strokes.includes('rgb(160,90,56)') && strokes.includes('rgb(87,87,79)') && strokes.includes('#123456'));
   h.overlay([]);
   assert.deepEqual(h.snapshot().rings, []);
   assert.equal(legend.hidden, true);
@@ -371,7 +378,7 @@ test('setGroups: team colours paint points, legend swatches, note; find() by tea
     { label: 'LAL', color: 'var(--team-a)', ids: [1] }, { label: 'none', ids: [] }]);
   const s = plain(h.snapshot());
   assert.deepEqual(s.groups, [{ label: 'BOS', color: 'rgb(0, 122, 51)', n: 1 }, { label: 'LAL', color: '#123456', n: 1 },
-    { label: 'none', color: 'rgb(167,176,188)', n: 0 }]);
+    { label: 'none', color: 'rgb(87,87,79)', n: 0 }]); // uncoloured group falls back to --loteria-ink-2
   const legend = e.host.q('embed3d__legend');
   assert.equal(legend.hidden, false);
   assert.equal(legend.getAttribute('aria-label'), 'Team colors');
@@ -399,7 +406,7 @@ test('#165 semantics: selection dims the field, twins in the mark colour, info()
   // point 2 is neither selected nor a twin: dimmed by 0.35
   const arcs = e.log.filter((r) => r.op === 'arc');
   assert.equal(arcs.length, 3); // twin dot + selected dot + selected ring
-  assert.ok(arcs.every((a) => a.fill === 'rgb(255,122,92)'));
+  assert.ok(arcs.every((a) => a.fill === 'rgb(193,39,45)'));
   assert.ok(Math.min(...rects.map((r) => r.alpha)) < 0.35);
   h.setSelected(-1);
   assert.equal(h.snapshot().selected, null);
@@ -514,7 +521,7 @@ test('source: no inline chrome, colour or font literals left in embed-3d.js', ()
   assert.doesNotMatch(code, /k-means|silhouette/i);
 });
 
-test("overlay: the neutral 'guess' ring (dashed --void-ink, key \"Guess\"); unknown kinds are neutral", async () => {
+test("overlay: the neutral 'guess' ring (dashed --loteria-ink, key \"Guess\"); unknown kinds are neutral", async () => {
   const e = env();
   const h = e.Embed3D.mount(e.host, { variant: 'game' });
   h.attachRings(e.Embed3DRings);
@@ -522,7 +529,7 @@ test("overlay: the neutral 'guess' ring (dashed --void-ink, key \"Guess\"); unkn
   h.overlay([{ id: 0, kind: 'guess' }, { id: 1, kind: 'bogus' }, { id: 2, kind: 'warm' }]);
   const s = h.snapshot();
   assert.deepEqual(s.rings.map((r) => r.kind), ['guess', 'guess', 'warm']);
-  assert.equal(s.rings[0].color, 'rgb(216,220,216)'); // guess = --void-ink
+  assert.equal(s.rings[0].color, 'rgb(35,35,35)'); // guess = --loteria-ink
   const legend = e.host.q('embed3d__legend');
   const keys = legend.qa('embed3d__key');
   assert.deepEqual(keys.map((k) => k.textContent), ['Warmer guess', 'Guess']);
@@ -533,7 +540,7 @@ test("overlay: the neutral 'guess' ring (dashed --void-ink, key \"Guess\"); unkn
   for (const k of keys) assert.deepEqual(k.q('embed3d__swatch').styleWrites, []);
   e.log.length = 0; e.pump();
   const strokes = e.log.filter((r) => r.op === 'stroke');
-  const guess = strokes.filter((r) => r.stroke === 'rgb(216,220,216)');
+  const guess = strokes.filter((r) => r.stroke === 'rgb(35,35,35)');
   const warm = strokes.filter((r) => r.stroke === 'rgb(160,90,56)');
   assert.equal(guess.length, 2);
   assert.ok(guess.every((r) => r.dash.length === 2), 'guess rings are dashed');

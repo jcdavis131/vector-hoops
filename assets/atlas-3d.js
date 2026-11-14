@@ -1,7 +1,7 @@
 /* atlas-3d.js — landing atlas wiring (Track 1, C1.2).
  *
  * Replaces atlas-map.js / atlas-regions.js / career-trails.js on index.html.
- * Fig. 1 is now the 3D greyscale Embed3D ball: slow-rotating, search/tap to
+ * Fig. 1 is now the 3D Embed3D ball on paper: slow-rotating, search/tap to
  * select, 3 twins highlighted in color.
  *
  * - Lazy boot on scroll-near (#159 pattern: IntersectionObserver, 600px
@@ -93,18 +93,49 @@
     });
   }
   var archNames = null;
+  /* Archetype families (UX refresh 2, P1): the 8 mtnnGlobal archetypes
+     (live.js:1071 — K=8 k-means of player-season representations) grouped
+     into 4 lotería families. Groups are the engine's designed extension
+     point (setGroups); the legend renders the 4 keys. Family index by
+     mtnnGlobal: 0 shooting, 1 rim & glass, 2 playmaking, 3 scoring,
+     4 rim & glass, 5 scoring, 6 rim & glass, 7 rim & glass. Colors resolve
+     through var() so a theme change re-resolves them. */
+  var ARCH_FAMILY = [1, 0, 2, 3, 0, 3, 0, 0];
+  var ARCH_FAMILIES = [
+    { label: 'Rim & glass', color: 'var(--loteria-green)' },
+    { label: 'Shooting', color: 'var(--loteria-blue)' },
+    { label: 'Playmaking', color: 'var(--loteria-marigold)' },
+    { label: 'Scoring volume', color: 'var(--loteria-red)' }
+  ];
+  var archGroups = null;
   function ensureArch(cb) {
     if (archNames) { if (cb) cb(); return; }
     fetch(ARCH_URL, { cache: 'force-cache' })
       .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
       .then(function (d) {
         archNames = {};
+        var byFam = [[], [], [], []];
         (d.assignments || []).forEach(function (a) {
-          if (a && a.id != null) archNames[a.id] = a.mtnnGlobalName || '';
+          if (a && a.id != null) {
+            archNames[a.id] = a.mtnnGlobalName || '';
+            var f = ARCH_FAMILY[a.mtnnGlobal | 0];
+            if (f != null) byFam[f].push(a.id);
+          }
         });
+        archGroups = ARCH_FAMILIES.map(function (fam, k) {
+          return { label: fam.label, color: fam.color, ids: byFam[k] };
+        });
+        applyArchGroups();
         if (cb) cb();
       })
       .catch(function () { archNames = {}; if (cb) cb(); });
+  }
+  /* Apply the archetype groups once the handle exists and the data has
+     landed; never while a concept is active (groups win over value colors,
+     so a concept pick clears them — see setConcept). */
+  function applyArchGroups() {
+    if (!handle || !archGroups || conceptActive) return;
+    try { handle.setGroups(archGroups); } catch (e) {}
   }
 
   /* Kit error state (atlas.css .state--error): role=alert, a retry button. */
@@ -141,7 +172,7 @@
        the engine's own fetch URL, same cache entry, zero extra bytes. */
     ensureIndex();
     /* A concept picked before the data lands still applies once it does. */
-    if (handle && handle.ready) handle.ready.then(function () { applyConcept(); });
+    if (handle && handle.ready) handle.ready.then(function () { applyConcept(); applyArchGroups(); });
   }
   function bootWhenNear() {
     var sec = $('atlas');
@@ -391,10 +422,13 @@
     ['FG_PCT', 'finishing'], ['FT_PCT', 'free-throw touch'],
     ['PLUS_MINUS', 'on-court impact']
   ];
-  /* 11-step diverging scale, low→high; reads on the dark void in both
-     themes (the canvas is the void on both). */
-  var CONCEPT_PALETTE = ['#2F6FD0', '#4E86E0', '#7AA5EA', '#A9BFEF', '#D3D9E2',
-    '#8E949E', '#E8B48C', '#F0924F', '#FF7A33', '#F25C19', '#E04A0C'];
+  /* 11-step diverging scale, low→high; paper-safe (UX refresh 2, P1 — the
+     map ground is paper now, so the pale mids of the old void palette
+     (#D3D9E2 1.37:1, #A9BFEF 1.78:1, #E8B48C 1.79:1 vs paper) are deepened;
+     every step now reads ≥2.0:1 vs paper. Same structure: 5 blue steps,
+     neutral mid, 5 warm steps. The gradient legend reads this literal. */
+  var CONCEPT_PALETTE = ['#2456A6', '#2F6FD0', '#4E86E0', '#7AA5EA', '#9AADC9',
+    '#8A8F98', '#D89A6A', '#E07B3A', '#E85D1F', '#D94F10', '#C2410C'];
   var ARROW_R2_MIN = 0.05; /* below this the direction is noise: no arrow */
   var conceptData = null, conceptLoading = false, conceptFailed = false;
   var conceptActive = null; /* concept code, or null for Off */
@@ -480,9 +514,13 @@
           handle.setHomeNote(null);
         } catch (e) {}
       }
+      applyArchGroups(); /* back to archetype families */
       renderConceptMeta();
       return;
     }
+    /* a concept owns the dot colors while active (groups win over value
+       colors, so the archetype groups must clear first) */
+    if (handle) { try { handle.setGroups([]); } catch (e) {} }
     boot(); /* selecting a concept boots the map so the effect is visible */
     renderConceptMeta();
     if (conceptData) { applyConcept(); renderConceptMeta(); return; }

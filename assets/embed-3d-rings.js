@@ -37,8 +37,9 @@
 
   function ringColor(r, COL, resolveColor) {
     if (r.color) return resolveColor(r.color, COL.css.mark);
-    return r.kind === 'exact' ? COL.css.mark : r.kind === 'cold' ? COL.css.voidInk2
-      : r.kind === 'guess' ? COL.css.voidInk : COL.css.terra;
+    /* paper map (UX refresh 2, P1): cold/guess rings read in paper inks */
+    return r.kind === 'exact' ? COL.css.mark : r.kind === 'cold' ? (COL.css.paperInk2 || COL.css.voidInk2)
+      : r.kind === 'guess' ? (COL.css.paperInk || COL.css.voidInk) : COL.css.terra;
   }
 
   /* Drawn by the frame loop (via the embed-3d.js hook) with its own
