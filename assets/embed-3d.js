@@ -12,7 +12,8 @@
        height: px                      (el.dataset.height, default 420)
        src: url                        (el.dataset.src) data override
        greyscale: bool                 accepted for #165 compatibility; every
-                                       variant now draws depth-shaded greys
+                                       variant now draws the paper depth ramp
+                                       (home adds archetype-family groups)
        dim: [ids]   overlay: [rings]   groups: [{label,color,ids}]
        onLoad: function(handle){}      once, when the data has loaded
                                        (same moment handle.ready resolves)
@@ -83,11 +84,17 @@
      so a page without the sheet still paints a visible map. */
   var TOKENS = {
     void: '--void', voidInk: '--void-ink', voidInk2: '--void-ink-2',
-    voidAccent: '--void-accent', accent: '--accent', fg3: '--fg-3', terra: '--data-terra'
+    voidAccent: '--void-accent', accent: '--accent', fg3: '--fg-3', terra: '--data-terra',
+    /* UX refresh 2 (P1): the map is paper on both themes — the depth ramp runs
+       paper→ink (near = dark) and the selection mark is lotería red. */
+    paper: '--loteria-paper', paperInk: '--loteria-ink', paperInk2: '--loteria-ink-2',
+    markRed: '--loteria-red'
   };
   var FALLBACK = {
     void: [30, 32, 34], voidInk: [216, 220, 216], voidInk2: [167, 176, 188],
-    voidAccent: [255, 122, 92], accent: [224, 72, 59], fg3: [110, 110, 102], terra: [160, 90, 56]
+    voidAccent: [255, 122, 92], accent: [224, 72, 59], fg3: [110, 110, 102], terra: [160, 90, 56],
+    paper: [252, 251, 247], paperInk: [35, 35, 35], paperInk2: [87, 87, 79],
+    markRed: [193, 39, 45]
   };
 
   /* The loading sketch (seed: map-guess.html .embed3d-sketch), drawn in
@@ -155,13 +162,15 @@
       out.rgb[k] = c || FALLBACK[k];
       out.css[k] = rgb(out.rgb[k]);
     });
-    /* the mark colour on the void: --void-accent, else --accent */
+    /* the mark colour on the paper map: lotería red, else the old ember */
+    var mr = parseColor(cssVar(TOKENS.markRed));
     var va = parseColor(cssVar(TOKENS.voidAccent));
-    out.css.mark = va ? rgb(va) : out.css.accent;
-    /* 16 depth buckets from just above the void to the void's ink (#165's
-       40..220 grey ramp, now theme-driven) */
+    out.css.mark = mr ? rgb(mr) : (va ? rgb(va) : out.css.accent);
+    /* 16 depth buckets on paper: far = near the paper, near = near the ink.
+       (Was void→void-ink, near = bright; the ground flipped, so the ramp
+       flips with it. Depth also survives through dot size + alpha.) */
     out.ramp = [];
-    for (var b = 0; b < 16; b++) out.ramp.push(rgb(mix(out.rgb.void, out.rgb.voidInk, 0.06 + b / 15 * 0.94)));
+    for (var b = 0; b < 16; b++) out.ramp.push(rgb(mix(out.rgb.paper, out.rgb.paperInk, 0.06 + b / 15 * 0.94)));
     return out;
   }
 
@@ -204,8 +213,10 @@
     var ready = new Promise(function (res) { resolveReady = res; });
     var hasMM = typeof global.matchMedia === 'function';
     var reduceMotion = hasMM && global.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    /* #165 semantics, now the one atlas look: depth-shaded greys, selection =
-       mark colour + ring, twins = mark dots, the field dims on selection. */
+    /* #165 semantics, now the one atlas look: paper ground, depth ramp
+       paper→ink (near = dark), selection = lotería-red mark + ring, twins =
+       red dots, the field dims on selection. Home adds archetype-family
+       groups; game stays depth-grey; live uses team-color groups. */
     var greyscale = opts.greyscale !== false;
     var coarsePointer = hasMM && global.matchMedia('(pointer: coarse)').matches;
     var pickRadius = coarsePointer ? 28 : 18;
@@ -446,7 +457,7 @@
         var hn = ov ? ov.note() : null;
         if (hn != null) { note.textContent = hn; return; }
         note.textContent = (PROJ_NOTES[state.proj] || '') +
-          ' Points are shaded by depth — nearer dots are brighter. Color appears only on your selection and its twins.' +
+          ' Dots are colored by archetype family — green rim & glass, blue shooting, marigold playmaking, red scoring volume. Nearer dots are darker. Your selection and its twins highlight in red.' +
           ' Each dot is one player-season. Axes are arbitrary units.';
         return;
       }
@@ -456,11 +467,11 @@
         return;
       }
       if (variant === 'game') {
-        text = 'Each dot is one player-season; nearer dots are brighter. Drag to turn the map, tap a dot to pick it.';
+        text = 'Each dot is one player-season; nearer dots are darker. Drag to turn the map, tap a dot to pick it.';
       } else {
         text = state.groups.length
           ? 'Each dot is one player-season. Colored dots are the players in this game.'
-          : 'Each dot is one player-season; nearer dots are brighter.';
+          : 'Each dot is one player-season; nearer dots are darker.';
       }
       note.textContent = text;
     }
@@ -530,7 +541,7 @@
     /* Colour groups: [{label, color, ids}]; [] clears. A point in two groups
        takes the first. Up to 254 groups. */
     function setGroups(groups) {      state.groups = (groups || []).slice(0, 254).map(function (g, gi) {
-        var fallback = [COL.css.mark, COL.css.terra, COL.css.voidInk2, COL.css.voidInk][gi % 4];
+        var fallback = [COL.css.mark, COL.css.terra, COL.css.paperInk2, COL.css.paperInk][gi % 4];
         return {
           label: String(g && g.label != null ? g.label : 'Group ' + (gi + 1)),
           color: g && g.color, css: resolveColor(g && g.color, fallback),
@@ -571,7 +582,7 @@
     function retheme() {
       COL = readTokens();
       state.groups.forEach(function (g, gi) {
-        g.css = resolveColor(g.color, [COL.css.mark, COL.css.terra, COL.css.voidInk2, COL.css.voidInk][gi % 4]);
+        g.css = resolveColor(g.color, [COL.css.mark, COL.css.terra, COL.css.paperInk2, COL.css.paperInk][gi % 4]);
       });
       renderLegend();
     }
@@ -804,8 +815,12 @@
         ctx.fillRect(sx[i] - size / 2, syy[i] - size / 2, size, size);
       }
       ctx.globalAlpha = 1;
-      /* highlights: larger dots; the selection gets a ring */
-      var hl = greyscale ? COL.css.mark : COL.css.voidInk;
+      /* highlights: larger dots; the selection gets a ring. The mark is
+         lotería red in every mode — the old !greyscale branch drew the
+         highlight in void-ink, which is near-white and invisible on the
+         paper map (no caller passes greyscale: false today, but the
+         branch was a landmine). */
+      var hl = COL.css.mark;
       if (state.highlight.size || selActive) {
         ctx.strokeStyle = hl;
         ctx.fillStyle = hl;
@@ -859,6 +874,7 @@
         dim: state.dim ? Array.from(state.dim) : null,
         groups: state.groups.map(function (g) { return { label: g.label, color: g.css, n: g.ids.length }; }),
         colors: { mark: COL.css.mark, void: COL.css.void, voidInk: COL.css.voidInk, voidInk2: COL.css.voidInk2,
+          paper: COL.css.paper, paperInk: COL.css.paperInk, paperInk2: COL.css.paperInk2,
           accent: COL.css.accent, fg3: COL.css.fg3, terra: COL.css.terra, ramp: COL.ramp.slice() }
       };
     }

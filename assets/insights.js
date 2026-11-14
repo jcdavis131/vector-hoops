@@ -6,20 +6,24 @@
 (function (global) {
   'use strict';
 
-  /* Chart + PNG palette: the void pairings and the coin gold, read from
-     atlas.css at draw time. All five are constant on both themes (the chart
-     panel is the void in both), so the on-page SVG uses token classes
-     (.vh-ins__mark*, insights-cards.css) and only the canvas PNG export,
-     which cannot read CSS, reads the values here. */
+  /* Chart + PNG palette: the lotería paper pairings and the deep gold, read
+     from atlas.css at draw time. All five are constant on both themes (the
+     chart panel is paper in both — UX refresh 2, P5), so the on-page SVG
+     uses token classes (.vh-ins__mark*, insights-cards.css) and only the
+     canvas PNG export, which cannot read CSS, reads the values here. Gold
+     is the deep-gold literal #7A5200 (light --coin-text, 6.7:1 on paper):
+     bright --coin-2 #F5B921 is 1.7:1 on paper, and night --coin-text is a
+     light gold that fails on paper too — the export card is paper whatever
+     the theme. */
   function palette() {
     var cs = getComputedStyle(document.documentElement);
     function v(name) { return cs.getPropertyValue(name).trim(); }
     return {
-      void: v('--void'),
-      ink: v('--void-ink'),
-      ink2: v('--void-ink-2'),
-      ember: v('--void-accent'),
-      gold: v('--coin-2')
+      void: v('--loteria-paper'),
+      ink: v('--loteria-ink'),
+      ink2: v('--loteria-ink-2'),
+      ember: v('--loteria-red'),
+      gold: '#7A5200'
     };
   }
 

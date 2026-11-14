@@ -53,8 +53,20 @@
   position: relative;
   display: flex; flex-direction: column; gap: var(--s-2);
   margin-bottom: var(--s-3); padding: var(--s-3);
-  background: var(--surface-2);
-  border: 1px solid var(--line); border-radius: var(--radius-lg);
+  background: var(--loteria-paper); color: var(--loteria-ink);
+  border: 2px solid var(--loteria-ink); border-radius: var(--radius-lg);
+  box-shadow: 4px 4px 0 var(--loteria-ink);
+  /* paper artifact: the quick-row label and chip-links read --fg-3/--fg-2,
+     which are light greys at night (2.12:1 on paper) — pin them to paper
+     inks, or the wrap repeats the F3 ghost-text failure */
+  --bg: var(--loteria-paper); --surface: var(--loteria-paper); --surface-2: #F5F2E9;
+  --fg: var(--loteria-ink); --fg-2: var(--loteria-ink-2); --fg-3: var(--loteria-ink-2);
+  --line: rgba(35,35,35,.28); --line-2: rgba(35,35,35,.5);
+  --accent: var(--loteria-red); --accent-2: var(--loteria-red);
+  --accent-line: rgba(193,39,45,.45); --accent-wash: rgba(193,39,45,.1);
+  --focus: var(--loteria-red);
+  --block: var(--loteria-ink); --block-line: var(--loteria-ink);
+  color-scheme: light;
 }
 .pp-search-top{ display: flex; gap: var(--s-2); align-items: center; }
 .pp-search-top .input{ flex: 1 1 auto; min-width: 0; }
@@ -69,20 +81,20 @@
 }
 #players-panel-profile #skills-suggest li{
   padding: 0;
-  background: var(--surface);
-  border: 1px solid var(--line); border-radius: var(--radius);
+  background: var(--loteria-paper);
+  border: 1px solid var(--loteria-ink); border-radius: var(--radius);
   box-shadow: none;
 }
 #players-panel-profile #skills-suggest li button{
   width: 100%;
   display: flex; justify-content: space-between; align-items: center; gap: 10px;
   min-height: 44px; padding: 10px 12px;
-  font: inherit; color: var(--fg); text-align: left;
+  font: inherit; color: var(--loteria-ink); text-align: left;
   background: transparent; border: 0; cursor: pointer;
 }
-#players-panel-profile #skills-suggest li button:hover{ background: var(--surface-2); }
+#players-panel-profile #skills-suggest li button:hover{ background: #F5F2E9; }
 .pp-suggest__name{ font-weight: 600; font-size: 14px; }
-.skills-suggest__meta{ font-size: var(--t-xs); color: var(--fg-3); font-variant-numeric: tabular-nums; }
+.skills-suggest__meta{ font-size: var(--t-xs); color: var(--loteria-ink-2); font-variant-numeric: tabular-nums; }
 
 /* ---- skill profile: the card ---- */
 #skills-profile{ display: flex; flex-direction: column; gap: var(--s-3); }
@@ -109,12 +121,14 @@
 .pp-mega{ padding: 2px 0 2px var(--s-4); border-left: 1px solid var(--line-2); }
 .pp-meta-line{ margin-top: 6px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
 .pp-meta-pill--arch{ background: var(--fg); color: var(--bg); border-color: var(--fg); }
-/* archetype dot hues: data colours, one per family */
-.kdot--rim{ background: var(--accent); }
-.kdot--shoot{ background: var(--blue); }
-.kdot--play{ background: var(--pipe); }
-.kdot--motor{ background: var(--data-terra); }
-.kdot--other{ background: var(--fg-3); }
+/* archetype dot hues: the lotería family hues, matching the map (P1) —
+   rim green, shooting blue, playmaking marigold; motor/pressure takes the
+   fourth lotería hue, red; other is secondary ink */
+.kdot--rim{ background: var(--loteria-green); }
+.kdot--shoot{ background: var(--loteria-blue); }
+.kdot--play{ background: var(--loteria-marigold); }
+.kdot--motor{ background: var(--loteria-red); }
+.kdot--other{ background: var(--loteria-ink-2); }
 
 .pp-seasons{ display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px; }
 .pp-seasons button{ min-height: 44px; padding: 0 12px; font-size: var(--t-sm); cursor: pointer; }

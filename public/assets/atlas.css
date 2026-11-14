@@ -50,6 +50,9 @@
   --loteria-marigold: #E8A317;
   --loteria-green:    #1C7331;
   --loteria-blue:     #2B6CE5;
+  --loteria-paper:   #FCFBF7;  /* pinned: paper ground for lotería surfaces incl. the map, both themes */
+  --loteria-ink:     #232323;  /* pinned: ink on lotería paper, both themes */
+  --loteria-ink-2:   #57574F;  /* pinned: secondary ink on lotería paper — 7.04:1, AA */
 
   /* ---- semantic aliases (components resolve through these) ---- */
   --bg:        var(--board);
@@ -181,6 +184,9 @@
     --loteria-marigold: #E8A317;
     --loteria-green:    #1C7331;
     --loteria-blue:     #2B6CE5;
+    --loteria-paper:   #FCFBF7;  /* pinned: paper ground for lotería surfaces incl. the map, both themes */
+    --loteria-ink:     #232323;  /* pinned: ink on lotería paper, both themes */
+    --loteria-ink-2:   #57574F;  /* pinned: secondary ink on lotería paper — 7.04:1, AA */
     --bg:        var(--board);
     --surface:   #14161A;
     --surface-2: #1A1D22;
@@ -249,6 +255,9 @@
   --loteria-marigold: #E8A317;
   --loteria-green:    #1C7331;
   --loteria-blue:     #2B6CE5;
+  --loteria-paper:   #FCFBF7;  /* pinned: paper ground for lotería surfaces incl. the map, both themes */
+  --loteria-ink:     #232323;  /* pinned: ink on lotería paper, both themes */
+  --loteria-ink-2:   #57574F;  /* pinned: secondary ink on lotería paper — 7.04:1, AA */
   --bg:        var(--board);
   --surface:   #14161A;
   --surface-2: #1A1D22;
@@ -307,6 +316,9 @@
   --loteria-marigold: #E8A317;
   --loteria-green:    #1C7331;
   --loteria-blue:     #2B6CE5;
+  --loteria-paper:   #FCFBF7;  /* pinned: paper ground for lotería surfaces incl. the map, both themes */
+  --loteria-ink:     #232323;  /* pinned: ink on lotería paper, both themes */
+  --loteria-ink-2:   #57574F;  /* pinned: secondary ink on lotería paper — 7.04:1, AA */
   --bg:        var(--board);
   --surface:   var(--board);
   --surface-2: #F5F2E9;
@@ -567,16 +579,16 @@ p{ text-wrap: pretty; }
   font-family: var(--font-display);
   font-size: 11.5px; font-weight: 700; font-stretch: 112%;
   letter-spacing: .14em; text-transform: uppercase;
-  color: var(--fg);
-  background: transparent;
-  border: 1px solid var(--line-2);
+  color: var(--loteria-ink);
+  background: var(--loteria-paper);
+  border: 2px solid var(--loteria-ink);
   border-radius: var(--radius);
   box-shadow: none;
   text-decoration: none;
   cursor: pointer;
   transition: border-color var(--dur-1) var(--ease), background var(--dur-1) var(--ease), color var(--dur-1) var(--ease), transform var(--dur-1) var(--ease), box-shadow var(--dur-1) var(--ease);
 }
-.btn:hover, .trail-btn:hover{ border-color: var(--fg-3); background: var(--surface-2); transform: none; box-shadow: none; }
+.btn:hover, .trail-btn:hover{ border-color: var(--loteria-ink); background: #F5F2E9; transform: none; box-shadow: none; }
 .btn[disabled], .btn:disabled, .trail-btn:disabled{ opacity: .45; cursor: not-allowed; }
 /* .btn-primary is defined once, in the pipe block below (one rule, one token: --pipe). */
 .btn-accent{ background: transparent; color: var(--accent-2); border-color: var(--accent-line); }
@@ -615,7 +627,8 @@ a.pill:hover, button.pill:hover{ color: var(--fg); border-color: var(--fg-3); }
 .pill--ok{ color: var(--ok-text); }
 .pill--warn{ color: var(--warn-text); }
 .pill--bad{ color: var(--bad-text); }
-.pill-yellow, .pill-blue{ background: var(--accent-wash); color: var(--accent-2); border-color: var(--accent-line); }
+.pill-yellow{ background: var(--loteria-marigold); color: var(--loteria-ink); border-color: var(--loteria-ink); }
+.pill-blue{ background: var(--loteria-blue); color: var(--loteria-paper); border-color: var(--loteria-ink); }
 .pill-green{ background: var(--pipe); color: var(--on-accent); border-color: var(--pipe); }  /* a green pill is green: pipe pairing 5.72:1 */
 
 .input, input[type="text"], input[type="search"], input[type="email"], input[type="number"], select, textarea{
@@ -625,9 +638,9 @@ a.pill:hover, button.pill:hover{ color: var(--fg); border-color: var(--fg-3); }
   /* 16px, not 15: iOS zooms a focused field under 16px. Ported from
      responsive.css:158 (it held 16px with !important on 11 pages, wave 1.2). */
   font-family: var(--font-text); font-size: 16px; font-weight: 450;
-  color: var(--fg);
-  background: var(--surface);
-  border: 1px solid var(--line-2);
+  color: var(--loteria-ink);
+  background: var(--loteria-paper);
+  border: 2px solid var(--loteria-ink);
   border-radius: var(--radius);
   box-shadow: none;
   transition: border-color var(--dur-1) var(--ease), background var(--dur-1) var(--ease);
@@ -635,16 +648,16 @@ a.pill:hover, button.pill:hover{ color: var(--fg); border-color: var(--fg-3); }
 select{
   appearance: none; -webkit-appearance: none;
   padding-right: 36px;
-  background-image: linear-gradient(45deg, transparent 50%, var(--fg-3) 50%), linear-gradient(135deg, var(--fg-3) 50%, transparent 50%);
+  background-image: linear-gradient(45deg, transparent 50%, var(--loteria-ink-2) 50%), linear-gradient(135deg, var(--loteria-ink-2) 50%, transparent 50%);
   background-position: calc(100% - 18px) 50%, calc(100% - 13px) 50%;
   background-size: 5px 5px, 5px 5px;
   background-repeat: no-repeat;
   font-family: var(--font-text);
 }
-.input::placeholder, input::placeholder{ color: var(--fg-3); opacity: 1; }
-.input:hover, select:hover, input[type="text"]:hover{ border-color: var(--fg-3); }
-.input:focus, select:focus, input[type="text"]:focus, input[type="search"]:focus{ border-color: var(--accent); outline: none; }
-input[type="range"]{ accent-color: var(--accent); }
+.input::placeholder, input::placeholder{ color: var(--loteria-ink-2); opacity: 1; }
+.input:hover, select:hover, input[type="text"]:hover{ border-color: var(--loteria-red); }
+.input:focus, select:focus, input[type="text"]:focus, input[type="search"]:focus{ border-color: var(--loteria-red); outline: 3px solid var(--loteria-red); outline-offset: 2px; }
+input[type="range"]{ accent-color: var(--loteria-red); }
 
 /* Tabs: segmented, hairline */
 .tab-pills, .mode-tabs{
@@ -664,7 +677,7 @@ input[type="range"]{ accent-color: var(--accent); }
   transition: color var(--dur-1) var(--ease), background var(--dur-1) var(--ease);
 }
 .tab-pills button:hover, .mode-tab:hover{ color: var(--fg); }
-.tab-pills button.is-active, .mode-tab.is-active, .mode-tab.is-active.daily-active{ background: var(--surface-2); color: var(--fg); box-shadow: inset 0 -2px 0 var(--accent); }
+.tab-pills button.is-active, .mode-tab.is-active, .mode-tab.is-active.daily-active{ background: var(--surface-2); color: var(--fg); box-shadow: inset 0 -2px 0 var(--loteria-red); }
 /* phone: three tabs (e.g. players' Directory / Skill profile / Leaderboards) fit one row at 390 */
 @media (max-width: 420px){
   .tab-pills button, .mode-tab{ padding: 0 8px; font-size: var(--t-xs); letter-spacing: .06em; }
@@ -762,7 +775,17 @@ table{ border-collapse: collapse; width: 100%; }
 .vh-modal{ width: 100%; max-width: 560px; max-height: 80vh; overflow: auto; cursor: auto; }
 body.vh-modal-open{ overflow: hidden; overscroll-behavior: contain; }
 .vh-modal-backdrop{ background: var(--scrim); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
-.vh-modal{ background: var(--surface); color: var(--fg); border: 1px solid var(--line-2); border-radius: var(--radius-lg); box-shadow: 0 30px 80px rgba(0,0,0,.45); padding: clamp(20px, 3vw, 32px); }
+.vh-modal{ background: var(--loteria-paper); color: var(--loteria-ink); border: 3px solid var(--loteria-ink); border-radius: var(--radius-lg); box-shadow: 6px 6px 0 var(--loteria-ink); padding: clamp(20px, 3vw, 32px);
+  /* paper artifact (UX refresh 2, P3): descendants read paper aliases, not
+     the theme — or night text would print light-on-paper */
+  --bg: var(--loteria-paper); --surface: var(--loteria-paper); --surface-2: #F5F2E9;
+  --fg: var(--loteria-ink); --fg-2: var(--loteria-ink-2); --fg-3: var(--loteria-ink-2);
+  --line: rgba(35,35,35,.28); --line-2: rgba(35,35,35,.5);
+  --accent: var(--loteria-red); --accent-2: var(--loteria-red);
+  --accent-line: rgba(193,39,45,.45); --accent-wash: rgba(193,39,45,.1);
+  --focus: var(--loteria-red);
+  --block: var(--loteria-ink); --block-line: var(--loteria-ink);
+  color-scheme: light; }
 
 /* ==========================================================================
    Methods & Lab
@@ -941,7 +964,7 @@ h1{ view-transition-name: vh-title; }
    exclusions it outranked .btn-primary:hover and the lifeline's hover and
    painted paper under them (pre-existing on the primary; fixed with the kit). */
 .btn:hover:not(.btn-accent):not(.btn-primary):not(.btn-play):not(.lifeline){
-  background: var(--surface-2);
+  background: #F5F2E9;
 }
 .btn:active, .trail-btn:active{
   transform: translate(2px,2px);
@@ -1153,7 +1176,7 @@ section .today-strip__links a:first-child:hover{ background: var(--pipe-deep); }
    changes without the OS. --step / --on-accent / --pipe are not remapped:
    the window's own shadow falls on paper, and a primary action keeps its
    pairing wherever it stands. */
-.card--void, .embed3d__state{
+.card--void{
   --bg: var(--void); --surface: var(--void); --surface-2: var(--void-surface);
   --fg: var(--void-ink); --fg-2: var(--void-ink-2); --fg-3: var(--void-ink-2);
   --line: var(--void-line); --line-2: var(--void-line-2);
@@ -1319,7 +1342,7 @@ details.card--collapsible > summary:focus-visible{ outline: 2px solid var(--focu
 /* card children, usable in any card */
 .card__n{
   font-family: var(--font-display); font-size: var(--t-xs); font-weight: 700; font-stretch: 112%;
-  letter-spacing: .2em; text-transform: uppercase; color: var(--accent-2);
+  letter-spacing: .2em; text-transform: uppercase; color: var(--loteria-red);
 }
 .card__title{
   margin: 0;
@@ -1334,14 +1357,14 @@ details.card--collapsible > summary:focus-visible{ outline: 2px solid var(--focu
   letter-spacing: var(--track-label); text-transform: uppercase; color: var(--fg);
   transition: color var(--dur-1) var(--ease);
 }
-.card--door:hover .card__go{ color: var(--accent); }
+.card--door:hover .card__go{ color: var(--loteria-red); }
 
 /* ---- segmented control: one setting, N exclusive options (replay cams, projection).
    Seed replay-embed.css:34-38; 44px targets; the chosen segment is ink. Real tabs
    that switch panels stay .tab-pills. ---- */
 .seg{
   display: inline-flex; align-items: stretch; gap: 0; max-width: 100%;
-  border: 1px solid var(--line-2); border-radius: var(--radius); background: var(--surface);
+  border: 2px solid var(--loteria-ink); border-radius: var(--radius); background: var(--loteria-paper);
   overflow-x: auto; scrollbar-width: none;
 }
 .seg::-webkit-scrollbar{ display: none; }
@@ -1350,8 +1373,8 @@ details.card--collapsible > summary:focus-visible{ outline: 2px solid var(--focu
   min-height: 44px; min-width: 44px; padding: 0 14px;
   font-family: var(--font-display); font-size: var(--t-xs); font-weight: 600; font-stretch: 112%;
   letter-spacing: .12em; text-transform: uppercase; white-space: nowrap;
-  color: var(--fg-2); background: transparent;
-  border: 0; border-left: 1px solid var(--line); border-radius: 0; box-shadow: none;
+  color: var(--loteria-ink-2); background: transparent;
+  border: 0; border-left: 1px solid rgba(35,35,35,.28); border-radius: 0; box-shadow: none;
   text-decoration: none; cursor: pointer;
   font-variant-numeric: tabular-nums;
   transition: color var(--dur-1) var(--ease), background var(--dur-1) var(--ease);
@@ -1360,9 +1383,9 @@ details.card--collapsible > summary:focus-visible{ outline: 2px solid var(--focu
 .seg > :last-child{ border-radius: 0 calc(var(--radius) - 1px) calc(var(--radius) - 1px) 0; }
 /* hover excludes the chosen segment: button:hover is (0,2,1) and would beat the [aria-pressed] rule below */
 .seg > button:hover:not([aria-pressed="true"]):not(.is-active),
-.seg > a:hover:not([aria-current="true"]):not([aria-current="page"]):not(.is-active){ color: var(--fg); background: var(--surface-2); }
+.seg > a:hover:not([aria-current="true"]):not([aria-current="page"]):not(.is-active){ color: var(--loteria-ink); background: #F5F2E9; }
 .seg > [aria-pressed="true"], .seg > [aria-current="true"], .seg > [aria-current="page"], .seg > .is-active{
-  color: var(--bg); background: var(--fg);
+  color: var(--loteria-paper); background: var(--loteria-ink);
 }
 .seg > button:disabled{ opacity: .45; cursor: not-allowed; }
 .seg > button:focus-visible, .seg > a:focus-visible{ outline-offset: -3px; border-radius: var(--radius); }
@@ -1382,7 +1405,7 @@ details.card--collapsible > summary:focus-visible{ outline: 2px solid var(--focu
 }
 .chip-link:hover{ color: var(--fg); border-color: var(--fg-3); background: var(--surface-2); }
 .chip-link.is-active, .chip-link[aria-current="page"], .chip-link[aria-pressed="true"]{
-  color: var(--fg); border-color: var(--fg); box-shadow: inset 0 -2px 0 var(--accent);
+  color: var(--fg); border-color: var(--fg); box-shadow: inset 0 -2px 0 var(--loteria-red);
 }
 
 /* ---- row list: hairline rows, 52px, hover raises the paper (seed .wiki-row-wrap). ---- */
@@ -1404,7 +1427,7 @@ details.card--collapsible > summary:focus-visible{ outline: 2px solid var(--focu
 .row-list__main:has(> .row-list__title){ padding: 12px 0; }
 .row-list__title{ display: block; }
 .row-list__title + .caption{ display: block; margin-top: 2px; font-weight: 400; }
-.row-list > li > a:hover .row-list__title, .row-list__row > a:hover .row-list__title{ color: var(--accent-2); }
+.row-list > li > a:hover .row-list__title, .row-list__row > a:hover .row-list__title{ color: var(--loteria-red); }
 .row-list__meta{ flex: 0 0 auto; font-family: var(--font-text); font-size: var(--t-sm); color: var(--fg-3); font-variant-numeric: tabular-nums; white-space: nowrap; }
 .row-list__num{ flex: 0 0 auto; font-family: var(--font-code); font-size: var(--t-sm); color: var(--fg-2); font-variant-numeric: tabular-nums; }
 
@@ -1547,7 +1570,26 @@ details.card--collapsible > summary:focus-visible{ outline: 2px solid var(--focu
               > .embed3d__legend (none for home; ring keys + the selected point for game;
                                   team swatches for live)
               > .embed3d__note ---- */
-.embed3d{ position: relative; width: 100%; min-width: 0; }
+.embed3d{ position: relative; width: 100%; min-width: 0;
+  /* the whole mount reads paper aliases, wherever it is embedded (the live
+     mount is not inside #map-wrap/.mh-map) */
+  --bg: var(--loteria-paper); --surface: var(--loteria-paper); --surface-2: #F5F2E9;
+  --fg: var(--loteria-ink); --fg-2: var(--loteria-ink-2); --fg-3: var(--loteria-ink-2);
+  --line: rgba(35,35,35,.28); --line-2: rgba(35,35,35,.5);
+  --accent: var(--loteria-red); --accent-2: var(--loteria-red);
+  --accent-line: rgba(193,39,45,.45); --accent-wash: rgba(193,39,45,.1);
+  --focus: var(--loteria-red);
+  --block: var(--loteria-ink); --block-line: var(--loteria-ink);
+}
+/* ---- the map window is paper on BOTH themes (UX refresh 2, P1 — the
+   lotería scoped exception, extended from the cards to the map). The wraps
+   (#map-wrap on index/play/twenty-questions, .mh-map on map-guess) carry
+   .card--void in the markup, so they get paper ground here; the chrome
+   inside reads the paper aliases from .embed3d above. */
+#map-wrap, .mh-map{
+  background: var(--loteria-paper); color: var(--loteria-ink);
+  color-scheme: light;
+}
 .embed3d__bar{ display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-2) var(--s-3); padding: 0 0 var(--s-2); }
 .embed3d__axis{
   margin-left: auto;
@@ -1557,7 +1599,10 @@ details.card--collapsible > summary:focus-visible{ outline: 2px solid var(--focu
 .embed3d__frame{ position: relative; min-width: 0; }
 .embed3d__canvas{
   display: block; width: 100%; height: auto; min-height: 320px;
-  background: var(--void); border-radius: var(--radius-lg);
+  background: var(--loteria-paper);
+  border: 3px solid var(--loteria-ink);
+  outline: 1px solid var(--loteria-ink); outline-offset: 6px;
+  border-radius: var(--radius-lg);
   touch-action: pan-y; cursor: grab;
 }
 .embed3d__canvas:active{ cursor: grabbing; }
@@ -1567,40 +1612,41 @@ details.card--collapsible > summary:focus-visible{ outline: 2px solid var(--focu
 }
 .embed3d__key{ display: inline-flex; align-items: center; gap: 6px; }
 .embed3d__swatch{ display: inline-block; width: 10px; height: 10px; border-radius: 2px; flex: 0 0 auto; }
-/* ring keys: the ring as the map draws it, a coloured circle on a void disc */
-.embed3d__swatch--ring{ width: 14px; height: 14px; border-radius: 50%; background: var(--void); border: 2px solid var(--void-ink); }
-.embed3d__swatch--exact{ border-color: var(--void-accent); }
+/* ring keys: the ring as the map draws it, a coloured circle on a paper disc */
+.embed3d__swatch--ring{ width: 14px; height: 14px; border-radius: 50%; background: var(--loteria-paper); border: 2px solid var(--loteria-ink); }
+.embed3d__swatch--exact{ border-color: var(--loteria-red); }
 .embed3d__swatch--warm{ border-color: var(--data-terra); }
-.embed3d__swatch--cold{ border-color: var(--void-ink-2); }
-.embed3d__swatch--guess{ border-style: dashed; border-color: var(--void-ink); }
+.embed3d__swatch--cold{ border-color: var(--loteria-ink-2); }
+.embed3d__swatch--guess{ border-style: dashed; border-color: var(--loteria-ink); }
 /* the selected point: the mark-coloured dot inside its ring */
 .embed3d__swatch--sel{
   width: 14px; height: 14px; border-radius: 50%;
-  background: radial-gradient(circle, var(--void-accent) 0 2.5px, var(--void) 3px 4px, var(--void-accent) 4.5px 5.5px, var(--void) 6px);
+  background: radial-gradient(circle, var(--loteria-red) 0 2.5px, var(--loteria-paper) 3px 4px, var(--loteria-red) 4.5px 5.5px, var(--loteria-paper) 6px);
 }
 .embed3d__note{ margin: var(--s-2) 0 0; max-width: 70ch; font-size: var(--t-sm); line-height: 1.55; color: var(--fg-2); }
 .embed3d__note b{ color: var(--fg); }
 .embed3d__tip{
   position: absolute; z-index: 3; display: none; pointer-events: none; white-space: nowrap;
   padding: 6px 9px; font-size: var(--t-sm); line-height: 1.4;
-  color: var(--void-ink); background: var(--void-surface);
-  border: 1px solid var(--void-line); border-radius: var(--radius);
+  color: var(--loteria-ink); background: var(--loteria-paper);
+  border: 1px solid var(--loteria-ink); border-radius: var(--radius);
+  box-shadow: 3px 3px 0 var(--loteria-ink);
 }
 .embed3d__tip.is-visible{ display: block; }
-.embed3d__tip b{ color: var(--void-ink); }
-.embed3d__tip .num{ color: var(--void-ink-2); }
-/* the state covers the frame; it is a void host (remapped above), so .state rules read right inside it */
+.embed3d__tip b{ color: var(--loteria-ink); }
+.embed3d__tip .num{ color: var(--loteria-ink-2); }
+/* the state covers the frame; it is paper now (P1), like the canvas under it */
 .embed3d__state{
   position: absolute; inset: 0; z-index: 5;
   display: grid; justify-items: center; align-content: center; gap: var(--s-3);
   padding: var(--s-5); text-align: center;
-  color: var(--void-ink-2); font-size: var(--t-sm); line-height: 1.6;
-  background: var(--void); border-radius: var(--radius-lg);
+  color: var(--loteria-ink-2); font-size: var(--t-sm); line-height: 1.6;
+  background: var(--loteria-paper); border-radius: var(--radius-lg);
 }
 .embed3d__state p{ margin: 0; max-width: 48ch; }
-.embed3d__state b{ color: var(--void-ink); }
-.embed3d__state--error{ color: var(--void-ink); }
-.embed3d__state--error::before{ content: ""; width: 48px; height: 3px; background: var(--void-accent); }
+.embed3d__state b{ color: var(--loteria-ink); }
+.embed3d__state--error{ color: var(--loteria-ink); }
+.embed3d__state--error::before{ content: ""; width: 48px; height: 3px; background: var(--loteria-red); }
 
 /* ---- sheet: the bottom sheet (seed play.html:105-106 .vh-sheet). Rises from the
    bottom on phones, sits centred from 600px. Close is a 44px square. ---- */
@@ -1614,10 +1660,19 @@ details.card--collapsible > summary:focus-visible{ outline: 2px solid var(--focu
   width: 100%; max-width: 680px; overflow: auto;
   max-height: 88vh; max-height: min(88dvh, calc(100dvh - 16px));
   padding: var(--s-4) var(--s-4) calc(var(--s-4) + env(safe-area-inset-bottom, 0));
-  color: var(--fg); background: var(--surface);
-  border: 1px solid var(--line-2); border-bottom: 0;
+  color: var(--loteria-ink); background: var(--loteria-paper);
+  border: 2px solid var(--loteria-ink); border-bottom: 0;
   border-radius: var(--radius-xl) var(--radius-xl) 0 0; box-shadow: none;
   animation: atlas-sheet-up var(--dur-2) var(--ease) both;
+  /* paper artifact (UX refresh 2, P3): see .vh-modal for the alias block */
+  --bg: var(--loteria-paper); --surface: var(--loteria-paper); --surface-2: #F5F2E9;
+  --fg: var(--loteria-ink); --fg-2: var(--loteria-ink-2); --fg-3: var(--loteria-ink-2);
+  --line: rgba(35,35,35,.28); --line-2: rgba(35,35,35,.5);
+  --accent: var(--loteria-red); --accent-2: var(--loteria-red);
+  --accent-line: rgba(193,39,45,.45); --accent-wash: rgba(193,39,45,.1);
+  --focus: var(--loteria-red);
+  --block: var(--loteria-ink); --block-line: var(--loteria-ink);
+  color-scheme: light;
 }
 @keyframes atlas-sheet-up{ from{ transform: translateY(100%); } to{ transform: none; } }
 .sheet__handle{ width: 36px; height: 4px; min-height: 0; margin: 2px auto var(--s-3); border-radius: 2px; background: var(--line-2); }
@@ -1634,8 +1689,8 @@ details.card--collapsible > summary:focus-visible{ outline: 2px solid var(--focu
 @media (min-width: 600px){
   .sheet__backdrop{ align-items: center; padding: 20px; }
   .sheet{
-    border-bottom: 1px solid var(--line-2); border-radius: var(--radius-xl);
-    box-shadow: 5px 5px 0 var(--step);
+    border-bottom: 2px solid var(--loteria-ink); border-radius: var(--radius-xl);
+    box-shadow: 5px 5px 0 var(--loteria-ink);
     animation: atlas-rise var(--dur-2) var(--ease) both;
   }
   .sheet__handle{ display: none; }

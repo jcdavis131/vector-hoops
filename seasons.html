@@ -25,8 +25,8 @@
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png"/>
 <link rel="manifest" href="/manifest.json"/>
 <link rel="stylesheet" href="/assets/fonts.css?v=8f376b2a"/>
-<link rel="stylesheet" href="/assets/atlas.css?v=b66eb74b"/>
-<link rel="stylesheet" href="/assets/shell.css?v=b462f98f"/>
+<link rel="stylesheet" href="/assets/atlas.css?v=c19812f9"/>
+<link rel="stylesheet" href="/assets/shell.css?v=1c3df1f9"/>
 <style>
 img,svg,video,canvas{max-width:100%;height:auto;display:block}
 a{color:inherit}
@@ -35,6 +35,9 @@ a{color:inherit}
 .ex-rail a[aria-current="page"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
 .ex-table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
 .ex-table th,.ex-table td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);font-size:var(--t-sm)}
+/* lotería table head (UX refresh 2, P4): display caps over a 2px ink rule; even rows banded */
+.ex-table th{font-family:var(--font-display);font-size:var(--t-xs);font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--fg);border-bottom:2px solid var(--fg)}
+.ex-table tbody tr:nth-child(even) td{background:var(--surface-2)}
 .ex-spark{width:100%;color:var(--accent)}
 </style>
 </head>
