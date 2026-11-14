@@ -23,6 +23,10 @@ PAGES = [
     "methods.html",
     "offline.html",
     "404.html",
+    "seasons.html",
+    "teams.html",
+    "games.html",
+    "compare.html",
 ]
 
 

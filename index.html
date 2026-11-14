@@ -26,8 +26,8 @@
 <meta name="twitter:description" content="An atlas of 12,966 NBA player-seasons. Pick one; the model returns the three that play most alike."/>
 <meta name="twitter:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png"/>
 <link rel="stylesheet" href="assets/fonts.css?v=8f376b2a"/>
-<link rel="stylesheet" href="/assets/atlas.css?v=2f33917d"/>
-<link rel="stylesheet" href="/assets/shell.css?v=8b888c0a"/>
+<link rel="stylesheet" href="/assets/atlas.css?v=89ee8519"/>
+<link rel="stylesheet" href="/assets/shell.css?v=0f508189"/>
 <style>
 /* Home layout only: every colour, card, plate, stat, row, button and state is the kit (atlas.css). */
 .home .main{ padding-top: 0; }
@@ -114,6 +114,24 @@
 .map-read{ margin-top: var(--s-4); }
 .map-read .map-note{ margin: 0; }
 
+/* ---------- concept overlay: color the map by what the model reads ---------- */
+.concept-picker{ margin-top: var(--s-3); }
+.concept-chips{ display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.concept-chips button{
+  min-height: 44px; padding: 0 14px; border: 1px solid var(--line-2); border-radius: 999px;
+  background: var(--surface); color: var(--fg-2);
+  font-family: var(--font-display); font-size: var(--t-xs); font-weight: 600;
+  letter-spacing: .08em; text-transform: uppercase; cursor: pointer;
+}
+.concept-chips button:hover{ color: var(--fg); background: var(--surface-2); }
+.concept-chips button[aria-pressed="true"]{ color: var(--bg); background: var(--fg); border-color: var(--fg); }
+.concept-chips button:focus-visible{ outline: 2px solid var(--accent); outline-offset: 2px; }
+.concept-chips button:disabled{ opacity: .45; cursor: wait; }
+.concept-meta{ margin: 10px 0 0; font-size: var(--t-sm); color: var(--fg-2); }
+.concept-meta b{ color: var(--fg); }
+.concept-scale{ display: block; height: 10px; border-radius: 999px; margin-top: 8px; }
+.concept-honesty{ margin: 8px 0 0; max-width: 62ch; }
+
 /* ---------- three play doors (kit .card--door) ---------- */
 .play, .lab{ width: 100%; max-width: var(--content); margin: var(--s-6) auto 0; }
 .doors{ display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s-3); }
@@ -182,6 +200,13 @@
       <button type="button" class="btn" data-map="share">Copy link</button>
       <button type="button" class="btn" id="atlas-export">Share image</button>
       <p class="share-bar__status" id="atlas-share-status" role="status" aria-live="polite"></p>
+    </div>
+
+    <div class="concept-picker" id="concept-picker">
+      <span class="label">Color the map by what the model reads</span>
+      <div class="concept-chips" id="concept-chips" role="group" aria-label="Concept color"></div>
+      <p class="concept-meta" id="concept-meta" hidden></p>
+      <p class="caption concept-honesty">Colors show what the model reads from the embedding — not the stat itself. R² is how faithfully it reads on players it never saw.</p>
     </div>
 
     <div class="card readout">
@@ -277,6 +302,10 @@
       <a href="/live">Live</a>
       <a href="/schedule">Schedule</a>
       <a href="/players">Players</a>
+      <a href="/seasons">Seasons</a>
+      <a href="/teams">Teams</a>
+      <a href="/games">Games</a>
+      <a href="/compare">Compare</a>
       <a href="/insights">Insights</a>
       <a href="/twin-network">Twin Networks</a>
       <a href="/playoff-runs">Playoff Runs</a>
@@ -294,13 +323,14 @@
 </footer>
 <!-- /footer:stamped -->
 
-<script defer src="/assets/site-nav.js?v=a16120da"></script>
+<script defer src="/assets/site-nav.js?v=70f136d8"></script>
 <script defer src="/assets/vh-analytics.js?v=d838a3e1"></script>
 <script defer src="/assets/vh-peers.js?v=860629b9"></script>
 <script defer src="/assets/served-constants.js?v=8ba12340"></script>
 <script defer src="/assets/twin-bands.js?v=0a191313"></script>
-<script defer src="/assets/embed-3d.js?v=06cc9778"></script>
-<script defer src="/assets/atlas-3d.js?v=996735df"></script>
+<script defer src="/assets/embed-3d.js?v=ccf00fa2"></script>
+<script defer src="/assets/embed-3d-overlay.js?v=390f8b9c"></script>
+<script defer src="/assets/atlas-3d.js?v=2999b11c"></script>
 <script src="assets/site-facts.js?v=f8edaf37" defer></script>
 <script defer src="/assets/engagement.js?v=b09bf206"></script>
 <script defer src="/assets/home-tonight.js?v=881d28f9"></script>

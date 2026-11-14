@@ -363,7 +363,9 @@ def test_real_tree_run_exits_0_and_prints_the_known_heading():
     lines: list[str] = []
     assert cdl.run(ROOT, out=lines.append) == 0
     text = "\n".join(lines)
-    assert "KNOWN" in text and "players.html:148" in text and "vercel.json:400" in text
+    assert "KNOWN" in text and "players.html:148" in text
+    # The vercel.json line moves whenever a redirect is added above it, so match the link, not the line.
+    assert any(row.strip().startswith("vercel.json:") and "/research -> /methods#frontier" in row for row in lines)
 
 
 def test_main_takes_a_root_argument(tmp_path, capsys):
