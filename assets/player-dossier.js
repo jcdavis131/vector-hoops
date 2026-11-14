@@ -81,23 +81,30 @@
     }
     var t = tw.t;
     var band = global.VHTwinBands ? global.VHTwinBands.chipHTML(bands, t.sim) : '';
-    var html = '<div class="vh-dos__twin vh-truth"><div class="vh-dos__twin-name">' +
-      esc(t.n) + ' <span class="vh-dos__dim">' + esc(t.s) + '</span></div>' +
-      '<div class="vh-dos__twin-sim">' + band + '</div></div>';
+    // Lotería reskin: the era twin is card Nº 1 — number badge, distance chip
+    // (mono), name banner, "why" line under the banner. Same data, same band.
+    var html = '<div class="loteria-card loteria-card--compact" data-loteria="0">' +
+      '<span class="loteria-card__num" aria-hidden="true">1</span>' +
+      '<div class="loteria-card__art">' +
+        '<div class="loteria-card__dist">' + Number(t.sim).toFixed(2) + '</div>' +
+        '<div class="loteria-card__why">' + band + '</div>' +
+      '</div>' +
+      '<span class="loteria-card__banner">' + esc(t.n) + ' ' + esc(t.s) + '</span>';
     if (tw.why) {
       var w = tw.why;
       if (w.sh && w.sh.length) {
-        html += '<div class="vh-dos__bullet">' +
-          esc(w.sh.slice(0, 3).join('; ')) + '.</div>';
+        html += '<p class="loteria-card__why">' +
+          esc(w.sh.slice(0, 3).join('; ')) + '.</p>';
       }
       if (w.d) {
-        html += '<div class="vh-dos__bullet">Differs most on ' + esc(w.d) + '.</div>';
+        html += '<p class="loteria-card__why">Differs most on ' + esc(w.d) + '.</p>';
       }
       if (w.th) {
-        html += '<p class="vh-dos__note">Thin match — found in the full embedding ' +
+        html += '<p class="loteria-card__why">Thin match — found in the full embedding ' +
           'space; treat as directional, not a claim of sameness.</p>';
       }
     }
+    html += '</div>';
     if (tw.t5 && tw.t5.length > 1) {
       html += '<div class="vh-dos__top5">' + tw.t5.slice(1).map(function (c) {
         var cb = global.VHTwinBands ? global.VHTwinBands.inlineHTML(bands, c.sim) : '';

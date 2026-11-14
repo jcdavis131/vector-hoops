@@ -37,6 +37,20 @@
   --void-line-2:  rgba(255,255,255,.28);  /* stronger line on the void: control borders, hard steps */
   --void-surface: rgba(13,16,21,.92);     /* raised chrome on the void: tooltips, overlays, nested cards */
 
+  /* ---- lotería card materials (2026-11-14 reskin): constant on both themes —
+     the cards are physical paper artifacts, so their ground never swaps (the one
+     scoped exception, stated in TOKENS.md). Banner rotation is red / marigold /
+     green / blue by card number ((n-1) mod 4), never random per render.
+     Contrast on paper #FCFBF7, verified 2026-11-14: red 5.64:1, cream-on-red
+     5.64:1, cream-on-green 5.72:1, cream-on-blue 4.63:1, ink-on-marigold
+     7.25:1 — all AA. Marigold is banner fill only, never small text.
+     Green/blue are literals equal to the LIGHT --pipe / --marker-blue: their
+     night values are too light for cream banner text, so they are pinned. */
+  --loteria-red:      #C1272D;
+  --loteria-marigold: #E8A317;
+  --loteria-green:    #1C7331;
+  --loteria-blue:     #2B6CE5;
+
   /* ---- semantic aliases (components resolve through these) ---- */
   --bg:        var(--board);
   --surface:   var(--board);
@@ -161,6 +175,12 @@
     --void-line:    rgba(255,255,255,.14);
     --void-line-2:  rgba(255,255,255,.28);
     --void-surface: rgba(13,16,21,.92);
+    /* lotería card materials: pinned to the light values — the cards keep paper
+       ground on the night board too, so the banner pairings must not swap. */
+    --loteria-red:      #C1272D;
+    --loteria-marigold: #E8A317;
+    --loteria-green:    #1C7331;
+    --loteria-blue:     #2B6CE5;
     --bg:        var(--board);
     --surface:   #14161A;
     --surface-2: #1A1D22;
@@ -223,6 +243,12 @@
   --void-line:    rgba(255,255,255,.14);
   --void-line-2:  rgba(255,255,255,.28);
   --void-surface: rgba(13,16,21,.92);
+  /* lotería card materials: pinned to the light values — the cards keep paper
+     ground on the night board too, so the banner pairings must not swap. */
+  --loteria-red:      #C1272D;
+  --loteria-marigold: #E8A317;
+  --loteria-green:    #1C7331;
+  --loteria-blue:     #2B6CE5;
   --bg:        var(--board);
   --surface:   #14161A;
   --surface-2: #1A1D22;
@@ -276,6 +302,11 @@
   --void-line:    rgba(255,255,255,.14);
   --void-line-2:  rgba(255,255,255,.28);
   --void-surface: rgba(13,16,21,.92);
+  /* lotería card materials: pinned to the light values (see the light :root). */
+  --loteria-red:      #C1272D;
+  --loteria-marigold: #E8A317;
+  --loteria-green:    #1C7331;
+  --loteria-blue:     #2B6CE5;
   --bg:        var(--board);
   --surface:   var(--board);
   --surface-2: #F5F2E9;
@@ -1136,14 +1167,127 @@ section .today-strip__links a:first-child:hover{ background: var(--pipe-deep); }
 .card--void .card{ box-shadow: none; }
 
 /* Door: a card that is one link (home's three play doors, index.html:305-313).
-   Hover changes the border, nothing lifts and nothing blurs. */
+   Hover changes the border, nothing lifts and nothing blurs.
+   Lotería reskin: doors carry the double frame (3px ink border + 1px outline,
+   6px gap) and the hard --block shadow, like the cards. */
 .card--door{
   display: flex; flex-direction: column; gap: var(--s-2);
   color: var(--fg); text-decoration: none;
-  transition: border-color var(--dur-2) var(--ease);
+  border: 3px solid var(--ink);
+  outline: 1px solid var(--ink); outline-offset: 6px;
+  box-shadow: 6px 6px 0 var(--block);
+  transition: border-color var(--dur-2) var(--ease), outline-color var(--dur-2) var(--ease);
 }
-.card--door:hover{ border-color: var(--line-2); transform: none; }
+.card--door:hover{ border-color: var(--ink); outline-color: var(--accent); transform: none; }
 .card--door:focus-visible{ outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* ==========================================================================
+   Lotería card (2026-11-14 reskin) — a physical paper card, numbered + named.
+   Kit class, next to .card--void. The card keeps paper ground + ink text on
+   BOTH themes: it is a paper artifact, not a page surface (the one scoped
+   exception, TOKENS.md). Every text colour inside is therefore a constant —
+   never a theme-swapping token — or the night board would print light ink on
+   paper. Double frame: 3px ink border + 1px ink outline, 6px gap. Hard
+   offset shadow via --block. Radius stays --radius (5px).
+   Banner colour: red / marigold / green / blue by card number ((n-1) mod 4).
+   Set data-loteria="0..3" on the card; default (absent) is red.
+   A .loteria-card nested in a .card (Daily Court result inside #guess-card,
+   twin-network cards inside the explorer article) would otherwise lose to
+   `.card .card` (atlas.css:547 — background surface-2, border line, no
+   shadow). The paired selector matches that specificity and wins by
+   coming later in this file.
+   ========================================================================== */
+.loteria-card,
+.card .loteria-card{
+  --loteria-paper: #FCFBF7;
+  --loteria-ink: #232323;
+  --loteria-ink-2: #57574F;   /* secondary ink on paper — 7.04:1, AA */
+  --loteria-banner-bg: var(--loteria-red);
+  --loteria-banner-fg: var(--loteria-paper);
+  position: relative;
+  background: var(--loteria-paper);
+  color: var(--loteria-ink);
+  border: 3px solid var(--loteria-ink);
+  outline: 1px solid var(--loteria-ink);
+  outline-offset: 6px;
+  border-radius: var(--radius);
+  box-shadow: 6px 6px 0 var(--block);
+  padding: clamp(16px, 2.2vw, 24px);
+  min-width: 0;
+}
+.loteria-card[data-loteria="1"]{ --loteria-banner-bg: var(--loteria-marigold); --loteria-banner-fg: var(--loteria-ink); }
+.loteria-card[data-loteria="2"]{ --loteria-banner-bg: var(--loteria-green); --loteria-banner-fg: var(--loteria-paper); }
+.loteria-card[data-loteria="3"]{ --loteria-banner-bg: var(--loteria-blue); --loteria-banner-fg: var(--loteria-paper); }
+/* theme-swapping text colours pinned to paper ink inside the card */
+.loteria-card .hd, .loteria-card h1, .loteria-card h2, .loteria-card h3{ color: var(--loteria-ink); }
+.loteria-card .result__detail, .loteria-card .caption, .loteria-card .sub{ color: var(--loteria-ink-2); }
+/* F3 (2026-11-14): the paper card pins EVERY text colour inside it. The F2
+   fix pinned the card's own text, but ghost controls keep theme-swapping
+   colours: a plain .btn is transparent with --fg text (light ink at night —
+   1.12:1 on paper), .pill/.chip are --fg-2 (2.12:1), .twin-why__label --fg-2
+   (2.12:1), .twin-why__method --fg-3 (3.43:1), and <b> in .twin-why__differ
+   is --fg via atlas.css:383 (1.12:1). All measured dark-theme headless,
+   2026-11-14. Pin them to the lotería inks in both themes; the light look
+   is unchanged (the pinned values equal what light already renders).
+   The hover :not() chain matches the (0,6,0) hover rule at :943, so this
+   later rule wins; #F5F2E9 is the light --surface-2 value, pinned. */
+.loteria-card .btn:not(.btn-primary):not(.btn-accent){ color: var(--loteria-ink); background: var(--loteria-paper); border-color: var(--loteria-ink); }
+.loteria-card .btn:hover:not(.btn-primary):not(.btn-accent):not(.btn-play):not(.lifeline){ color: var(--loteria-ink); background: #F5F2E9; border-color: var(--loteria-ink); }
+.loteria-card .pill, .loteria-card .chip{ color: var(--loteria-ink); background: var(--loteria-paper); border-color: var(--loteria-ink); }
+.loteria-card a.pill:hover, .loteria-card button.pill:hover{ color: var(--loteria-ink); border-color: var(--loteria-ink); background: #F5F2E9; }
+.loteria-card .twin-why__label, .loteria-card .twin-why__thin{ color: var(--loteria-ink-2); }
+.loteria-card .twin-why__method{ color: var(--loteria-ink-2); }
+.loteria-card .twin-why__differ, .loteria-card .twin-why__differ b{ color: var(--loteria-ink); }
+/* number badge, top-left: mono, black square, cream numerals */
+.loteria-card__num{
+  position: absolute; top: 10px; left: 10px; z-index: 1;
+  display: grid; place-content: center;
+  min-width: 30px; height: 30px; padding: 0 6px;
+  background: var(--loteria-ink); color: var(--loteria-paper);
+  font-family: var(--font-code); font-size: var(--t-sm); font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  border-radius: 2px;
+}
+/* art area: the "illustration" is data (mini-map, stat bars, era glyph) — never a photo */
+.loteria-card__art{
+  display: flex; flex-direction: column; justify-content: center; align-items: center;
+  min-height: 84px; padding: 36px 4px 12px; text-align: center;
+}
+/* name banner, full-bleed horizontally: coloured band, uppercase, letterspaced.
+   It sits in normal flow above the "why" line — never the last element, so the
+   why line reads under the banner, inside the card. */
+.loteria-card__banner{
+  display: block;
+  margin: 12px calc(-1 * clamp(16px, 2.2vw, 24px)) 0;
+  padding: 10px 14px;
+  background: var(--loteria-banner-bg); color: var(--loteria-banner-fg);
+  border-top: 3px solid var(--loteria-ink);
+  font-family: var(--font-display); font-size: var(--t-md); font-weight: 700;
+  letter-spacing: .08em; text-transform: uppercase; text-align: center;
+  overflow-wrap: break-word;
+}
+/* distance chip, mono — the honest number on the card */
+.loteria-card__dist{
+  font-family: var(--font-code); font-size: var(--t-sm); font-weight: 700;
+  font-variant-numeric: tabular-nums; color: var(--loteria-ink);
+}
+/* "why" line under the banner: secondary ink, never a theme token */
+.loteria-card__why{ margin: 10px 0 0; font-size: var(--t-sm); line-height: 1.55; color: var(--loteria-ink-2); }
+/* compact variant: featured players, dossier twins — same frame, tighter pad */
+.loteria-card--compact{ padding: 12px; }
+.loteria-card--compact .loteria-card__art{ min-height: 0; padding: 32px 2px 8px; }
+.loteria-card--compact .loteria-card__banner{ margin: 10px -12px 0; padding: 7px 10px; font-size: var(--t-sm); }
+.loteria-card--compact .loteria-card__why{ margin-top: 8px; }
+/* Daily Court reveal: the h3 clears the number badge; the Twin score number
+   is the mono distance chip; the share button sits under the why-block. */
+.loteria-card > .loteria-card__num + h3{ padding-top: 34px; }
+.loteria-card .twin-why__conf .num{ font-family: var(--font-code); }
+.loteria-card .vh-twin-share{ margin-top: 12px; }
+/* a lost result keeps the lotería frame whole: the red left edge of
+   .result--lost would break one side of the double frame (the "❌ Revealed"
+   heading already carries the lost state). */
+.loteria-card.result--lost{ border-left-color: var(--loteria-ink); }
+
 /* Collapsible card: <details class="card card--collapsible"> whose <summary> is the head (seed insights'
    .vh-ins__sum). 48px summary, the +/- glyph of .disclosure in a 28px circle on the right. */
 details.card--collapsible > summary{

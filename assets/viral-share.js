@@ -305,5 +305,137 @@
       }catch(e){ resolve(false); }
     });
   }
-  window.VHShare={showToast:showToast,shareUniverse:shareUniverse,shareChimera:shareChimera,sharePastModern:sharePastModern,drawTeamCard:drawTeamCard,drawChimeraCard:drawChimeraCard,drawPastModernCard:drawPastModernCard,shareDailyCourt:shareDailyCourt,shareMapHunt:shareMapHunt,drawMapHuntCard:drawMapHuntCard,mapHuntText:mapHuntText};
+  /* ---------- Twin share card (lotería reskin) ----------
+   * opts: {targetName, targetSeason, twinName, twinSeason, sim (0-1),
+   *        why (string[]), rank (default 1), dayKey, url}
+   * 9:16 PNG on a client-side canvas: cream paper, giant bold headline with
+   * the target on a black highlight bar, the twin as a lotería card (number
+   * badge = rank, distance chip, name banner), site footer. System fonts
+   * only — no webfont fetch, so the card draws with no network. No photos.
+   * drawTwinCard takes a canvasOverride so node tests can pass a recording
+   * stub (document.createElement has no canvas in node). */
+  var LOTERIA = { paper: '#FCFBF7', ink: '#232323', ink2: '#57574F',
+    red: '#C1272D', marigold: '#E8A317', green: '#1C7331', blue: '#2B6CE5' };
+  function loteriaBanner(i) {
+    return [LOTERIA.red, LOTERIA.marigold, LOTERIA.green, LOTERIA.blue][(((i || 0) % 4) + 4) % 4];
+  }
+  function loteriaBannerText(i) { return ((i || 0) % 4) === 1 ? LOTERIA.ink : LOTERIA.paper; }
+  function fitFont(ctx, text, maxW, px, weight, family) {
+    var size = px;
+    ctx.font = weight + ' ' + size + 'px ' + family;
+    while (size > 12 && ctx.measureText(text).width > maxW) {
+      size -= 2;
+      ctx.font = weight + ' ' + size + 'px ' + family;
+    }
+    return size;
+  }
+  function drawTwinCard(opts, canvasOverride) {
+    opts = opts || {};
+    var W = 1080, H = 1920;
+    var c = canvasOverride || document.createElement('canvas');
+    c.width = W; c.height = H;
+    var ctx = c.getContext('2d');
+    var target = String(opts.targetName || '?').toUpperCase();
+    var twin = String(opts.twinName || '?').toUpperCase();
+    var twinSeason = opts.twinSeason || '';
+    var rank = opts.rank || 1;
+    var simPct = (opts.sim != null) ? Math.round(opts.sim * 100) : null;
+    // ground: cream paper, ink frame
+    ctx.fillStyle = LOTERIA.paper; ctx.fillRect(0, 0, W, H);
+    ctx.strokeStyle = LOTERIA.ink; ctx.lineWidth = 18; ctx.strokeRect(10, 10, W - 20, H - 20);
+    // headline: WHO PLAYS / LIKE / target on a black highlight bar
+    ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic';
+    ctx.fillStyle = LOTERIA.ink;
+    ctx.font = '800 128px ui-sans-serif, sans-serif';
+    ctx.fillText('WHO PLAYS', W / 2, 250);
+    ctx.fillText('LIKE', W / 2, 420);
+    fitFont(ctx, target, W - 160, 96, '800', 'ui-sans-serif, sans-serif');
+    var tw = ctx.measureText(target).width;
+    var barTop = 470, barH = 130;
+    ctx.fillStyle = LOTERIA.ink; ctx.fillRect((W - tw - 72) / 2, barTop, tw + 72, barH);
+    ctx.fillStyle = LOTERIA.paper;
+    ctx.fillText(target, W / 2, barTop + 96);
+    // lotería card: the twin
+    var cx = 230, cy = 660, cw = 620, ch = 800;
+    ctx.fillStyle = LOTERIA.ink; ctx.fillRect(cx + 6, cy + 6, cw, ch); // hard shadow
+    ctx.fillStyle = LOTERIA.paper; ctx.fillRect(cx, cy, cw, ch);
+    ctx.strokeStyle = LOTERIA.ink; ctx.lineWidth = 3; ctx.strokeRect(cx + 1.5, cy + 1.5, cw - 3, ch - 3);
+    ctx.lineWidth = 1; ctx.strokeRect(cx + 6.5, cy + 6.5, cw - 13, ch - 13); // hairline
+    // number badge: black square, cream mono numerals
+    var bs = 72;
+    ctx.fillStyle = LOTERIA.ink; ctx.fillRect(cx + 14, cy + 14, bs, bs);
+    ctx.fillStyle = LOTERIA.paper; ctx.font = '700 36px ui-monospace, monospace';
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillText(String(rank), cx + 14 + bs / 2, cy + 14 + bs / 2 + 2);
+    // art: distance chip + why lines, centred in the badge-to-banner space
+    var artLines = [];
+    if (simPct != null) {
+      artLines.push({ s: simPct + '%', f: '700 72px ui-monospace, monospace', fill: LOTERIA.ink, adv: 96, gap: 12 });
+      artLines.push({ s: 'STYLE MATCH', f: '700 28px ui-monospace, monospace', fill: LOTERIA.ink2, adv: 40, gap: 28 });
+    }
+    (opts.why || []).slice(0, 3).forEach(function (w) {
+      var s = String(w);
+      if (s.length > 34) s = s.slice(0, 33) + '…';
+      artLines.push({ s: s, f: '400 26px ui-sans-serif, sans-serif', fill: LOTERIA.ink2, adv: 38, gap: 10 });
+    });
+    var artTop = cy + 14 + bs + 20, artBottom = cy + ch - 96;
+    var total = artLines.reduce(function (a, l) { return a + l.adv + l.gap; }, 0) - (artLines.length ? artLines[artLines.length - 1].gap : 0);
+    var ay = artTop + Math.max(0, (artBottom - artTop - total) / 2);
+    artLines.forEach(function (l) {
+      ctx.font = l.f; ctx.fillStyle = l.fill;
+      ctx.fillText(l.s, cx + cw / 2, ay + l.adv / 2); // textBaseline is 'middle'
+      ay += l.adv + l.gap;
+    });
+    // name banner: full-width coloured band, 3px ink top rule
+    var bh = 96;
+    var banner = twin + (twinSeason ? ' ' + twinSeason : '');
+    ctx.fillStyle = loteriaBanner(rank - 1); ctx.fillRect(cx, cy + ch - bh, cw, bh);
+    ctx.fillStyle = LOTERIA.ink; ctx.fillRect(cx, cy + ch - bh, cw, 3);
+    fitFont(ctx, banner, cw - 48, 40, '800', 'ui-sans-serif, sans-serif');
+    ctx.fillStyle = loteriaBannerText(rank - 1);
+    ctx.fillText(banner, cx + cw / 2, cy + ch - bh / 2); // textBaseline is 'middle'
+    // footer
+    ctx.textBaseline = 'alphabetic';
+    ctx.fillStyle = LOTERIA.ink; ctx.font = '800 34px ui-sans-serif, sans-serif';
+    ctx.fillText('hoops.dumbmodel.com', W / 2, 1560);
+    ctx.fillStyle = LOTERIA.ink2; ctx.font = '400 28px ui-monospace, monospace';
+    ctx.fillText((opts.dayKey ? opts.dayKey + ' · ' : '') + '12,966 player-seasons · 1996–2026', W / 2, 1614);
+    return c;
+  }
+  async function shareTwinCard(opts) {
+    opts = opts || {};
+    var target = opts.targetName || '?';
+    var twin = opts.twinName || '?';
+    var simPct = (opts.sim != null) ? Math.round(opts.sim * 100) : null;
+    var url = opts.url || ('https://hoops.dumbmodel.com/play' + (opts.dayKey ? '?day=' + opts.dayKey : ''));
+    var text = 'Who plays like ' + target + '? ' + twin +
+      (simPct != null ? ' — ' + simPct + '% style match' : '') +
+      '\nVector Hoops · 12,966 player-seasons\n' + url;
+    var title = 'Who plays like ' + target + '?';
+    try {
+      var canvas = drawTwinCard(opts);
+      var blob = await new Promise(function (r) {
+        try { canvas.toBlob(function (b) { r(b); }, 'image/png'); } catch (e) { r(null); }
+      });
+      if (blob) {
+        var slug = String(target).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'twin';
+        var file = new File([blob], 'twin-' + slug + '.png', { type: 'image/png' });
+        if (navigator.canShare && navigator.canShare({ files: [file] })) {
+          await navigator.share({ title: title, text: text, files: [file] });
+          showToast('Twin card shared');
+          return true;
+        }
+      }
+    } catch (e) { console.warn('shareTwinCard card fail', e); }
+    try {
+      if (navigator.share) { try { await navigator.share({ title: title, text: text, url: url }); return true; } catch (e) {} }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        await navigator.clipboard.writeText(text + '\n' + url);
+        showToast('Twin card copied.');
+        return 'copied';
+      }
+    } catch (e) { console.warn('shareTwinCard fail', e); }
+    return false;
+  }
+  window.VHShare={showToast:showToast,shareUniverse:shareUniverse,shareChimera:shareChimera,sharePastModern:sharePastModern,drawTeamCard:drawTeamCard,drawChimeraCard:drawChimeraCard,drawPastModernCard:drawPastModernCard,shareDailyCourt:shareDailyCourt,shareMapHunt:shareMapHunt,drawMapHuntCard:drawMapHuntCard,mapHuntText:mapHuntText,drawTwinCard:drawTwinCard,shareTwinCard:shareTwinCard};
 })();

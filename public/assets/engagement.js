@@ -324,6 +324,33 @@
         if (t.deep) toast('Deep cut unlocked — ' + t.gap + ' seasons apart, one style.');
       }
     }
+    // Lotería row (2026-11-14 reskin): Twin of the Day + 2 featured twins,
+    // all from the TOTD table — no new data. Card numbers 1–3, banner colour
+    // (n-1) mod 4, deterministic per day.
+    var row = document.getElementById('loteria-row');
+    if (row) {
+      var dk = dayKey();
+      var picks = [twinOfDay(dk), twinOfDay(dk + '-2'), twinOfDay(dk + '-3')];
+      row.innerHTML = picks.map(function (p, i) {
+        var n = i + 1;
+        var apart = p.gap + (p.gap === 1 ? ' season' : ' seasons') + ' apart';
+        var why = i === 0
+          ? 'Same pair for everyone today, picked by the calendar.'
+          : (p.deep ? 'Deep cut — an era-bridging twin, 20+ seasons apart.' : 'Same style, different era.');
+        return '<article class="loteria-card" data-loteria="' + ((n - 1) % 4) + '">' +
+          '<span class="loteria-card__num" aria-hidden="true">' + n + '</span>' +
+          '<div class="loteria-card__art">' +
+            '<div class="loteria-row__pair">' + esc(p.a) + ' <span class="loteria-row__tilde">~</span> ' + esc(p.b) + '</div>' +
+            '<div class="loteria-row__gap">' + apart + (p.deep ? ' · DEEP CUT' : '') + '</div>' +
+          '</div>' +
+          '<span class="loteria-card__banner">' + (i === 0 ? 'Twin of the Day' : 'Featured Twin') + '</span>' +
+          '<p class="loteria-card__why">' + why + '</p>' +
+          '<a class="loteria-row__link" href="/twin-network.html">See why they&rsquo;re twins &rarr;</a>' +
+        '</article>';
+      }).join('');
+      var rowLinks = row.querySelectorAll('a');
+      for (var li = 0; li < rowLinks.length; li++) rowLinks[li].addEventListener('click', unlock);
+    }
     // Landing hero: a compact one-liner in #totd-slot, its disclosure kept in view.
     var slot = document.getElementById('totd-slot');
     if (slot) {

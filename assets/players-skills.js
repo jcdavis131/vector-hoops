@@ -504,7 +504,7 @@
   function renderFeatured() {
     if (!els.ppFeatured || !INDEX['victor-wembanyama']) return;
     var html = '';
-    FEATURED.forEach(function(name){
+    FEATURED.forEach(function(name, i){
       var slug = window.VHDossier.playerSlug(name);
       var rec = INDEX[slug];
       if (!rec) return;
@@ -513,7 +513,14 @@
       var c99 = g.filter(function(x){return x>=99;}).length;
       var c90 = g.filter(function(x){return x>=90;}).length;
       var avg = Math.round(g.reduce(function(a,b){return a+b;},0)/g.length);
-      html += '<div class="pp-featured__card" data-slug="'+esc(slug)+'"><div class="pp-featured__name">'+esc(name)+'</div><div class="pp-featured__line">'+esc(last.season)+' · avg '+avg+'</div><div class="pp-featured__grade">'+(c99?c99+'×99 ': '')+(c90?c90+'×90+':'avg '+avg)+'</div></div>';
+      // Lotería reskin: the featured card IS a lotería card (atlas.css owns
+      // the frame; players.css only keeps the pointer + hover). Card number
+      // i+1, banner colour (i mod 4). Same data — name, season, grade.
+      html += '<div class="pp-featured__card loteria-card loteria-card--compact" data-loteria="'+(i%4)+'" data-slug="'+esc(slug)+'">' +
+        '<span class="loteria-card__num" aria-hidden="true">'+(i+1)+'</span>' +
+        '<div class="loteria-card__art"><div class="pp-featured__grade">'+(c99?c99+'×99 ': '')+(c90?c90+'×90+':'avg '+avg)+'</div></div>' +
+        '<span class="loteria-card__banner">'+esc(name)+'</span>' +
+        '<p class="loteria-card__why">'+esc(last.season)+' · avg '+avg+'</p></div>';
     });
     els.ppFeatured.innerHTML = html;
   }

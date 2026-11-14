@@ -101,9 +101,14 @@
     }).join('');
 
     if (!nav.getAttribute('aria-label')) nav.setAttribute('aria-label', 'Primary');
+    // Lotería reskin: the numbered mini-card glyph after the wordmark — the
+    // day of the month is today's card number, banner colour rotates
+    // deterministically ((day-1) mod 4), never random.
+    var day = new Date().getDate();
     nav.innerHTML =
       '<a class="site-nav__brand" href="/" aria-label="Vector Hoops, home">' + MARK +
-        '<span>Vector<span class="site-nav__accent"> Hoops</span></span></a>' +
+        '<span>Vector<span class="site-nav__accent"> Hoops</span></span>' +
+        '<span class="site-nav__loteria" data-loteria="' + ((day - 1) % 4) + '" title="Lotería card Nº ' + day + ' of the month">' + day + '</span></a>' +
       '<div class="site-nav__slots" role="group" aria-label="Primary destinations">' +
         '<a class="site-nav__slot site-nav__link' + (mapOn ? ' is-active' : '') + '" href="' + MAP.href +
           '" title="' + MAP.title + '"' + (mapOn ? ' aria-current="page"' : '') + '>' + MAP.label + '</a>' +

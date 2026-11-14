@@ -20,14 +20,14 @@
 <meta property="og:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png"/>
 <meta property="og:image:width" content="1200"/>
 <meta property="og:image:height" content="630"/>
-<meta property="og:image:alt" content="Vector Hoops: 12,966 NBA player-seasons plotted as points on a dark field."/>
+<meta property="og:image:alt" content="Vector Hoops — Who plays like this? 12,966 NBA player-seasons, drawn as lotería cards on cream paper."/>
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:title" content="Vector Hoops — Who plays like this?"/>
 <meta name="twitter:description" content="An atlas of 12,966 NBA player-seasons. Pick one; the model returns the three that play most alike."/>
 <meta name="twitter:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png"/>
 <link rel="stylesheet" href="assets/fonts.css?v=8f376b2a"/>
-<link rel="stylesheet" href="/assets/atlas.css?v=89ee8519"/>
-<link rel="stylesheet" href="/assets/shell.css?v=0f508189"/>
+<link rel="stylesheet" href="/assets/atlas.css?v=b66eb74b"/>
+<link rel="stylesheet" href="/assets/shell.css?v=b462f98f"/>
 <style>
 /* Home layout only: every colour, card, plate, stat, row, button and state is the kit (atlas.css). */
 .home .main{ padding-top: 0; }
@@ -42,7 +42,10 @@
   text-wrap: balance;
 }
 .hero__title span{ display: block; }
-.hero__title em{ font-style: normal; color: var(--accent); }
+.hero__title em{ font-style: normal; }
+/* lotería voice: the key phrase sits on a black highlight bar, like the reel.
+   Pinned ink-on-paper (15.18:1) so the bar reads the same on both themes. */
+.hero__title .loteria-mark{ background: #232323; color: #FCFBF7; padding: 0 .14em; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
 .hero__lede{ max-width: 54ch; }
 .hero-search{ position: relative; z-index: 40; width: 100%; max-width: 600px; margin: var(--s-2) auto 0; }
 .hero-search .atlas-search input{ height: 58px; padding-left: 48px; font-size: var(--t-md); border-radius: 999px; border-width: 1.5px; border-color: var(--line-2); }
@@ -56,6 +59,13 @@
 .vh-totd--compact a{ color: var(--fg); font-weight: 650; }
 .vh-totd--compact a:hover{ color: var(--accent); }
 .vh-totd__why{ display: block; margin-top: 2px; font-size: var(--t-xs); color: var(--fg-3); }
+
+/* ---------- lotería row: Twin of the Day + 2 featured twins (engagement.js fills #loteria-row) ---------- */
+.loteria-row{ display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; width: 100%; max-width: var(--content); margin: var(--s-5) auto 0; padding: 0 clamp(14px, 2.4vw, 22px) 14px; }
+.loteria-row__pair{ font-family: var(--font-display); font-size: var(--t-lg); font-weight: 700; letter-spacing: -.01em; line-height: 1.15; }
+.loteria-row__pair .loteria-row__tilde{ opacity: .45; }
+.loteria-row__gap{ margin-top: 6px; font-size: var(--t-sm); color: var(--loteria-ink-2); }
+.loteria-row__link{ display: inline-block; margin-top: 10px; font-size: var(--t-sm); color: var(--loteria-ink); }
 
 /* ---------- search ---------- */
 .atlas-search{ position: relative; }
@@ -145,6 +155,7 @@
   .readout{ grid-template-columns: 1fr; }
   .readout > * + *{ border-left: 0; border-top: 1px solid var(--line); }
   .doors{ grid-template-columns: 1fr; }
+  .loteria-row{ grid-template-columns: 1fr; }
   .tonight__links{ margin-left: 0; }
   .hide-s{ display: none; }
 }
@@ -159,7 +170,7 @@
 <main id="main" class="main">
   <header class="title-card hero">
     <div class="title-card__eyebrow reveal">An atlas of NBA player-seasons</div>
-    <h1 class="hero__title"><span>Who plays</span><span>like <em>this?</em></span></h1>
+    <h1 class="hero__title"><span>Who plays</span><span>like <em class="loteria-mark">this?</em></span></h1>
     <p class="title-card__lede hero__lede reveal reveal-1">Type any player. A neural embedding finds the three seasons since <span data-fact="season_first">1996-97</span> that play most alike &mdash; across eras, teams and positions.</p>
     <div class="hero-search reveal reveal-2">
       <div class="atlas-search" role="search">
@@ -175,6 +186,10 @@
       </div>
     </div>
   </header>
+
+  <section class="loteria-row" id="loteria-row" aria-label="Featured twin cards">
+    <!-- filled by engagement.js: Twin of the Day + 2 featured twins, from the TOTD table — no new data -->
+  </section>
 
   <section class="tonight" id="tonight" aria-label="Tonight in the NBA">
     <span class="tonight__k"><span class="tonight__dot" aria-hidden="true"></span><span id="tonight-k">Tonight</span></span>
@@ -323,7 +338,7 @@
 </footer>
 <!-- /footer:stamped -->
 
-<script defer src="/assets/site-nav.js?v=70f136d8"></script>
+<script defer src="/assets/site-nav.js?v=9b5c4c31"></script>
 <script defer src="/assets/vh-analytics.js?v=d838a3e1"></script>
 <script defer src="/assets/vh-peers.js?v=860629b9"></script>
 <script defer src="/assets/served-constants.js?v=8ba12340"></script>
@@ -332,7 +347,7 @@
 <script defer src="/assets/embed-3d-overlay.js?v=390f8b9c"></script>
 <script defer src="/assets/atlas-3d.js?v=2999b11c"></script>
 <script src="assets/site-facts.js?v=f8edaf37" defer></script>
-<script defer src="/assets/engagement.js?v=b09bf206"></script>
+<script defer src="/assets/engagement.js?v=dfd25457"></script>
 <script defer src="/assets/home-tonight.js?v=881d28f9"></script>
 <script defer src="/assets/inline-index.js?v=2ad73c39"></script>
 </body>

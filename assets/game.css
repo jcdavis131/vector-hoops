@@ -50,7 +50,7 @@
 :where(.game--play) .court-top{ display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; }
 :where(.game--play) .court-top h2{ margin: 4px 0 0; font-size: var(--t-lg); }
 :where(.game--play) .court-top__actions{ display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
-:where(.game--play) .court-grid{ display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: var(--s-2); margin-top: var(--s-3); }
+:where(.game--play) .court-grid{ display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 20px; margin-top: var(--s-3); }
 @media (max-width: 720px){
   :where(.game--play) .court-grid{ grid-template-columns: 1fr; }
 }
@@ -64,11 +64,17 @@
 :where(.game--play) .court-card{
   display: flex; flex-direction: column; gap: 2px;
   min-height: 92px; padding: 10px; cursor: pointer;
-  background: var(--surface-2); border: 1px solid var(--line); border-radius: var(--radius-lg);
-  transition: border-color var(--dur-1) var(--ease);
+  /* lotería reskin: the slot cards are the doors into each puzzle — double
+     frame (3px ink border + 1px outline, 6px gap) and hard --block shadow.
+     Theme-following surface (not paper): the slot state tints (solved/failed)
+     live on the theme tokens. */
+  background: var(--surface-2); border: 3px solid var(--ink); border-radius: var(--radius);
+  outline: 1px solid var(--ink); outline-offset: 6px;
+  box-shadow: 6px 6px 0 var(--block);
+  transition: border-color var(--dur-1) var(--ease), outline-color var(--dur-1) var(--ease);
 }
-:where(.game--play) .court-card:hover{ border-color: var(--line-2); }
-:where(.game--play) .court-card.is-active{ border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
+:where(.game--play) .court-card:hover{ outline-color: var(--accent); }
+:where(.game--play) .court-card.is-active{ border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent), 6px 6px 0 var(--block); }
 :where(.game--play) .court-card.is-failed{
   background: color-mix(in srgb, var(--bad) 8%, var(--surface-2));
   border-color: color-mix(in srgb, var(--bad) 45%, transparent);

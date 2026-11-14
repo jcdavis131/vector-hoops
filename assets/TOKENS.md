@@ -42,8 +42,12 @@ primary actions, coin-gold rewards) stay; their tokens are now first-class citiz
 | `--void-line` | `rgba(255,255,255,.14)` | same | hairline on the void | — |
 | `--void-line-2` | `rgba(255,255,255,.28)` | same | control borders and hard steps on the void | — |
 | `--void-surface` | `rgba(13,16,21,.92)` | same | raised chrome on the void: tooltips, overlays, nested cards | ≈ `#0E1116` over void |
+| `--loteria-red` | `#C1272D` | same | lotería banner red; text on paper | 5.64:1 on paper — AA |
+| `--loteria-marigold` | `#E8A317` | same | lotería banner fill only, never small text; ink text on it | 7.25:1 ink-on-marigold — AA |
+| `--loteria-green` | `#1C7331` | same | lotería banner green (= light `--pipe`, pinned — night `--pipe` is too light for cream text) | 5.72:1 cream-on-green — AA |
+| `--loteria-blue` | `#2B6CE5` | same | lotería banner blue (= light `--marker-blue`, pinned — night `--marker-blue` is too light for cream text) | 4.63:1 cream-on-blue — AA |
 
-*The void family is restated in the night `:root` with the same values: the void never swaps, and the dark-coverage gate (D10) exempts only the token named `void`, not its ink.*
+*The void family is restated in the night `:root` with the same values: the void never swaps, and the dark-coverage gate (D10) exempts only the token named `void`, not its ink. The lotería family is restated the same way, with the same values in every `:root`: the cards are paper artifacts, so their colours never swap either (D10 is satisfied by the restatement, not by an exemption).*
 
 ## Palette — semantic layer
 
@@ -140,6 +144,17 @@ window reads the void pairings with no per-class variant. It is a component rule
 and the only place the ink changes without the OS. Not remapped on purpose: `--step` (the
 window's own shadow falls on paper), `--on-accent` and `--pipe` (a primary action keeps its
 pairing wherever it stands), the materials.
+
+## The one scoped exception: `.loteria-card` (2026-11-14 reskin)
+
+A `.loteria-card` KEEPS paper ground (`#FCFBF7`) and ink text (`#232323`, secondary `#57574F`)
+on BOTH themes — it is a physical paper artifact, the deliberate inverse of `.card--void`.
+The page ground follows the theme; the card does not. Every colour inside the card is therefore
+a constant (the `--loteria-*` family, or the card's own `--loteria-paper/--loteria-ink/
+--loteria-ink-2` locals) — never a theme-swapping token, or the night board would print
+light ink on paper. Banner rotation is red / marigold / green / blue by card number
+((n−1) mod 4), set with `data-loteria="0..3"`. D10 is satisfied because the lotería tokens
+are restated with identical values in the dark `:root`.
 
 ## Kit classes (wave 1, task 1.1 — DESIGN-DIRECTION §2)
 

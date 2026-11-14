@@ -146,16 +146,44 @@
                   absenceOnly: live.absenceOnly,
                   thin: !!(meta.threshold && sim < meta.threshold) };
         }
-        render(rec, bands);
+        render(rec, bands, st);
       });
     } catch (e) { /* the game must never break because of the explainer */ }
   }
 
-  function render(rec, bands) {
+  function render(rec, bands, st) {
     var card = document.querySelector('#result .card');
     if (!card || !rec) return;
     var old = card.querySelector('.twin-why');
     if (old) old.parentNode.removeChild(old);
+    // Lotería reskin: the reveal card IS card Nº 1 — paper ground, double
+    // frame, number badge, name banner. Rank 1 by construction (closestModern).
+    card.classList.add('loteria-card');
+    card.setAttribute('data-loteria', '0');
+    var oldBadge = card.querySelector('.loteria-card__num');
+    if (oldBadge) oldBadge.parentNode.removeChild(oldBadge);
+    var oldBanner = card.querySelector('.loteria-card__banner');
+    if (oldBanner) oldBanner.parentNode.removeChild(oldBanner);
+    var oldShare = card.querySelector('.vh-twin-share');
+    if (oldShare) oldShare.parentNode.removeChild(oldShare);
+    var badge = document.createElement('span');
+    badge.className = 'loteria-card__num';
+    badge.setAttribute('aria-hidden', 'true');
+    badge.textContent = '1';
+    card.insertBefore(badge, card.firstChild);
+    // Name banner = the twin, right under the solved line. The distance chip
+    // (mono) is the Twin score line in .twin-why__conf below; the "why" line
+    // is the chips + biggest-difference line in the same block.
+    // (The twin lives at st.closestModern — st.twin does not exist.)
+    var twin = st && st.closestModern;
+    if (twin && twin.entry) {
+      var banner = document.createElement('span');
+      banner.className = 'loteria-card__banner';
+      banner.textContent = twin.entry.n + ' ' + twin.entry.s;
+      var h3 = card.querySelector('h3');
+      if (h3 && h3.parentNode) h3.parentNode.insertBefore(banner, h3.nextSibling);
+      else card.appendChild(banner);
+    }
 
     // Hook 6 double-down (ethical engagement): the honest confidence number is
     // VISIBLE in the chips block, not only behind tap-through. Same data the
@@ -199,6 +227,28 @@
       '<div class="twin-why__differ">Biggest difference: <b>' + esc(rec.differ) + '</b></div>' +
       '<div class="twin-why__method">Twins are matched by embedding similarity; this breakdown uses the 14 style traits from the map.</div>';
     card.appendChild(el);
+
+    // "Share this twin" (lotería reskin, P9): renders a 9:16 twin card on a
+    // client-side canvas. Gated on VHShare so a stale viral-share.js never
+    // breaks the reveal; sharing never breaks the game.
+    if (twin && twin.entry && window.VHShare && window.VHShare.shareTwinCard) {
+      var shareBtn = document.createElement('button');
+      shareBtn.className = 'btn vh-twin-share';
+      shareBtn.type = 'button';
+      shareBtn.textContent = 'Share this twin';
+      shareBtn.addEventListener('click', function () {
+        try {
+          window.VHShare.shareTwinCard({
+            targetName: st.target.n, targetSeason: st.target.s,
+            twinName: twin.entry.n, twinSeason: twin.entry.s,
+            sim: Number(rec.sim), why: rec.shared || [],
+            dayKey: st.dayKey || '',
+            url: 'https://hoops.dumbmodel.com/play' + (st.dayKey ? '?day=' + st.dayKey : '')
+          });
+        } catch (e) { /* sharing never breaks the game */ }
+      });
+      card.appendChild(shareBtn);
+    }
   }
 
   window.VHTwinExplainer = { onReveal: onReveal };

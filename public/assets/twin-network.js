@@ -298,6 +298,32 @@
     document.getElementById('tn-vizwrap').innerHTML =
       networkSVG(p, neighbors, state.counts[id], eraBridgeCount);
 
+    // Lotería reskin: the five nearest twins as lotería cards — number badge =
+    // rank, banner = twin name + season, distance chip (mono) = similarity,
+    // "why" line = band + era-bridge note. The SVG viz above stays the map.
+    var twinsEl = document.getElementById('tn-twins');
+    if (twinsEl) {
+      var top5 = topNeighbors(id, 5);
+      twinsEl.innerHTML = top5.map(function (nb, i) {
+        var q = state.byId[nb.id];
+        if (!q) return '';
+        var rank = i + 1;
+        var bridge = q.decade !== p.decade;
+        var eraLine = bridge
+          ? esc(q.decade + 's') + ' \u2192 ' + esc(p.decade + 's')
+          : 'Same decade \u00B7 ' + esc(q.decade + 's');
+        return '<article class="loteria-card loteria-card--compact" data-loteria="' + ((rank - 1) % 4) + '">' +
+          '<span class="loteria-card__num" aria-hidden="true">' + rank + '</span>' +
+          '<div class="loteria-card__art">' +
+            '<div class="loteria-card__dist">' + Number(nb.sim).toFixed(2) + '</div>' +
+            '<div class="loteria-card__why">' + eraLine + '</div>' +
+          '</div>' +
+          '<span class="loteria-card__banner">' + esc(pretty(q.name)) + ' ' + esc(shortSeason(q.season)) + '</span>' +
+          '<p class="loteria-card__why">' + esc(simBand(Number(nb.sim))) + (bridge ? ' \u00B7 Era-bridge' : ' \u00B7 Same decade') + '</p>' +
+        '</article>';
+      }).join('');
+    }
+
     document.getElementById('tn-flowwrap').innerHTML = flowSVG(p);
 
     var url = new URL(location.href);
