@@ -21,6 +21,7 @@ count alone, so a link always replays the same stars.
 
 from __future__ import annotations
 
+import argparse
 import datetime as dt
 import hashlib
 import json
@@ -33,8 +34,15 @@ OUT = ASSETS / "map-hunt"
 VERSION = "map-hunt-v1"
 
 # Puzzle window: a week back (shared-link replay) + two weeks forward.
+# Days that already have puzzles are never rewritten (a rebuild can differ by a
+# byte of numpy rounding, and a shared ?day= link must replay the same puzzle),
+# so --start/--end only ever add days. Nothing runs this on a schedule: run it
+# (and `--check`) before the window's last day. The test pins every day's
+# sha256 (NEW_SHA in tests/test_map_hunt_window.py): add 2 lines per new day.
 START = dt.date(2026, 10, 13)
-END = dt.date(2026, 11, 3)
+END = dt.date(2026, 11, 24)
+WARN_DAYS = 7  # --check warns when fewer days than this remain
+N_ROWS = 12966
 
 
 def day_key(d: dt.date) -> str:
@@ -46,7 +54,46 @@ def pick_index(day: str, mode: str, n: int) -> int:
     return int.from_bytes(h[:8], "big") % n
 
 
-def main() -> int:
+def _date(text: str) -> dt.date:
+    return dt.date.fromisoformat(text)
+
+
+def check(today: dt.date) -> int:
+    """Read-only: does the committed window cover `today`? Exit 1 if not."""
+    try:
+        days = sorted(json.loads((OUT / "index.json").read_text())["days"])
+    except (OSError, KeyError, ValueError) as err:
+        print(f"map-hunt window: cannot read index.json ({err})")
+        return 1
+    if not days:
+        print("map-hunt window: index.json has no days")
+        return 1
+    missing = [
+        f"{k}-{m}.u8" for k in days for m in ("mh", "th") if not (OUT / "puzzles" / f"{k}-{m}.u8").is_file()
+    ]
+    print(f"map-hunt window: first covered day {days[0]}, last covered day {days[-1]}")
+    if missing:
+        print(f"map-hunt window: {len(missing)} puzzle file(s) missing, first {missing[0]}")
+        return 1
+    if today.isoformat() not in days:
+        print(f"map-hunt window: {today.isoformat()} is not covered; last covered day is {days[-1]}")
+        return 1
+    left = (_date(days[-1]) - today).days
+    if left < WARN_DAYS:
+        print(f"map-hunt window: only {left} day(s) left after {today.isoformat()}; run the builder to extend it")
+    return 0
+
+
+def main(argv: list[str] | None = None) -> int:
+    ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
+    ap.add_argument("--start", type=_date, default=START, help="first day to cover (YYYY-MM-DD)")
+    ap.add_argument("--end", type=_date, default=END, help="last day to cover (YYYY-MM-DD)")
+    ap.add_argument("--check", action="store_true", help="only verify the committed window covers --today")
+    ap.add_argument("--today", type=_date, default=None, help="date for --check and the index 'generated' stamp")
+    args = ap.parse_args(argv)
+    today = args.today or dt.date.today()
+    if args.check:
+        return check(today)
     try:
         import numpy as np
     except ImportError:
@@ -55,7 +102,7 @@ def main() -> int:
     vec = json.loads((ASSETS / "vectors.json").read_text())
     players = vec["players"]
     n = len(players)
-    assert n == 12966, f"expected 12966 rows, got {n}"
+    assert n == N_ROWS, f"expected {N_ROWS} rows, got {n}"
 
     by_name_season: dict[tuple[str, str], int] = {}
     by_name: dict[str, int] = {}
@@ -104,19 +151,28 @@ def main() -> int:
 
     OUT.mkdir(exist_ok=True)
     (OUT / "puzzles").mkdir(exist_ok=True)
-    (OUT / "candidates.json").write_text(json.dumps(candidates, separators=(",", ":")))
+    cand_text = json.dumps(candidates, separators=(",", ":"))
+    cand_path = OUT / "candidates.json"
+    if not cand_path.exists() or cand_path.read_text() != cand_text:
+        cand_path.write_text(cand_text)
 
     E = np.fromfile(str(ASSETS / "mtnn_embeddings.f32"), dtype="<f4").reshape(n, 64)
     norms = np.linalg.norm(E, axis=1)
     if not np.allclose(norms, 1.0, atol=1e-3):
         sys.exit(f"embeddings not L2-normalized (max dev {np.abs(norms-1).max()})")
 
-    days: dict[str, dict] = {}
-    d = START
+    index_path = OUT / "index.json"
+    old = json.loads(index_path.read_text()) if index_path.exists() else {}
+    days: dict[str, dict] = dict(old.get("days", {}))
     targets: set[int] = set()
     day_list: list[tuple[str, int, int]] = []
-    while d <= END:
+    d = args.start
+    while d <= args.end:
         k = day_key(d)
+        done = (OUT / "puzzles" / f"{k}-mh.u8").is_file() and (OUT / "puzzles" / f"{k}-th.u8").is_file()
+        if k in days and done:
+            d += dt.timedelta(days=1)
+            continue
         mh = pick_index(k, "mh", nm)
         th = pick_index(k, "th", nc)
         mi = mh_pool[mh][0]
@@ -146,15 +202,20 @@ def main() -> int:
     for f in (OUT / "puzzles").glob("_t*.u8"):
         f.unlink()
 
-    (OUT / "index.json").write_text(json.dumps(
-        {"v": 1, "generated": dt.date.today().isoformat(), "mh_pool": nm, "th_pool": nc, "days": days},
+    if not day_list:
+        print("OK  every day in the window already has puzzles; nothing written")
+        return 0
+    days = dict(sorted(days.items()))
+    generated = today.isoformat() if day_list else old.get("generated", today.isoformat())
+    index_path.write_text(json.dumps(
+        {"v": 1, "generated": generated, "mh_pool": nm, "th_pool": nc, "days": days},
         separators=(",", ":")))
 
     # Sanity: mystery is its own nearest (dist 0) and twin is near the given.
     k0, mi0, _ti0 = day_list[0]
     q = np.fromfile(str(OUT / "puzzles" / f"{k0}-mh.u8"), dtype=np.uint8)
     assert len(q) == n and q[mi0] == 0, "self-distance must quantize to 0"
-    print(f"OK  {len(day_list)} days, {len(targets)} unique targets, "
+    print(f"OK  {len(day_list)} new days ({day_list[0][0]}..{day_list[-1][0]}), {len(targets)} unique targets, "
           f"self-dist of {k0} mystery = 0")
     return 0
 

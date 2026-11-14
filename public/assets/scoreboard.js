@@ -67,7 +67,7 @@
     var days = [-3, -2, -1, 0, 1, 2, 3].map(function (n) { return shiftDay(today, n); });
     return Promise.all(days.map(function (day) {
       return fetchDay(day).then(function (games) { return { day: day, games: games }; })
-        .catch(function () { return { day: day, games: [] }; });
+        .catch(function () { return { day: day, games: [], failed: true }; });
     }));
   }
 

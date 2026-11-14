@@ -454,7 +454,7 @@ def main() -> int:
             const seen = {}, out = [];
             // the datalist the page fills is the pool a player can actually type
             [].slice.call(document.querySelectorAll('#guessList option')).forEach(o => {
-              const n = (o.value || '').replace(/\s+\d{4}-\d{2}$/, '');
+              const n = (o.value || '').replace(/\\s+\\d{4}-\\d{2}$/, '');
               if (/curry/i.test(n) && !seen[n]) { seen[n] = 1; out.push(n); }
             });
             const b = document.querySelector('#dist b');

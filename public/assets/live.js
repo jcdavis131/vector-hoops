@@ -1,7 +1,7 @@
 
 const SB='https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard';
 const SUM=id=>`https://site.api.espn.com/apis/site/v2/sports/basketball/nba/summary?event=${id}`;
-let games=[], cur=null, timer=null, lastUpd=null, lastOkAt=null;
+let games=[], cur=null, lastUpd=null, lastOkAt=null;
 // feedPoll rules: 1 a response sets the next step. 2 a hidden tab sets no timer.
 // 3 Refresh sends at most one request. 4 a new game or day stops the poll.
 
@@ -11,7 +11,8 @@ function etToday(){return new Intl.DateTimeFormat('en-CA',{timeZone:'America/New
 function shiftDay(yyyymmdd,n){const t=new Date(Date.UTC(+yyyymmdd.slice(0,4),+yyyymmdd.slice(4,6)-1,+yyyymmdd.slice(6,8))+n*864e5);return String(t.getUTCFullYear())+String(t.getUTCMonth()+1).padStart(2,'0')+String(t.getUTCDate()).padStart(2,'0');}
 function dayLabel(yyyymmdd){const t=new Date(Date.UTC(+yyyymmdd.slice(0,4),+yyyymmdd.slice(4,6)-1,+yyyymmdd.slice(6,8)));const s=t.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric',timeZone:'UTC'});return (yyyymmdd===etToday()?'Today — ':'')+s;}
 function renderDayNav(){const cur2=sbDay||etToday();const lbl=$('dayLbl');if(lbl)lbl.textContent=dayLabel(cur2);const b=$('dayToday');if(b)b.hidden=cur2===etToday();}
-function resetView(){cur=null;clearInterval(timer);fpNew();const m=$('main');if(m)m.hidden=false;const og=$('offgame');if(og)og.hidden=true;const ln=$('live-loading');if(ln)ln.hidden=false;}
+function clearGame(){window._lastD=window._lastG=null;lastOkAt=null;for(const i of['a','h']){$(i+'Abbr').textContent='\u2013';setScore($(i+'Score'));$(i+'Rec').textContent='';}setPhase('');$('clock').textContent='\u2013';$('upd').textContent='';const gh=$('ghMount');if(gh)gh.textContent='';document.title='Courtside Live \u2014 Vector Hoops';}
+function resetView(){cur=null;fpNew();clearGame();const m=$('main');if(m)m.hidden=false;const og=$('offgame');if(og)og.hidden=true;const ln=$('live-loading');if(ln)ln.hidden=false;}
 function gotoDay(n){sbExplicit=true;resetView();loadGames(shiftDay(sbDay||etToday(),n));}
 
 const $=id=>document.getElementById(id);
@@ -68,6 +69,8 @@ function tlAfter(TL,n){
 function preTips(g){return g.filter(x=>x&&x.state==='pre').map(x=>Date.parse(x.date)).filter(isFinite);}
 function boardTimerStart(games,nowMs){const t=preTips(games);return t.length?Math.min(...t)-12e4:null;}
 function boardTimerEnd(games){const t=preTips(games);return t.length?Math.max(...t)+108e5:null;}
+// whole hours until a final leaves /live: est. final + the live window (GameRoute's) - now; null once past
+function replayHours(finalMs,nowMs,winMs){const h=(finalMs+winMs-nowMs)/3600e3;return finalMs==null||!isFinite(h)||h<=0?null:Math.max(1,Math.round(h));}
 /* feedPoll:end */
 function phaseOf(d){try{return gamePhase(d.header.competitions[0].status.type);}catch(e){return {phase:'',label:''};}}
 async function jget(u){
@@ -148,11 +151,9 @@ async function loadGames(day){
 
 /* C2.6/T2.4: graduation marking — a recent final shows when it moves to Replay. */
 function finalLabel(g){
-  const ms=estFinalMs(g);
-  if(ms==null)return 'Final';
-  const hrs=(ms-Date.now())/3600e3;
-  if(hrs<=0)return 'Final';
-  return 'Final · moves to Replay in '+Math.max(1,Math.round(hrs))+'h';
+  const hrs=replayHours(estFinalMs(g),Date.now(),window.GameRoute&&window.GameRoute.LIVE_WINDOW_MS);
+  if(hrs==null)return 'Final';
+  return 'Final · moves to Replay in about '+hrs+'h';
 }
 function renderGames(){
   const el=$('games');el.innerHTML='';
@@ -193,12 +194,11 @@ function resetTabs(){try{window.dispatchEvent(new CustomEvent('gamecenter:tab',{
 // G2/T2.3: no live game -> schedule strip + last-game replay + day arrows.
 // The 13 plates never render; ESPN fetch-driven init is skipped.
 function offGame(){
-  cur=null;clearInterval(timer);fpNew();
+  cur=null;fpNew();clearGame();
   const now=Date.now(),s=boardTimerStart(games,now);
   if((sbDay||etToday())===etToday()&&s!=null&&now<boardTimerEnd(games)){BT.on=true;btArm(s>now?s-now:POLL.preNear);}
   const m=$('main');if(m)m.hidden=true;
   const ln=$('live-loading');if(ln)ln.hidden=true;
-  setPhase('');
   const og=$('offgame');
   if(og){
     og.hidden=false;
@@ -212,7 +212,6 @@ function offGame(){
     const meta=$('offgame-meta');
     if(meta)meta.textContent=games.length?games.length+' on the board \u00b7 none live':'no games on the board';
   }
-  try{document.title='Courtside Live \u2014 Vector Hoops';}catch(e){}
 }
 function syncAtlas(d,g){
   if(!window.LiveAtlas)return;
@@ -220,7 +219,7 @@ function syncAtlas(d,g){
   window.LiveAtlas.onGame(d,g,f&&JAM?f.name:null);
 }
 function selectGame(id){
-  cur=id;clearInterval(timer);fpNew(id,'running','');renderGames();
+  const was=cur;cur=id;fpNew(id,'running','');if(was!==id)clearGame();renderGames();
   const m=$('main');if(m)m.hidden=false;
   const og=$('offgame');if(og)og.hidden=true;
   resetTabs();
@@ -238,12 +237,12 @@ function renderMorning(d,g,isPost){
   if(!isPost){mo.hidden=true;return;}
   mo.hidden=false;
   const ms=estFinalMs(g);
-  const hrs=ms!=null?Math.max(1,Math.round((ms-Date.now())/3600e3)):null;
+  const hrs=replayHours(ms,Date.now(),window.GameRoute&&window.GameRoute.LIVE_WINDOW_MS);
   const head=window.Plate?window.Plate.html('FINAL','THE MORNING AFTER','final · complete')
     :'<div class="plate"><span class="pno">FINAL</span><h2>THE MORNING AFTER</h2><span class="prule"></span></div>';
   mo.innerHTML=head+
     '<div class="mg-row"><a href="#rpPlate">\u2193 Jump to the replay viewer</a>'+
-    (hrs!=null?'<span>Moves to Pixel Replay in '+hrs+'h</span>':'')+'</div>';
+    (hrs!=null?'<span>Moves to Pixel Replay in about '+hrs+'h</span>':'')+'</div>';
 }
 /* Audit #18: one phase for the page. 'in' lights the live chrome; 'post' says Final
    and switches every plate's empty copy to past tense; nothing pretends to be live. */
@@ -412,6 +411,7 @@ function tickNum(el,to,fmt){
   if(f===to){el.textContent=fmt(to);return;}
   const t0=performance.now(),dur=650;
   (function fr(t){
+    if(el.dataset.v!==String(to))return;
     const k=Math.min(1,(t-t0)/dur),e=1-Math.pow(1-k,3);
     el.textContent=fmt(f+(to-f)*e);
     if(k<1)requestAnimationFrame(fr);else el.textContent=fmt(to);

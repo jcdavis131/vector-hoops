@@ -44,7 +44,8 @@
     if (!isFinite(a)) return 'time unknown';
     if (a < 60) return 'just now';
     if (a < 3600) return Math.round(a / 60) + ' min ago';
-    return Math.round(a / 3600) + ' hr ago';
+    if (a < 48 * 3600) return Math.round(a / 3600) + ' hr ago';
+    return Math.round(a / 86400) + ' d ago';
   }
 
   /* Staleness badge: every number carries its as-of. Unknown fields stay

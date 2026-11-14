@@ -663,9 +663,7 @@ def test_two_calls_agree():
 
 @pytest.fixture(scope="module")
 def tm():
-    import importlib
-
-    return importlib.import_module("train_mtnn")
+    return pytest.importorskip("train_mtnn", reason="train_mtnn imports torch, which is not installed")
 
 
 def tiny_model(tm, inp: dict, token_dropout: float = 0.5):

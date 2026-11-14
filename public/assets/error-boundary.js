@@ -62,7 +62,7 @@
     t.setAttribute('role','status');
     t.setAttribute('aria-live','polite');
     t.style.cssText='position:fixed; top:calc(12px + env(safe-area-inset-top)); left:50%; transform:translateX(-50%); background:#1A150F; color:#FFFEF7; border:2.2px solid #F0E442; border-radius:999px; padding:8px 14px; font-family:ui-monospace,monospace; font-size:11px; z-index:90; box-shadow:none; max-width:90vw; text-align:center;';
-    t.textContent='Offline — cached 12,966 seasons still playable. Daily + Lab work offline.';
+    t.textContent='Offline — pages you’ve already opened may still work from this device’s cache.';
     document.body.appendChild(t);
     setTimeout(function(){ try{ t.style.opacity='0'; t.style.transition='opacity .4s'; }catch(e){} setTimeout(function(){ try{t.remove();}catch(e){} }, 400); }, 4000);
   }
@@ -128,7 +128,7 @@
       });
       if((target.src||'').indexOf('mtnn_embeddings')!==-1 || (target.src||'').indexOf('vectors')!==-1){
         try{ window.dispatchEvent(new CustomEvent('vh:vectors-failed')); }catch(e){}
-        showFallbackCard('sky-demo','Sky took longer to load','12,966 seasons map is ~1.4MB positions + ~1.2MB precomputed peers. Check connection — cache still works offline.', function(){
+        showFallbackCard('sky-demo','Sky took longer to load','12,966 seasons map is ~1.4MB positions + ~1.2MB precomputed peers. Check your connection and retry.', function(){
           location.reload();
           return false;
         });
@@ -189,7 +189,7 @@
 
   function handleVHCustomFailures(){
     window.addEventListener('vh:mtnn-failed', function(){
-      showFallbackCard('daily-guesses','Embeddings failed to load','64-d MTNN data took too long. Daily cosine still works offline from cache if previously visited. Retrying 1s/2s/4s.', function(){
+      showFallbackCard('daily-guesses','Embeddings failed to load','64-d MTNN data took too long. Retrying 1s/2s/4s.', function(){
         if(window.VHMtnn && VHMtnn.load){
           return new Promise(function(res){
             var tries=0;

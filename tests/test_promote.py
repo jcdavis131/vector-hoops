@@ -422,6 +422,10 @@ def test_an_option_a_select_run_predates_compares_as_its_default(data):
     Missing reads as train_mtnn's parser default (False), not None, so the two
     are one recipe. A real difference (True) is still refused.
     """
+    pytest.importorskip(
+        "train_mtnn",
+        reason="promote reads train_mtnn's parser defaults, and train_mtnn imports torch, which is not installed",
+    )
     sel = make_run(data, "sel")
     assert "protocol_v2" not in json.loads((sel / "mtnn_report.json").read_text(encoding="utf-8"))["lineage"]["args"]
     refit = make_run(data, "refit", phase="final-refit", seed=1, args={"protocol_v2": False})

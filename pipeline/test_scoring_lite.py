@@ -18,6 +18,7 @@ from __future__ import annotations
 
 import json
 import os
+import re
 import sys
 from pathlib import Path
 
@@ -75,6 +76,28 @@ def test_lite_rows_are_the_served_embedding_rows(meta, idx):
     assert np.array_equal(lite, served.reshape(rows, dim)[np.asarray(idx["ids"])]), (
         "scoring_lite.f32 rows differ from mtnn_embeddings.f32[ids]: the play page scores in a different space"
     )
+
+
+def test_ids_are_the_set_the_page_scores():
+    # past-modern-game.js init() draws a past target from every 1996..PAST_MAX
+    # all-star season (honors asg === 1) and scores guesses against every 2024+
+    # season; a target with no row leaves every guess on "Loading scoring". The
+    # lite index must hold exactly those ids (it once lacked 747, Steven Smith 1997-98).
+    js = (ASSETS / "past-modern-game.js").read_text(encoding="utf-8")
+    m = re.search(r"const PAST_MAX = (\d+);", js)
+    assert m, "PAST_MAX not found in past-modern-game.js"
+    past_max = int(m.group(1))
+    lite = json.loads((ASSETS / "vectors_search_lite.json").read_text(encoding="utf-8"))
+    players = lite["players"] if isinstance(lite, dict) else lite
+    honors = json.loads((ASSETS / "honors.json").read_text(encoding="utf-8"))
+    by_season = honors.get("bySeason", honors)
+    expect = set()
+    for p in players:
+        yr = int(str(p["s"]).split("-")[0])
+        if yr >= 2024 or (1996 <= yr <= past_max and (by_season.get(f"{p['n']}|{p['s']}") or {}).get("asg") == 1):
+            expect.add(p["i"])
+    have = set(json.loads(INDEX.read_text(encoding="utf-8"))["ids"])
+    assert have == expect, f"missing ids {sorted(expect - have)}, extra ids {sorted(have - expect)}"
 
 
 if __name__ == "__main__":
