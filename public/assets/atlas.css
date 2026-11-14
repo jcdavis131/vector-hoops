@@ -1221,6 +1221,23 @@ section .today-strip__links a:first-child:hover{ background: var(--pipe-deep); }
 /* theme-swapping text colours pinned to paper ink inside the card */
 .loteria-card .hd, .loteria-card h1, .loteria-card h2, .loteria-card h3{ color: var(--loteria-ink); }
 .loteria-card .result__detail, .loteria-card .caption, .loteria-card .sub{ color: var(--loteria-ink-2); }
+/* F3 (2026-11-14): the paper card pins EVERY text colour inside it. The F2
+   fix pinned the card's own text, but ghost controls keep theme-swapping
+   colours: a plain .btn is transparent with --fg text (light ink at night —
+   1.12:1 on paper), .pill/.chip are --fg-2 (2.12:1), .twin-why__label --fg-2
+   (2.12:1), .twin-why__method --fg-3 (3.43:1), and <b> in .twin-why__differ
+   is --fg via atlas.css:383 (1.12:1). All measured dark-theme headless,
+   2026-11-14. Pin them to the lotería inks in both themes; the light look
+   is unchanged (the pinned values equal what light already renders).
+   The hover :not() chain matches the (0,6,0) hover rule at :943, so this
+   later rule wins; #F5F2E9 is the light --surface-2 value, pinned. */
+.loteria-card .btn:not(.btn-primary):not(.btn-accent){ color: var(--loteria-ink); background: var(--loteria-paper); border-color: var(--loteria-ink); }
+.loteria-card .btn:hover:not(.btn-primary):not(.btn-accent):not(.btn-play):not(.lifeline){ color: var(--loteria-ink); background: #F5F2E9; border-color: var(--loteria-ink); }
+.loteria-card .pill, .loteria-card .chip{ color: var(--loteria-ink); background: var(--loteria-paper); border-color: var(--loteria-ink); }
+.loteria-card a.pill:hover, .loteria-card button.pill:hover{ color: var(--loteria-ink); border-color: var(--loteria-ink); background: #F5F2E9; }
+.loteria-card .twin-why__label, .loteria-card .twin-why__thin{ color: var(--loteria-ink-2); }
+.loteria-card .twin-why__method{ color: var(--loteria-ink-2); }
+.loteria-card .twin-why__differ, .loteria-card .twin-why__differ b{ color: var(--loteria-ink); }
 /* number badge, top-left: mono, black square, cream numerals */
 .loteria-card__num{
   position: absolute; top: 10px; left: 10px; z-index: 1;
