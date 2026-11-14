@@ -6,11 +6,13 @@
 .vh-ins__wrap{max-width:880px;margin:0 auto;padding:0 var(--s-3) var(--s-6)}
 .vh-ins__spotlabel{font:700 12px/1.4 var(--font-sans);letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin:0 0 var(--s-2)}
 
-/* ---- card: the kit .card plus spacing; featured = accent border, same hard step ---- */
-.vh-ins__card{margin:0 0 var(--s-4);padding:clamp(20px,4vw,36px)}
+/* ---- card: the kit .card plus spacing; lotería reskin: the double frame
+   (3px ink border + 1px outline, 6px gap), hard --block shadow, --radius.
+   The old data-theme top-border accents are gone — the kicker already carries
+   the theme colour, and a coloured top edge would break one side of the frame.
+   Featured keeps its accent border; chart panels stay void hosts (below). ---- */
+.vh-ins__card{margin:0 0 var(--s-4);padding:clamp(20px,4vw,36px);border:3px solid var(--ink);border-radius:var(--radius);outline:1px solid var(--ink);outline-offset:6px;box-shadow:6px 6px 0 var(--block)}
 .vh-ins__card--featured{border-color:var(--accent-line)}
-.vh-ins__card[data-theme="money"]{border-top:3px solid var(--coin-text)}
-.vh-ins__card[data-theme="entity"]{border-top:3px solid var(--data-moss)}
 .vh-ins__kicker{display:block;font:700 12px/1.4 var(--font-sans);letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin:0 0 8px}
 .vh-ins__kicker--money{color:var(--coin-text)}
 .vh-ins__kicker--entity{color:var(--fg-2)}

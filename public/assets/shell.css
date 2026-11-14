@@ -45,6 +45,23 @@
 }
 .site-nav__brand:hover{ color: var(--fg); }
 .site-nav__mark{ width: 22px; height: 22px; flex: 0 0 auto; color: var(--accent); }
+/* lotería reskin: numbered mini-card glyph after the wordmark — the day of the
+   month is today's card number; banner colour (data-loteria) rotates red /
+   marigold / green / blue deterministically, never random. CSS-only, no image.
+   The badge pins the lotería constants, so it reads identically on both themes. */
+.site-nav__loteria{
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 22px; height: 22px; padding: 0 4px;
+  font-family: var(--font-code); font-size: 12px; font-weight: 700;
+  letter-spacing: 0; text-transform: none;
+  background: var(--loteria-red); color: var(--loteria-paper);
+  border: 2px solid var(--loteria-ink); border-radius: 3px;
+  outline: 1px solid var(--loteria-ink); outline-offset: 2px;
+  box-shadow: 2px 2px 0 var(--block);
+}
+.site-nav__loteria[data-loteria="1"]{ background: var(--loteria-marigold); color: var(--loteria-ink); }
+.site-nav__loteria[data-loteria="2"]{ background: var(--loteria-green); color: var(--loteria-paper); }
+.site-nav__loteria[data-loteria="3"]{ background: var(--loteria-blue); color: var(--loteria-paper); }
 .site-nav__accent{ color: var(--fg-3); }
 .site-nav__slots{
   justify-self: center;
